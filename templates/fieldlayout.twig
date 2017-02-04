@@ -1,0 +1,23 @@
+{% set tabs = fieldLayout.getTabs() %}
+
+{% if tabs|length > 1 %}
+    <div id="field-layout" class="ui top attached tabular menu">
+        {% for tab in tabs %}
+            <a class="{% if loop.first %}active {% endif %}item" data-tab="tab{{ loop.index }}">{{ tab.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% for tab in tabs %}
+        <div class="ui bottom attached tab segment{% if loop.first %} active{% endif %}" data-tab="tab{{ loop.index }}">
+            {% include "fffields/fields" with {
+                fields:  tab.getFields(),
+                element: currentVendor
+            } only %}
+        </div>
+    {% endfor %}
+{% else %}
+    {% include "fffields/fields" with {
+        fields:  tabs[0].getFields(),
+        element: currentVendor
+    } only %}
+{% endif %}

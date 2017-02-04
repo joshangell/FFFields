@@ -35,6 +35,8 @@ class FffieldsVariable
                 break;
         }
 
+
+
         if (!$fieldLayout) {
             return false;
         }

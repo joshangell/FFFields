@@ -26,7 +26,7 @@ class FffieldsService extends BaseApplicationComponent
             return false;
         }
 
-        return 'HI!';
+        return craft()->templates->render('fffields/fieldlayout', [$fieldLayout]);
 
     }
 
