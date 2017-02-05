@@ -9,15 +9,15 @@
 
     {% for tab in tabs %}
         <div class="ui bottom attached tab segment{% if loop.first %} active{% endif %}" data-tab="tab{{ loop.index }}">
-            {% include "fffields/fields" with {
+            {% include "fields" with {
                 fields:  tab.getFields(),
-                element: currentVendor
+                element: element
             } only %}
         </div>
     {% endfor %}
 {% else %}
-    {% include "fffields/fields" with {
+    {% include "fields" with {
         fields:  tabs[0].getFields(),
-        element: currentVendor
+        element: element
     } only %}
 {% endif %}

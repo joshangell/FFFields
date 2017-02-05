@@ -21,28 +21,7 @@ class FffieldsVariable
      */
     public function render(BaseElementModel $element)
     {
-
-        $elementType = craft()->elements->getElementTypeById($element->id);
-
-        if (!$elementType)
-        {
-            return false;
-        }
-
-        switch ($elementType) {
-            case 'Entry' :
-                $fieldLayout = $element->getType()->getFieldLayout();
-                break;
-        }
-
-
-
-        if (!$fieldLayout) {
-            return false;
-        }
-
-        return craft()->fffields->renderFromLayout($fieldLayout);
-
+        return craft()->fffields->render($element);
     }
 
 }

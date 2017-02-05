@@ -13,21 +13,44 @@ class FffieldsService extends BaseApplicationComponent
 {
 
     /**
-     * Renders the fields for a given field layout.
+     * Renders the fields for a given element.
      *
-     * @param FieldLayoutModel $fieldLayout
+     * @param BaseElementModel $element
      *
      * @return mixed
      */
-    public function renderFromLayout(FieldLayoutModel $fieldLayout)
+    public function render(BaseElementModel $element)
     {
+
+        $elementType = craft()->elements->getElementTypeById($element->id);
+
+        if (!$elementType)
+        {
+            return false;
+        }
+
+        switch ($elementType) {
+            case 'Entry' :
+                $fieldLayout = $element->getType()->getFieldLayout();
+                break;
+        }
 
         if (!$fieldLayout) {
             return false;
         }
 
-        return craft()->templates->render('fffields/fieldlayout', [$fieldLayout]);
+        $oldPath = craft()->templates->getTemplatesPath();
+        $newPath = craft()->path->getPluginsPath().'fffields/templates';
+        craft()->templates->setTemplatesPath($newPath);
 
+        $html = craft()->templates->render('fieldlayout', [
+            'element' => $element,
+            'fieldLayout' => $fieldLayout
+        ]);
+
+        craft()->templates->setTemplatesPath($oldPath);
+
+        return TemplateHelper::getRaw($html);
     }
 
 }

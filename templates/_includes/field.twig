@@ -1,0 +1,64 @@
+{% set static = static is defined ? static : false %}
+{% set element = element is defined ? element : null %}
+
+{% set value = (element ? element.getFieldValue(field.handle) : null) %}
+{% set errors = (element and not static ? element.getErrors(field.handle) : null) %}
+{% set fieldtype = field.getFieldType() %}
+{% set instructions = (not static and field.instructions ? field.instructions|t : null) %}
+
+{% if fieldtype %}
+    {% if element %}
+        {% do fieldtype.setElement(element) %}
+    {% endif %}
+
+    {% switch field.type %}
+    {# TODO: implement other field types #}
+
+    {# RichText fields #}
+    {% case "RichText" %}
+    {% if not static %}
+        {% includeCssResource "lib/redactor/redactor.css" %}
+        {% includeJsResource "lib/redactor/redactor.js" %}
+
+        {# TODO: Include any plugins needed here #}
+        {# {% includeJsResource "lib/redactor/plugins/table.js" %} #}
+
+        {# TODO: sort out the redactor configs #}
+
+        {% includejs %}
+        $('#{{ namespace }}-{{ field.handle }}').redactor(
+        {
+            buttons:['format', 'bold', 'italic', 'lists', 'link', 'horizontalrule'],
+            formatting: ['p', 'blockquote', 'h3', 'h4'],
+            plugins: ['table'],
+            toolbarFixed: false
+        });
+        {% endincludejs %}
+
+        {% set input %}
+            <textarea id="{{ field.handle }}" name="{{ field.handle }}">{{ value }}</textarea>
+        {% endset %}
+    {% else %}
+        {% set input = value %}
+    {% endif %}
+
+    {% default %}
+    {% set input = '<div class="ui warning message visible">' ~ "The fieldtype “{class}” is not yet supported."|t({ class: field.type }) ~ '</div>' %}
+
+    {% endswitch %}
+
+{% else %}
+    {% set input = '<div class="ui error message visible">' ~ "The fieldtype class “{class}” could not be found."|t({ class: field.type }) ~ '</div>' %}
+{% endif %}
+
+{% if instructions or input %}
+    {% include "_includes/forms/field" with {
+        label: field.name|t|e,
+        locale: field.translatable ? (locale is defined ? locale : (element ? element.locale : craft.locale)),
+        required: (not static ? required : false),
+        instructions: instructions|e,
+        id: field.handle,
+        errors: errors,
+        input: input
+    } only %}
+{% endif %}
