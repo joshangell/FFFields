@@ -117,7 +117,6 @@ class Fffields_RichTextService extends BaseApplicationComponent
 
         // Gotta use the uncompressed Redactor JS until the compressed one gets our Live Preview menu fix
         craft()->templates->includeJsResource('lib/redactor/redactor.js');
-        //craft()->templates->includeJsResource('lib/redactor/redactor'.(craft()->config->get('useCompressedJs') ? '.min' : '').'.js');
 
         $this->_maybeIncludeRedactorPlugin($configJs, 'fullscreen', false);
         $this->_maybeIncludeRedactorPlugin($configJs, 'source|html', false);

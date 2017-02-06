@@ -1,0 +1,26 @@
+{
+  "name": "FFFields",
+  "version": "1.0.0",
+  "description": "Craft CMS fields for the front-end.",
+  "main": "resources/js/main.js",
+  "dependencies": {
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.10.0",
+    "jquery": "^3.1.1",
+    "semantic-ui-css": "^2.2.4",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue": "^2.1.10",
+    "vue-loader": "^10.3.0",
+    "vue-semantic": "git+https://github.com/joshangell/vue-semantic.git#vue2",
+    "vue-template-compiler": "^2.1.10",
+    "webpack": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "Josh Angell",
+  "license": "ISC"
+}
