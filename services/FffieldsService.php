@@ -105,6 +105,9 @@ class FffieldsService extends BaseApplicationComponent
                 ));
                 break;
 
+            case 'RichText' :
+                return craft()->fffields_richText->render($field, $value);
+
             default :
                 return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $field->type]) . '</div>';
                 break;
