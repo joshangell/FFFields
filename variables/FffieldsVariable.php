@@ -24,4 +24,15 @@ class FffieldsVariable
         return craft()->fffields->render($element);
     }
 
+    /**
+     * @param FieldModel $field
+     * @param            $value
+     *
+     * @return mixed
+     */
+    public function getInputHtml(FieldModel $field, $value)
+    {
+        return craft()->fffields->getInputHtml($field, $value);
+    }
+
 }

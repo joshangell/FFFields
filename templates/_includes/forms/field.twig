@@ -17,21 +17,21 @@
 
     {% if label or instructions %}
         {% if label %}
-			<label {% if labelId %} id="{{ labelId }}"{% endif %}{% if id is defined and id %} for="{{ id }}"{% endif %}>
+            <label {% if labelId %} id="{{ labelId }}"{% endif %}{% if id is defined and id %} for="{{ id }}"{% endif %}>
                 {{- label|raw -}}
-			</label>
+            </label>
         {% endif %}
         {% if instructions %}
-			<div class="instructions">{{ instructions|md|replace('/&amp;(\\w+);/', '&$1;')|raw }}</div>
+            <div class="small text instructions">{{ instructions|md|replace('/&amp;(\\w+);/', '&$1;')|raw }}</div>
         {% endif %}
     {% endif %}
 
     {{ input|raw }}
 
     {% if warning %}
-		<div class="ui warning message visible">
+        <div class="ui warning message visible">
             {{ warning }}
-		</div>
+        </div>
     {% endif %}
 
     {% include "_includes/forms/errorList" with { errors: errors } %}

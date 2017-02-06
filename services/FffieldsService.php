@@ -11,6 +11,43 @@ namespace Craft;
  */
 class FffieldsService extends BaseApplicationComponent
 {
+    // Properties
+    // =========================================================================
+
+    /**
+     * The original template path.
+     *
+     * @var string
+     */
+    protected $oldPath;
+
+    /**
+     * Our plugin template path.
+     *
+     * @var string
+     */
+    protected $newPath;
+
+    // Public Methods
+    // =========================================================================
+
+    /**
+     * Set the template path to our plugin one
+     */
+    public function __construct()
+    {
+        $this->oldPath = craft()->templates->getTemplatesPath();
+        $this->newPath = craft()->path->getPluginsPath().'fffields/templates';
+        craft()->templates->setTemplatesPath($this->newPath);
+    }
+
+    /**
+     * Reset the parent path when the class gets killed
+     */
+    public function __destruct()
+    {
+        craft()->templates->setTemplatesPath($this->oldPath);
+    }
 
     /**
      * Renders the fields for a given element.
@@ -39,18 +76,41 @@ class FffieldsService extends BaseApplicationComponent
             return false;
         }
 
-        $oldPath = craft()->templates->getTemplatesPath();
-        $newPath = craft()->path->getPluginsPath().'fffields/templates';
-        craft()->templates->setTemplatesPath($newPath);
-
         $html = craft()->templates->render('fieldlayout', [
             'element' => $element,
             'fieldLayout' => $fieldLayout
         ]);
 
-        craft()->templates->setTemplatesPath($oldPath);
-
         return TemplateHelper::getRaw($html);
+    }
+
+
+    /**
+     * @param FieldModel $field
+     * @param            $value
+     *
+     * @return string
+     */
+    public function getInputHtml(FieldModel $field, $value)
+    {
+        $fieldType = $field->getFieldType();
+
+        switch ($field->type) {
+
+            case 'PlainText' :
+                return craft()->templates->render('_fieldtypes/PlainText/input', array(
+                    'name'     => $field->handle,
+                    'value'    => $value,
+                    'settings' => $fieldType->getSettings()
+                ));
+                break;
+
+            default :
+                return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $field->type]) . '</div>';
+                break;
+
+        }
+
     }
 
 }
