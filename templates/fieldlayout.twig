@@ -1,7 +1,8 @@
 {% set tabs = fieldLayout.getTabs() %}
 
+<div id="field-layout">
 {% if tabs|length > 1 %}
-    <div id="field-layout" class="ui top attached tabular menu">
+    <div class="ui top attached tabular menu">
         {% for tab in tabs %}
             <a class="{% if loop.first %}active {% endif %}item" data-tab="tab{{ loop.index }}">{{ tab.name }}</a>
         {% endfor %}
@@ -21,3 +22,4 @@
         element: element
     } only %}
 {% endif %}
+</div>

@@ -13,7 +13,7 @@
     {% endif %}
 
     {% if not static %}
-        {% set input = craft.fffields.getInputHtml(field, value) %}
+        {% set input = craft.fffields.getInputHtml(field, value, namespace) %}
     {% else %}
         {% set input = fieldtype.getStaticHtml(value) %}
     {% endif %}

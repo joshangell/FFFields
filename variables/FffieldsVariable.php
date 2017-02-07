@@ -30,9 +30,9 @@ class FffieldsVariable
      *
      * @return mixed
      */
-    public function getInputHtml(FieldModel $field, $value)
+    public function getInputHtml(FieldModel $field, $value, $namespace = null)
     {
-        return craft()->fffields->getInputHtml($field, $value);
+        return craft()->fffields->getInputHtml($field, $value, $namespace);
     }
 
 }

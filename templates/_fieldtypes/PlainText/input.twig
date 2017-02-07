@@ -1,17 +1,15 @@
-{% import "_includes/forms" as forms %}
-
 {% set config = {
-    id: name,
+    id: id,
     name: name,
     value: value,
     maxlength: settings.maxLength,
-    showCharsLeft: true,
+    showCharsLeft: settings.maxLength ? true : false,
     placeholder: settings.placeholder|t,
     rows: settings.initialRows
 } %}
 
 {% if settings.multiline %}
-    {{ forms.textarea(config) }}
+    <text-area v-bind:config="{{ config|json_encode() }}"></text-area>
 {% else %}
-    {{ forms.text(config) }}
+    <text-input v-bind:config="{{ config|json_encode() }}"></text-input>
 {% endif %}

@@ -91,7 +91,7 @@ class FffieldsService extends BaseApplicationComponent
      *
      * @return string
      */
-    public function getInputHtml(FieldModel $field, $value)
+    public function getInputHtml(FieldModel $field, $value, $namespace = null)
     {
         $fieldType = $field->getFieldType();
 
@@ -99,7 +99,8 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'PlainText' :
                 return craft()->templates->render('_fieldtypes/PlainText/input', array(
-                    'name'     => $field->handle,
+                    'id'       => craft()->templates->namespaceInputId($field->handle, $namespace),
+                    'name'     => craft()->templates->namespaceInputName($field->handle, $namespace),
                     'value'    => $value,
                     'settings' => $fieldType->getSettings()
                 ));
