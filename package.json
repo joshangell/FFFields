@@ -12,7 +12,6 @@
     "url-loader": "^0.5.7",
     "vue": "^2.1.10",
     "vue-loader": "^10.3.0",
-    "vue-semantic": "git+https://github.com/joshangell/vue-semantic.git#vue2",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.1"
   },

@@ -51,13 +51,6 @@ module.exports = {
         }
     },
 
-    // resolve: {
-    //     extensions: ['.js', '.vue'],
-    //     alias: {
-    //         'semantic': path.resolve(__dirname, './node_modules/semantic-ui-css/semantic.min.js')
-    //     }
-    // },
-
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
