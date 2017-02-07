@@ -19645,10 +19645,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'text-area',
     props: ['config'],
+    data: function() {
+        return {
+            value : this.config.value,
+            charsLeft : (this.config.value ? this.config.maxlength - value.length : this.config.maxlength),
+            percentageUsed : (this.config.value ? ((this.config.maxlength-value.length)/this.config.maxlength)*100 : 0)
+        }
+    },
+    methods: {
+        updateCharsLeft: function (value) {
+            this.charsLeft = this.config.maxlength - value.length;
+            this.percentageUsed = ((this.config.maxlength-this.charsLeft)/this.config.maxlength)*100;
+            this.value = value;
+        }
+    },
+    computed: {
+        labelClasses: function () {
+            return {
+                'ui bottom right attached label' : true,
+                'basic' : this.percentageUsed < 70,
+                'pink' : this.percentageUsed >= 80 && this.percentageUsed < 90,
+                'red' : this.percentageUsed >= 90,
+            }
+        }
+    }
 };
 
 
@@ -19657,7 +19687,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('textarea', {
+  return _c('div', {
+    class: {
+      'ui labeled input': _vm.config.showCharsLeft
+    }
+  }, [_c('textarea', {
     attrs: {
       "rows": _vm.config.rows,
       "id": _vm.config.id,
@@ -19665,8 +19699,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": _vm.config.maxlength,
       "disabled": _vm.config.disabled,
       "placeholder": _vm.config.placeholder
+    },
+    domProps: {
+      "value": _vm.value
+    },
+    on: {
+      "input": function($event) {
+        _vm.updateCharsLeft($event.target.value)
+      }
     }
-  }, [_vm._v(_vm._s(_vm.config.value))])
+  }, [_vm._v(_vm._s(_vm.config.value))]), _vm._v(" "), (_vm.config.showCharsLeft) ? _c('div', {
+    class: _vm.labelClasses
+  }, [_vm._v(_vm._s(_vm.charsLeft))]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -19740,13 +19784,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function() {
         return {
             value : this.config.value,
-            charsLeft: (this.config.value ? this.config.maxlength - value.length : this.config.maxlength)
+            charsLeft : (this.config.value ? this.config.maxlength - value.length : this.config.maxlength),
+            percentageUsed : (this.config.value ? ((this.config.maxlength-value.length)/this.config.maxlength)*100 : 0)
         }
     },
     methods: {
         updateCharsLeft: function (value) {
             this.charsLeft = this.config.maxlength - value.length;
+            this.percentageUsed = ((this.config.maxlength-this.charsLeft)/this.config.maxlength)*100;
             this.value = value;
+        }
+    },
+    computed: {
+        labelClasses: function () {
+            return {
+                'ui label' : true,
+                'basic' : this.percentageUsed < 70,
+                'pink' : this.percentageUsed >= 80 && this.percentageUsed < 90,
+                'red' : this.percentageUsed >= 90,
+            }
         }
     }
 };
@@ -19781,7 +19837,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }), _vm._v(" "), (_vm.config.showCharsLeft) ? _c('div', {
-    staticClass: "ui dropdown label"
+    class: _vm.labelClasses
   }, [_vm._v(_vm._s(_vm.charsLeft))]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
