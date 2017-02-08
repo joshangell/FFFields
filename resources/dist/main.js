@@ -21923,8 +21923,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'lightswitch',
@@ -21948,16 +21946,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "hidden",
       "name": _vm.config.name,
-      "value": "0"
+      "value": ""
     }
   }), _vm._v(" "), _c('input', {
     attrs: {
       "type": "checkbox",
       "value": "1",
       "id": _vm.config.id,
-      "name": _vm.config.name,
-      "true-value": 1,
-      "false-value": 0
+      "name": _vm.config.name
     },
     domProps: {
       "checked": _vm.checked

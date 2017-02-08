@@ -1,14 +1,12 @@
 <template>
 
     <div class="ui fitted toggle checkbox">
-        <input type="hidden" v-bind:name="config.name" value="0">
+        <input type="hidden" v-bind:name="config.name" value="">
         <input type="checkbox"
                value="1"
                v-bind:id="config.id"
                v-bind:name="config.name"
-               v-bind:checked="checked"
-               v-bind:true-value="1"
-               v-bind:false-value="0">
+               v-bind:checked="checked">
         <label></label>
     </div>
 
