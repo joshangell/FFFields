@@ -21838,6 +21838,9 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_RichText_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue__);
+
 
 
 
@@ -21855,7 +21858,8 @@ if (document.querySelector('#field-layout')) {
         components: {
             'text-area' : __WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue___default.a,
             'text-input' : __WEBPACK_IMPORTED_MODULE_4__components_TextInput_vue___default.a,
-            'rich-text' : __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue___default.a
+            'rich-text' : __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue___default.a,
+            'lightswitch' : __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue___default.a
         },
         mounted: function() {
             $('.tabular .item', this.$el).tab()
@@ -21864,6 +21868,117 @@ if (document.querySelector('#field-layout')) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(33),
+  /* template */
+  __webpack_require__(34),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/LightSwitch.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] LightSwitch.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d49857d8", Component.options)
+  } else {
+    hotAPI.reload("data-v-d49857d8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+    /* harmony default export */ __webpack_exports__["default"] = {
+        name: 'lightswitch',
+        props: ['config'],
+        data: function() {
+            return {
+                checked : this.config.value
+            }
+        },
+//        methods: {
+//            updateValue: function (value) {
+//                console.log(value);
+////                this.checked = value ? '1' : '0';
+//                this.value = value ? '1' : '0';
+//                console.log(this.value);
+//            }
+//        },
+    };
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ui fitted toggle checkbox"
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name,
+      "value": "0"
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "checkbox",
+      "value": "1",
+      "id": _vm.config.id,
+      "name": _vm.config.name,
+      "true-value": 1,
+      "false-value": 0
+    },
+    domProps: {
+      "checked": _vm.checked
+    }
+  }), _vm._v(" "), _c('label')])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-d49857d8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

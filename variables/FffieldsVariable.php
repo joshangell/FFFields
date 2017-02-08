@@ -25,14 +25,18 @@ class FffieldsVariable
     }
 
     /**
-     * @param FieldModel $field
-     * @param            $value
+     * Renders the input html for a given set of parameters.
+     *
+     * @param BaseElementModel $element
+     * @param FieldModel       $field
+     * @param                  $value
+     * @param null             $namespace
      *
      * @return mixed
      */
-    public function getInputHtml(FieldModel $field, $value, $namespace = null)
+    public function getInputHtml(BaseElementModel $element, FieldModel $field, $value, $namespace = null)
     {
-        return craft()->fffields->getInputHtml($field, $value, $namespace);
+        return craft()->fffields->getInputHtml($element, $field, $value, $namespace);
     }
 
 }

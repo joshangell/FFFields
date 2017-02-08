@@ -86,24 +86,24 @@ class FffieldsService extends BaseApplicationComponent
 
 
     /**
-     * @param FieldModel $field
-     * @param            $value
+     * @param BaseElementModel $element
+     * @param FieldModel       $field
+     * @param                  $value
+     * @param null             $namespace
      *
      * @return string
      */
-    public function getInputHtml(FieldModel $field, $value, $namespace = null)
+    public function getInputHtml(BaseElementModel $element, FieldModel $field, $value, $namespace = null)
     {
-        $fieldType = $field->getFieldType();
 
         switch ($field->type) {
 
             case 'PlainText' :
-                return craft()->templates->render('_fieldtypes/PlainText/input', array(
-                    'id'       => craft()->templates->namespaceInputId($field->handle, $namespace),
-                    'name'     => craft()->templates->namespaceInputName($field->handle, $namespace),
-                    'value'    => $value,
-                    'settings' => $fieldType->getSettings()
-                ));
+                return craft()->fffields_basic->renderPlainText($field, $value, $namespace);
+                break;
+
+            case 'Lightswitch' :
+                return craft()->fffields_basic->renderLightswitch($element, $field, $value, $namespace);
                 break;
 
             case 'RichText' :
