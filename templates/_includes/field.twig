@@ -20,7 +20,7 @@
 
 {% else %}
 
-    {% set input = '<div class="ui error message visible">' ~ "The fieldtype class “{class}” could not be found."|t({ class: field.type }) ~ '</div>' %}
+    {% set input = '<div class="field"><div class="ui error message visible">' ~ "The fieldtype class “{class}” could not be found."|t({ class: field.type }) ~ '</div></div>' %}
 
 {% endif %}
 

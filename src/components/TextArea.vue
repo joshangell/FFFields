@@ -18,10 +18,13 @@
         name: 'text-area',
         props: ['config'],
         data: function() {
+            const value = this.config.value;
+            const initialValueLength = value ? value.length : 0;
+            const initialCharsLeft = value ? this.config.maxlength - initialValueLength : this.config.maxlength;
             return {
-                value : this.config.value,
-                charsLeft : (this.config.value ? this.config.maxlength - value.length : this.config.maxlength),
-                percentageUsed : (this.config.value ? ((this.config.maxlength-value.length)/this.config.maxlength)*100 : 0)
+                value : value,
+                charsLeft : initialCharsLeft,
+                percentageUsed : ((this.config.maxlength-initialCharsLeft)/this.config.maxlength)*100
             }
         },
         methods: {

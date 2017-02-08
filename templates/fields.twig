@@ -1,6 +1,7 @@
 {% if element is not defined %}{% set element = null %}{% endif %}
 {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
+<div class="ui form">
 {% for field in fields %}
     {% include "_includes/field" with {
         namespace: namespace,
@@ -10,3 +11,4 @@
         static:    (static is defined ? static : null)
     } only %}
 {% endfor %}
+</div>

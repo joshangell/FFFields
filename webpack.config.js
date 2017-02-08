@@ -1,8 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 
-// import '../node_modules/trumbowyg/dist/ui/icons.svg';
-
 module.exports = {
     entry: './src/main.js',
 
@@ -36,7 +34,6 @@ module.exports = {
                         'scss': 'vue-style-loader!css-loader!sass-loader',
                         'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
                     }
-                    // other vue-loader options go here
                 }
             },
             // {

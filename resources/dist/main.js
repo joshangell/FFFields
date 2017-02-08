@@ -21245,38 +21245,41 @@ module.exports = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5v
 //
 //
 //
+//
 
 
-    var trumbowygSvgPath = __webpack_require__(20);
+const trumbowygSvgPath = __webpack_require__(20);
 
-    /* harmony default export */ __webpack_exports__["default"] = {
-        name: 'rich-text',
-        props: {
-            config: {},
-            content: {
-                type: String,
-                default: this.value,
-            },
-            svgPath: {
-                type: String,
-                default: trumbowygSvgPath,
-            },
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'rich-text',
+    props: {
+        config: {},
+        svgPath: {
+            type: String,
+            default: trumbowygSvgPath,
         },
-        data: function() {
-            return {
-                value : this.config.value,
-            }
-        },
-        mounted: function() {
-            $.trumbowyg.svgPath = this.svgPath;
-            $('textarea', this.$el)
-                .trumbowyg({
-//                    resetCss: true,
-                    autogrow: true
-                })
-                .trumbowyg('html', this.content);
+    },
+    data: function() {
+        return {
+            value : this.config.value,
         }
-    };
+    },
+    mounted: function() {
+        $.trumbowyg.svgPath = this.svgPath;
+        $('textarea', this.$el)
+            .trumbowyg({
+                autogrow: true
+            })
+            .on('tbwchange', this.onChange)
+            .trumbowyg('html', this.value);
+    },
+    methods: {
+        onChange() {
+            this.value = $('textarea', this.$el).trumbowyg('html');
+        },
+    },
+};
+
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -21306,10 +21309,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'text-area',
     props: ['config'],
     data: function() {
+        const value = this.config.value;
+        const initialValueLength = value ? value.length : 0;
+        const initialCharsLeft = value ? this.config.maxlength - initialValueLength : this.config.maxlength;
         return {
-            value : this.config.value,
-            charsLeft : (this.config.value ? this.config.maxlength - value.length : this.config.maxlength),
-            percentageUsed : (this.config.value ? ((this.config.maxlength-value.length)/this.config.maxlength)*100 : 0)
+            value : value,
+            charsLeft : initialCharsLeft,
+            percentageUsed : ((this.config.maxlength-initialCharsLeft)/this.config.maxlength)*100
         }
     },
     methods: {
@@ -21360,10 +21366,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'text-input',
     props: ['config'],
     data: function() {
+        const value = this.config.value;
+        const initialValueLength = value ? value.length : 0;
+        const initialCharsLeft = value ? this.config.maxlength - initialValueLength : this.config.maxlength;
         return {
-            value : this.config.value,
-            charsLeft : (this.config.value ? this.config.maxlength - value.length : this.config.maxlength),
-            percentageUsed : (this.config.value ? ((this.config.maxlength-value.length)/this.config.maxlength)*100 : 0)
+            value : value,
+            charsLeft : initialCharsLeft,
+            percentageUsed : ((this.config.maxlength-initialCharsLeft)/this.config.maxlength)*100
         }
     },
     methods: {
@@ -21473,6 +21482,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": _vm.config.id,
       "name": _vm.config.name
+    },
+    domProps: {
+      "value": _vm.value
     }
   }, [_vm._v(_vm._s(_vm.config.value))])])
 },staticRenderFns: []}

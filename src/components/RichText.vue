@@ -1,6 +1,7 @@
 <template>
     <div>
-        <textarea v-bind:id="config.id"
+        <textarea v-bind:value="value"
+                  v-bind:id="config.id"
                   v-bind:name="config.name">{{ config.value }}</textarea>
     </div>
 </template>
@@ -11,16 +12,12 @@
 
 <script>
 
-    var trumbowygSvgPath = require("../../node_modules/trumbowyg/dist/ui/icons.svg");
+    const trumbowygSvgPath = require("../../node_modules/trumbowyg/dist/ui/icons.svg");
 
     export default {
         name: 'rich-text',
         props: {
             config: {},
-            content: {
-                type: String,
-                default: this.value,
-            },
             svgPath: {
                 type: String,
                 default: trumbowygSvgPath,
@@ -35,10 +32,16 @@
             $.trumbowyg.svgPath = this.svgPath;
             $('textarea', this.$el)
                 .trumbowyg({
-//                    resetCss: true,
                     autogrow: true
                 })
-                .trumbowyg('html', this.content);
-        }
+                .on('tbwchange', this.onChange)
+                .trumbowyg('html', this.value);
+        },
+        methods: {
+            onChange() {
+                this.value = $('textarea', this.$el).trumbowyg('html');
+            },
+        },
     }
+
 </script>
