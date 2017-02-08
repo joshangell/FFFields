@@ -28,58 +28,66 @@ class Fffields_RichTextService extends BaseApplicationComponent
     // =========================================================================
 
 
-    public function render(FieldModel $field, $value)
+    public function render(FieldModel $field, $value, $namespace)
     {
 
         $this->_field = $field;
 
         $configJs = $this->_getConfigJson();
-        $this->_includeFieldResources($configJs);
+//        $this->_includeFieldResources($configJs);
 
-        $id = craft()->templates->formatInputId($this->_field->handle);
-        $localeId = (isset($this->_field->element) ? $this->_field->element->locale : craft()->language);
+        $id = craft()->templates->namespaceInputId($this->_field->handle, $namespace);
+        $name = craft()->templates->namespaceInputName($this->_field->handle, $namespace);
+//        $localeId = (isset($this->_field->element) ? $this->_field->element->locale : craft()->language);
 
-        $settings = array(
-            'id'              => craft()->templates->namespaceInputId($id),
-//            'linkOptions'     => $this->_getLinkOptions(), // TODO support link options
-//            'assetSources'    => $this->_getAssetSources(), // TODO support asset sources
-//            'transforms'      => $this->_getTransforms(), // TODO support transforms
-            'elementLocale'   => $localeId,
-            'redactorConfig'  => JsonHelper::decode(JsonHelper::removeComments($configJs)),
-            'redactorLang'    => static::$_redactorLang,
-        );
+//        $settings = array(
+//            'id'              => $id,
+////            'linkOptions'     => $this->_getLinkOptions(), // TODO support link options
+////            'assetSources'    => $this->_getAssetSources(), // TODO support asset sources
+////            'transforms'      => $this->_getTransforms(), // TODO support transforms
+//            'elementLocale'   => $localeId,
+//            'redactorConfig'  => JsonHelper::decode(JsonHelper::removeComments($configJs)),
+//            'redactorLang'    => static::$_redactorLang,
+//        );
 
-        if (isset($this->_field->model) && $this->_field->model->translatable)
-        {
-            // Explicitly set the text direction
-            $locale = craft()->i18n->getLocaleData($localeId);
-            $settings['direction'] = $locale->getOrientation();
-        }
+//        if (isset($this->_field->model) && $this->_field->model->translatable)
+//        {
+//            // Explicitly set the text direction
+//            $locale = craft()->i18n->getLocaleData($localeId);
+//            $settings['direction'] = $locale->getOrientation();
+//        }
+//
+////        craft()->templates->includeJs('new Craft.RichTextInput('.JsonHelper::encode($settings).');');
+//
+//        if ($value instanceof RichTextData)
+//        {
+//            $value = $value->getRawContent();
+//        }
+//
+//        if (strpos($value, '{') !== false)
+//        {
+//            // Preserve the ref tags with hashes {type:id:url} => {type:id:url}#type:id
+//            $value = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})(#[^\'"#]+)?\2/', function($matches)
+//            {
+//                return $matches[1].$matches[2].$matches[3].(!empty($matches[5]) ? $matches[5] : '').'#'.$matches[4].$matches[2];
+//            }, $value);
+//
+//            // Now parse 'em
+//            $value = craft()->elements->parseRefs($value);
+//        }
+//
+//        // Swap any <!--pagebreak-->'s with <hr>'s
+//        $value = str_replace('<!--pagebreak-->', '<hr class="redactor_pagebreak" style="display:none" unselectable="on" contenteditable="false" />', $value);
 
-//        craft()->templates->includeJs('new Craft.RichTextInput('.JsonHelper::encode($settings).');');
+        $config = [
+            'id' => $id,
+            'name' => $name,
+            'value' => htmlentities($value, ENT_NOQUOTES, 'UTF-8')
+        ];
 
-        if ($value instanceof RichTextData)
-        {
-            $value = $value->getRawContent();
-        }
+        $html = '<rich-text v-bind:config="{{ config|json_encode() }}"></rich-text>';
 
-        if (strpos($value, '{') !== false)
-        {
-            // Preserve the ref tags with hashes {type:id:url} => {type:id:url}#type:id
-            $value = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})(#[^\'"#]+)?\2/', function($matches)
-            {
-                return $matches[1].$matches[2].$matches[3].(!empty($matches[5]) ? $matches[5] : '').'#'.$matches[4].$matches[2];
-            }, $value);
-
-            // Now parse 'em
-            $value = craft()->elements->parseRefs($value);
-        }
-
-        // Swap any <!--pagebreak-->'s with <hr>'s
-        $value = str_replace('<!--pagebreak-->', '<hr class="redactor_pagebreak" style="display:none" unselectable="on" contenteditable="false" />', $value);
-
-        return '<textarea id="'.$id.'" name="'.$this->_field->handle.'" style="display: none">'.htmlentities($value, ENT_NOQUOTES, 'UTF-8').'</textarea>';
-
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
 
 

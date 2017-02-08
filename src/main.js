@@ -1,10 +1,12 @@
 import '../node_modules/semantic-ui-css/semantic.min.css';
 import '../node_modules/semantic-ui-css/semantic.min.js';
+import '../node_modules/trumbowyg/dist/trumbowyg.js';
 
 import Vue from 'vue';
 
 import TextInput from './components/TextInput.vue';
 import TextArea from './components/TextArea.vue';
+import RichText from './components/RichText.vue';
 
 // Field layout tabs
 if (document.querySelector('#field-layout')) {
@@ -12,11 +14,11 @@ if (document.querySelector('#field-layout')) {
         el: '#field-layout',
         components: {
             'text-area' : TextArea,
-            'text-input' : TextInput
+            'text-input' : TextInput,
+            'rich-text' : RichText
         },
         mounted: function() {
             $('.tabular .item', this.$el).tab()
         }
     });
 }
-

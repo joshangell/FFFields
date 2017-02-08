@@ -8,7 +8,7 @@
                   v-bind:maxlength="config.maxlength"
                   v-bind:disabled="config.disabled"
                   v-bind:placeholder="config.placeholder">{{ config.value }}</textarea>
-        
+
         <div v-if="config.showCharsLeft" v-bind:class="labelClasses">{{ charsLeft }}</div>
     </div>
 </template>
