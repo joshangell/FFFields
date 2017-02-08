@@ -22,14 +22,6 @@
             return {
                 checked : this.config.value
             }
-        },
-//        methods: {
-//            updateValue: function (value) {
-//                console.log(value);
-////                this.checked = value ? '1' : '0';
-//                this.value = value ? '1' : '0';
-//                console.log(this.value);
-//            }
-//        },
+        }
     }
 </script>
