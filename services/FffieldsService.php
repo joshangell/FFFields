@@ -50,7 +50,7 @@ class FffieldsService extends BaseApplicationComponent
     }
 
     /**
-     * Renders the fields for a given element.
+     * Renders the field layout for a given element.
      *
      * @param BaseElementModel $element
      *
@@ -61,8 +61,7 @@ class FffieldsService extends BaseApplicationComponent
 
         $elementType = craft()->elements->getElementTypeById($element->id);
 
-        if (!$elementType)
-        {
+        if (!$elementType) {
             return false;
         }
 
@@ -84,8 +83,74 @@ class FffieldsService extends BaseApplicationComponent
         return TemplateHelper::getRaw($html);
     }
 
+    /**
+     * Renders the markup for a specific field.
+     *
+     * @param BaseElementModel      $element
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $namespace
+     *
+     * @return \Twig_Markup
+     */
+    public function renderField(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $namespace)
+    {
+        $field = $fieldLayoutField->getField();
+        $value = ($element ? $element->getFieldValue($field->handle) : null);
+        $errors = ($element ? $element->getErrors($field->handle) : null);
+        $fieldType = $field->getFieldType();
+        $instructions = ($field->instructions ? Craft::t($field->instructions) : null);
+        $id = $field->handle;
+
+        if ($fieldType) {
+
+            if ($element) {
+                $fieldType->setElement($element);
+            }
+
+            $input = $this->getInputHtml($element, $field, $value, $namespace);
+
+        } else {
+
+            $input = '<div class="field"><div class="ui error message visible">' . Craft::t("The fieldtype class “{class}” could not be found.", [ 'class' => $field->type ]) . '</div></div>';
+
+        }
+
+        $labelId = $field->handle . '-label';
+        $fieldId = $field->handle . '-field';
+        $label   = Craft::t($field->name); // TODO: |e
+
+        $fieldClass = [
+            'field',
+            ($errors ? 'error' : null),
+            ($fieldLayoutField->required ? 'required' : null)
+        ];
+
+        $fieldClass = implode(array_filter($fieldClass), ' ');
+
+        $html = "<div class='{$fieldClass}' id='{$fieldId}'>";
+
+        if ($label) {
+            $html .= "<label id='{$labelId}' for='{$id}'>{$label}</label>";
+        }
+
+        if ($instructions) {
+            $html .= "<div class='instructions'>{$instructions}</div>";
+            // TODO: |md|replace('/&amp;(\\w+);/', '&$1;')|raw
+        }
+
+        $html .= $input;
+
+        // TODO: errors
+        // {% include "_includes/forms/errorList" with { errors: errors } %}
+
+        $html .= "</div>";
+
+        return TemplateHelper::getRaw($html);
+    }
 
     /**
+     * Gets the input html for a given field
+     *
      * @param BaseElementModel $element
      * @param FieldModel       $field
      * @param                  $value
@@ -120,6 +185,9 @@ class FffieldsService extends BaseApplicationComponent
 
     }
 
+    // TODO: document these methods
+    // TODO: convert their paramters to options array
+    // =========================================================================
 
     public function getComponentType(FieldModel $field)
     {

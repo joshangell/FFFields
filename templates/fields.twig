@@ -3,12 +3,6 @@
 
 <div class="ui form">
 {% for field in fields %}
-    {% include "_includes/field" with {
-        namespace: namespace,
-        field:     field.getField(),
-        required:  field.required,
-        element:   element,
-        static:    (static is defined ? static : null)
-    } only %}
+    {{ craft.fffields.renderField(element, field, namespace) }}
 {% endfor %}
 </div>
