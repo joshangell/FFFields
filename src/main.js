@@ -8,16 +8,18 @@ import TextInput from './components/TextInput.vue';
 import TextArea from './components/TextArea.vue';
 import RichText from './components/RichText.vue';
 import LightSwitch from './components/LightSwitch.vue';
+import Matrix from './components/Matrix.vue';
 
 // Field layout tabs
 if (document.querySelector('#field-layout')) {
     new Vue({
         el: '#field-layout',
         components: {
-            'text-area' : TextArea,
-            'text-input' : TextInput,
-            'rich-text' : RichText,
-            'lightswitch' : LightSwitch
+            'text-area'   : TextArea,
+            'text-input'  : TextInput,
+            'rich-text'   : RichText,
+            'lightswitch' : LightSwitch,
+            'matrix'      : Matrix
         },
         mounted: function() {
             $('.tabular .item', this.$el).tab()

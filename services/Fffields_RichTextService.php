@@ -24,7 +24,7 @@ class Fffields_RichTextService extends BaseApplicationComponent
 
 
     /**
-     * Renders a <rich-text /> custom input, which uses the Trumbowyg editor
+     * Renders a <rich-text/> custom input, which uses the Trumbowyg editor
      *
      * @param FieldModel $field
      * @param            $value
