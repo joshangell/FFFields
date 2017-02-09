@@ -23701,6 +23701,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TextInput_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextArea_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__RichText_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__);
 //
 //
 //
@@ -23730,6 +23738,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
+
+
+
+
 
 
 
@@ -23740,6 +23754,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     components : {
         'draggable'   : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        'text-area'   : __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default.a,
+        'text input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
+        'rich-text'   : __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default.a,
+        'lightswitch' : __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default.a,
     },
     data: function() {
         return {
@@ -23748,12 +23766,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ghostClass : 'disabled',
                 chosenClass: 'chosen'
             },
-            list : [
-                { name : "One"   },
-                { name : "Two"   },
-                { name : "Three" },
-                { name : "Four"  },
-            ]
+            blocks : this.config.blocks,
         }
     }
 };
@@ -23766,20 +23779,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('draggable', {
     attrs: {
-      "list": _vm.list,
+      "blocks": _vm.blocks,
       "options": _vm.options
     }
-  }, _vm._l((_vm.list), function(element) {
+  }, _vm._l((_vm.blocks), function(block) {
     return _c('div', {
       staticClass: "ui segment"
     }, [_c('div', {
       staticClass: "ui top attached label"
-    }, [_vm._v("\n            Block\n            "), _c('i', {
+    }, [_vm._v("\n            " + _vm._s(block.name) + "\n            "), _c('i', {
       staticClass: "move icon",
       attrs: {
         "data-content": "Move"
       }
-    })]), _vm._v(" "), _c('p', [_vm._v(_vm._s(element.name))])])
+    })]), _vm._v(" "), _vm._l((block.fields), function(field) {
+      return _c(field.component.type, {
+        tag: "component",
+        staticClass: "field",
+        attrs: {
+          "config": field.component.config
+        }
+      })
+    })], 2)
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true

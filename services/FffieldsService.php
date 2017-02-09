@@ -110,10 +110,65 @@ class FffieldsService extends BaseApplicationComponent
                 return craft()->fffields_richText->render($field, $value, $namespace);
 
             case 'Matrix' :
-                return craft()->fffields_matrix->render($field, $value, $namespace);
+                return craft()->fffields_matrix->render($element, $field, $value, $namespace);
 
             default :
                 return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $field->type]) . '</div>';
+                break;
+
+        }
+
+    }
+
+
+    public function getComponentType(FieldModel $field)
+    {
+
+        $settings = $field->getFieldType()->getSettings();
+
+        switch ($field->type) {
+
+            case 'PlainText' :
+                if ($settings->multiline) {
+                    return 'text-area';
+                } else {
+                    return 'text-input';
+                }
+                break;
+
+            case 'Lightswitch' :
+                return 'lightswitch';
+                break;
+
+            case 'RichText' :
+                return 'rich-text';
+
+            default :
+                return '';
+                break;
+
+        }
+    }
+
+
+    public function getComponentConfig(BaseElementModel $element, FieldModel $field, $value, $namespace = null)
+    {
+
+        switch ($field->type) {
+
+            case 'PlainText' :
+                return craft()->fffields_basic->getPlainTextConfig($field, $value, $namespace);
+                break;
+
+            case 'Lightswitch' :
+                return craft()->fffields_basic->getLightswitchConfig($element, $field, $value, $namespace);
+                break;
+
+            case 'RichText' :
+                return craft()->fffields_richText->getConfig($field, $value, $namespace);
+
+            default :
+                return '{}';
                 break;
 
         }

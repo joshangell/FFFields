@@ -1,13 +1,14 @@
 <template>
 
-    <draggable v-bind:list="list" v-bind:options="options">
-        <div v-for="element in list" class="ui segment">
+    <draggable v-bind:blocks="blocks" v-bind:options="options">
+        <div v-for="block in blocks" class="ui segment">
 
             <div class="ui top attached label">
-                Block
+                {{ block.name }}
                 <i data-content="Move" class="move icon"></i>
             </div>
-            <p>{{ element.name }}</p>
+
+            <component v-for="field in block.fields" v-bind:is="field.component.type" v-bind:config="field.component.config" class="field"></component>
 
         </div>
     </draggable>
@@ -30,6 +31,11 @@
 <script>
     import Draggable from 'vuedraggable';
 
+    import TextInput from './TextInput.vue';
+    import TextArea from './TextArea.vue';
+    import RichText from './RichText.vue';
+    import LightSwitch from './LightSwitch.vue';
+
     export default {
         name: 'lightswitch',
         props: {
@@ -37,6 +43,10 @@
         },
         components : {
             'draggable'   : Draggable,
+            'text-area'   : TextArea,
+            'text input'  : TextInput,
+            'rich-text'   : RichText,
+            'lightswitch' : LightSwitch,
         },
         data: function() {
             return {
@@ -45,12 +55,7 @@
                     ghostClass : 'disabled',
                     chosenClass: 'chosen'
                 },
-                list : [
-                    { name : "One"   },
-                    { name : "Two"   },
-                    { name : "Three" },
-                    { name : "Four"  },
-                ]
+                blocks : this.config.blocks,
             }
         }
     }

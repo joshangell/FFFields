@@ -26,6 +26,19 @@ class Fffields_BasicService extends BaseApplicationComponent
      */
     public function renderPlainText(FieldModel $field, $value, $namespace)
     {
+        $config = $this->getPlainTextConfig($field, $value, $namespace);
+
+        if ($config['multiline']) {
+            $html = '<text-area v-bind:config="{{ config|json_encode() }}"></text-area>';
+        } else {
+            $html = '<text-input v-bind:config="{{ config|json_encode() }}"></text-input>';
+        }
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
+    }
+
+    public function getPlainTextConfig(FieldModel $field, $value, $namespace)
+    {
 
         $id = craft()->templates->namespaceInputId($field->handle, $namespace);
         $name = craft()->templates->namespaceInputName($field->handle, $namespace);
@@ -38,16 +51,12 @@ class Fffields_BasicService extends BaseApplicationComponent
             'maxlength'     => $settings->maxLength,
             'showCharsLeft' => $settings->maxLength ? true : false,
             'placeholder'   => Craft::t($settings->placeholder),
-            'rows'          => $settings->initialRows
+            'rows'          => $settings->initialRows,
+            'multiline'     => $settings->multiline
         ];
 
-        if ($settings->multiline) {
-            $html = '<text-area v-bind:config="{{ config|json_encode() }}"></text-area>';
-        } else {
-            $html = '<text-input v-bind:config="{{ config|json_encode() }}"></text-input>';
-        }
+        return $config;
 
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
 
     /**
@@ -63,11 +72,20 @@ class Fffields_BasicService extends BaseApplicationComponent
     public function renderLightswitch(BaseElementModel $element, FieldModel $field, $value, $namespace)
     {
 
+        $config = $this->getLightswitchConfig($element, $field, $value, $namespace);
+
+        $html = '<lightswitch v-bind:config="{{ config|json_encode() }}"></lightswitch>';
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
+
+    }
+
+    public function getLightswitchConfig(BaseElementModel $element, FieldModel $field, $value, $namespace)
+    {
         $id = craft()->templates->namespaceInputId($field->handle, $namespace);
         $name = craft()->templates->namespaceInputName($field->handle, $namespace);
         $settings = $field->getFieldType()->getSettings();
 
-        // TODO: default value needed if the element being saved on is fresh - no idea how to accomplish this
         if ($element->getHasFreshContent()) {
             $value = $settings->default;
         }
@@ -78,10 +96,7 @@ class Fffields_BasicService extends BaseApplicationComponent
             'value' => (bool) $value,
         ];
 
-        $html = '<lightswitch v-bind:config="{{ config|json_encode() }}"></lightswitch>';
-
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
-
+        return $config;
     }
 
 }

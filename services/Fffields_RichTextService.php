@@ -11,13 +11,6 @@ namespace Craft;
  */
 class Fffields_RichTextService extends BaseApplicationComponent
 {
-    // Properties
-    // =========================================================================
-
-    /**
-     * @var
-     */
-    private $_field;
 
     // Public Methods
     // =========================================================================
@@ -34,17 +27,24 @@ class Fffields_RichTextService extends BaseApplicationComponent
      */
     public function render(FieldModel $field, $value, $namespace)
     {
+        $config = $this->getConfig($field, $value, $namespace);
 
-        $this->_field = $field;
+        $html = '<rich-text v-bind:config="{{ config|json_encode() }}"></rich-text>';
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
+    }
+
+    public function getConfig(FieldModel $field, $value, $namespace)
+    {
 
 //        // TODO implement redactor config from field
-//        $configJs = $this->_getConfigJson();
 //        $this->_includeFieldResources($configJs);
+//        $configJs = $this->_getConfigJson();
 
-        $id = craft()->templates->namespaceInputId($this->_field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($this->_field->handle, $namespace);
+        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
+        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
 
-        $settings = array(
+        $config = array(
             'id'    => $id,
             'name'  => $name,
             'value' => $value,
@@ -53,49 +53,48 @@ class Fffields_RichTextService extends BaseApplicationComponent
 //            'transforms'      => $this->_getTransforms(), // TODO support transforms
         );
 
-        if ($settings['value'] instanceof RichTextData)
+        if ($config['value'] instanceof RichTextData)
         {
-            $settings['value'] = $settings['value']->getRawContent();
+            $config['value'] = $config['value']->getRawContent();
         }
 
-        if (strpos($settings['value'], '{') !== false)
+        if (strpos($config['value'], '{') !== false)
         {
             // Preserve the ref tags with hashes {type:id:url} => {type:id:url}#type:id
-            $settings['value'] = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})(#[^\'"#]+)?\2/', function($matches)
+            $config['value'] = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})(#[^\'"#]+)?\2/', function($matches)
             {
                 return $matches[1].$matches[2].$matches[3].(!empty($matches[5]) ? $matches[5] : '').'#'.$matches[4].$matches[2];
-            }, $settings['value']);
+            }, $config['value']);
 
             // Now parse 'em
-            $settings['value'] = craft()->elements->parseRefs($settings['value']);
+            $config['value'] = craft()->elements->parseRefs($config['value']);
         }
 
-        $html = '<rich-text v-bind:config="{{ config|json_encode() }}"></rich-text>';
+        return $config;
 
-        return craft()->templates->renderString($html, [ 'config' => $settings ]);
     }
 
-    /**
-     * Returns the Redactor config JSON used by this field.
-     *
-     * TODO: convert to Trumbowyg config object
-     *
-     * @return string
-     */
-    private function _getConfigJson()
-    {
-        if ($this->_field->getFieldType()->getSettings()->configFile)
-        {
-            $configPath = craft()->path->getConfigPath().'redactor/'.$this->_field->getFieldType()->getSettings()->configFile;
-            $json = IOHelper::getFileContents($configPath);
-        }
-
-        if (empty($json))
-        {
-            $json = '{}';
-        }
-
-        return $json;
-    }
+//    /**
+//     * Returns the Redactor config JSON used by this field.
+//     *
+//     * TODO: convert to Trumbowyg config object
+//     *
+//     * @return string
+//     */
+//    private function _getConfigJson()
+//    {
+//        if ($this->_field->getFieldType()->getSettings()->configFile)
+//        {
+//            $configPath = craft()->path->getConfigPath().'redactor/'.$this->_field->getFieldType()->getSettings()->configFile;
+//            $json = IOHelper::getFileContents($configPath);
+//        }
+//
+//        if (empty($json))
+//        {
+//            $json = '{}';
+//        }
+//
+//        return $json;
+//    }
 
 }
