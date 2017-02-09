@@ -37,7 +37,7 @@
     import LightSwitch from './LightSwitch.vue';
 
     export default {
-        name: 'lightswitch',
+        name: 'matrix',
         props: {
             config : {},
         },

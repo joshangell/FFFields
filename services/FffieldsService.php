@@ -65,6 +65,8 @@ class FffieldsService extends BaseApplicationComponent
             return false;
         }
 
+        $fieldLayout = false;
+
         switch ($elementType) {
             case 'Entry' :
                 $fieldLayout = $element->getType()->getFieldLayout();
@@ -86,6 +88,8 @@ class FffieldsService extends BaseApplicationComponent
     /**
      * Renders the markup for a specific field.
      *
+     * TODO: convert params to object
+     *
      * @param BaseElementModel      $element
      * @param FieldLayoutFieldModel $fieldLayoutField
      * @param                       $namespace
@@ -96,10 +100,7 @@ class FffieldsService extends BaseApplicationComponent
     {
         $field = $fieldLayoutField->getField();
         $value = ($element ? $element->getFieldValue($field->handle) : null);
-        $errors = ($element ? $element->getErrors($field->handle) : null);
         $fieldType = $field->getFieldType();
-        $instructions = ($field->instructions ? Craft::t($field->instructions) : null);
-        $id = $field->handle;
 
         if ($fieldType) {
 
@@ -114,6 +115,23 @@ class FffieldsService extends BaseApplicationComponent
             $input = '<div class="field"><div class="ui error message visible">' . Craft::t("The fieldtype class “{class}” could not be found.", [ 'class' => $field->type ]) . '</div></div>';
 
         }
+
+        $template = $this->getFieldTemplate($element, $fieldLayoutField, $namespace);
+
+
+        $html = craft()->templates->renderString($template, [ 'input' => $input ]);
+
+        return TemplateHelper::getRaw($html);
+    }
+
+
+    // TODO: convert params to object
+    public function getFieldTemplate(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $namespace)
+    {
+        $field = $fieldLayoutField->getField();
+        $errors = ($element ? $element->getErrors($field->handle) : null);
+        $instructions = ($field->instructions ? Craft::t($field->instructions) : null);
+        $id = $field->handle;
 
         $labelId = $field->handle . '-label';
         $fieldId = $field->handle . '-field';
@@ -138,18 +156,21 @@ class FffieldsService extends BaseApplicationComponent
             // TODO: |md|replace('/&amp;(\\w+);/', '&$1;')|raw
         }
 
-        $html .= $input;
+
+        $html .= "{{ input|raw }}";
 
         // TODO: errors
         // {% include "_includes/forms/errorList" with { errors: errors } %}
 
         $html .= "</div>";
 
-        return TemplateHelper::getRaw($html);
+        return $html;
     }
 
     /**
-     * Gets the input html for a given field
+     * Gets the input html for a given field.
+     *
+     * TODO: convert params to object
      *
      * @param BaseElementModel $element
      * @param FieldModel       $field
@@ -186,7 +207,7 @@ class FffieldsService extends BaseApplicationComponent
     }
 
     // TODO: document these methods
-    // TODO: convert their paramters to options array
+    // TODO: convert params to object
     // =========================================================================
 
     public function getComponentType(FieldModel $field)

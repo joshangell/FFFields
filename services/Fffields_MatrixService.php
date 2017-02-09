@@ -26,6 +26,8 @@ class Fffields_MatrixService extends BaseApplicationComponent
     /**
      * Renders a <matrix/> custom element, with <block/> elements inside
      *
+     * TODO: convert params to object
+     *
      * @param BaseElementModel $element
      * @param FieldModel       $field
      * @param                  $value
