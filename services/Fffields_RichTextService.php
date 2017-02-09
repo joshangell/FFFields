@@ -19,14 +19,16 @@ class Fffields_RichTextService extends BaseApplicationComponent
     /**
      * Renders a <rich-text/> custom input, which uses the Trumbowyg editor
      *
-     * @param FieldModel $field
-     * @param            $value
-     * @param            $namespace
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $value
+     * @param                       $namespace
      *
      * @return string
      */
-    public function render(FieldModel $field, $value, $namespace)
+    public function render(FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
+        $field = $fieldLayoutField->getField();
+
         $config = $this->getConfig($field, $value, $namespace);
 
         $html = '<rich-text v-bind:config="{{ config|json_encode() }}"></rich-text>';

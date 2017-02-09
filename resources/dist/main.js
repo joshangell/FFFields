@@ -23739,6 +23739,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -23755,7 +23759,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components : {
         'draggable'   : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
         'text-area'   : __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default.a,
-        'text input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
+        'text-input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
         'rich-text'   : __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default.a,
         'lightswitch' : __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default.a,
     },
@@ -23768,7 +23772,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             blocks : this.config.blocks,
         }
-    }
+    },
 };
 
 
@@ -23797,7 +23801,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         tag: "component",
         staticClass: "field",
         attrs: {
-          "config": field.component.config
+          "config": field.component.config,
+          "template": field.component.fieldTemplate
         }
       })
     })], 2)

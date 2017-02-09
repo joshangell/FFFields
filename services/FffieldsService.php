@@ -108,7 +108,7 @@ class FffieldsService extends BaseApplicationComponent
                 $fieldType->setElement($element);
             }
 
-            $input = $this->getInputHtml($element, $field, $value, $namespace);
+            $input = $this->getInputHtml($element, $fieldLayoutField, $value, $namespace);
 
         } else {
 
@@ -172,34 +172,36 @@ class FffieldsService extends BaseApplicationComponent
      *
      * TODO: convert params to object
      *
-     * @param BaseElementModel $element
-     * @param FieldModel       $field
-     * @param                  $value
-     * @param null             $namespace
+     * @param BaseElementModel      $element
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $value
+     * @param null                  $namespace
      *
      * @return string
      */
-    public function getInputHtml(BaseElementModel $element, FieldModel $field, $value, $namespace = null)
+    public function getInputHtml(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace = null)
     {
 
-        switch ($field->type) {
+        $fieldType = $fieldLayoutField->getField()->type;
+
+        switch ($fieldType) {
 
             case 'PlainText' :
-                return craft()->fffields_basic->renderPlainText($field, $value, $namespace);
+                return craft()->fffields_basic->renderPlainText($fieldLayoutField, $value, $namespace);
                 break;
 
             case 'Lightswitch' :
-                return craft()->fffields_basic->renderLightswitch($element, $field, $value, $namespace);
+                return craft()->fffields_basic->renderLightswitch($element, $fieldLayoutField, $value, $namespace);
                 break;
 
             case 'RichText' :
-                return craft()->fffields_richText->render($field, $value, $namespace);
+                return craft()->fffields_richText->render($fieldLayoutField, $value, $namespace);
 
             case 'Matrix' :
-                return craft()->fffields_matrix->render($element, $field, $value, $namespace);
+                return craft()->fffields_matrix->render($element, $fieldLayoutField, $value, $namespace);
 
             default :
-                return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $field->type]) . '</div>';
+                return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $fieldType]) . '</div>';
                 break;
 
         }

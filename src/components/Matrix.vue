@@ -8,7 +8,11 @@
                 <i data-content="Move" class="move icon"></i>
             </div>
 
-            <component v-for="field in block.fields" v-bind:is="field.component.type" v-bind:config="field.component.config" class="field"></component>
+
+            <!--<div v-for="field in block.fields" v-html="field.component.fieldTemplate">-->
+            <!--</div>-->
+
+            <component v-for="field in block.fields" v-bind:is="field.component.type" v-bind:config="field.component.config" v-bind:template="field.component.fieldTemplate" class="field"></component>
 
         </div>
     </draggable>
@@ -44,7 +48,7 @@
         components : {
             'draggable'   : Draggable,
             'text-area'   : TextArea,
-            'text input'  : TextInput,
+            'text-input'  : TextInput,
             'rich-text'   : RichText,
             'lightswitch' : LightSwitch,
         },
@@ -57,7 +61,7 @@
                 },
                 blocks : this.config.blocks,
             }
-        }
+        },
     }
 </script>
 

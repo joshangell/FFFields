@@ -11,13 +11,6 @@ namespace Craft;
  */
 class Fffields_MatrixService extends BaseApplicationComponent
 {
-    // Properties
-    // =========================================================================
-
-    /**
-     * @var
-     */
-    private $_field;
 
     // Public Methods
     // =========================================================================
@@ -28,21 +21,21 @@ class Fffields_MatrixService extends BaseApplicationComponent
      *
      * TODO: convert params to object
      *
-     * @param BaseElementModel $element
-     * @param FieldModel       $field
-     * @param                  $value
-     * @param                  $namespace
+     * @param BaseElementModel      $element
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $value
+     * @param                       $namespace
      *
      * @return string
      */
-    public function render(BaseElementModel $element, FieldModel $field, $value, $namespace)
+    public function render(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
 
-        $this->_field = $field;
+        $field = $fieldLayoutField->getField();
 
-        $id = craft()->templates->namespaceInputId($this->_field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($this->_field->handle, $namespace);
-//        $settings = $this->_field->getFieldType()->getSettings();
+        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
+        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
+//        $settings = $field->getFieldType()->getSettings();
 
         $blocks = [];
 
@@ -57,6 +50,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     'component'  => [
                         'type' => craft()->fffields->getComponentType($blockField),
                         'config' => craft()->fffields->getComponentConfig($element, $blockField, null, $namespace),
+                        'fieldTemplate' => craft()->fffields->getFieldTemplate($element, $fieldLayoutField, $namespace)
                     ]
                 ];
             }

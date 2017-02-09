@@ -16,16 +16,18 @@ class Fffields_BasicService extends BaseApplicationComponent
     // =========================================================================
 
     /**
-     * Renders a <text-input/> or <text-area/> custom input
+     * Renders a <text-input/> or <text-area/> custom input.
      *
-     * @param FieldModel $field
-     * @param            $value
-     * @param            $namespace
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $value
+     * @param                       $namespace
      *
      * @return string
      */
-    public function renderPlainText(FieldModel $field, $value, $namespace)
+    public function renderPlainText(FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
+        $field = $fieldLayoutField->getField();
+
         $config = $this->getPlainTextConfig($field, $value, $namespace);
 
         if ($config['multiline']) {
@@ -60,17 +62,18 @@ class Fffields_BasicService extends BaseApplicationComponent
     }
 
     /**
-     * Renders a <lightswitch/> custom input
+     * Renders a <lightswitch/> custom input.
      *
-     * @param BaseElementModel $element
-     * @param FieldModel       $field
-     * @param                  $value
-     * @param                  $namespace
+     * @param BaseElementModel      $element
+     * @param FieldLayoutFieldModel $fieldLayoutField
+     * @param                       $value
+     * @param                       $namespace
      *
      * @return string
      */
-    public function renderLightswitch(BaseElementModel $element, FieldModel $field, $value, $namespace)
+    public function renderLightswitch(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
+        $field = $fieldLayoutField->getField();
 
         $config = $this->getLightswitchConfig($element, $field, $value, $namespace);
 
