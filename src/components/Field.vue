@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    import Field from './Field.vue';
     import Message from './Message.vue';
     import TextInput from './TextInput.vue';
     import TextArea from './TextArea.vue';
@@ -24,6 +25,7 @@
         props: ['config'],
         components: {
             'message'     : Message,
+            'field'       : Field,
             'text-area'   : TextArea,
             'text-input'  : TextInput,
             'rich-text'   : RichText,

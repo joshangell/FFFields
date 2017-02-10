@@ -23685,14 +23685,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TextInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextArea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__RichText_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Field_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Field_vue__);
 //
 //
 //
@@ -23723,13 +23717,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-
-
-
 
 
 
@@ -23741,11 +23728,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         config : {},
     },
     components : {
-        'draggable'   : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
-        'text-area'   : __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default.a,
-        'text-input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
-        'rich-text'   : __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default.a,
-        'lightswitch' : __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default.a,
+        'draggable' : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        'field'     : __WEBPACK_IMPORTED_MODULE_1__Field_vue___default.a,
     },
     data: function() {
         return {
@@ -23757,6 +23741,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             blocks : this.config.blocks,
         }
     },
+    beforeCreate: function () {
+        this.$options.components.field = __webpack_require__(42)
+    }
 };
 
 
@@ -23780,13 +23767,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "data-content": "Move"
       }
-    })]), _vm._v(" "), _vm._l((block.fields), function(field) {
-      return _c(field.component.type, {
-        tag: "component",
-        staticClass: "field",
+    })]), _vm._v(" "), _vm._l((block.fields), function(f) {
+      return _c('field', {
         attrs: {
-          "config": field.component.config,
-          "template": field.component.fieldTemplate
+          "config": f.config
         }
       })
     })], 2)
@@ -23880,18 +23864,20 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Message_vue__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TextInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextArea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__RichText_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Matrix_vue__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Matrix_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Field_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Message_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextInput_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__TextArea_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RichText_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Matrix_vue__);
 //
 //
 //
@@ -23905,6 +23891,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -23917,12 +23904,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'field',
     props: ['config'],
     components: {
-        'message'     : __WEBPACK_IMPORTED_MODULE_0__Message_vue___default.a,
-        'text-area'   : __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default.a,
-        'text-input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
-        'rich-text'   : __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default.a,
-        'lightswitch' : __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default.a,
-        'matrix'      : __WEBPACK_IMPORTED_MODULE_5__Matrix_vue___default.a
+        'message'     : __WEBPACK_IMPORTED_MODULE_1__Message_vue___default.a,
+        'field'       : __WEBPACK_IMPORTED_MODULE_0__Field_vue___default.a,
+        'text-area'   : __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default.a,
+        'text-input'  : __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default.a,
+        'rich-text'   : __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default.a,
+        'lightswitch' : __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default.a,
+        'matrix'      : __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default.a
     },
 };
 

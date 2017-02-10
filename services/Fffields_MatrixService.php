@@ -16,19 +16,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
     // =========================================================================
 
 
-    /**
-     * Renders a <matrix/> custom element, with <block/> elements inside
-     *
-     * TODO: convert params to object
-     *
-     * @param BaseElementModel      $element
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param                       $value
-     * @param                       $namespace
-     *
-     * @return string
-     */
-    public function render(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
+    public function getConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
 
         $field = $fieldLayoutField->getField();
@@ -43,21 +31,27 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
             $fields = [];
 
-            foreach ($block->type->getFields() as $blockField) {
+            $blockTypeFieldLayout = $block->type->getFieldLayout();
+
+            foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
+
+                $blockField = $blockFieldLayoutField->getField();
+
+                $blockFieldValue = ($block ? $block->getFieldValue($blockField->handle) : null);
+
                 // TODO: work out what each field’s value is
                 $fields[] = [
                     'handle' => $blockField->handle,
-                    'component'  => [
-                        'type' => craft()->fffields->getComponentType($blockField),
-                        'config' => craft()->fffields->getComponentConfig($element, $blockField, null, $namespace),
-                        'fieldTemplate' => craft()->fffields->getFieldTemplate($element, $fieldLayoutField, $namespace)
-                    ]
+                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, $blockFieldValue, $namespace)
+//                    'component'  => [
+//                        'type' => craft()->fffields->getComponentType($blockField),
+//                        'config' => craft()->fffields->getComponentConfig($element, $blockField, null, $namespace)
+//                    ]
                 ];
             }
 
             $blocks[] = [
                 'name'   => $block->type->name,
-                'type'   => $block->type->handle,
                 'fields' => $fields
             ];
         }
@@ -69,9 +63,10 @@ class Fffields_MatrixService extends BaseApplicationComponent
 //            'blockTypes'    => $settings->getBlockTypes(),
         ];
 
-        $html = '<matrix v-bind:config="{{ config|json_encode() }}"></matrix>';
+//        Craft::dd($config);
 
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
+        return $config;
+
     }
 
 }

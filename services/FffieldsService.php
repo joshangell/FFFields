@@ -135,6 +135,15 @@ class FffieldsService extends BaseApplicationComponent
 
     public function getFieldTemplate(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
+        $config = $this->getFieldConfig($element, $fieldLayoutField, $value, $namespace);
+
+        $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
+    }
+
+    public function getFieldConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
+    {
         $field = $fieldLayoutField->getField();
         $errors = ($element ? $element->getErrors($field->handle) : null);
         $instructions = ($field->instructions ? Craft::t($field->instructions) : null);
@@ -166,13 +175,12 @@ class FffieldsService extends BaseApplicationComponent
             'instructions' => $instructions,
             'field' => [
                 'type' => $this->getComponentType($field),
-                'config' => $this->getComponentConfig($element, $field, $value, $namespace),
+                'config' => $this->getComponentConfig($element, $fieldLayoutField, $value, $namespace),
             ]
         ];
 
-        $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
+        return $config;
 
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
 
     public function getComponentType(FieldModel $field)
@@ -197,6 +205,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'RichText' :
                 return 'rich-text';
 
+            case 'Matrix' :
+                return 'matrix';
+
             default :
                 return 'message';
                 break;
@@ -205,8 +216,9 @@ class FffieldsService extends BaseApplicationComponent
     }
 
 
-    public function getComponentConfig(BaseElementModel $element, FieldModel $field, $value, $namespace = null)
+    public function getComponentConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace = null)
     {
+        $field = $fieldLayoutField->getField();
 
         switch ($field->type) {
 
@@ -220,6 +232,9 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'RichText' :
                 return craft()->fffields_richText->getConfig($field, $value, $namespace);
+
+            case 'Matrix' :
+                return craft()->fffields_matrix->getConfig($element, $fieldLayoutField, $value, $namespace);
 
             default :
                 return [

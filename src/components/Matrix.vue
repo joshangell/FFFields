@@ -8,11 +8,7 @@
                 <i data-content="Move" class="move icon"></i>
             </div>
 
-
-            <!--<div v-for="field in block.fields" v-html="field.component.fieldTemplate">-->
-            <!--</div>-->
-
-            <component v-for="field in block.fields" v-bind:is="field.component.type" v-bind:config="field.component.config" v-bind:template="field.component.fieldTemplate" class="field"></component>
+            <field v-for="f in block.fields" v-bind:config="f.config"></field>
 
         </div>
     </draggable>
@@ -35,10 +31,7 @@
 <script>
     import Draggable from 'vuedraggable';
 
-    import TextInput from './TextInput.vue';
-    import TextArea from './TextArea.vue';
-    import RichText from './RichText.vue';
-    import LightSwitch from './LightSwitch.vue';
+    import Field from './Field.vue';
 
     export default {
         name: 'matrix',
@@ -46,11 +39,8 @@
             config : {},
         },
         components : {
-            'draggable'   : Draggable,
-            'text-area'   : TextArea,
-            'text-input'  : TextInput,
-            'rich-text'   : RichText,
-            'lightswitch' : LightSwitch,
+            'draggable' : Draggable,
+            'field'     : Field,
         },
         data: function() {
             return {
@@ -62,6 +52,9 @@
                 blocks : this.config.blocks,
             }
         },
+        beforeCreate: function () {
+            this.$options.components.field = require('./Field.vue')
+        }
     }
 </script>
 
