@@ -52,6 +52,7 @@
                 blocks : this.config.blocks,
             }
         },
+        // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
         beforeCreate: function () {
             this.$options.components.field = require('./Field.vue')
         }

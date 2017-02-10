@@ -23741,6 +23741,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             blocks : this.config.blocks,
         }
     },
+    // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
     beforeCreate: function () {
         this.$options.components.field = __webpack_require__(42)
     }
