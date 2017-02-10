@@ -49,7 +49,6 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
                 $blockFieldValue = ($block ? $block->getFieldValue($blockField->handle) : null);
 
-                // TODO: work out what each field’s value is
                 $fields[] = [
                     'handle' => $blockField->handle,
                     'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, $blockFieldValue, $matrixNamespace)
@@ -57,7 +56,15 @@ class Fffields_MatrixService extends BaseApplicationComponent
             }
 
             $blocks[] = [
-                'name'   => $block->type->name,
+                'name' => $block->type->name,
+                'type' => [
+                    'name' => $name.'['.$blockId.'][type]',
+                    'value' => $block->type->handle,
+                ],
+                'enabled' => [
+                    'name' => $name.'['.$blockId.'][enabled]',
+                    'value' => $block->type->enabled ? '1' : '0',
+                ],
                 'fields' => $fields
             ];
         }

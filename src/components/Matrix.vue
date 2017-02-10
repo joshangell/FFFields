@@ -2,13 +2,10 @@
 
     <draggable v-bind:options="options">
 
-        <!--TODO-->
-        <!--<input type="hidden">-->
-        <!--<input type="hidden">-->
-        <!--fields[matrix][79][type]:text-->
-        <!--fields[matrix][79][enabled]:1-->
-
         <div v-for="block in config.blocks" class="ui segment">
+
+            <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value">
+            <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="block.enabled.value">
 
             <div class="ui top attached label">
                 {{ block.name }}
@@ -18,6 +15,7 @@
             <field v-for="f in block.fields" v-bind:config="f.config"></field>
 
         </div>
+        
     </draggable>
 
 </template>

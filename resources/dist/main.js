@@ -23722,8 +23722,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -23766,7 +23764,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.config.blocks), function(block) {
     return _c('div', {
       staticClass: "ui segment"
-    }, [_c('div', {
+    }, [_c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": block.type.name
+      },
+      domProps: {
+        "value": block.type.value
+      }
+    }), _vm._v(" "), _c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": block.enabled.name
+      },
+      domProps: {
+        "value": block.enabled.value
+      }
+    }), _vm._v(" "), _c('div', {
       staticClass: "ui top attached label"
     }, [_vm._v("\n            " + _vm._s(block.name) + "\n            "), _c('i', {
       staticClass: "move icon",
