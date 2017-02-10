@@ -108,25 +108,32 @@ class FffieldsService extends BaseApplicationComponent
                 $fieldType->setElement($element);
             }
 
-            $input = $this->getInputHtml($element, $fieldLayoutField, $value, $namespace);
+            $template = $this->getFieldTemplate($element, $fieldLayoutField, $value, $namespace);
+
+            $html = craft()->templates->renderString($template);
 
         } else {
 
-            $input = '<div class="field"><div class="ui error message visible">' . Craft::t("The fieldtype class “{class}” could not be found.", [ 'class' => $field->type ]) . '</div></div>';
+            $config = [
+                'class' => 'ui error message visible',
+                'message' =>  Craft::t("The fieldtype class “{class}” could not be found.", [ 'class' => $field->type ])
+            ];
+
+            $template = '<message v-bind:config="{{ config|json_encode() }}"></message>';
+
+            $html = craft()->templates->renderString($template, [ 'config' => $config ]);
 
         }
-
-        $template = $this->getFieldTemplate($element, $fieldLayoutField, $namespace);
-
-
-        $html = craft()->templates->renderString($template, [ 'input' => $input ]);
 
         return TemplateHelper::getRaw($html);
     }
 
 
+    // TODO: document these methods
     // TODO: convert params to object
-    public function getFieldTemplate(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $namespace)
+    // =========================================================================
+
+    public function getFieldTemplate(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
     {
         $field = $fieldLayoutField->getField();
         $errors = ($element ? $element->getErrors($field->handle) : null);
@@ -145,72 +152,28 @@ class FffieldsService extends BaseApplicationComponent
 
         $fieldClass = implode(array_filter($fieldClass), ' ');
 
-        $html = "<div class='{$fieldClass}' id='{$fieldId}'>";
-
-        if ($label) {
-            $html .= "<label id='{$labelId}' for='{$id}'>{$label}</label>";
-        }
-
-        if ($instructions) {
-            $html .= "<div class='instructions'>{$instructions}</div>";
-            // TODO: |md|replace('/&amp;(\\w+);/', '&$1;')|raw
-        }
-
-
-        $html .= "{{ input|raw }}";
+        // TODO: this on instructions: |md|replace('/&amp;(\\w+);/', '&$1;')|raw
 
         // TODO: errors
         // {% include "_includes/forms/errorList" with { errors: errors } %}
 
-        $html .= "</div>";
+        $config = [
+            'id' => $id,
+            'class' => $fieldClass,
+            'label' => $label,
+            'labelId' => $labelId,
+            'fieldId' => $fieldId,
+            'instructions' => $instructions,
+            'field' => [
+                'type' => $this->getComponentType($field),
+                'config' => $this->getComponentConfig($element, $field, $value, $namespace),
+            ]
+        ];
 
-        return $html;
+        $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
-
-    /**
-     * Gets the input html for a given field.
-     *
-     * TODO: convert params to object
-     *
-     * @param BaseElementModel      $element
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param                       $value
-     * @param null                  $namespace
-     *
-     * @return string
-     */
-    public function getInputHtml(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace = null)
-    {
-
-        $fieldType = $fieldLayoutField->getField()->type;
-
-        switch ($fieldType) {
-
-            case 'PlainText' :
-                return craft()->fffields_basic->renderPlainText($fieldLayoutField, $value, $namespace);
-                break;
-
-            case 'Lightswitch' :
-                return craft()->fffields_basic->renderLightswitch($element, $fieldLayoutField, $value, $namespace);
-                break;
-
-            case 'RichText' :
-                return craft()->fffields_richText->render($fieldLayoutField, $value, $namespace);
-
-            case 'Matrix' :
-                return craft()->fffields_matrix->render($element, $fieldLayoutField, $value, $namespace);
-
-            default :
-                return '<div class="ui warning message visible">' . Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $fieldType]) . '</div>';
-                break;
-
-        }
-
-    }
-
-    // TODO: document these methods
-    // TODO: convert params to object
-    // =========================================================================
 
     public function getComponentType(FieldModel $field)
     {
@@ -235,7 +198,7 @@ class FffieldsService extends BaseApplicationComponent
                 return 'rich-text';
 
             default :
-                return '';
+                return 'message';
                 break;
 
         }
@@ -259,7 +222,10 @@ class FffieldsService extends BaseApplicationComponent
                 return craft()->fffields_richText->getConfig($field, $value, $namespace);
 
             default :
-                return '{}';
+                return [
+                    'class' => 'ui warning message visible',
+                    'message' =>  Craft::t("The fieldtype “{class}” is not yet supported.", ['class' => $field->type])
+                ];
                 break;
 
         }

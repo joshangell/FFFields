@@ -21931,20 +21931,8 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_trumbowyg_dist_trumbowyg_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__node_modules_trumbowyg_dist_trumbowyg_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_TextInput_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_TextInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_RichText_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Matrix_vue__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Matrix_vue__);
-
-
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Field_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Field_vue__);
 
 
 
@@ -21958,11 +21946,7 @@ if (document.querySelector('#field-layout')) {
     new __WEBPACK_IMPORTED_MODULE_3_vue___default.a({
         el: '#field-layout',
         components: {
-            'text-area'   : __WEBPACK_IMPORTED_MODULE_5__components_TextArea_vue___default.a,
-            'text-input'  : __WEBPACK_IMPORTED_MODULE_4__components_TextInput_vue___default.a,
-            'rich-text'   : __WEBPACK_IMPORTED_MODULE_6__components_RichText_vue___default.a,
-            'lightswitch' : __WEBPACK_IMPORTED_MODULE_7__components_LightSwitch_vue___default.a,
-            'matrix'      : __WEBPACK_IMPORTED_MODULE_8__components_Matrix_vue___default.a
+            'field' : __WEBPACK_IMPORTED_MODULE_4__components_Field_vue___default.a
         },
         mounted: function() {
             $('.tabular .item', this.$el).tab()
@@ -23854,6 +23838,197 @@ if(false) {
  }
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(43),
+  /* template */
+  __webpack_require__(44),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/Field.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Field.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fbe9dab8", Component.options)
+  } else {
+    hotAPI.reload("data-v-fbe9dab8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Message_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Message_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TextInput_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextArea_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__RichText_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Matrix_vue__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Matrix_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'field',
+    props: ['config'],
+    components: {
+        'message'     : __WEBPACK_IMPORTED_MODULE_0__Message_vue___default.a,
+        'text-area'   : __WEBPACK_IMPORTED_MODULE_2__TextArea_vue___default.a,
+        'text-input'  : __WEBPACK_IMPORTED_MODULE_1__TextInput_vue___default.a,
+        'rich-text'   : __WEBPACK_IMPORTED_MODULE_3__RichText_vue___default.a,
+        'lightswitch' : __WEBPACK_IMPORTED_MODULE_4__LightSwitch_vue___default.a,
+        'matrix'      : __WEBPACK_IMPORTED_MODULE_5__Matrix_vue___default.a
+    },
+};
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: _vm.config.class,
+    attrs: {
+      "id": _vm.config.fieldId
+    }
+  }, [_c('label', {
+    attrs: {
+      "id": _vm.config.labelId,
+      "for": _vm.config.id
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.config.label) + "\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "instructions"
+  }, [_vm._v(_vm._s(_vm.config.instructions))]), _vm._v(" "), _c(_vm.config.field.type, {
+    tag: "component",
+    attrs: {
+      "config": _vm.config.field.config
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-fbe9dab8", module.exports)
+  }
+}
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(46),
+  /* template */
+  __webpack_require__(47),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/Message.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Message.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-211466b1", Component.options)
+  } else {
+    hotAPI.reload("data-v-211466b1", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'message',
+    props: ['config'],
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    class: _vm.config.class
+  }, [_vm._v("\n    " + _vm._s(_vm.config.message) + "\n")])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-211466b1", module.exports)
+  }
 }
 
 /***/ })

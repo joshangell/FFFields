@@ -15,29 +15,9 @@ class Fffields_BasicService extends BaseApplicationComponent
     // Public Methods
     // =========================================================================
 
-    /**
-     * Renders a <text-input/> or <text-area/> custom input.
-     *
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param                       $value
-     * @param                       $namespace
-     *
-     * @return string
-     */
-    public function renderPlainText(FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
-    {
-        $field = $fieldLayoutField->getField();
-
-        $config = $this->getPlainTextConfig($field, $value, $namespace);
-
-        if ($config['multiline']) {
-            $html = '<text-area v-bind:config="{{ config|json_encode() }}"></text-area>';
-        } else {
-            $html = '<text-input v-bind:config="{{ config|json_encode() }}"></text-input>';
-        }
-
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
-    }
+    // TODO: document these methods
+    // TODO: convert params to object
+    // =========================================================================
 
     public function getPlainTextConfig(FieldModel $field, $value, $namespace)
     {
@@ -61,27 +41,6 @@ class Fffields_BasicService extends BaseApplicationComponent
 
     }
 
-    /**
-     * Renders a <lightswitch/> custom input.
-     *
-     * @param BaseElementModel      $element
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param                       $value
-     * @param                       $namespace
-     *
-     * @return string
-     */
-    public function renderLightswitch(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
-    {
-        $field = $fieldLayoutField->getField();
-
-        $config = $this->getLightswitchConfig($element, $field, $value, $namespace);
-
-        $html = '<lightswitch v-bind:config="{{ config|json_encode() }}"></lightswitch>';
-
-        return craft()->templates->renderString($html, [ 'config' => $config ]);
-
-    }
 
     public function getLightswitchConfig(BaseElementModel $element, FieldModel $field, $value, $namespace)
     {

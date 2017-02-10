@@ -4,22 +4,14 @@ import '../node_modules/trumbowyg/dist/trumbowyg.js';
 
 import Vue from 'vue';
 
-import TextInput from './components/TextInput.vue';
-import TextArea from './components/TextArea.vue';
-import RichText from './components/RichText.vue';
-import LightSwitch from './components/LightSwitch.vue';
-import Matrix from './components/Matrix.vue';
+import Field from './components/Field.vue';
 
 // Field layout tabs
 if (document.querySelector('#field-layout')) {
     new Vue({
         el: '#field-layout',
         components: {
-            'text-area'   : TextArea,
-            'text-input'  : TextInput,
-            'rich-text'   : RichText,
-            'lightswitch' : LightSwitch,
-            'matrix'      : Matrix
+            'field' : Field
         },
         mounted: function() {
             $('.tabular .item', this.$el).tab()
