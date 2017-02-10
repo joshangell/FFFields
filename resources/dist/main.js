@@ -23643,10 +23643,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(41)
-
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(38),
@@ -23685,33 +23681,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Field_vue__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Field_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__);
 //
 //
 //
@@ -23733,8 +23704,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         config : {},
     },
     components : {
-        'draggable' : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
-        'field'     : __WEBPACK_IMPORTED_MODULE_1__Field_vue___default.a,
+        'draggable'    : __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        'matrix-block' : __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue___default.a,
     },
     data: function() {
         return {
@@ -23744,10 +23715,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 chosenClass: 'chosen'
             },
         }
-    },
-    // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
-    beforeCreate: function () {
-        this.$options.components.field = __webpack_require__(42)
     }
 };
 
@@ -23761,39 +23728,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "options": _vm.options
     }
-  }, _vm._l((_vm.config.blocks), function(block) {
-    return _c('div', {
-      staticClass: "ui segment"
-    }, [_c('input', {
+  }, _vm._l((_vm.config.blocks), function(blk) {
+    return _c('matrix-block', {
       attrs: {
-        "type": "hidden",
-        "name": block.type.name
-      },
-      domProps: {
-        "value": block.type.value
+        "block": blk
       }
-    }), _vm._v(" "), _c('input', {
-      attrs: {
-        "type": "hidden",
-        "name": block.enabled.name
-      },
-      domProps: {
-        "value": block.enabled.value
-      }
-    }), _vm._v(" "), _c('div', {
-      staticClass: "ui top attached label"
-    }, [_vm._v("\n            " + _vm._s(block.name) + "\n            "), _c('i', {
-      staticClass: "move icon",
-      attrs: {
-        "data-content": "Move"
-      }
-    })]), _vm._v(" "), _vm._l((block.fields), function(f) {
-      return _c('field', {
-        attrs: {
-          "config": f.config
-        }
-      })
-    })], 2)
+    })
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -23805,46 +23745,8 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.top.attached.label .move {\n  float: right;\n  margin-right: 0;\n  opacity: 0.75;\n  cursor: move;\n}\n.ui.top.attached.label .move:hover {\n    opacity: 1;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(40);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(31)("0eaba284", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2b473807!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Matrix.vue", function() {
-     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2b473807!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Matrix.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 40 */,
+/* 41 */,
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24040,6 +23942,307 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-211466b1", module.exports)
   }
+}
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(52)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(49),
+  /* template */
+  __webpack_require__(50),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/MatrixBlock.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] MatrixBlock.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9fb3df14", Component.options)
+  } else {
+    hotAPI.reload("data-v-9fb3df14", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Field_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'matrix-block',
+    props: ['block'],
+    components : {
+        'field' : __WEBPACK_IMPORTED_MODULE_0__Field_vue___default.a,
+    },
+    data: function() {
+        return {
+            collapsed: false,
+            enabled: true
+        }
+    },
+    // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
+    beforeCreate: function () {
+        this.$options.components.field = __webpack_require__(42)
+    },
+    methods: {
+        toggleCollapse: function(event) {
+            if (this.collapsed) {
+                this.collapsed = false;
+            } else {
+                this.collapsed = true;
+            }
+
+            $('.ui.form', this.$el).transition({
+                animation: 'slide down',
+            });
+        },
+        toggleEnabled: function(event) {
+            if (this.enabled) {
+                this.enabled = false;
+            } else {
+                this.enabled = true;
+            }
+        }
+    },
+    mounted: function() {
+        $('.ui.dropdown', this.$el).dropdown({
+            action : 'hide'
+        });
+    }
+};
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ui segment matrix-block"
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.block.type.name
+    },
+    domProps: {
+      "value": _vm.block.type.value
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.block.enabled.name
+    },
+    domProps: {
+      "value": _vm.block.enabled.value
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "ui top attached label"
+  }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
+    staticClass: "actions"
+  }, [_c('div', {
+    staticClass: "item"
+  }, [_c('div', {
+    staticClass: "ui icon dropdown"
+  }, [_c('i', {
+    staticClass: "setting icon"
+  }), _vm._v(" "), _c('i', {
+    staticClass: "dropdown icon"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "menu"
+  }, [_c('div', {
+    staticClass: "item",
+    on: {
+      "click": _vm.toggleCollapse
+    }
+  }, [(_vm.collapsed) ? [_c('i', {
+    staticClass: "button expand icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Expand")])] : [_c('i', {
+    staticClass: "button compress icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Collapse")])]], 2), _vm._v(" "), _c('div', {
+    staticClass: "item",
+    on: {
+      "click": _vm.toggleEnabled
+    }
+  }, [(_vm.enabled) ? [_c('i', {
+    staticClass: "button toggle off icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Disable")])] : [_c('i', {
+    staticClass: "button toggle on icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2)])])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
+    staticClass: "ui form"
+  }, _vm._l((_vm.block.fields), function(f) {
+    return _c('field', {
+      attrs: {
+        "config": f.config
+      }
+    })
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "item"
+  }, [_c('i', {
+    staticClass: "button move icon",
+    attrs: {
+      "data-content": "Move"
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9fb3df14", module.exports)
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .actions {\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown {\n    margin-left: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(51);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(31)("274fdfb2", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-9fb3df14!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MatrixBlock.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-9fb3df14!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MatrixBlock.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })
