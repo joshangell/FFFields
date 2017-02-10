@@ -23738,7 +23738,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ghostClass : 'disabled',
                 chosenClass: 'chosen'
             },
-            blocks : this.config.blocks,
         }
     },
     // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
@@ -23755,10 +23754,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('draggable', {
     attrs: {
-      "blocks": _vm.blocks,
       "options": _vm.options
     }
-  }, _vm._l((_vm.blocks), function(block) {
+  }, _vm._l((_vm.config.blocks), function(block) {
     return _c('div', {
       staticClass: "ui segment"
     }, [_c('div', {
@@ -23879,6 +23877,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Matrix_vue__);
+//
+//
+//
 //
 //
 //

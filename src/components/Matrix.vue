@@ -1,7 +1,7 @@
 <template>
 
-    <draggable v-bind:blocks="blocks" v-bind:options="options">
-        <div v-for="block in blocks" class="ui segment">
+    <draggable v-bind:options="options">
+        <div v-for="block in config.blocks" class="ui segment">
 
             <div class="ui top attached label">
                 {{ block.name }}
@@ -49,7 +49,6 @@
                     ghostClass : 'disabled',
                     chosenClass: 'chosen'
                 },
-                blocks : this.config.blocks,
             }
         },
         // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components

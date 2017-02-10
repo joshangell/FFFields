@@ -1,4 +1,5 @@
 <template>
+    
     <div v-bind:class='config.class' v-bind:id='config.fieldId'>
 
         <label v-bind:id='config.labelId' v-bind:for='config.id'>
@@ -8,7 +9,9 @@
         <div class='instructions'>{{ config.instructions }}</div>
 
         <component v-bind:is="config.field.type" v-bind:config="config.field.config"></component>
+
     </div>
+
 </template>
 
 <script>

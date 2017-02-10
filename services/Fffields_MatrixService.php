@@ -26,12 +26,22 @@ class Fffields_MatrixService extends BaseApplicationComponent
 //        $settings = $field->getFieldType()->getSettings();
 
         $blocks = [];
+        $totalNewBlocks = 0;
 
         foreach ($value->find() as $block) {
+
+            $blockId = $block->id;
+
+            if (!$blockId) {
+                $totalNewBlocks++;
+                $blockId = 'new' . $totalNewBlocks;
+            }
 
             $fields = [];
 
             $blockTypeFieldLayout = $block->type->getFieldLayout();
+
+            $matrixNamespace = $name.'['.$blockId.'][fields]';
 
             foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
 
@@ -42,11 +52,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 // TODO: work out what each field’s value is
                 $fields[] = [
                     'handle' => $blockField->handle,
-                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, $blockFieldValue, $namespace)
-//                    'component'  => [
-//                        'type' => craft()->fffields->getComponentType($blockField),
-//                        'config' => craft()->fffields->getComponentConfig($element, $blockField, null, $namespace)
-//                    ]
+                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, $blockFieldValue, $matrixNamespace)
                 ];
             }
 
@@ -60,10 +66,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
             'id'            => $id,
             'name'          => $name,
             'blocks'        => $blocks,
-//            'blockTypes'    => $settings->getBlockTypes(),
         ];
-
-//        Craft::dd($config);
 
         return $config;
 
