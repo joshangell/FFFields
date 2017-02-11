@@ -5,9 +5,16 @@
         <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
         <div class="ui top attached label">
+
             {{ block.name }}
 
             <div class="actions">
+
+                <template v-if="enabled === '0'">
+                    <div class="item">
+                        <i class="button toggle off icon"></i>
+                    </div>
+                </template>
 
                 <div class="item">
                     <div class="ui icon dropdown">
@@ -26,13 +33,13 @@
                                 </template>
                             </div>
                             <div class="item" v-on:click="toggleEnabled">
-                                <template v-if="enabled == 1">
-                                    <i class="button toggle off icon"></i>
+                                <template v-if="enabled === '1'">
+                                    <i class="button toggle on icon"></i>
                                     <span>Disable</span>
                                 </template>
 
                                 <template v-else>
-                                    <i class="button toggle on icon"></i>
+                                    <i class="button toggle off icon"></i>
                                     <span>Enable</span>
                                 </template>
                             </div>
@@ -45,6 +52,7 @@
                 </div>
 
             </div>
+
         </div>
 
         <div class="ui form">
@@ -94,7 +102,7 @@
         },
         data: function() {
             return {
-                collapsed: false,
+                collapsed: (this.block.enabled.value === '1' ? false : true),
                 enabled: this.block.enabled.value
             }
         },
@@ -114,11 +122,33 @@
                     animation: 'slide down',
                 });
             },
+            collapse: function() {
+                if ($('.ui.form', this.$el).transition('is visible')) {
+                    this.collapsed = true;
+
+                    $('.ui.form', this.$el).transition({
+                        animation: 'slide down',
+                    });
+                }
+            },
+            expand: function() {
+                if (!$('.ui.form', this.$el).transition('is visible')) {
+                    this.collapsed = false;
+
+                    $('.ui.form', this.$el).transition({
+                        animation: 'slide down',
+                    });
+                }
+            },
             toggleEnabled: function(event) {
-                if (this.enabled) {
-                    this.enabled = 0;
+                if (this.enabled === '1') {
+                    this.enabled = '0';
+
+                    this.collapse();
+
                 } else {
-                    this.enabled = 1;
+                    this.enabled = '1';
+                    this.expand();
                 }
             }
         },
@@ -126,6 +156,10 @@
             $('.ui.dropdown', this.$el).dropdown({
                 action : 'hide'
             });
+
+            if (this.collapsed && $('.ui.form', this.$el).transition('is visible')) {
+                $('.ui.form', this.$el).transition('hide');
+            }
         }
     }
 </script>

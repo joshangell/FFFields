@@ -23278,6 +23278,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23289,7 +23297,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function() {
         return {
-            collapsed: false,
+            collapsed: (this.block.enabled.value === '1' ? false : true),
             enabled: this.block.enabled.value
         }
     },
@@ -23309,11 +23317,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 animation: 'slide down',
             });
         },
+        collapse: function() {
+            if ($('.ui.form', this.$el).transition('is visible')) {
+                this.collapsed = true;
+
+                $('.ui.form', this.$el).transition({
+                    animation: 'slide down',
+                });
+            }
+        },
+        expand: function() {
+            if (!$('.ui.form', this.$el).transition('is visible')) {
+                this.collapsed = false;
+
+                $('.ui.form', this.$el).transition({
+                    animation: 'slide down',
+                });
+            }
+        },
         toggleEnabled: function(event) {
-            if (this.enabled) {
-                this.enabled = 0;
+            if (this.enabled === '1') {
+                this.enabled = '0';
+
+                this.collapse();
+
             } else {
-                this.enabled = 1;
+                this.enabled = '1';
+                this.expand();
             }
         }
     },
@@ -23321,6 +23351,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         $('.ui.dropdown', this.$el).dropdown({
             action : 'hide'
         });
+
+        if (this.collapsed && $('.ui.form', this.$el).transition('is visible')) {
+            $('.ui.form', this.$el).transition('hide');
+        }
     }
 };
 
@@ -23682,9 +23716,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "ui top attached label"
-  }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
+  }, [_vm._v("\n\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
     staticClass: "actions"
-  }, [_c('div', {
+  }, [(_vm.enabled === '0') ? [_vm._m(0)] : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "item"
   }, [_c('div', {
     staticClass: "ui icon dropdown"
@@ -23708,11 +23742,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.toggleEnabled
     }
-  }, [(_vm.enabled == 1) ? [_c('i', {
-    staticClass: "button toggle off icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Disable")])] : [_c('i', {
+  }, [(_vm.enabled === '1') ? [_c('i', {
     staticClass: "button toggle on icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2)])])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('span', [_vm._v("Disable")])] : [_c('i', {
+    staticClass: "button toggle off icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2)])])]), _vm._v(" "), _vm._m(1)], 2)]), _vm._v(" "), _c('div', {
     staticClass: "ui form"
   }, _vm._l((_vm.block.fields), function(f) {
     return _c('field', {
@@ -23722,6 +23756,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })
   }))])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "item"
+  }, [_c('i', {
+    staticClass: "button toggle off icon"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "item"
   }, [_c('i', {
