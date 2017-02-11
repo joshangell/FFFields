@@ -2,7 +2,7 @@
     <div class="ui segment matrix-block">
 
         <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value">
-        <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="block.enabled.value">
+        <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
         <div class="ui top attached label">
             {{ block.name }}
@@ -26,7 +26,7 @@
                                 </template>
                             </div>
                             <div class="item" v-on:click="toggleEnabled">
-                                <template v-if="enabled">
+                                <template v-if="enabled == 1">
                                     <i class="button toggle off icon"></i>
                                     <span>Disable</span>
                                 </template>
@@ -95,7 +95,7 @@
         data: function() {
             return {
                 collapsed: false,
-                enabled: true
+                enabled: this.block.enabled.value
             }
         },
         // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
@@ -116,9 +116,9 @@
             },
             toggleEnabled: function(event) {
                 if (this.enabled) {
-                    this.enabled = false;
+                    this.enabled = 0;
                 } else {
-                    this.enabled = true;
+                    this.enabled = 1;
                 }
             }
         },

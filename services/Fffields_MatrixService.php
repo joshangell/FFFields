@@ -28,7 +28,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
         $blocks = [];
         $totalNewBlocks = 0;
 
-        foreach ($value->find() as $block) {
+        foreach ($value->find(['status'=>null]) as $block) {
 
             $blockId = $block->id;
 
@@ -63,7 +63,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 ],
                 'enabled' => [
                     'name' => $name.'['.$blockId.'][enabled]',
-                    'value' => $block->type->enabled ? '1' : '0',
+                    'value' => $block->enabled,
                 ],
                 'fields' => $fields
             ];
