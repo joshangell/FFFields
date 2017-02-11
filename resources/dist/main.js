@@ -22839,6 +22839,10 @@ module.exports = Component.exports
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(54)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(31),
@@ -23159,6 +23163,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23180,6 +23208,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ghostClass : 'disabled',
                 chosenClass: 'chosen'
             },
+        }
+    },
+    methods: {
+        addBlock: function(event) {
+            event.preventDefault();
+            alert('TODO!');
         }
     }
 };
@@ -23582,7 +23616,9 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('draggable', {
+  return _c('div', {
+    staticClass: "matrix"
+  }, [_c('draggable', {
     attrs: {
       "options": _vm.options
     }
@@ -23592,7 +23628,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "block": blk
       }
     })
-  }))
+  })), _vm._v(" "), _c('div', {
+    staticClass: "ui buttons"
+  }, [_vm._l((_vm.config.blockTypes), function(blockType, index) {
+    return [(index == 0) ? [_c('button', {
+      staticClass: "ui labeled icon button",
+      attrs: {
+        "role": "button"
+      },
+      on: {
+        "click": _vm.addBlock
+      }
+    }, [_c('i', {
+      staticClass: "left plus icon"
+    }), _vm._v("\n                    " + _vm._s(blockType.name) + "\n                ")])] : [_c('button', {
+      staticClass: "ui button",
+      attrs: {
+        "role": "button"
+      },
+      on: {
+        "click": _vm.addBlock
+      }
+    }, [_vm._v("\n                    " + _vm._s(blockType.name) + "\n                ")])]]
+  })], 2)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -24301,6 +24359,48 @@ if (document.querySelector('#field-layout')) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.matrix > .ui.buttons {\n  margin-top: 1rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(53);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("0eaba284", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2b473807!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Matrix.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-2b473807!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Matrix.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -109,7 +109,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
             'blocks'     => $blocks,
             'blockTypes' => $blockTypes
         ];
-        
+
         return $config;
 
     }
