@@ -23,7 +23,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $id = craft()->templates->namespaceInputId($field->handle, $namespace);
         $name = craft()->templates->namespaceInputName($field->handle, $namespace);
-//        $settings = $field->getFieldType()->getSettings();
+        $settings = $field->getFieldType()->getSettings();
 
         $blocks = [];
         $totalNewBlocks = 0;
@@ -69,12 +69,47 @@ class Fffields_MatrixService extends BaseApplicationComponent
             ];
         }
 
-        $config = [
-            'id'            => $id,
-            'name'          => $name,
-            'blocks'        => $blocks,
-        ];
+        $blockTypes = [];
 
+        foreach ($settings->getBlockTypes() as $blockType) {
+
+            $fields = [];
+
+            $blockTypeFieldLayout = $blockType->getFieldLayout();
+
+            $matrixNamespace = $name.'[__block__][fields]';
+
+            foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
+
+                $blockField = $blockFieldLayoutField->getField();
+
+                $fields[] = [
+                    'handle' => $blockField->handle,
+                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, null, $matrixNamespace)
+                ];
+            }
+
+            $blockTypes[] = [
+                'name' => $blockType->name,
+                'type' => [
+                    'name' => $name.'[__block__][type]',
+                    'value' => $blockType->handle,
+                ],
+                'enabled' => [
+                    'name' => $name.'[__block__][enabled]',
+                    'value' => '1'
+                ],
+                'fields' => $fields
+            ];
+        }
+
+        $config = [
+            'id'         => $id,
+            'name'       => $name,
+            'blocks'     => $blocks,
+            'blockTypes' => $blockTypes
+        ];
+        
         return $config;
 
     }
