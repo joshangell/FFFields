@@ -23286,6 +23286,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -23345,6 +23349,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.enabled = '1';
                 this.expand();
             }
+        },
+        deleteBlock: function(event) {
+            $(this.$el).transition({
+                animation: 'slide down',
+                onHide: function() {
+                    $(this).remove();
+                }
+            });
         }
     },
     mounted: function() {
@@ -23746,7 +23758,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "button toggle on icon"
   }), _vm._v(" "), _c('span', [_vm._v("Disable")])] : [_c('i', {
     staticClass: "button toggle off icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2)])])]), _vm._v(" "), _vm._m(1)], 2)]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2), _vm._v(" "), _c('div', {
+    staticClass: "item",
+    on: {
+      "click": _vm.deleteBlock
+    }
+  }, [_c('i', {
+    staticClass: "button minus circle icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2)]), _vm._v(" "), _c('div', {
     staticClass: "ui form"
   }, _vm._l((_vm.block.fields), function(f) {
     return _c('field', {

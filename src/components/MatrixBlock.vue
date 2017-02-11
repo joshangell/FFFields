@@ -43,6 +43,10 @@
                                     <span>Enable</span>
                                 </template>
                             </div>
+                            <div class="item" v-on:click="deleteBlock">
+                                <i class="button minus circle icon"></i>
+                                <span>Delete</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,6 +154,14 @@
                     this.enabled = '1';
                     this.expand();
                 }
+            },
+            deleteBlock: function(event) {
+                $(this.$el).transition({
+                    animation: 'slide down',
+                    onHide: function() {
+                        $(this).remove();
+                    }
+                });
             }
         },
         mounted: function() {
