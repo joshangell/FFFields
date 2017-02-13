@@ -23203,17 +23203,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function() {
         return {
+            blocks         : this.config.blocks,
+            blockTypes     : this.config.blockTypes,
+            totalNewBlocks : this.config.totalNewBlocks,
             options: {
-                handle     : '.move',
-                ghostClass : 'disabled',
-                chosenClass: 'chosen'
+                handle      : '.move',
+                ghostClass  : 'disabled',
+                chosenClass : 'chosen'
             },
         }
     },
     methods: {
-        addBlock: function(event) {
+        addBlock: function(blockType, event) {
             event.preventDefault();
-            alert('TODO!');
+
+            this.totalNewBlocks += 1;
+
+            const id = 'new' + this.totalNewBlocks;
+
+            let newBlock = JSON.stringify(blockType);
+
+            newBlock = newBlock.replace(/__BLOCK__/g, id);
+
+            newBlock = JSON.parse(newBlock);
+
+            this.blocks.push(newBlock);
         }
     }
 };
@@ -23622,7 +23636,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "options": _vm.options
     }
-  }, _vm._l((_vm.config.blocks), function(blk) {
+  }, _vm._l((_vm.blocks), function(blk) {
     return _c('matrix-block', {
       attrs: {
         "block": blk
@@ -23630,14 +23644,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })
   })), _vm._v(" "), _c('div', {
     staticClass: "ui buttons"
-  }, [_vm._l((_vm.config.blockTypes), function(blockType, index) {
+  }, [_vm._l((_vm.blockTypes), function(blockType, index) {
     return [(index == 0) ? [_c('button', {
       staticClass: "ui labeled icon button",
       attrs: {
         "role": "button"
       },
       on: {
-        "click": _vm.addBlock
+        "click": function($event) {
+          _vm.addBlock(blockType, $event)
+        }
       }
     }, [_c('i', {
       staticClass: "left plus icon"
@@ -23647,7 +23663,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "role": "button"
       },
       on: {
-        "click": _vm.addBlock
+        "click": function($event) {
+          _vm.addBlock(blockType, $event)
+        }
       }
     }, [_vm._v("\n                    " + _vm._s(blockType.name) + "\n                ")])]]
   })], 2)], 1)

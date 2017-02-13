@@ -3,19 +3,19 @@
     <div class="matrix">
 
         <draggable v-bind:options="options">
-            <matrix-block v-for="blk in config.blocks" v-bind:block="blk"></matrix-block>
+            <matrix-block v-for="blk in blocks" v-bind:block="blk"></matrix-block>
         </draggable>
 
         <div class="ui buttons">
-            <template v-for="(blockType, index) in config.blockTypes">
+            <template v-for="(blockType, index) in blockTypes">
                 <template v-if="index == 0">
-                    <button class="ui labeled icon button" role="button" v-on:click="addBlock">
+                    <button class="ui labeled icon button" role="button" v-on:click="addBlock(blockType, $event)">
                         <i class="left plus icon"></i>
                         {{ blockType.name }}
                     </button>
                 </template>
                 <template v-else>
-                    <button class="ui button" role="button" v-on:click="addBlock">
+                    <button class="ui button" role="button" v-on:click="addBlock(blockType, $event)">
                         {{ blockType.name }}
                     </button>
                 </template>
@@ -48,17 +48,31 @@
         },
         data: function() {
             return {
+                blocks         : this.config.blocks,
+                blockTypes     : this.config.blockTypes,
+                totalNewBlocks : this.config.totalNewBlocks,
                 options: {
-                    handle     : '.move',
-                    ghostClass : 'disabled',
-                    chosenClass: 'chosen'
+                    handle      : '.move',
+                    ghostClass  : 'disabled',
+                    chosenClass : 'chosen'
                 },
             }
         },
         methods: {
-            addBlock: function(event) {
+            addBlock: function(blockType, event) {
                 event.preventDefault();
-                alert('TODO!');
+
+                this.totalNewBlocks += 1;
+
+                const id = 'new' + this.totalNewBlocks;
+
+                let newBlock = JSON.stringify(blockType);
+
+                newBlock = newBlock.replace(/__BLOCK__/g, id);
+
+                newBlock = JSON.parse(newBlock);
+
+                this.blocks.push(newBlock);
             }
         }
     }

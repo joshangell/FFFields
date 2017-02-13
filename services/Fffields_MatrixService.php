@@ -77,7 +77,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
             $blockTypeFieldLayout = $blockType->getFieldLayout();
 
-            $matrixNamespace = $name.'[__block__][fields]';
+            $matrixNamespace = $name.'[__BLOCK__][fields]';
 
             foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
 
@@ -92,11 +92,11 @@ class Fffields_MatrixService extends BaseApplicationComponent
             $blockTypes[] = [
                 'name' => $blockType->name,
                 'type' => [
-                    'name' => $name.'[__block__][type]',
+                    'name' => $name.'[__BLOCK__][type]',
                     'value' => $blockType->handle,
                 ],
                 'enabled' => [
-                    'name' => $name.'[__block__][enabled]',
+                    'name' => $name.'[__BLOCK__][enabled]',
                     'value' => '1'
                 ],
                 'fields' => $fields
@@ -104,10 +104,11 @@ class Fffields_MatrixService extends BaseApplicationComponent
         }
 
         $config = [
-            'id'         => $id,
-            'name'       => $name,
-            'blocks'     => $blocks,
-            'blockTypes' => $blockTypes
+            'id'             => $id,
+            'name'           => $name,
+            'blocks'         => $blocks,
+            'blockTypes'     => $blockTypes,
+            'totalNewBlocks' => $totalNewBlocks
         ];
 
         return $config;
