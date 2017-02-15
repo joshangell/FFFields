@@ -67,12 +67,24 @@
 </template>
 
 <style lang="scss">
+    /* FIXME */
+    .matrix-block {
+        /*z-index: 1;*/
+    }
+    .matrix-block .ui.top.attached.label {
+        /*z-index: 1;*/
+    }
+    /* FIXME */
+
     .matrix-block .ui.form {
         margin-top: 2em;
     }
 
     .matrix-block .actions {
+        /* FIXME */
+        position: relative;
         float: right;
+        /* FIXME */
 
         > .item {
             float: left;
@@ -91,6 +103,9 @@
 
         .ui.dropdown .dropdown {
             margin-left: 0;
+
+            position: relative;
+            z-index: 2;
         }
     }
 </style>
