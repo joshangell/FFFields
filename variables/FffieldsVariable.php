@@ -28,15 +28,13 @@ class FffieldsVariable
     /**
      * Renders field html.
      *
-     * @param BaseElementModel      $element
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param null                  $namespace
+     * @param array $params
      *
      * @return mixed
      */
-    public function renderField(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $namespace = null)
+    public function renderField(array $params)
     {
-        return craft()->fffields->renderField($element, $fieldLayoutField, $namespace);
+        return craft()->fffields->renderField($params);
     }
 
 }

@@ -3,6 +3,10 @@
 
 <div class="ui form">
 {% for field in fields %}
-    {{ craft.fffields.renderField(element, field, namespace) }}
+    {{ craft.fffields.renderField({
+        element: element,
+        fieldLayoutField: field,
+        namespace: namespace
+    }) }}
 {% endfor %}
 </div>

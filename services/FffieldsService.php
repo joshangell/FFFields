@@ -91,16 +91,21 @@ class FffieldsService extends BaseApplicationComponent
     /**
      * Renders the markup for a specific field.
      *
-     * TODO: convert params to object
+     * @param array $params
      *
-     * @param BaseElementModel      $element
-     * @param FieldLayoutFieldModel $fieldLayoutField
-     * @param                       $namespace
-     *
-     * @return \Twig_Markup
+     * @return bool|\Twig_Markup
      */
-    public function renderField(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $namespace)
+    public function renderField(array $params)
     {
+
+        if (!isset($params['element'], $params['fieldLayoutField'], $params['namespace'])) {
+            return false;
+        }
+
+        $element = $params['element'];
+        $fieldLayoutField = $params['fieldLayoutField'];
+        $namespace = $params['namespace'];
+
         $field = $fieldLayoutField->getField();
         $value = ($element ? $element->getFieldValue($field->handle) : null);
         $fieldType = $field->getFieldType();
