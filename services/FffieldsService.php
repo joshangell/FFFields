@@ -50,27 +50,30 @@ class FffieldsService extends BaseApplicationComponent
     }
 
     /**
-     * Renders the field layout for a given element.
+     * Renders the field layout for a given element and optional field layout.
      *
-     * @param BaseElementModel $element
+     * @param BaseElementModel      $element
+     * @param FieldLayoutModel|null $fieldLayout
      *
-     * @return mixed
+     * @return bool|\Twig_Markup
      */
-    public function render(BaseElementModel $element)
+    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null)
     {
 
-        $elementType = craft()->elements->getElementTypeById($element->id);
+        if (!$fieldLayout) {
 
-        if (!$elementType) {
-            return false;
-        }
+            $elementType = craft()->elements->getElementTypeById($element->id);
 
-        $fieldLayout = false;
+            if (!$elementType) {
+                return false;
+            }
 
-        switch ($elementType) {
-            case 'Entry' :
-                $fieldLayout = $element->getType()->getFieldLayout();
-                break;
+            switch ($elementType) {
+                case 'Entry' :
+                    $fieldLayout = $element->getType()->getFieldLayout();
+                    break;
+            }
+
         }
 
         if (!$fieldLayout) {

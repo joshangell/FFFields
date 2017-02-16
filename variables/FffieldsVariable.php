@@ -13,15 +13,16 @@ class FffieldsVariable
 {
 
     /**
-     * Renders the fields for a given element.
+     * Renders the fields for a given element and optional field layout.
      *
-     * @param BaseElementModel $element
+     * @param BaseElementModel      $element
+     * @param FieldLayoutModel|null $fieldLayout
      *
-     * @return bool
+     * @return mixed
      */
-    public function render(BaseElementModel $element)
+    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null)
     {
-        return craft()->fffields->render($element);
+        return craft()->fffields->render($element, $fieldLayout);
     }
 
     /**
