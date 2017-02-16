@@ -228,6 +228,10 @@ class FffieldsService extends BaseApplicationComponent
                 return 'lightswitch';
                 break;
 
+            case 'Dropdown' :
+                return 'dropdown';
+                break;
+
             case 'RichText' :
                 return 'rich-text';
 
@@ -260,6 +264,10 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'Lightswitch' :
                 return craft()->fffields_basic->getLightswitchConfig($params);
+                break;
+
+            case 'Dropdown' :
+                return craft()->fffields_basic->getDropdownConfig($params);
                 break;
 
             case 'RichText' :

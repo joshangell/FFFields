@@ -74,4 +74,34 @@ class Fffields_BasicService extends BaseApplicationComponent
         return $config;
     }
 
+    /**
+     * Returns the required config for a <dropdown/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getDropdownConfig(array $params)
+    {
+        $field = $params['fieldLayoutField']->getField();
+        $value = $params['value'];
+
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
+        $settings = $field->getFieldType()->getSettings();
+
+        if ($params['element']->getHasFreshContent()) {
+            $value = $field->getFieldType()->getFefaultValue();
+        }
+
+        $config = [
+            'id'      => $id,
+            'name'    => $name,
+            'value'   => $value,
+            'options' => $settings->options
+        ];
+
+        return $config;
+    }
+
 }

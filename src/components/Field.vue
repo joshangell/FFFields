@@ -28,6 +28,7 @@
     import RichText from './RichText.vue';
     import LightSwitch from './LightSwitch.vue';
     import Matrix from './Matrix.vue';
+    import Dropdown from './Dropdown.vue';
 
     export default {
         name: 'field',
@@ -39,7 +40,8 @@
             'text-input'  : TextInput,
             'rich-text'   : RichText,
             'lightswitch' : LightSwitch,
-            'matrix'      : Matrix
+            'matrix'      : Matrix,
+            'dropdown'    : Dropdown,
         },
     }
 </script>
