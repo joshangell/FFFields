@@ -15,11 +15,13 @@ class Fffields_RichTextService extends BaseApplicationComponent
     // Public Methods
     // =========================================================================
 
-
-    // TODO: document these methods
-    // TODO: convert params to object
-    // =========================================================================
-
+    /**
+     * Returns the required config for a <rich-text/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function getConfig(array $params)
     {
 

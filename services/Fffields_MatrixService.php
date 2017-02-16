@@ -15,7 +15,13 @@ class Fffields_MatrixService extends BaseApplicationComponent
     // Public Methods
     // =========================================================================
 
-
+    /**
+     * Returns the required config for a <matrix/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function getConfig(array $params)
     {
 

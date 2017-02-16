@@ -135,10 +135,13 @@ class FffieldsService extends BaseApplicationComponent
         return TemplateHelper::getRaw($html);
     }
 
-
-    // TODO: document these methods
-    // =========================================================================
-
+    /**
+     * Returns the wrapping <field/> custom tag.
+     *
+     * @param $params
+     *
+     * @return string
+     */
     public function getFieldTemplate($params)
     {
         $config = $this->getFieldConfig($params);
@@ -148,6 +151,13 @@ class FffieldsService extends BaseApplicationComponent
         return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
 
+    /**
+     * Returns the required config for a <field/> custom tag.
+     *
+     * @param $params
+     *
+     * @return array
+     */
     public function getFieldConfig($params)
     {
         $element = $params['element'];
@@ -192,6 +202,13 @@ class FffieldsService extends BaseApplicationComponent
 
     }
 
+    /**
+     * Returns the type of custom tag a given field type should use.
+     *
+     * @param FieldModel $field
+     *
+     * @return string
+     */
     public function getComponentType(FieldModel $field)
     {
 
@@ -224,7 +241,13 @@ class FffieldsService extends BaseApplicationComponent
         }
     }
 
-
+    /**
+     * Returns the required config for a given field type’s custom tag.
+     *
+     * @param $params
+     *
+     * @return array
+     */
     public function getComponentConfig($params)
     {
         $field = $params['fieldLayoutField']->getField();

@@ -15,9 +15,13 @@ class Fffields_BasicService extends BaseApplicationComponent
     // Public Methods
     // =========================================================================
 
-    // TODO: document these methods
-    // =========================================================================
-
+    /**
+     * Returns the required config for a <plain-text/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function getPlainTextConfig(array $params)
     {
         $field = $params['fieldLayoutField']->getField();
@@ -41,7 +45,13 @@ class Fffields_BasicService extends BaseApplicationComponent
 
     }
 
-
+    /**
+     * Returns the required config for a <lightswitch/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     public function getLightswitchConfig(array $params)
     {
         $field = $params['fieldLayoutField']->getField();
