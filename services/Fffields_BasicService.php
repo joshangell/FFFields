@@ -93,11 +93,11 @@ class Fffields_BasicService extends BaseApplicationComponent
         if ($params['element']->getHasFreshContent()) {
             $value = $field->getFieldType()->getFefaultValue();
         }
-
+        
         $config = [
             'id'      => $id,
             'name'    => $name,
-            'value'   => $value,
+            'value'   => $value->value,
             'options' => $settings->options
         ];
 

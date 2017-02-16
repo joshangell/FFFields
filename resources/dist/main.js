@@ -24621,10 +24621,26 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selected),
+      expression: "selected"
+    }],
     staticClass: "ui dropdown",
     attrs: {
       "name": _vm.config.name,
       "id": _vm.config.id
+    },
+    on: {
+      "change": function($event) {
+        _vm.selected = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
     }
   }, _vm._l((_vm.config.options), function(option) {
     return _c('option', {
