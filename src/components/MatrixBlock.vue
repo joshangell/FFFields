@@ -4,73 +4,88 @@
         <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value">
         <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
-        <div class="ui top attached label">{{ block.name }}</div>
-
-        <div class="actions">
-
-            <template v-if="enabled === '0'">
-                <div class="item">
-                    <i class="button toggle off icon"></i>
-                </div>
-            </template>
-
-            <div class="item">
-                <div class="ui icon dropdown">
-                    <i class="setting icon"></i>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item" v-on:click="toggleCollapse">
-                            <template v-if="collapsed">
-                                <i class="button expand icon"></i>
-                                <span>Expand</span>
-                            </template>
-
-                            <template v-else>
-                                <i class="button compress icon"></i>
-                                <span>Collapse</span>
-                            </template>
-                        </div>
-                        <div class="item" v-on:click="toggleEnabled">
-                            <template v-if="enabled === '1'">
-                                <i class="button toggle on icon"></i>
-                                <span>Disable</span>
-                            </template>
-
-                            <template v-else>
-                                <i class="button toggle off icon"></i>
-                                <span>Enable</span>
-                            </template>
-                        </div>
-                        <div class="item" v-on:click="deleteBlock">
-                            <i class="button minus circle icon"></i>
-                            <span>Delete</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item">
-                <i data-content="Move" class="button move icon"></i>
-            </div>
-
-        </div>
-
         <div class="ui form">
             <field v-for="f in block.fields" v-bind:config="f.config"></field>
         </div>
+
+        <div class="ui top attached label">
+            {{ block.name }}
+
+
+            <div class="actions">
+
+                <template v-if="enabled === '0'">
+                    <div class="item">
+                        <i class="button toggle off icon"></i>
+                    </div>
+                </template>
+
+                <div class="item">
+                    <div class="ui icon dropdown">
+                        <i class="setting icon"></i>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" v-on:click="toggleCollapse">
+                                <template v-if="collapsed">
+                                    <i class="button expand icon"></i>
+                                    <span>Expand</span>
+                                </template>
+
+                                <template v-else>
+                                    <i class="button compress icon"></i>
+                                    <span>Collapse</span>
+                                </template>
+                            </div>
+                            <div class="item" v-on:click="toggleEnabled">
+                                <template v-if="enabled === '1'">
+                                    <i class="button toggle on icon"></i>
+                                    <span>Disable</span>
+                                </template>
+
+                                <template v-else>
+                                    <i class="button toggle off icon"></i>
+                                    <span>Enable</span>
+                                </template>
+                            </div>
+                            <div class="item" v-on:click="deleteBlock">
+                                <i class="button minus circle icon"></i>
+                                <span>Delete</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <i data-content="Move" class="button move icon"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+
 
     </div>
 </template>
 
 <style lang="scss">
+    .matrix-block {
+        /*z-index: 1;*/
+    }
     .matrix-block .ui.form {
         margin-top: 2em;
     }
 
+    .matrix-block .ui.top.attached.label {
+        z-index: 2;
+    }
+
     .matrix-block .actions {
-        position: absolute;
-        right: 0.8em;
-        top: 5px;
+        /*position: absolute;*/
+        /*z-index: 2;*/
+        /*right: 0.8em;*/
+        /*top: 5px;*/
+        float: right;
 
         > .item {
             float: left;

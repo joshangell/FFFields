@@ -20941,7 +20941,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .actions {\n  position: absolute;\n  right: 0.8em;\n  top: 5px;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n", ""]);
+exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .ui.top.attached.label {\n  z-index: 2;\n}\n.matrix-block .actions {\n  /*position: absolute;*/\n  /*z-index: 2;*/\n  /*right: 0.8em;*/\n  /*top: 5px;*/\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n", ""]);
 
 // exports
 
@@ -23350,6 +23350,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23815,8 +23830,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": _vm.enabled
     }
   }), _vm._v(" "), _c('div', {
+    staticClass: "ui form"
+  }, _vm._l((_vm.block.fields), function(f) {
+    return _c('field', {
+      attrs: {
+        "config": f.config
+      }
+    })
+  })), _vm._v(" "), _c('div', {
     staticClass: "ui top attached label"
-  }, [_vm._v(_vm._s(_vm.block.name))]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n\n        "), _c('div', {
     staticClass: "actions"
   }, [(_vm.enabled === '0') ? [_vm._m(0)] : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "item"
@@ -23853,15 +23876,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "button minus circle icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2), _vm._v(" "), _c('div', {
-    staticClass: "ui form"
-  }, _vm._l((_vm.block.fields), function(f) {
-    return _c('field', {
-      attrs: {
-        "config": f.config
-      }
-    })
-  }))])
+  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "item"
