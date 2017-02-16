@@ -14,6 +14,12 @@
 
 </template>
 
+<style lang="scss">
+    .field {
+        position: relative;
+    }
+</style>
+
 <script>
     import Field from './Field.vue';
     import Message from './Message.vue';

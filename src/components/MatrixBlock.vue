@@ -11,7 +11,6 @@
         <div class="ui top attached label">
             {{ block.name }}
 
-
             <div class="actions">
 
                 <template v-if="enabled === '0'">

@@ -10350,6 +10350,10 @@ return jQuery;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(54)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(30),
@@ -20913,7 +20917,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.matrix > .ui.buttons {\n  margin-top: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n.matrix-header {\n  height: 1em;\n}\n.matrix-header .ui.buttons {\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n.matrix-footer {\n  margin-top: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -23101,6 +23105,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23201,6 +23211,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23242,6 +23279,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             newBlock = JSON.parse(newBlock);
 
             this.blocks.push(newBlock);
+        },
+        expandAll: function(event) {
+            event.preventDefault();
+            console.log('expand all');
+        },
+        collapseAll: function(event) {
+            event.preventDefault();
+            console.log('collapse all');
         }
     }
 };
@@ -23255,7 +23300,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Field_vue__);
-//
 //
 //
 //
@@ -23659,7 +23703,31 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "matrix"
-  }, [_c('draggable', {
+  }, [_c('div', {
+    staticClass: "matrix-header"
+  }, [_c('div', {
+    staticClass: "ui tiny compact basic buttons"
+  }, [_c('button', {
+    staticClass: "ui button",
+    attrs: {
+      "role": "button"
+    },
+    on: {
+      "click": _vm.expandAll
+    }
+  }, [_c('i', {
+    staticClass: "left expand icon"
+  }), _vm._v("\n                Expand All\n            ")]), _vm._v(" "), _c('button', {
+    staticClass: "ui button",
+    attrs: {
+      "role": "button"
+    },
+    on: {
+      "click": _vm.collapseAll
+    }
+  }, [_c('i', {
+    staticClass: "left compress icon"
+  }), _vm._v("\n                Collapse All\n            ")])])]), _vm._v(" "), _c('draggable', {
     attrs: {
       "options": _vm.options
     }
@@ -23670,6 +23738,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })
   })), _vm._v(" "), _c('div', {
+    staticClass: "matrix-footer"
+  }, [_c('div', {
     staticClass: "ui buttons"
   }, [_vm._l((_vm.blockTypes), function(blockType, index) {
     return [(index == 0) ? [_c('button', {
@@ -23684,7 +23754,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('i', {
       staticClass: "left plus icon"
-    }), _vm._v("\n                    " + _vm._s(blockType.name) + "\n                ")])] : [_c('button', {
+    }), _vm._v("\n                        " + _vm._s(blockType.name) + "\n                    ")])] : [_c('button', {
       staticClass: "ui button",
       attrs: {
         "role": "button"
@@ -23694,8 +23764,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.addBlock(blockType, $event)
         }
       }
-    }, [_vm._v("\n                    " + _vm._s(blockType.name) + "\n                ")])]]
-  })], 2)], 1)
+    }, [_vm._v("\n                        " + _vm._s(blockType.name) + "\n                    ")])]]
+  })], 2)])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -23839,7 +23909,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })
   })), _vm._v(" "), _c('div', {
     staticClass: "ui top attached label"
-  }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n\n        "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
     staticClass: "actions"
   }, [(_vm.enabled === '0') ? [_vm._m(0)] : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "item"
@@ -24430,6 +24500,46 @@ if (document.querySelector('#field-layout')) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.field {\n  position: relative;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(53);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("f19e078e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-fbe9dab8!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Field.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-fbe9dab8!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Field.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -2,24 +2,39 @@
 
     <div class="matrix">
 
+        <div class="matrix-header">
+            <div class="ui tiny compact basic buttons">
+                <button role="button" class="ui button" v-on:click="expandAll">
+                    <i class="left expand icon"></i>
+                    Expand All
+                </button>
+                <button role="button" class="ui button" v-on:click="collapseAll">
+                    <i class="left compress icon"></i>
+                    Collapse All
+                </button>
+            </div>
+        </div>
+
         <draggable v-bind:options="options">
             <matrix-block v-for="blk in blocks" v-bind:block="blk"></matrix-block>
         </draggable>
 
-        <div class="ui buttons">
-            <template v-for="(blockType, index) in blockTypes">
-                <template v-if="index == 0">
-                    <button class="ui labeled icon button" role="button" v-on:click="addBlock(blockType, $event)">
-                        <i class="left plus icon"></i>
-                        {{ blockType.name }}
-                    </button>
+        <div class="matrix-footer">
+            <div class="ui buttons">
+                <template v-for="(blockType, index) in blockTypes">
+                    <template v-if="index == 0">
+                        <button class="ui labeled icon button" role="button" v-on:click="addBlock(blockType, $event)">
+                            <i class="left plus icon"></i>
+                            {{ blockType.name }}
+                        </button>
+                    </template>
+                    <template v-else>
+                        <button class="ui button" role="button" v-on:click="addBlock(blockType, $event)">
+                            {{ blockType.name }}
+                        </button>
+                    </template>
                 </template>
-                <template v-else>
-                    <button class="ui button" role="button" v-on:click="addBlock(blockType, $event)">
-                        {{ blockType.name }}
-                    </button>
-                </template>
-            </template>
+            </div>
         </div>
 
     </div>
@@ -27,7 +42,19 @@
 </template>
 
 <style lang="scss">
-    .matrix > .ui.buttons {
+    .matrix {
+    }
+    .matrix-header {
+        height: 1em;
+        .ui.buttons {
+
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .matrix-footer {
         margin-top: 1rem;
     }
 </style>
@@ -73,6 +100,14 @@
                 newBlock = JSON.parse(newBlock);
 
                 this.blocks.push(newBlock);
+            },
+            expandAll: function(event) {
+                event.preventDefault();
+                console.log('expand all');
+            },
+            collapseAll: function(event) {
+                event.preventDefault();
+                console.log('collapse all');
             }
         }
     }
