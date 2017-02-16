@@ -16,7 +16,7 @@
         </div>
 
         <draggable v-bind:options="options">
-            <matrix-block v-for="blk in blocks" v-bind:block="blk"></matrix-block>
+            <matrix-block v-for="blk in blocks" v-bind:block="blk" ref="matrixBlock"></matrix-block>
         </draggable>
 
         <div class="matrix-footer">
@@ -103,11 +103,15 @@
             },
             expandAll: function(event) {
                 event.preventDefault();
-                console.log('expand all');
+                for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                    this.$refs.matrixBlock[i].expand();
+                }
             },
             collapseAll: function(event) {
                 event.preventDefault();
-                console.log('collapse all');
+                for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                    this.$refs.matrixBlock[i].collapse();
+                }
             }
         }
     }

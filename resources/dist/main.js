@@ -23282,11 +23282,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         expandAll: function(event) {
             event.preventDefault();
-            console.log('expand all');
+            for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                this.$refs.matrixBlock[i].expand();
+            }
         },
         collapseAll: function(event) {
             event.preventDefault();
-            console.log('collapse all');
+            for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                this.$refs.matrixBlock[i].collapse();
+            }
         }
     }
 };
@@ -23733,6 +23737,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, _vm._l((_vm.blocks), function(blk) {
     return _c('matrix-block', {
+      ref: "matrixBlock",
+      refInFor: true,
       attrs: {
         "block": blk
       }
