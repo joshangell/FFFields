@@ -97,13 +97,17 @@ class Fffields_BasicService extends BaseApplicationComponent
             $value = $field->getFieldType()->getFefaultValue();
         }
 
-        // Bit of a crap check but it’ll do for now
-        $multi = false;
+        // Check for multi
+        // NOTE: Bit of a crap check but it’ll do for now
         if ($field->type === 'Checkboxes') {
-            $multi = true;
-        }
+            $values = [];
 
-        if (!$multi) {
+            foreach ($value as $v) {
+                $values[] = $v->value;
+            }
+
+            $value = $values;
+        } else {
             $value = $value->value;
         }
 

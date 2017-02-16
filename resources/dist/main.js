@@ -24721,6 +24721,7 @@ module.exports = Component.exports
     name: 'checkboxes',
     props: ['config'],
     data: function() {
+        console.log(this.config.value);
         return {
             checkedValues : this.config.value
         }
@@ -24744,7 +24745,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input', {
     attrs: {
       "type": "hidden",
-      "name": _vm.config.name,
+      "name": _vm.config.name + '[]',
       "value": ""
     }
   }), _vm._v(" "), _vm._l((_vm.config.options), function(option) {
@@ -24763,7 +24764,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "type": "checkbox",
         "tabindex": "0",
-        "name": _vm.config.name
+        "name": _vm.config.name + '[]'
       },
       domProps: {
         "value": option.value,

@@ -1,10 +1,10 @@
 <template>
 
     <div v-bind:id="config.id">
-        <input type="hidden" v-bind:name="config.name" value="">
+        <input type="hidden" v-bind:name="config.name + '[]'" value="">
         <div v-for="option in config.options" class="inline field">
             <div class="ui checkbox">
-                <input type="checkbox" tabindex="0" class="hidden" v-bind:name="config.name" v-bind:value="option.value" v-model="checkedValues">
+                <input type="checkbox" tabindex="0" class="hidden" v-bind:name="config.name + '[]'" v-bind:value="option.value" v-model="checkedValues">
                 <label>{{ option.label }}</label>
             </div>
         </div>
@@ -17,6 +17,7 @@
         name: 'checkboxes',
         props: ['config'],
         data: function() {
+            console.log(this.config.value);
             return {
                 checkedValues : this.config.value
             }
