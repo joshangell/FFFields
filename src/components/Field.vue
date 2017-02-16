@@ -29,6 +29,7 @@
     import LightSwitch from './LightSwitch.vue';
     import Matrix from './Matrix.vue';
     import Dropdown from './Dropdown.vue';
+    import Checkboxes from './Checkboxes.vue';
 
     export default {
         name: 'field',
@@ -42,6 +43,7 @@
             'lightswitch' : LightSwitch,
             'matrix'      : Matrix,
             'dropdown'    : Dropdown,
+            'checkboxes'  : Checkboxes
         },
     }
 </script>

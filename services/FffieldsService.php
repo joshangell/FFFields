@@ -232,6 +232,10 @@ class FffieldsService extends BaseApplicationComponent
                 return 'dropdown';
                 break;
 
+            case 'Checkboxes' :
+                return 'checkboxes';
+                break;
+
             case 'RichText' :
                 return 'rich-text';
 
@@ -267,7 +271,11 @@ class FffieldsService extends BaseApplicationComponent
                 break;
 
             case 'Dropdown' :
-                return craft()->fffields_basic->getDropdownConfig($params);
+                return craft()->fffields_basic->getOptionsConfig($params);
+                break;
+
+            case 'Checkboxes' :
+                return craft()->fffields_basic->getOptionsConfig($params);
                 break;
 
             case 'RichText' :

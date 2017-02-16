@@ -75,13 +75,16 @@ class Fffields_BasicService extends BaseApplicationComponent
     }
 
     /**
-     * Returns the required config for a <dropdown/> custom tag.
+     * Returns the required config for the following custom tags:
+     *
+     * <dropdown/>
+     * <checkboxes/>
      *
      * @param array $params
      *
      * @return array
      */
-    public function getDropdownConfig(array $params)
+    public function getOptionsConfig(array $params)
     {
         $field = $params['fieldLayoutField']->getField();
         $value = $params['value'];
@@ -93,11 +96,21 @@ class Fffields_BasicService extends BaseApplicationComponent
         if ($params['element']->getHasFreshContent()) {
             $value = $field->getFieldType()->getFefaultValue();
         }
-        
+
+        // Bit of a crap check but it’ll do for now
+        $multi = false;
+        if ($field->type === 'Checkboxes') {
+            $multi = true;
+        }
+
+        if (!$multi) {
+            $value = $value->value;
+        }
+
         $config = [
-            'id'      => $id,
-            'name'    => $name,
-            'value'   => $value->value,
+            'id' => $id,
+            'name' => $name,
+            'value' => $value,
             'options' => $settings->options
         ];
 
