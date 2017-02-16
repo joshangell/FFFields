@@ -20,20 +20,22 @@ class Fffields_RichTextService extends BaseApplicationComponent
     // TODO: convert params to object
     // =========================================================================
 
-    public function getConfig(FieldModel $field, $value, $namespace)
+    public function getConfig(array $params)
     {
+
+        $field = $params['fieldLayoutField']->getField();
 
 //        // TODO implement redactor config from field
 //        $this->_includeFieldResources($configJs);
 //        $configJs = $this->_getConfigJson();
 
-        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
 
         $config = array(
             'id'    => $id,
             'name'  => $name,
-            'value' => $value,
+            'value' => $params['value'],
 //            'linkOptions'     => $this->_getLinkOptions(), // TODO support link options
 //            'assetSources'    => $this->_getAssetSources(), // TODO support asset sources
 //            'transforms'      => $this->_getTransforms(), // TODO support transforms

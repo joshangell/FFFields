@@ -16,20 +16,20 @@ class Fffields_BasicService extends BaseApplicationComponent
     // =========================================================================
 
     // TODO: document these methods
-    // TODO: convert params to object
     // =========================================================================
 
-    public function getPlainTextConfig(FieldModel $field, $value, $namespace)
+    public function getPlainTextConfig(array $params)
     {
+        $field = $params['fieldLayoutField']->getField();
 
-        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
         $config = [
             'id'            => $id,
             'name'          => $name,
-            'value'         => $value,
+            'value'         => $params['value'],
             'maxlength'     => $settings->maxLength,
             'showCharsLeft' => $settings->maxLength ? true : false,
             'placeholder'   => Craft::t($settings->placeholder),
@@ -42,13 +42,16 @@ class Fffields_BasicService extends BaseApplicationComponent
     }
 
 
-    public function getLightswitchConfig(BaseElementModel $element, FieldModel $field, $value, $namespace)
+    public function getLightswitchConfig(array $params)
     {
-        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
+        $field = $params['fieldLayoutField']->getField();
+        $value = $params['value'];
+
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
-        if ($element->getHasFreshContent()) {
+        if ($params['element']->getHasFreshContent()) {
             $value = $settings->default;
         }
 

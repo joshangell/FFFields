@@ -16,19 +16,19 @@ class Fffields_MatrixService extends BaseApplicationComponent
     // =========================================================================
 
 
-    public function getConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
+    public function getConfig(array $params)
     {
 
-        $field = $fieldLayoutField->getField();
+        $field = $params['fieldLayoutField']->getField();
 
-        $id = craft()->templates->namespaceInputId($field->handle, $namespace);
-        $name = craft()->templates->namespaceInputName($field->handle, $namespace);
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
         $blocks = [];
         $totalNewBlocks = 0;
 
-        foreach ($value->find(['status'=>null]) as $block) {
+        foreach ($params['value']->find(['status'=>null]) as $block) {
 
             $blockId = $block->id;
 
@@ -51,7 +51,13 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
                 $fields[] = [
                     'handle' => $blockField->handle,
-                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, $blockFieldValue, $matrixNamespace)
+                    'config' => craft()->fffields->getFieldConfig([
+                        'element' => $params['element'],
+                        'fieldLayoutField' => $blockFieldLayoutField,
+                        'value' => $blockFieldValue,
+                        'namespace' => $matrixNamespace
+
+                    ])
                 ];
             }
 
@@ -85,7 +91,12 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
                 $fields[] = [
                     'handle' => $blockField->handle,
-                    'config' => craft()->fffields->getFieldConfig($element, $blockFieldLayoutField, null, $matrixNamespace)
+                    'config' => craft()->fffields->getFieldConfig([
+                        'element' => $params['element'],
+                        'fieldLayoutField' => $blockFieldLayoutField,
+                        'value' => null,
+                        'namespace' => $matrixNamespace
+                    ])
                 ];
             }
 

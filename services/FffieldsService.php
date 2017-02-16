@@ -104,10 +104,9 @@ class FffieldsService extends BaseApplicationComponent
 
         $element = $params['element'];
         $fieldLayoutField = $params['fieldLayoutField'];
-        $namespace = $params['namespace'];
 
         $field = $fieldLayoutField->getField();
-        $value = ($element ? $element->getFieldValue($field->handle) : null);
+        $params['value'] = ($element ? $element->getFieldValue($field->handle) : null);
         $fieldType = $field->getFieldType();
 
         if ($fieldType) {
@@ -116,7 +115,7 @@ class FffieldsService extends BaseApplicationComponent
                 $fieldType->setElement($element);
             }
 
-            $template = $this->getFieldTemplate($element, $fieldLayoutField, $value, $namespace);
+            $template = $this->getFieldTemplate($params);
 
             $html = craft()->templates->renderString($template);
 
@@ -138,20 +137,22 @@ class FffieldsService extends BaseApplicationComponent
 
 
     // TODO: document these methods
-    // TODO: convert params to object
     // =========================================================================
 
-    public function getFieldTemplate(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
+    public function getFieldTemplate($params)
     {
-        $config = $this->getFieldConfig($element, $fieldLayoutField, $value, $namespace);
+        $config = $this->getFieldConfig($params);
 
         $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
 
         return craft()->templates->renderString($html, [ 'config' => $config ]);
     }
 
-    public function getFieldConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace)
+    public function getFieldConfig($params)
     {
+        $element = $params['element'];
+        $fieldLayoutField = $params['fieldLayoutField'];
+
         $field = $fieldLayoutField->getField();
         $errors = ($element ? $element->getErrors($field->handle) : null);
         $instructions = ($field->instructions ? Craft::t($field->instructions) : null);
@@ -183,7 +184,7 @@ class FffieldsService extends BaseApplicationComponent
             'instructions' => $instructions,
             'field' => [
                 'type' => $this->getComponentType($field),
-                'config' => $this->getComponentConfig($element, $fieldLayoutField, $value, $namespace),
+                'config' => $this->getComponentConfig($params),
             ]
         ];
 
@@ -224,25 +225,25 @@ class FffieldsService extends BaseApplicationComponent
     }
 
 
-    public function getComponentConfig(BaseElementModel $element, FieldLayoutFieldModel $fieldLayoutField, $value, $namespace = null)
+    public function getComponentConfig($params)
     {
-        $field = $fieldLayoutField->getField();
+        $field = $params['fieldLayoutField']->getField();
 
         switch ($field->type) {
 
             case 'PlainText' :
-                return craft()->fffields_basic->getPlainTextConfig($field, $value, $namespace);
+                return craft()->fffields_basic->getPlainTextConfig($params);
                 break;
 
             case 'Lightswitch' :
-                return craft()->fffields_basic->getLightswitchConfig($element, $field, $value, $namespace);
+                return craft()->fffields_basic->getLightswitchConfig($params);
                 break;
 
             case 'RichText' :
-                return craft()->fffields_richText->getConfig($field, $value, $namespace);
+                return craft()->fffields_richText->getConfig($params);
 
             case 'Matrix' :
-                return craft()->fffields_matrix->getConfig($element, $fieldLayoutField, $value, $namespace);
+                return craft()->fffields_matrix->getConfig($params);
 
             default :
                 return [
