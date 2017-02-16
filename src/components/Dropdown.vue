@@ -6,6 +6,12 @@
 
 </template>
 
+<style lang="scss">
+    .ui.form .field > .selection.dropdown {
+        width: auto;
+    }
+</style>
+
 <script>
     export default {
         name: 'dropdown',
