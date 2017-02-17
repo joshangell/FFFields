@@ -17,6 +17,11 @@
 <style lang="scss">
     .field {
         position: relative;
+
+        .instructions {
+            font-size: 0.85em;
+            margin-bottom: 0.5em;
+        }
     }
 </style>
 

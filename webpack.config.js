@@ -1,5 +1,7 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
     entry: './src/main.js',
@@ -13,7 +15,20 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: {
+                        loader: "css-loader",
+                        options:{
+                            minimize: {
+                                // safe: true,
+                                discardComments: {
+                                    removeAll: true
+                                }
+                            }
+                        }
+                    }
+                }),
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
@@ -56,6 +71,7 @@ module.exports = {
             jQuery: "jquery",
             "window.jQuery": "jquery",
             // semantic: 'semantic-ui-css',
-        })
+        }),
+        new ExtractTextPlugin("main.css"),
     ],
 };

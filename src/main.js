@@ -1,5 +1,14 @@
-import '../node_modules/semantic-ui-css/semantic.min.css';
-import '../node_modules/semantic-ui-css/semantic.min.js';
+import './semantic/dist/semantic.min.css';
+
+// import './semantic/dist/semantic.js';
+import './semantic/dist/components/form';
+import './semantic/dist/components/checkbox';
+import './semantic/dist/components/dropdown';
+import './semantic/dist/components/tab';
+import './semantic/dist/components/transition';
+import './semantic/dist/components/state';
+import './semantic/dist/components/visibility';
+
 import '../node_modules/trumbowyg/dist/trumbowyg.js';
 
 import Vue from 'vue';
