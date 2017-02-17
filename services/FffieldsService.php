@@ -11,43 +11,9 @@ namespace Craft;
  */
 class FffieldsService extends BaseApplicationComponent
 {
-    // Properties
-    // =========================================================================
-
-    /**
-     * The original template path.
-     *
-     * @var string
-     */
-    protected $oldPath;
-
-    /**
-     * Our plugin template path.
-     *
-     * @var string
-     */
-    protected $newPath;
 
     // Public Methods
     // =========================================================================
-
-    /**
-     * Set the template path to our plugin one
-     */
-    public function __construct()
-    {
-        $this->oldPath = craft()->templates->getTemplatesPath();
-        $this->newPath = craft()->path->getPluginsPath().'fffields/templates';
-        craft()->templates->setTemplatesPath($this->newPath);
-    }
-
-    /**
-     * Reset the parent path when the class gets killed
-     */
-    public function __destruct()
-    {
-        craft()->templates->setTemplatesPath($this->oldPath);
-    }
 
     /**
      * Renders the field layout for a given element and optional field layout.
@@ -80,10 +46,16 @@ class FffieldsService extends BaseApplicationComponent
             return false;
         }
 
+        $oldPath = craft()->templates->getTemplatesPath();
+        $newPath = craft()->path->getPluginsPath().'fffields/templates';
+        craft()->templates->setTemplatesPath($newPath);
+
         $html = craft()->templates->render('fieldlayout', [
             'element' => $element,
             'fieldLayout' => $fieldLayout
         ]);
+
+        craft()->templates->setTemplatesPath($oldPath);
 
         return TemplateHelper::getRaw($html);
     }
