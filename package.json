@@ -4,6 +4,8 @@
   "description": "Craft CMS fields for the front-end.",
   "main": "resources/js/main.js",
   "dependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "^0.10.0",
