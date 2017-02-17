@@ -7,6 +7,9 @@
                v-bind:name="config.name"
                v-bind:maxlength="config.maxlength"
                v-bind:autocomplete="config.autocomplete"
+               v-bind:min="config.min"
+               v-bind:max="config.max"
+               v-bind:step="config.step"
                v-bind:disabled="config.disabled"
                v-bind:title="config.title"
                v-bind:placeholder="config.placeholder">
@@ -14,6 +17,12 @@
         <div v-if="config.showCharsLeft" v-bind:class="labelClasses">{{ charsLeft }}</div>
     </div>
 </template>
+
+<style lang="scss">
+    .ui.form input[type=number] {
+        width: auto;
+    }
+</style>
 
 <script>
     export default {

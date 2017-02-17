@@ -33,6 +33,7 @@ class Fffields_BasicService extends BaseApplicationComponent
         $config = [
             'id'            => $id,
             'name'          => $name,
+            'type'          => 'text',
             'value'         => $params['value'],
             'maxlength'     => $settings->maxLength,
             'showCharsLeft' => $settings->maxLength ? true : false,
@@ -42,7 +43,51 @@ class Fffields_BasicService extends BaseApplicationComponent
         ];
 
         return $config;
+    }
 
+    /**
+     * Returns the required config for a <number/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getNumberConfig(array $params)
+    {
+        $field = $params['fieldLayoutField']->getField();
+
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
+        $settings = $field->getFieldType()->getSettings();
+
+        $value = $params['value'];
+
+        if ($params['element']->getHasFreshContent() && ($value < $settings->min || $value > $settings->max)) {
+            $value = $settings->min;
+        }
+
+        $value = craft()->numberFormatter->formatDecimal($value, false);
+
+        $config = [
+            'id'    => $id,
+            'name'  => $name,
+            'type'  => 'number',
+            'value' => $value,
+        ];
+
+        if ($settings->min || $settings->min === '0') {
+            $config['min'] = $settings->min;
+        }
+
+        if ($settings->max || $settings->max === '0') {
+            $config['max'] = $settings->max;
+        }
+
+        if ($settings->decimals) {
+            $config['step'] = '0.' . str_repeat ('0', $settings->decimals - 1) . '1';
+        }
+
+        return $config;
     }
 
     /**

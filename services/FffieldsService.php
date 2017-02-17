@@ -224,6 +224,10 @@ class FffieldsService extends BaseApplicationComponent
                 }
                 break;
 
+            case 'Number' :
+                return 'text-input';
+                break;
+
             case 'Lightswitch' :
                 return 'lightswitch';
                 break;
@@ -272,6 +276,10 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'PlainText' :
                 return craft()->fffields_basic->getPlainTextConfig($params);
+                break;
+
+            case 'Number' :
+                return craft()->fffields_basic->getNumberConfig($params);
                 break;
 
             case 'Lightswitch' :
