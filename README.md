@@ -7,6 +7,8 @@ Craft CMS fields for the front-end.
 This is all you need to get a field layout in your front end templates:
 
 ```twig
+{% includeCssFile resourceUrl('fffields/dist/main.css') %}
+
 <form method="post" accept-charset="UTF-8">
   {{ getCsrfInput() }}
   <input type="hidden" name="action" value="entries/saveEntry">

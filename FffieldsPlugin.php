@@ -59,7 +59,7 @@ class FffieldsPlugin extends BasePlugin
      */
     public function getPluginUrl()
     {
-        return 'https://angell.io/plugins/fffields';
+        return 'https://github.com/joshangell/fffields';
     }
 
     /**
@@ -69,7 +69,7 @@ class FffieldsPlugin extends BasePlugin
      */
     public function getDocumentationUrl()
     {
-        return 'https://angell.io/plugins/fffields/docs';
+        return 'https://github.com/joshangell/fffields/blob/master/README.md';
     }
 
     /**
@@ -77,7 +77,7 @@ class FffieldsPlugin extends BasePlugin
      */
     public function getReleaseFeedUrl()
     {
-        return 'https://angell.io/plugins/fffields/releases.json';
+        return 'https://raw.githubusercontent.com/joshangell/fffields/master/releases.json';
     }
 
     /**
@@ -87,7 +87,7 @@ class FffieldsPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '0.0.1';
+        return '0.1.0';
     }
 
     /**
@@ -97,7 +97,7 @@ class FffieldsPlugin extends BasePlugin
      */
     public function getSchemaVersion()
     {
-        return '0.0.1';
+        return '0.1.0';
     }
 
 }
