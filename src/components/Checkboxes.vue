@@ -17,7 +17,6 @@
         name: 'checkboxes',
         props: ['config'],
         data: function() {
-            console.log(this.config.value);
             return {
                 checkedValues : this.config.value
             }

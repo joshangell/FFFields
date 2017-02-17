@@ -31,6 +31,7 @@
     import Dropdown     from './Dropdown.vue';
     import Checkboxes   from './Checkboxes.vue';
     import RadioButtons from './RadioButtons.vue';
+    import MultiSelect  from './MultiSelect.vue';
 
     export default {
         name: 'field',
@@ -45,7 +46,8 @@
             'matrix'        : Matrix,
             'dropdown'      : Dropdown,
             'checkboxes'    : Checkboxes,
-            'radio-buttons' : RadioButtons
+            'radio-buttons' : RadioButtons,
+            'multi-select'  : MultiSelect
         },
     }
 </script>

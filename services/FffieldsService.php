@@ -240,6 +240,10 @@ class FffieldsService extends BaseApplicationComponent
                 return 'radio-buttons';
                 break;
 
+            case 'MultiSelect' :
+                return 'multi-select';
+                break;
+
             case 'RichText' :
                 return 'rich-text';
 
@@ -275,14 +279,9 @@ class FffieldsService extends BaseApplicationComponent
                 break;
 
             case 'Dropdown' :
-                return craft()->fffields_basic->getOptionsConfig($params);
-                break;
-
             case 'Checkboxes' :
-                return craft()->fffields_basic->getOptionsConfig($params);
-                break;
-
             case 'RadioButtons' :
+            case 'MultiSelect' :
                 return craft()->fffields_basic->getOptionsConfig($params);
                 break;
 

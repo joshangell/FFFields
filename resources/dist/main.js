@@ -23095,6 +23095,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__);
 //
 //
 //
@@ -23117,6 +23119,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -23142,7 +23145,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'matrix'        : __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default.a,
         'dropdown'      : __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default.a,
         'checkboxes'    : __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default.a,
-        'radio-buttons' : __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default.a
+        'radio-buttons' : __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default.a,
+        'multi-select'  : __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default.a
     },
 };
 
@@ -24735,7 +24739,6 @@ module.exports = Component.exports
     name: 'checkboxes',
     props: ['config'],
     data: function() {
-        console.log(this.config.value);
         return {
             checkedValues : this.config.value
         }
@@ -24971,6 +24974,164 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-4cad0368", module.exports)
   }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(72)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(70),
+  /* template */
+  __webpack_require__(71),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/MultiSelect.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] MultiSelect.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-51f98382", Component.options)
+  } else {
+    hotAPI.reload("data-v-51f98382", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'multi-select',
+    props: ['config'],
+    data: function() {
+        return {
+            selected : this.config.value
+        }
+    },
+    mounted: function() {
+        $(this.$el).dropdown();
+    },
+};
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selected),
+      expression: "selected"
+    }],
+    staticClass: "ui dropdown",
+    attrs: {
+      "name": _vm.config.name + '[]',
+      "id": _vm.config.id,
+      "multiple": ""
+    },
+    on: {
+      "change": function($event) {
+        _vm.selected = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })
+      }
+    }
+  }, _vm._l((_vm.config.options), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.value
+      }
+    }, [_vm._v(_vm._s(option.label))])
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-51f98382", module.exports)
+  }
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(68);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("5831f142", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-51f98382!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MultiSelect.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-51f98382!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MultiSelect.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })

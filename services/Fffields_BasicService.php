@@ -99,7 +99,7 @@ class Fffields_BasicService extends BaseApplicationComponent
 
         // Check for multi
         // NOTE: Bit of a crap check but it’ll do for now
-        if ($field->type === 'Checkboxes') {
+        if (in_array($field->type , ['Checkboxes', 'MultiSelect'])) {
             $values = [];
 
             foreach ($value as $v) {
