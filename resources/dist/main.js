@@ -23093,6 +23093,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__);
 //
 //
 //
@@ -23115,6 +23117,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -23130,15 +23133,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'field',
     props: ['config'],
     components: {
-        'message'     : __WEBPACK_IMPORTED_MODULE_1__Message_vue___default.a,
-        'field'       : __WEBPACK_IMPORTED_MODULE_0__Field_vue___default.a,
-        'text-area'   : __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default.a,
-        'text-input'  : __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default.a,
-        'rich-text'   : __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default.a,
-        'lightswitch' : __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default.a,
-        'matrix'      : __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default.a,
-        'dropdown'    : __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default.a,
-        'checkboxes'  : __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default.a
+        'message'       : __WEBPACK_IMPORTED_MODULE_1__Message_vue___default.a,
+        'field'         : __WEBPACK_IMPORTED_MODULE_0__Field_vue___default.a,
+        'text-area'     : __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default.a,
+        'text-input'    : __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default.a,
+        'rich-text'     : __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default.a,
+        'lightswitch'   : __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default.a,
+        'matrix'        : __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default.a,
+        'dropdown'      : __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default.a,
+        'checkboxes'    : __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default.a,
+        'radio-buttons' : __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default.a
     },
 };
 
@@ -24849,6 +24853,111 @@ if(false) {
  }
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(66),
+  /* template */
+  __webpack_require__(67),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/RadioButtons.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] RadioButtons.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4cad0368", Component.options)
+  } else {
+    hotAPI.reload("data-v-4cad0368", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+    /* harmony default export */ __webpack_exports__["default"] = {
+        name: 'radio-buttons',
+        props: ['config'],
+//        data: function() {
+//            console.log(this.config.value);
+//            return {
+//                checkedValues : this.config.value
+//            }
+//        },
+        mounted: function() {
+            $('.ui.radio.checkbox', this.$el).checkbox();
+        },
+    };
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": _vm.config.id
+    }
+  }, _vm._l((_vm.config.options), function(option) {
+    return _c('div', {
+      staticClass: "inline field"
+    }, [_c('div', {
+      staticClass: "ui radio checkbox"
+    }, [_c('input', {
+      staticClass: "hidden",
+      attrs: {
+        "type": "radio",
+        "tabindex": "0",
+        "name": _vm.config.name
+      },
+      domProps: {
+        "value": option.value
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(option.label))])])])
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4cad0368", module.exports)
+  }
 }
 
 /***/ })

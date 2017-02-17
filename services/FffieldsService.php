@@ -236,6 +236,10 @@ class FffieldsService extends BaseApplicationComponent
                 return 'checkboxes';
                 break;
 
+            case 'RadioButtons' :
+                return 'radio-buttons';
+                break;
+
             case 'RichText' :
                 return 'rich-text';
 
@@ -275,6 +279,10 @@ class FffieldsService extends BaseApplicationComponent
                 break;
 
             case 'Checkboxes' :
+                return craft()->fffields_basic->getOptionsConfig($params);
+                break;
+
+            case 'RadioButtons' :
                 return craft()->fffields_basic->getOptionsConfig($params);
                 break;
 

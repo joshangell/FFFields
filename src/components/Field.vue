@@ -21,29 +21,31 @@
 </style>
 
 <script>
-    import Field from './Field.vue';
-    import Message from './Message.vue';
-    import TextInput from './TextInput.vue';
-    import TextArea from './TextArea.vue';
-    import RichText from './RichText.vue';
-    import LightSwitch from './LightSwitch.vue';
-    import Matrix from './Matrix.vue';
-    import Dropdown from './Dropdown.vue';
-    import Checkboxes from './Checkboxes.vue';
+    import Field        from './Field.vue';
+    import Message      from './Message.vue';
+    import TextInput    from './TextInput.vue';
+    import TextArea     from './TextArea.vue';
+    import RichText     from './RichText.vue';
+    import LightSwitch  from './LightSwitch.vue';
+    import Matrix       from './Matrix.vue';
+    import Dropdown     from './Dropdown.vue';
+    import Checkboxes   from './Checkboxes.vue';
+    import RadioButtons from './RadioButtons.vue';
 
     export default {
         name: 'field',
         props: ['config'],
         components: {
-            'message'     : Message,
-            'field'       : Field,
-            'text-area'   : TextArea,
-            'text-input'  : TextInput,
-            'rich-text'   : RichText,
-            'lightswitch' : LightSwitch,
-            'matrix'      : Matrix,
-            'dropdown'    : Dropdown,
-            'checkboxes'  : Checkboxes
+            'message'       : Message,
+            'field'         : Field,
+            'text-area'     : TextArea,
+            'text-input'    : TextInput,
+            'rich-text'     : RichText,
+            'lightswitch'   : LightSwitch,
+            'matrix'        : Matrix,
+            'dropdown'      : Dropdown,
+            'checkboxes'    : Checkboxes,
+            'radio-buttons' : RadioButtons
         },
     }
 </script>
