@@ -24753,6 +24753,7 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    staticClass: "grouped fields",
     attrs: {
       "id": _vm.config.id
     }
@@ -24764,7 +24765,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _vm._l((_vm.config.options), function(option) {
     return _c('div', {
-      staticClass: "inline field"
+      staticClass: "field"
     }, [_c('div', {
       staticClass: "ui checkbox"
     }, [_c('input', {
@@ -24909,19 +24910,18 @@ module.exports = Component.exports
 //
 //
 
-    /* harmony default export */ __webpack_exports__["default"] = {
-        name: 'radio-buttons',
-        props: ['config'],
-//        data: function() {
-//            console.log(this.config.value);
-//            return {
-//                checkedValues : this.config.value
-//            }
-//        },
-        mounted: function() {
-            $('.ui.radio.checkbox', this.$el).checkbox();
-        },
-    };
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'radio-buttons',
+    props: ['config'],
+    data: function() {
+        return {
+            selected : this.config.value
+        }
+    },
+    mounted: function() {
+        $('.ui.radio.checkbox', this.$el).checkbox();
+    },
+};
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
@@ -24931,15 +24931,22 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    staticClass: "grouped fields",
     attrs: {
       "id": _vm.config.id
     }
   }, _vm._l((_vm.config.options), function(option) {
     return _c('div', {
-      staticClass: "inline field"
+      staticClass: "field"
     }, [_c('div', {
       staticClass: "ui radio checkbox"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.selected),
+        expression: "selected"
+      }],
       staticClass: "hidden",
       attrs: {
         "type": "radio",
@@ -24947,7 +24954,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "name": _vm.config.name
       },
       domProps: {
-        "value": option.value
+        "value": option.value,
+        "checked": _vm._q(_vm.selected, option.value)
+      },
+      on: {
+        "click": function($event) {
+          _vm.selected = option.value
+        }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(option.label))])])])
   }))
