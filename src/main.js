@@ -1,6 +1,5 @@
-import './semantic/dist/semantic.min.css';
+import './semantic/dist/semantic.css';
 
-// import './semantic/dist/semantic.js';
 import './semantic/dist/components/form';
 import './semantic/dist/components/checkbox';
 import './semantic/dist/components/dropdown';

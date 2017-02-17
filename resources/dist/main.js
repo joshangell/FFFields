@@ -35024,8 +35024,8 @@ module.exports = g;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_min_css__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__semantic_dist_components_checkbox__ = __webpack_require__(8);
@@ -35048,7 +35048,6 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_Field_vue__);
 
 
-// import './semantic/dist/semantic.js';
 
 
 
