@@ -145,16 +145,77 @@ class Fffields_MatrixService extends BaseApplicationComponent
         $id = craft()->templates->namespaceInputId($params['name']);
         $name = craft()->templates->namespaceInputName($params['name']);
 
-        $blocks = [];
-        $totalNewBlocks = 0;
-        $blockTypes = [];
+        $variants = [];
+        $totalNewVariants = 0;
+
+        foreach ($params['product']->getVariants() as $variant) {
+
+            $variantId = $variant->id;
+
+            if (!$variantId) {
+                $totalNewVariants++;
+                $variantId = 'new' . $totalNewVariants;
+            }
+
+            $fields = [];
+
+//            $blockTypeFieldLayout = $block->type->getFieldLayout();
+
+            $matrixNamespace = $name.'['.$variantId.']';
+//
+//            foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
+//
+//                $blockField = $blockFieldLayoutField->getField();
+//
+//                $blockFieldValue = ($block ? $block->getFieldValue($blockField->handle) : null);
+//
+//                $fields[] = [
+//                    'handle' => $blockField->handle,
+//                    'config' => craft()->fffields->getFieldConfig([
+//                        'element' => $params['element'],
+//                        'fieldLayoutField' => $blockFieldLayoutField,
+//                        'value' => $blockFieldValue,
+//                        'namespace' => $matrixNamespace
+//
+//                    ])
+//                ];
+//            }
+
+            $variants[] = [
+                'name' => 'Variant',
+//                'type' => [
+//                    'name' => $name.'['.$variantId.'][type]',
+//                    'value' => null,
+//                ],
+                'enabled' => [
+                    'name' => $name.'['.$variantId.'][enabled]',
+                    'value' => $variant->enabled,
+                ],
+                'fields' => $fields
+            ];
+        }
+
+
+        $blockTypes[] = [
+            'name' => 'variant',
+//            'type' => [
+//                'name' => $name.'[__BLOCK__][type]',
+//                'value' => null,
+//            ],
+            'enabled' => [
+                'name' => $name.'[__BLOCK__][enabled]',
+                'value' => '1'
+            ],
+            'fields' => $fields
+        ];
+
 
         $config = [
             'id'             => $id,
             'name'           => $name,
-            'blocks'         => $blocks,
+            'blocks'         => $variants,
             'blockTypes'     => $blockTypes,
-            'totalNewBlocks' => $totalNewBlocks
+            'totalNewBlocks' => $totalNewVariants
         ];
 
         return $config;
