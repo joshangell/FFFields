@@ -16,7 +16,7 @@
             } only %}
         </div>
     {% endfor %}
-{% else %}
+{% elseif tabs %}
     {% include "fields" with {
         fields:  tabs[0].getFields(),
         element: element

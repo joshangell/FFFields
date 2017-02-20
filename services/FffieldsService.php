@@ -108,6 +108,61 @@ class FffieldsService extends BaseApplicationComponent
     }
 
     /**
+     * Renders a <matrix/> of Variants for use with Commerce.
+     *
+     * @param array $params
+     */
+    public function renderCommerceVariants(array $params)
+    {
+
+        if (!isset($params['product'])) {
+            return false;
+        }
+
+        $name = 'variants';
+        if (isset($params['name'])) {
+            $name = $params['name'];
+        }
+
+
+        // TODO variant errors
+        $errors = null;
+//        $errors = ($params['product'] ? $params['product']->getErrors($field->handle) : null);
+
+        $labelId = $name . '-label';
+        $fieldId = $name . '-field';
+        $label   = Craft::t($name);
+
+        $fieldClass = [
+            'field',
+            ($errors ? 'error' : null)
+        ];
+
+        $fieldClass = implode(array_filter($fieldClass), ' ');
+
+        $config = [
+            'id' => $name,
+            'class' => $fieldClass,
+            'label' => $label,
+            'labelId' => $labelId,
+            'fieldId' => $fieldId,
+            'instructions' => null,
+            'field' => [
+                'type' => 'matrix',
+                'config' => craft()->fffields_matrix->getVariantsConfig([
+                    'product' => $params['product'],
+                    'name' => $name
+                ])
+            ]
+        ];
+
+        $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
+
+        return craft()->templates->renderString($html, [ 'config' => $config ]);
+
+    }
+
+    /**
      * Returns the wrapping <field/> custom tag.
      *
      * @param $params

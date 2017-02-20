@@ -132,4 +132,32 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
     }
 
+    /**
+     * Returns the required config for a <matrix/> custom tag as used
+     * for Commerce Variants
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getVariantsConfig(array $params)
+    {
+        $id = craft()->templates->namespaceInputId($params['name']);
+        $name = craft()->templates->namespaceInputName($params['name']);
+
+        $blocks = [];
+        $totalNewBlocks = 0;
+        $blockTypes = [];
+
+        $config = [
+            'id'             => $id,
+            'name'           => $name,
+            'blocks'         => $blocks,
+            'blockTypes'     => $blockTypes,
+            'totalNewBlocks' => $totalNewBlocks
+        ];
+
+        return $config;
+    }
+
 }
