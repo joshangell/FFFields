@@ -183,10 +183,10 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
             $variants[] = [
                 'name' => 'Variant',
-//                'type' => [
-//                    'name' => $name.'['.$variantId.'][type]',
-//                    'value' => null,
-//                ],
+                'type' => [
+                    'name' => $name.'['.$variantId.'][type]',
+                    'value' => null,
+                ],
                 'enabled' => [
                     'name' => $name.'['.$variantId.'][enabled]',
                     'value' => $variant->enabled,
@@ -198,10 +198,10 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $blockTypes[] = [
             'name' => 'variant',
-//            'type' => [
-//                'name' => $name.'[__BLOCK__][type]',
-//                'value' => null,
-//            ],
+            'type' => [
+                'name' => $name.'[__BLOCK__][type]',
+                'value' => null,
+            ],
             'enabled' => [
                 'name' => $name.'[__BLOCK__][enabled]',
                 'value' => '1'
