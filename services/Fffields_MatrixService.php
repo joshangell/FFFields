@@ -207,7 +207,17 @@ class Fffields_MatrixService extends BaseApplicationComponent
         return $config;
     }
 
+    // Private Methods
+    // =========================================================================
 
+    /**
+     * Returns the field configs for both the meta and field layout for a variant.
+     *
+     * @param $variant
+     * @param $name
+     *
+     * @return array
+     */
     private function _getVariantFields($variant, $name)
     {
         $fields = [];
@@ -340,7 +350,6 @@ class Fffields_MatrixService extends BaseApplicationComponent
         return [$meta, $fields];
 
     }
-
 
     /**
      * Returns the config for the simple meta fields needed on variant blocks.
