@@ -4,9 +4,24 @@
         <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value" v-if="block.type !== undefined">
         <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
-        <div class="ui form">
-            <field v-for="f in block.fields" v-bind:config="f.config"></field>
-        </div>
+        <template v-if="block.meta !== undefined">
+            <div class="ui form">
+                <div class="ui grid">
+                    <div class="six wide column">
+                        <field v-for="m in block.meta" v-bind:config="m.config"></field>
+                    </div>
+                    <div class="ten wide column">
+                        <field v-for="f in block.fields" v-bind:config="f.config"></field>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template v-else>
+            <div class="ui form">
+                <field v-for="f in block.fields" v-bind:config="f.config"></field>
+            </div>
+        </template>
 
         <div class="ui top attached label">
             {{ block.name }}

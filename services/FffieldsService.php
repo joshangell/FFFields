@@ -143,7 +143,7 @@ class FffieldsService extends BaseApplicationComponent
         $config = [
             'id' => $name,
             'class' => $fieldClass,
-            'label' => $label,
+            'label' => Craft::t('Product Variants'),
             'labelId' => $labelId,
             'fieldId' => $fieldId,
             'instructions' => null,

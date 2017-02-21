@@ -148,6 +148,151 @@ class Fffields_MatrixService extends BaseApplicationComponent
         $variants = [];
         $totalNewVariants = 0;
 
+        $fields = [];
+        $meta = [];
+
+        // Create a fake Variant model so the field types have a way to get at the owner element, if there is one
+        $variant = new Commerce_VariantModel();
+        $variant->setProduct($params['product']);
+
+
+        // Sort out the custom fields for these variants
+        $variantFieldLayout = $variant->getFieldLayout();
+
+        $variantNamespace = $name.'[__BLOCK__]';
+
+
+
+        foreach ($variantFieldLayout->getFields() as $variantFieldLayoutField) {
+
+            $variantField = $variantFieldLayoutField->getField();
+
+            $fieldType = $variantField->getFieldType();
+
+            if ($fieldType)
+            {
+                $fieldType->element = $variant;
+                $fieldType->setIsFresh(true);
+            }
+
+            $variantFieldValue = ($variant ? $variant->getFieldValue($variantField->handle) : null);
+
+            $fields[] = [
+                'handle' => $variantField->handle,
+                'config' => craft()->fffields->getFieldConfig([
+                    'element' => $variant,
+                    'fieldLayoutField' => $variantFieldLayoutField,
+                    'value' => $variantFieldValue,
+                    'namespace' => $variantNamespace.'[fields]'
+                ])
+            ];
+
+            if ($fieldType)
+            {
+                $fieldType->setIsFresh(null);
+            }
+
+        }
+
+        // Sort out the meta fields for these variants
+        if ($params['product']->type->hasVariantTitleField) {
+            $meta[] = [
+                'handle' => 'title',
+                'config' => $this->getVariantMetaFieldConfig([
+                    'name'        => 'title',
+                    'label'       => Craft::t('Title'),
+                    'placeholder' => Craft::t('Enter title'),
+                    'required'    => true,
+                    'variant'     => $variant,
+                    'namespace'   => $variantNamespace
+                ])
+            ];
+        }
+
+        $meta[] = [
+            'handle' => 'sku',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'sku',
+                'label'       => Craft::t('SKU'),
+                'placeholder' => Craft::t('Enter SKU'),
+                'required'    => true,
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+        $meta[] = [
+            'handle' => 'price',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'price',
+                'label'       => Craft::t('Price'),
+                'placeholder' => Craft::t('Enter price'),
+                'required'    => true,
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+        // TODO: format these fields better
+        $meta[] = [
+            'handle' => 'stock',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'stock',
+                'label'       => Craft::t('Stock'),
+                'placeholder' => Craft::t('Enter stock'),
+                'required'    => true,
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+        $meta[] = [
+            'handle' => 'unlimitedStock',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'unlimitedStock',
+                'label'       => Craft::t('Unlimited Stock'),
+                'placeholder' => null,
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+        $meta[] = [
+            'handle' => 'minQty',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'minQty',
+                'label'       => Craft::t('Minimum allowed quantity'),
+                'placeholder' => Craft::t('Any'),
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+        $meta[] = [
+            'handle' => 'maxQty',
+            'config' => $this->getVariantMetaFieldConfig([
+                'name'        => 'maxQty',
+                'label'       => Craft::t('Maximum allowed quantity'),
+                'placeholder' => Craft::t('Any'),
+                'variant'     => $variant,
+                'namespace'   => $variantNamespace
+            ])
+        ];
+
+
+        // Store the meta and fields for the blockTypes array
+        $blockTypes[] = [
+            'name' => Craft::t('Variant'),
+            'enabled' => [
+                'name' => $name.'[__BLOCK__][enabled]',
+                'value' => '1'
+            ],
+            'meta'   => $meta,
+            'fields' => $fields
+        ];
+
+
+        // Go over the existing variants and load up the meta and fields for them too
         foreach ($params['product']->getVariants() as $variant) {
 
             $variantId = $variant->id;
@@ -157,58 +302,24 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 $variantId = 'new' . $totalNewVariants;
             }
 
-            $fields = [];
 
-//            $blockTypeFieldLayout = $block->type->getFieldLayout();
+            // Need to re-build the fields and variants so we get inline errors and values etc
 
-            $matrixNamespace = $name.'['.$variantId.']';
-//
-//            foreach ($blockTypeFieldLayout->getFields() as $blockFieldLayoutField) {
-//
-//                $blockField = $blockFieldLayoutField->getField();
-//
-//                $blockFieldValue = ($block ? $block->getFieldValue($blockField->handle) : null);
-//
-//                $fields[] = [
-//                    'handle' => $blockField->handle,
-//                    'config' => craft()->fffields->getFieldConfig([
-//                        'element' => $params['element'],
-//                        'fieldLayoutField' => $blockFieldLayoutField,
-//                        'value' => $blockFieldValue,
-//                        'namespace' => $matrixNamespace
-//
-//                    ])
-//                ];
-//            }
+//            $metaFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($meta)));
+//            $variantFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($fields)));
+            $metaFields = [];
+            $variantFields = [];
 
             $variants[] = [
-                'name' => 'Variant',
-                'type' => [
-                    'name' => $name.'['.$variantId.'][type]',
-                    'value' => null,
-                ],
+                'name' => Craft::t('Variant'),
                 'enabled' => [
                     'name' => $name.'['.$variantId.'][enabled]',
                     'value' => $variant->enabled,
                 ],
-                'fields' => $fields
+                'meta'   => $metaFields,
+                'fields' => $variantFields
             ];
         }
-
-
-        $blockTypes[] = [
-            'name' => 'variant',
-            'type' => [
-                'name' => $name.'[__BLOCK__][type]',
-                'value' => null,
-            ],
-            'enabled' => [
-                'name' => $name.'[__BLOCK__][enabled]',
-                'value' => '1'
-            ],
-            'fields' => $fields
-        ];
-
 
         $config = [
             'id'             => $id,
@@ -219,6 +330,140 @@ class Fffields_MatrixService extends BaseApplicationComponent
         ];
 
         return $config;
+    }
+
+
+    /**
+     * Returns the config for the simple meta fields needed on variant blocks.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getVariantMetaFieldConfig(array $params)
+    {
+        $errors = ($params['variant'] ? $params['variant']->getErrors($params['name']) : null);
+        $required = (isset($params['required']) && $params['required'] ? true : false);
+
+
+        $labelId = $params['name'] . '-label';
+        $fieldId = $params['name'] . '-field';
+
+        $fieldClass = [
+            'field',
+            ($errors ? 'error' : null),
+            ($required ? 'required' : null)
+        ];
+
+        $fieldClass = implode(array_filter($fieldClass), ' ');
+
+
+        // TODO: errors
+        //            $variant->getErrors('title')
+        //        variant.getErrors('unlimitedStock')|merge(variant.getErrors('stock'))
+
+
+        $id = craft()->templates->namespaceInputId($params['name'], $params['namespace']);
+        $name = craft()->templates->namespaceInputName($params['name'], $params['namespace']);
+
+
+        switch ($params['name']) {
+
+            case 'price' :
+                $value = craft()->numberFormatter->formatDecimal($params['variant']->price, false);
+
+                if ($value === '0') {
+                    $value = '';
+                }
+
+                // TODO handle currency label
+                // craft.commerce.primaryPaymentCurrency.iso
+
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'number',
+                        'value'       => $value,
+                        'placeholder' => $params['placeholder'],
+                        'min'         => 0,
+                        'step'        => 0.01
+                    ]
+                ];
+                break;
+
+
+            case 'stock' :
+                $value = ($params['variant']->unlimitedStock ? '' : $params['variant']->stock == '0' ? '0': ($params['variant']->stock ? $params['variant']->stock : ''));
+
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'number',
+                        'value'       => $value,
+                        'placeholder' => $params['placeholder'],
+                        //'disabled' => $params['variant']->unlimitedStock -- would be set on main stock field above
+                    ]
+                ];
+                break;
+
+            case 'unlimitedStock' :
+                $fieldConfig = [
+                    'type' => 'lightswitch',
+                    'config' => [
+                        'id'    => $id,
+                        'name'  => $name,
+                        'value' => $params['variant']->unlimitedStock,
+                    ]
+                ];
+                break;
+
+            case 'minQty' :
+            case 'maxQty' :
+                $value = craft()->numberFormatter->formatDecimal($params['variant'][$params['name']], false);
+
+                if ($value === '0') {
+                    $value = '';
+                }
+
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'number',
+                        'value'       => $value,
+                        'placeholder' => $params['placeholder'],
+                    ]
+                ];
+                break;
+
+            default;
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'text',
+                        'value'       => $params['variant'][$params['name']],
+                        'placeholder' => $params['placeholder']
+                    ]
+                ];
+                break;
+        }
+
+        return [
+            'id'           => $params['name'],
+            'class'        => $fieldClass,
+            'label'        => $params['label'],
+            'labelId'      => $labelId,
+            'fieldId'      => $fieldId,
+            'instructions' => null,
+            'field'        => $fieldConfig
+        ];
     }
 
 }
