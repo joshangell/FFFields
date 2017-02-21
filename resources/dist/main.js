@@ -29706,9 +29706,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -29778,7 +29775,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function () {
-        $('.ui.dropdown', this.$el).dropdown({
+        $('.actions .ui.dropdown', this.$el).dropdown({
             action: 'hide'
         });
 
@@ -29829,6 +29826,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'multi-select',
@@ -29839,7 +29839,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function () {
-        $(this.$el).dropdown();
+        $('.ui.dropdown', this.$el).dropdown();
     }
 };
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -32385,7 +32385,13 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('select', {
+  return _c('div', [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name + '[]',
+      "value": ""
+    }
+  }), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -32414,7 +32420,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": option.value
       }
     }, [_vm._v(_vm._s(option.label))])
-  }))
+  }))])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

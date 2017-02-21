@@ -189,7 +189,7 @@
             }
         },
         mounted: function() {
-            $('.ui.dropdown', this.$el).dropdown({
+            $('.actions .ui.dropdown', this.$el).dropdown({
                 action : 'hide'
             });
 
