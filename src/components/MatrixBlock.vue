@@ -1,7 +1,7 @@
 <template>
     <div class="ui segment matrix-block">
 
-        <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value">
+        <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value" v-if="block.type !== undefined">
         <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
         <div class="ui form">
