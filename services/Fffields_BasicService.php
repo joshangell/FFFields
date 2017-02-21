@@ -138,22 +138,54 @@ class Fffields_BasicService extends BaseApplicationComponent
         $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
-        if ($params['element']->getHasFreshContent()) {
-            $value = $field->getFieldType()->getFefaultValue();
+        // NOTE: Bit of a crap check but it’ll do for now
+        $multi = false;
+        if (in_array($field->type , ['Checkboxes', 'MultiSelect'])) {
+            $multi = true;
         }
 
-        // Check for multi
-        // NOTE: Bit of a crap check but it’ll do for now
-        if (in_array($field->type , ['Checkboxes', 'MultiSelect'])) {
-            $values = [];
+        // Sort out the value
+        if ($params['element']->getHasFreshContent()) {
 
-            foreach ($value as $v) {
-                $values[] = $v->value;
+            if ($multi)
+            {
+                $defaultValues = [];
             }
 
-            $value = $values;
+            foreach ($settings->options as $option)
+            {
+                if (!empty($option['default']))
+                {
+                    if ($multi)
+                    {
+                        $defaultValues[] = $option['value'];
+                    }
+                    else
+                    {
+                        $value = $option['value'];
+                    }
+                }
+            }
+
+            if ($multi)
+            {
+                $value = $defaultValues;
+            }
+
         } else {
-            $value = $value->value;
+
+            if ($multi) {
+                $values = [];
+
+                foreach ($value as $v) {
+                    $values[] = $v->value;
+                }
+
+                $value = $values;
+            } else {
+                $value = $value->value;
+            }
+
         }
 
         $config = [
