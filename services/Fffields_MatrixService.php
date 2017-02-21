@@ -148,20 +148,78 @@ class Fffields_MatrixService extends BaseApplicationComponent
         $variants = [];
         $totalNewVariants = 0;
 
-        $fields = [];
-        $meta = [];
 
         // Create a fake Variant model so the field types have a way to get at the owner element, if there is one
         $variant = new Commerce_VariantModel();
         $variant->setProduct($params['product']);
 
+        list($meta, $fields) = $this->_getVariantFields($variant, $name);
+
+        // Store the meta and fields for the blockTypes array
+        $blockTypes[] = [
+            'name' => Craft::t('Variant'),
+            'enabled' => [
+                'name' => $name.'[__BLOCK__][enabled]',
+                'value' => '1'
+            ],
+            'meta'   => $meta,
+            'fields' => $fields
+        ];
+
+
+        // Now go over the existing variants and load up the meta and fields for them too
+        foreach ($params['product']->getVariants() as $variant) {
+
+            $variantId = $variant->id;
+
+            if (!$variantId) {
+                $totalNewVariants++;
+                $variantId = 'new' . $totalNewVariants;
+            }
+
+
+            // Need to re-build the fields and variants so we get inline errors and values etc
+
+//            $metaFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($meta)));
+//            $variantFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($fields)));
+
+            list($metaFields, $variantFields) = $this->_getVariantFields($variant, $name);
+
+            $variants[] = [
+                'name' => Craft::t('Variant'),
+                'enabled' => [
+                    'name' => $name.'['.$variantId.'][enabled]',
+                    'value' => $variant->enabled,
+                ],
+                'meta'   => $metaFields,
+                'fields' => $variantFields
+            ];
+        }
+
+        $config = [
+            'id'             => $id,
+            'name'           => $name,
+            'blocks'         => $variants,
+            'blockTypes'     => $blockTypes,
+            'totalNewBlocks' => $totalNewVariants
+        ];
+
+        return $config;
+    }
+
+
+    private function _getVariantFields($variant, $name)
+    {
+        $fields = [];
+        $meta = [];
 
         // Sort out the custom fields for these variants
         $variantFieldLayout = $variant->getFieldLayout();
 
         $variantNamespace = $name.'[__BLOCK__]';
-
-
+        if ($variant->id) {
+            $variantNamespace = $name.'['.$variant->id.']';
+        }
 
         foreach ($variantFieldLayout->getFields() as $variantFieldLayoutField) {
 
@@ -195,10 +253,10 @@ class Fffields_MatrixService extends BaseApplicationComponent
         }
 
         // Sort out the meta fields for these variants
-        if ($params['product']->type->hasVariantTitleField) {
+        if ($variant->product->type->hasVariantTitleField) {
             $meta[] = [
                 'handle' => 'title',
-                'config' => $this->getVariantMetaFieldConfig([
+                'config' => $this->_getVariantMetaFieldConfig([
                     'name'        => 'title',
                     'label'       => Craft::t('Title'),
                     'placeholder' => Craft::t('Enter title'),
@@ -211,7 +269,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $meta[] = [
             'handle' => 'sku',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'sku',
                 'label'       => Craft::t('SKU'),
                 'placeholder' => Craft::t('Enter SKU'),
@@ -223,7 +281,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $meta[] = [
             'handle' => 'price',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'price',
                 'label'       => Craft::t('Price'),
                 'placeholder' => Craft::t('Enter price'),
@@ -236,7 +294,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
         // TODO: format these fields better
         $meta[] = [
             'handle' => 'stock',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'stock',
                 'label'       => Craft::t('Stock'),
                 'placeholder' => Craft::t('Enter stock'),
@@ -248,7 +306,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $meta[] = [
             'handle' => 'unlimitedStock',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'unlimitedStock',
                 'label'       => Craft::t('Unlimited Stock'),
                 'placeholder' => null,
@@ -259,7 +317,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $meta[] = [
             'handle' => 'minQty',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'minQty',
                 'label'       => Craft::t('Minimum allowed quantity'),
                 'placeholder' => Craft::t('Any'),
@@ -270,7 +328,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
 
         $meta[] = [
             'handle' => 'maxQty',
-            'config' => $this->getVariantMetaFieldConfig([
+            'config' => $this->_getVariantMetaFieldConfig([
                 'name'        => 'maxQty',
                 'label'       => Craft::t('Maximum allowed quantity'),
                 'placeholder' => Craft::t('Any'),
@@ -279,57 +337,8 @@ class Fffields_MatrixService extends BaseApplicationComponent
             ])
         ];
 
+        return [$meta, $fields];
 
-        // Store the meta and fields for the blockTypes array
-        $blockTypes[] = [
-            'name' => Craft::t('Variant'),
-            'enabled' => [
-                'name' => $name.'[__BLOCK__][enabled]',
-                'value' => '1'
-            ],
-            'meta'   => $meta,
-            'fields' => $fields
-        ];
-
-
-        // Go over the existing variants and load up the meta and fields for them too
-        foreach ($params['product']->getVariants() as $variant) {
-
-            $variantId = $variant->id;
-
-            if (!$variantId) {
-                $totalNewVariants++;
-                $variantId = 'new' . $totalNewVariants;
-            }
-
-
-            // Need to re-build the fields and variants so we get inline errors and values etc
-
-//            $metaFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($meta)));
-//            $variantFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($fields)));
-            $metaFields = [];
-            $variantFields = [];
-
-            $variants[] = [
-                'name' => Craft::t('Variant'),
-                'enabled' => [
-                    'name' => $name.'['.$variantId.'][enabled]',
-                    'value' => $variant->enabled,
-                ],
-                'meta'   => $metaFields,
-                'fields' => $variantFields
-            ];
-        }
-
-        $config = [
-            'id'             => $id,
-            'name'           => $name,
-            'blocks'         => $variants,
-            'blockTypes'     => $blockTypes,
-            'totalNewBlocks' => $totalNewVariants
-        ];
-
-        return $config;
     }
 
 
@@ -340,7 +349,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
      *
      * @return array
      */
-    public function getVariantMetaFieldConfig(array $params)
+    private function _getVariantMetaFieldConfig(array $params)
     {
         $errors = ($params['variant'] ? $params['variant']->getErrors($params['name']) : null);
         $required = (isset($params['required']) && $params['required'] ? true : false);
