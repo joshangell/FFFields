@@ -29694,6 +29694,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -32459,7 +32474,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ui segment matrix-block"
-  }, [_c('input', {
+  }, [(_vm.block.type !== undefined) ? _c('input', {
     attrs: {
       "type": "hidden",
       "name": _vm.block.type.name
@@ -32467,7 +32482,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.block.type.value
     }
-  }), _vm._v(" "), _c('input', {
+  }) : _vm._e(), _vm._v(" "), _c('input', {
     attrs: {
       "type": "hidden",
       "name": _vm.block.enabled.name
@@ -32475,7 +32490,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.enabled
     }
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.block.meta !== undefined) ? [_c('div', {
+    staticClass: "ui form"
+  }, [_c('div', {
+    staticClass: "ui grid"
+  }, [_c('div', {
+    staticClass: "six wide column"
+  }, _vm._l((_vm.block.meta), function(m) {
+    return _c('field', {
+      attrs: {
+        "config": m.config
+      }
+    })
+  })), _vm._v(" "), _c('div', {
+    staticClass: "ten wide column"
+  }, _vm._l((_vm.block.fields), function(f) {
+    return _c('field', {
+      attrs: {
+        "config": f.config
+      }
+    })
+  }))])])] : [_c('div', {
     staticClass: "ui form"
   }, _vm._l((_vm.block.fields), function(f) {
     return _c('field', {
@@ -32483,7 +32518,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "config": f.config
       }
     })
-  })), _vm._v(" "), _c('div', {
+  }))], _vm._v(" "), _c('div', {
     staticClass: "ui top attached label"
   }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
     staticClass: "actions"
@@ -32522,7 +32557,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "button minus circle icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2)])])
+  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2)])], 2)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "item"
