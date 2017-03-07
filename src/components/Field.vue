@@ -37,6 +37,7 @@
     import Checkboxes   from './Checkboxes.vue';
     import RadioButtons from './RadioButtons.vue';
     import MultiSelect  from './MultiSelect.vue';
+    import Assets       from './Assets.vue';
 
     export default {
         name: 'field',
@@ -52,7 +53,8 @@
             'dropdown'      : Dropdown,
             'checkboxes'    : Checkboxes,
             'radio-buttons' : RadioButtons,
-            'multi-select'  : MultiSelect
-        },
+            'multi-select'  : MultiSelect,
+            'assets'        : Assets
+        }
     }
 </script>

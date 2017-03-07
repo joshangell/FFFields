@@ -283,6 +283,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'Matrix' :
                 return 'matrix';
 
+            case 'Assets' :
+                return 'assets';
+
             default :
                 return 'message';
                 break;
@@ -327,6 +330,9 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'Matrix' :
                 return craft()->fffields_matrix->getConfig($params);
+
+            case 'Assets' :
+                return craft()->fffields_assets->getConfig($params);
 
             default :
                 return [

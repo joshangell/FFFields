@@ -29360,6 +29360,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__Assets_vue__);
 //
 //
 //
@@ -29387,6 +29389,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -29414,7 +29417,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'dropdown': __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default.a,
         'checkboxes': __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default.a,
         'radio-buttons': __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default.a,
-        'multi-select': __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default.a
+        'multi-select': __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default.a,
+        'assets': __WEBPACK_IMPORTED_MODULE_11__Assets_vue___default.a
     }
 };
 
@@ -33307,6 +33311,193 @@ if (document.querySelector('#field-layout')) {
     });
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__AssetElement_vue__);
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'assets',
+    props: {
+        config: {}
+    },
+    data: function () {
+        return {
+            elements: this.config.elements
+        };
+    },
+    components: {
+        'asset-element': __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue___default.a
+    }
+};
+
+/***/ }),
+/* 79 */,
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(78),
+  /* template */
+  __webpack_require__(82),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/Assets.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Assets.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1f9262c9", Component.options)
+  } else {
+    hotAPI.reload("data-v-1f9262c9", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */,
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', _vm._l((_vm.elements), function(element) {
+    return _c('asset-element', {
+      attrs: {
+        "element": element
+      }
+    })
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1f9262c9", module.exports)
+  }
+}
+
+/***/ }),
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'asset-element',
+    props: ['element']
+};
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(87),
+  /* template */
+  __webpack_require__(89),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/AssetElement.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AssetElement.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-68d05632", Component.options)
+  } else {
+    hotAPI.reload("data-v-68d05632", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ui image label"
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.element.name
+    },
+    domProps: {
+      "value": _vm.element.id
+    }
+  }), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": _vm.element.thumbUrl
+    }
+  }), _vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), _c('i', {
+    staticClass: "delete icon"
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-68d05632", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
