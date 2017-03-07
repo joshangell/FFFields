@@ -1,8 +1,14 @@
 <template>
-    <div>
+    <div class="ui labels">
         <asset-element v-for="element in elements" v-bind:element="element"></asset-element>
     </div>
 </template>
+
+<style lang="scss">
+    .ui.labels .ui.image.label {
+        margin-bottom: 0.5rem;
+    }
+</style>
 
 <script>
 
