@@ -140,11 +140,7 @@
         },
         methods: {
             toggleCollapse: function(event) {
-                if (this.collapsed) {
-                    this.collapsed = false;
-                } else {
-                    this.collapsed = true;
-                }
+                this.collapsed = !this.collapsed;
 
                 $('.ui.form', this.$el).transition({
                     animation: 'slide down',
