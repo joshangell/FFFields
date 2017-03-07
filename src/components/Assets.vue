@@ -8,7 +8,7 @@
             </draggable>
         </div>
 
-        <button type="button" class="ui small basic labeled icon button">
+        <button type="button" class="ui small basic labeled icon button" v-if="canAddMore">
             <i class="add icon"></i>
             {{ config.selectionLabel }}
         </button>
@@ -34,11 +34,15 @@
             config: {},
         },
         data: function() {
+
+            const initialElementCount = Object.keys(this.config.elements).length;
+
             return {
                 elements: this.config.elements,
+                canAddMore: (this.config.limit === '' || initialElementCount < this.config.limit),
                 options: {
                     ghostClass: 'disabled',
-                    disabled: Object.keys(this.config.elements).length <= 1
+                    disabled: initialElementCount <= 1
                 },
             }
         },
@@ -49,11 +53,19 @@
         methods: {
             onElementRemoved: function(element) {
                 delete this.elements[element.id];
-                this.updateDraggable();
+                this.updateState();
             },
-            updateDraggable: function()
+            updateState: function()
             {
-                this.$children[0]._sortable.option("disabled", Object.keys(this.elements).length <= 1);
+                const elementCount = Object.keys(this.elements).length;
+
+                this.$children[0]._sortable.option("disabled", elementCount <= 1);
+
+
+                if (this.config.limit !== '') {
+                    this.canAddMore = elementCount < this.config.limit;
+                }
+
             }
         }
     }

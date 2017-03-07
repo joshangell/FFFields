@@ -33358,11 +33358,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         config: {}
     },
     data: function () {
+
+        const initialElementCount = Object.keys(this.config.elements).length;
+
         return {
             elements: this.config.elements,
+            canAddMore: this.config.limit === '' || initialElementCount < this.config.limit,
             options: {
                 ghostClass: 'disabled',
-                disabled: Object.keys(this.config.elements).length <= 1
+                disabled: initialElementCount <= 1
             }
         };
     },
@@ -33373,10 +33377,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         onElementRemoved: function (element) {
             delete this.elements[element.id];
-            this.updateDraggable();
+            this.updateState();
         },
-        updateDraggable: function () {
-            this.$children[0]._sortable.option("disabled", Object.keys(this.elements).length <= 1);
+        updateState: function () {
+            const elementCount = Object.keys(this.elements).length;
+
+            this.$children[0]._sortable.option("disabled", elementCount <= 1);
+
+            if (this.config.limit !== '') {
+                this.canAddMore = elementCount < this.config.limit;
+            }
         }
     }
 };
@@ -33447,14 +33457,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "elementRemoved": _vm.onElementRemoved
       }
     })
-  }))], 1), _vm._v(" "), _c('button', {
+  }))], 1), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
     staticClass: "ui small basic labeled icon button",
     attrs: {
       "type": "button"
     }
   }, [_c('i', {
     staticClass: "add icon"
-  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")])])
+  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

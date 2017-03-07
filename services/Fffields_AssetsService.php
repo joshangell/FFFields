@@ -66,11 +66,12 @@ class Fffields_AssetsService extends BaseApplicationComponent
 
         // Return the config
         $config = [
-            'id'       => $id,
-            'name'     => $name,
-            'elements' => $elements,
-            'sources'  => $settings->sources,
-            'criteria' => $selectionCriteria,
+            'id'             => $id,
+            'name'           => $name,
+            'elements'       => $elements,
+            'sources'        => $settings->sources,
+            'criteria'       => $selectionCriteria,
+            'limit'          => $settings->limit,
             'selectionLabel' => ($settings->selectionLabel ? Craft::t($settings->selectionLabel) : Craft::t('Add an asset'))
         ];
 
