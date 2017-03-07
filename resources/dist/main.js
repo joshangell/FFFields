@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 70);
+/******/ 	return __webpack_require__(__webpack_require__.s = 80);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10422,7 +10422,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(67)
+var listToStyles = __webpack_require__(78)
 
 /*
 type StyleObject = {
@@ -10644,13 +10644,13 @@ function applyToTag (styleElement, obj) {
 
 
 /* styles */
-__webpack_require__(66)
+__webpack_require__(77)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(17),
+  __webpack_require__(22),
   /* template */
-  __webpack_require__(59),
+  __webpack_require__(69),
   /* scopeId */
   null,
   /* cssModules */
@@ -10678,6 +10678,294 @@ module.exports = Component.exports
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+(function () {
+  "use strict";
+
+  function buildDraggable(Sortable) {
+    function removeNode(node) {
+      node.parentElement.removeChild(node);
+    }
+
+    function insertNodeAt(fatherNode, node, position) {
+      if (position < fatherNode.children.length) {
+        fatherNode.insertBefore(node, fatherNode.children[position]);
+      } else {
+        fatherNode.appendChild(node);
+      }
+    }
+
+    function computeVmIndex(vnodes, element) {
+      return vnodes.map(function (elt) {
+        return elt.elm;
+      }).indexOf(element);
+    }
+
+    function _computeIndexes(slots, children) {
+      return !slots ? [] : Array.prototype.map.call(children, function (elt) {
+        return computeVmIndex(slots, elt);
+      });
+    }
+
+    function emit(evtName, evtData) {
+      this.$emit(evtName.toLowerCase(), evtData);
+    }
+
+    function delegateAndEmit(evtName) {
+      var _this = this;
+
+      return function (evtData) {
+        if (_this.list !== null) {
+          _this['onDrag' + evtName](evtData);
+        }
+        emit.call(_this, evtName, evtData);
+      };
+    }
+
+    var eventsListened = ['Start', 'Add', 'Remove', 'Update', 'End'];
+    var eventsToEmit = ['Choose', 'Sort', 'Filter', 'Clone'];
+    var readonlyProperties = ['Move'].concat(eventsListened, eventsToEmit).map(function (evt) {
+      return 'on' + evt;
+    });
+    var draggingElement = null;
+
+    var props = {
+      options: Object,
+      list: {
+        type: Array,
+        required: false,
+        default: null
+      },
+      clone: {
+        type: Function,
+        default: function _default(original) {
+          return original;
+        }
+      },
+      element: {
+        type: String,
+        default: 'div'
+      },
+      move: {
+        type: Function,
+        default: null
+      }
+    };
+
+    var draggableComponent = {
+      props: props,
+
+      data: function data() {
+        return {
+          transitionMode: false
+        };
+      },
+      render: function render(h) {
+        if (this.$slots.default && this.$slots.default.length === 1) {
+          var child = this.$slots.default[0];
+          if (child.componentOptions && child.componentOptions.tag === "transition-group") {
+            this.transitionMode = true;
+          }
+        }
+        return h(this.element, null, this.$slots.default);
+      },
+      mounted: function mounted() {
+        var _this2 = this;
+
+        var optionsAdded = {};
+        eventsListened.forEach(function (elt) {
+          optionsAdded['on' + elt] = delegateAndEmit.call(_this2, elt);
+        });
+
+        eventsToEmit.forEach(function (elt) {
+          optionsAdded['on' + elt] = emit.bind(_this2, elt);
+        });
+
+        var options = _extends({}, this.options, optionsAdded, { onMove: function onMove(evt) {
+            return _this2.onDragMove(evt);
+          } });
+        this._sortable = new Sortable(this.rootContainer, options);
+        this.computeIndexes();
+      },
+      beforeDestroy: function beforeDestroy() {
+        this._sortable.destroy();
+      },
+
+
+      computed: {
+        rootContainer: function rootContainer() {
+          return this.transitionMode ? this.$el.children[0] : this.$el;
+        }
+      },
+
+      watch: {
+        options: function options(newOptionValue) {
+          for (var property in newOptionValue) {
+            if (readonlyProperties.indexOf(property) == -1) {
+              this._sortable.option(property, newOptionValue[property]);
+            }
+          }
+        },
+        list: function list() {
+          this.computeIndexes();
+        }
+      },
+
+      methods: {
+        getChildrenNodes: function getChildrenNodes() {
+          var rawNodes = this.$slots.default;
+          return this.transitionMode ? rawNodes[0].child.$slots.default : rawNodes;
+        },
+        computeIndexes: function computeIndexes() {
+          var _this3 = this;
+
+          this.$nextTick(function () {
+            _this3.visibleIndexes = _computeIndexes(_this3.getChildrenNodes(), _this3.rootContainer.children);
+          });
+        },
+        getUnderlyingVm: function getUnderlyingVm(htmlElt) {
+          var index = computeVmIndex(this.getChildrenNodes(), htmlElt);
+          var element = this.list[index];
+          return { index: index, element: element };
+        },
+        getUnderlyingPotencialDraggableComponent: function getUnderlyingPotencialDraggableComponent(_ref) {
+          var __vue__ = _ref.__vue__;
+
+          if (!__vue__ || !__vue__.$options || __vue__.$options._componentTag !== "transition-group") {
+            return __vue__;
+          }
+          return __vue__.$parent;
+        },
+        emitChanges: function emitChanges(evt) {
+          var _this4 = this;
+
+          this.$nextTick(function () {
+            _this4.$emit('change', evt);
+          });
+        },
+        spliceList: function spliceList() {
+          var _list;
+
+          (_list = this.list).splice.apply(_list, arguments);
+        },
+        updatePosition: function updatePosition(oldIndex, newIndex) {
+          this.list.splice(newIndex, 0, this.list.splice(oldIndex, 1)[0]);
+        },
+        getRelatedContextFromMoveEvent: function getRelatedContextFromMoveEvent(_ref2) {
+          var to = _ref2.to,
+              related = _ref2.related;
+
+          var component = this.getUnderlyingPotencialDraggableComponent(to);
+          if (!component) {
+            return { component: component };
+          }
+          var list = component.list;
+          var context = { list: list, component: component };
+          if (to !== related && list && component.getUnderlyingVm) {
+            var destination = component.getUnderlyingVm(related);
+            return _extends(destination, context);
+          }
+
+          return context;
+        },
+        getVmIndex: function getVmIndex(domIndex) {
+          var indexes = this.visibleIndexes;
+          var numberIndexes = indexes.length;
+          return domIndex > numberIndexes - 1 ? numberIndexes : indexes[domIndex];
+        },
+        onDragStart: function onDragStart(evt) {
+          this.context = this.getUnderlyingVm(evt.item);
+          evt.item._underlying_vm_ = this.clone(this.context.element);
+          draggingElement = evt.item;
+        },
+        onDragAdd: function onDragAdd(evt) {
+          var element = evt.item._underlying_vm_;
+          if (element === undefined) {
+            return;
+          }
+          removeNode(evt.item);
+          var newIndex = this.getVmIndex(evt.newIndex);
+          this.spliceList(newIndex, 0, element);
+          this.computeIndexes();
+          var added = { element: element, newIndex: newIndex };
+          this.emitChanges({ added: added });
+        },
+        onDragRemove: function onDragRemove(evt) {
+          insertNodeAt(this.rootContainer, evt.item, evt.oldIndex);
+          var isCloning = !!evt.clone;
+          if (isCloning) {
+            removeNode(evt.clone);
+            return;
+          }
+          var oldIndex = this.context.index;
+          this.spliceList(oldIndex, 1);
+          var removed = { element: this.context.element, oldIndex: oldIndex };
+          this.emitChanges({ removed: removed });
+        },
+        onDragUpdate: function onDragUpdate(evt) {
+          removeNode(evt.item);
+          insertNodeAt(evt.from, evt.item, evt.oldIndex);
+          var oldIndex = this.context.index;
+          var newIndex = this.getVmIndex(evt.newIndex);
+          this.updatePosition(oldIndex, newIndex);
+          var moved = { element: this.context.element, oldIndex: oldIndex, newIndex: newIndex };
+          this.emitChanges({ moved: moved });
+        },
+        computeFutureIndex: function computeFutureIndex(relatedContext, evt) {
+          if (!relatedContext.element) {
+            return 0;
+          }
+          var domChildren = [].concat(_toConsumableArray(evt.to.children));
+          var currentDOMIndex = domChildren.indexOf(evt.related);
+          var currentIndex = relatedContext.component.getVmIndex(currentDOMIndex);
+          var draggedInList = domChildren.indexOf(draggingElement) != -1;
+          return draggedInList ? currentIndex : currentIndex + 1;
+        },
+        onDragMove: function onDragMove(evt) {
+          var onMove = this.move;
+          if (!onMove || !this.list) {
+            return true;
+          }
+
+          var relatedContext = this.getRelatedContextFromMoveEvent(evt);
+          var draggedContext = this.context;
+          var futureIndex = this.computeFutureIndex(relatedContext, evt);
+          _extends(draggedContext, { futureIndex: futureIndex });
+          _extends(evt, { relatedContext: relatedContext, draggedContext: draggedContext });
+          return onMove(evt);
+        },
+        onDragEnd: function onDragEnd(evt) {
+          this.computeIndexes();
+          draggingElement = null;
+        }
+      }
+    };
+    return draggableComponent;
+  }
+
+  if (true) {
+    var Sortable = __webpack_require__(41);
+    module.exports = buildDraggable(Sortable);
+  } else if (typeof define == "function" && define.amd) {
+    define(['sortablejs'], function (Sortable) {
+      return buildDraggable(Sortable);
+    });
+  } else if (window && window.Vue && window.Sortable) {
+    var draggable = buildDraggable(window.Sortable);
+    Vue.component('draggable', draggable);
+  }
+})();
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -11403,7 +11691,607 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {/*!
+ * # Semantic UI 2.2.7 - Dimmer
+ * http://github.com/semantic-org/semantic-ui/
+ *
+ *
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+;(function ($, window, document, undefined) {
+
+  "use strict";
+
+  window = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+
+  $.fn.dimmer = function (parameters) {
+    var $allModules = $(this),
+        time = new Date().getTime(),
+        performance = [],
+        query = arguments[0],
+        methodInvoked = typeof query == 'string',
+        queryArguments = [].slice.call(arguments, 1),
+        returnedValue;
+
+    $allModules.each(function () {
+      var settings = $.isPlainObject(parameters) ? $.extend(true, {}, $.fn.dimmer.settings, parameters) : $.extend({}, $.fn.dimmer.settings),
+          selector = settings.selector,
+          namespace = settings.namespace,
+          className = settings.className,
+          error = settings.error,
+          eventNamespace = '.' + namespace,
+          moduleNamespace = 'module-' + namespace,
+          moduleSelector = $allModules.selector || '',
+          clickEvent = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click',
+          $module = $(this),
+          $dimmer,
+          $dimmable,
+          element = this,
+          instance = $module.data(moduleNamespace),
+          module;
+
+      module = {
+
+        preinitialize: function () {
+          if (module.is.dimmer()) {
+
+            $dimmable = $module.parent();
+            $dimmer = $module;
+          } else {
+            $dimmable = $module;
+            if (module.has.dimmer()) {
+              if (settings.dimmerName) {
+                $dimmer = $dimmable.find(selector.dimmer).filter('.' + settings.dimmerName);
+              } else {
+                $dimmer = $dimmable.find(selector.dimmer);
+              }
+            } else {
+              $dimmer = module.create();
+            }
+            module.set.variation();
+          }
+        },
+
+        initialize: function () {
+          module.debug('Initializing dimmer', settings);
+
+          module.bind.events();
+          module.set.dimmable();
+          module.instantiate();
+        },
+
+        instantiate: function () {
+          module.verbose('Storing instance of module', module);
+          instance = module;
+          $module.data(moduleNamespace, instance);
+        },
+
+        destroy: function () {
+          module.verbose('Destroying previous module', $dimmer);
+          module.unbind.events();
+          module.remove.variation();
+          $dimmable.off(eventNamespace);
+        },
+
+        bind: {
+          events: function () {
+            if (settings.on == 'hover') {
+              $dimmable.on('mouseenter' + eventNamespace, module.show).on('mouseleave' + eventNamespace, module.hide);
+            } else if (settings.on == 'click') {
+              $dimmable.on(clickEvent + eventNamespace, module.toggle);
+            }
+            if (module.is.page()) {
+              module.debug('Setting as a page dimmer', $dimmable);
+              module.set.pageDimmer();
+            }
+
+            if (module.is.closable()) {
+              module.verbose('Adding dimmer close event', $dimmer);
+              $dimmable.on(clickEvent + eventNamespace, selector.dimmer, module.event.click);
+            }
+          }
+        },
+
+        unbind: {
+          events: function () {
+            $module.removeData(moduleNamespace);
+            $dimmable.off(eventNamespace);
+          }
+        },
+
+        event: {
+          click: function (event) {
+            module.verbose('Determining if event occured on dimmer', event);
+            if ($dimmer.find(event.target).length === 0 || $(event.target).is(selector.content)) {
+              module.hide();
+              event.stopImmediatePropagation();
+            }
+          }
+        },
+
+        addContent: function (element) {
+          var $content = $(element);
+          module.debug('Add content to dimmer', $content);
+          if ($content.parent()[0] !== $dimmer[0]) {
+            $content.detach().appendTo($dimmer);
+          }
+        },
+
+        create: function () {
+          var $element = $(settings.template.dimmer());
+          if (settings.dimmerName) {
+            module.debug('Creating named dimmer', settings.dimmerName);
+            $element.addClass(settings.dimmerName);
+          }
+          $element.appendTo($dimmable);
+          return $element;
+        },
+
+        show: function (callback) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          module.debug('Showing dimmer', $dimmer, settings);
+          if ((!module.is.dimmed() || module.is.animating()) && module.is.enabled()) {
+            module.animate.show(callback);
+            settings.onShow.call(element);
+            settings.onChange.call(element);
+          } else {
+            module.debug('Dimmer is already shown or disabled');
+          }
+        },
+
+        hide: function (callback) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          if (module.is.dimmed() || module.is.animating()) {
+            module.debug('Hiding dimmer', $dimmer);
+            module.animate.hide(callback);
+            settings.onHide.call(element);
+            settings.onChange.call(element);
+          } else {
+            module.debug('Dimmer is not visible');
+          }
+        },
+
+        toggle: function () {
+          module.verbose('Toggling dimmer visibility', $dimmer);
+          if (!module.is.dimmed()) {
+            module.show();
+          } else {
+            module.hide();
+          }
+        },
+
+        animate: {
+          show: function (callback) {
+            callback = $.isFunction(callback) ? callback : function () {};
+            if (settings.useCSS && $.fn.transition !== undefined && $dimmer.transition('is supported')) {
+              if (settings.opacity !== 'auto') {
+                module.set.opacity();
+              }
+              $dimmer.transition({
+                animation: settings.transition + ' in',
+                queue: false,
+                duration: module.get.duration(),
+                useFailSafe: true,
+                onStart: function () {
+                  module.set.dimmed();
+                },
+                onComplete: function () {
+                  module.set.active();
+                  callback();
+                }
+              });
+            } else {
+              module.verbose('Showing dimmer animation with javascript');
+              module.set.dimmed();
+              if (settings.opacity == 'auto') {
+                settings.opacity = 0.8;
+              }
+              $dimmer.stop().css({
+                opacity: 0,
+                width: '100%',
+                height: '100%'
+              }).fadeTo(module.get.duration(), settings.opacity, function () {
+                $dimmer.removeAttr('style');
+                module.set.active();
+                callback();
+              });
+            }
+          },
+          hide: function (callback) {
+            callback = $.isFunction(callback) ? callback : function () {};
+            if (settings.useCSS && $.fn.transition !== undefined && $dimmer.transition('is supported')) {
+              module.verbose('Hiding dimmer with css');
+              $dimmer.transition({
+                animation: settings.transition + ' out',
+                queue: false,
+                duration: module.get.duration(),
+                useFailSafe: true,
+                onStart: function () {
+                  module.remove.dimmed();
+                },
+                onComplete: function () {
+                  module.remove.active();
+                  callback();
+                }
+              });
+            } else {
+              module.verbose('Hiding dimmer with javascript');
+              module.remove.dimmed();
+              $dimmer.stop().fadeOut(module.get.duration(), function () {
+                module.remove.active();
+                $dimmer.removeAttr('style');
+                callback();
+              });
+            }
+          }
+        },
+
+        get: {
+          dimmer: function () {
+            return $dimmer;
+          },
+          duration: function () {
+            if (typeof settings.duration == 'object') {
+              if (module.is.active()) {
+                return settings.duration.hide;
+              } else {
+                return settings.duration.show;
+              }
+            }
+            return settings.duration;
+          }
+        },
+
+        has: {
+          dimmer: function () {
+            if (settings.dimmerName) {
+              return $module.find(selector.dimmer).filter('.' + settings.dimmerName).length > 0;
+            } else {
+              return $module.find(selector.dimmer).length > 0;
+            }
+          }
+        },
+
+        is: {
+          active: function () {
+            return $dimmer.hasClass(className.active);
+          },
+          animating: function () {
+            return $dimmer.is(':animated') || $dimmer.hasClass(className.animating);
+          },
+          closable: function () {
+            if (settings.closable == 'auto') {
+              if (settings.on == 'hover') {
+                return false;
+              }
+              return true;
+            }
+            return settings.closable;
+          },
+          dimmer: function () {
+            return $module.hasClass(className.dimmer);
+          },
+          dimmable: function () {
+            return $module.hasClass(className.dimmable);
+          },
+          dimmed: function () {
+            return $dimmable.hasClass(className.dimmed);
+          },
+          disabled: function () {
+            return $dimmable.hasClass(className.disabled);
+          },
+          enabled: function () {
+            return !module.is.disabled();
+          },
+          page: function () {
+            return $dimmable.is('body');
+          },
+          pageDimmer: function () {
+            return $dimmer.hasClass(className.pageDimmer);
+          }
+        },
+
+        can: {
+          show: function () {
+            return !$dimmer.hasClass(className.disabled);
+          }
+        },
+
+        set: {
+          opacity: function (opacity) {
+            var color = $dimmer.css('background-color'),
+                colorArray = color.split(','),
+                isRGB = colorArray && colorArray.length == 3,
+                isRGBA = colorArray && colorArray.length == 4;
+            opacity = settings.opacity === 0 ? 0 : settings.opacity || opacity;
+            if (isRGB || isRGBA) {
+              colorArray[3] = opacity + ')';
+              color = colorArray.join(',');
+            } else {
+              color = 'rgba(0, 0, 0, ' + opacity + ')';
+            }
+            module.debug('Setting opacity to', opacity);
+            $dimmer.css('background-color', color);
+          },
+          active: function () {
+            $dimmer.addClass(className.active);
+          },
+          dimmable: function () {
+            $dimmable.addClass(className.dimmable);
+          },
+          dimmed: function () {
+            $dimmable.addClass(className.dimmed);
+          },
+          pageDimmer: function () {
+            $dimmer.addClass(className.pageDimmer);
+          },
+          disabled: function () {
+            $dimmer.addClass(className.disabled);
+          },
+          variation: function (variation) {
+            variation = variation || settings.variation;
+            if (variation) {
+              $dimmer.addClass(variation);
+            }
+          }
+        },
+
+        remove: {
+          active: function () {
+            $dimmer.removeClass(className.active);
+          },
+          dimmed: function () {
+            $dimmable.removeClass(className.dimmed);
+          },
+          disabled: function () {
+            $dimmer.removeClass(className.disabled);
+          },
+          variation: function (variation) {
+            variation = variation || settings.variation;
+            if (variation) {
+              $dimmer.removeClass(variation);
+            }
+          }
+        },
+
+        setting: function (name, value) {
+          module.debug('Changing setting', name, value);
+          if ($.isPlainObject(name)) {
+            $.extend(true, settings, name);
+          } else if (value !== undefined) {
+            if ($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            } else {
+              settings[name] = value;
+            }
+          } else {
+            return settings[name];
+          }
+        },
+        internal: function (name, value) {
+          if ($.isPlainObject(name)) {
+            $.extend(true, module, name);
+          } else if (value !== undefined) {
+            module[name] = value;
+          } else {
+            return module[name];
+          }
+        },
+        debug: function () {
+          if (!settings.silent && settings.debug) {
+            if (settings.performance) {
+              module.performance.log(arguments);
+            } else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function () {
+          if (!settings.silent && settings.verbose && settings.debug) {
+            if (settings.performance) {
+              module.performance.log(arguments);
+            } else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function () {
+          if (!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
+        },
+        performance: {
+          log: function (message) {
+            var currentTime, executionTime, previousTime;
+            if (settings.performance) {
+              currentTime = new Date().getTime();
+              previousTime = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time = currentTime;
+              performance.push({
+                'Name': message[0],
+                'Arguments': [].slice.call(message, 1) || '',
+                'Element': element,
+                'Execution Time': executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function () {
+            var title = settings.name + ':',
+                totalTime = 0;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function (index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if (moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if ($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
+            }
+            if ((console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if (console.table) {
+                console.table(performance);
+              } else {
+                $.each(performance, function (index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time'] + 'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function (query, passedArguments, context) {
+          var object = instance,
+              maxDepth,
+              found,
+              response;
+          passedArguments = passedArguments || queryArguments;
+          context = element || context;
+          if (typeof query == 'string' && object !== undefined) {
+            query = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function (depth, value) {
+              var camelCaseValue = depth != maxDepth ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1) : query;
+              if ($.isPlainObject(object[camelCaseValue]) && depth != maxDepth) {
+                object = object[camelCaseValue];
+              } else if (object[camelCaseValue] !== undefined) {
+                found = object[camelCaseValue];
+                return false;
+              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+                object = object[value];
+              } else if (object[value] !== undefined) {
+                found = object[value];
+                return false;
+              } else {
+                module.error(error.method, query);
+                return false;
+              }
+            });
+          }
+          if ($.isFunction(found)) {
+            response = found.apply(context, passedArguments);
+          } else if (found !== undefined) {
+            response = found;
+          }
+          if ($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          } else if (returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          } else if (response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+
+      module.preinitialize();
+
+      if (methodInvoked) {
+        if (instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      } else {
+        if (instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+    });
+
+    return returnedValue !== undefined ? returnedValue : this;
+  };
+
+  $.fn.dimmer.settings = {
+
+    name: 'Dimmer',
+    namespace: 'dimmer',
+
+    silent: false,
+    debug: false,
+    verbose: false,
+    performance: true,
+
+    // name to distinguish between multiple dimmers in context
+    dimmerName: false,
+
+    // whether to add a variation type
+    variation: false,
+
+    // whether to bind close events
+    closable: 'auto',
+
+    // whether to use css animations
+    useCSS: true,
+
+    // css animation to use
+    transition: 'fade',
+
+    // event to bind to
+    on: false,
+
+    // overriding opacity value
+    opacity: 'auto',
+
+    // transition durations
+    duration: {
+      show: 500,
+      hide: 500
+    },
+
+    onChange: function () {},
+    onShow: function () {},
+    onHide: function () {},
+
+    error: {
+      method: 'The method you called is not defined.'
+    },
+
+    className: {
+      active: 'active',
+      animating: 'animating',
+      dimmable: 'dimmable',
+      dimmed: 'dimmed',
+      dimmer: 'dimmer',
+      disabled: 'disabled',
+      hide: 'hide',
+      pageDimmer: 'page',
+      show: 'show'
+    },
+
+    selector: {
+      dimmer: '> .ui.dimmer',
+      content: '.ui.dimmer > .content, .ui.dimmer > .content > .center'
+    },
+
+    template: {
+      dimmer: function () {
+        return $('<div />').attr('class', 'ui dimmer');
+      }
+    }
+
+  };
+})(jQuery, window, document);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -14400,7 +15288,7 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -15684,7 +16572,774 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {/*!
+ * # Semantic UI 2.2.7 - Modal
+ * http://github.com/semantic-org/semantic-ui/
+ *
+ *
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+;(function ($, window, document, undefined) {
+
+  "use strict";
+
+  window = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+
+  $.fn.modal = function (parameters) {
+    var $allModules = $(this),
+        $window = $(window),
+        $document = $(document),
+        $body = $('body'),
+        moduleSelector = $allModules.selector || '',
+        time = new Date().getTime(),
+        performance = [],
+        query = arguments[0],
+        methodInvoked = typeof query == 'string',
+        queryArguments = [].slice.call(arguments, 1),
+        requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
+      setTimeout(callback, 0);
+    },
+        returnedValue;
+
+    $allModules.each(function () {
+      var settings = $.isPlainObject(parameters) ? $.extend(true, {}, $.fn.modal.settings, parameters) : $.extend({}, $.fn.modal.settings),
+          selector = settings.selector,
+          className = settings.className,
+          namespace = settings.namespace,
+          error = settings.error,
+          eventNamespace = '.' + namespace,
+          moduleNamespace = 'module-' + namespace,
+          $module = $(this),
+          $context = $(settings.context),
+          $close = $module.find(selector.close),
+          $allModals,
+          $otherModals,
+          $focusedElement,
+          $dimmable,
+          $dimmer,
+          element = this,
+          instance = $module.data(moduleNamespace),
+          elementEventNamespace,
+          id,
+          observer,
+          module;
+      module = {
+
+        initialize: function () {
+          module.verbose('Initializing dimmer', $context);
+
+          module.create.id();
+          module.create.dimmer();
+          module.refreshModals();
+
+          module.bind.events();
+          if (settings.observeChanges) {
+            module.observeChanges();
+          }
+          module.instantiate();
+        },
+
+        instantiate: function () {
+          module.verbose('Storing instance of modal');
+          instance = module;
+          $module.data(moduleNamespace, instance);
+        },
+
+        create: {
+          dimmer: function () {
+            var defaultSettings = {
+              debug: settings.debug,
+              dimmerName: 'modals',
+              duration: {
+                show: settings.duration,
+                hide: settings.duration
+              }
+            },
+                dimmerSettings = $.extend(true, defaultSettings, settings.dimmerSettings);
+            if (settings.inverted) {
+              dimmerSettings.variation = dimmerSettings.variation !== undefined ? dimmerSettings.variation + ' inverted' : 'inverted';
+            }
+            if ($.fn.dimmer === undefined) {
+              module.error(error.dimmer);
+              return;
+            }
+            module.debug('Creating dimmer with settings', dimmerSettings);
+            $dimmable = $context.dimmer(dimmerSettings);
+            if (settings.detachable) {
+              module.verbose('Modal is detachable, moving content into dimmer');
+              $dimmable.dimmer('add content', $module);
+            } else {
+              module.set.undetached();
+            }
+            if (settings.blurring) {
+              $dimmable.addClass(className.blurring);
+            }
+            $dimmer = $dimmable.dimmer('get dimmer');
+          },
+          id: function () {
+            id = (Math.random().toString(16) + '000000000').substr(2, 8);
+            elementEventNamespace = '.' + id;
+            module.verbose('Creating unique id for element', id);
+          }
+        },
+
+        destroy: function () {
+          module.verbose('Destroying previous modal');
+          $module.removeData(moduleNamespace).off(eventNamespace);
+          $window.off(elementEventNamespace);
+          $dimmer.off(elementEventNamespace);
+          $close.off(eventNamespace);
+          $context.dimmer('destroy');
+        },
+
+        observeChanges: function () {
+          if ('MutationObserver' in window) {
+            observer = new MutationObserver(function (mutations) {
+              module.debug('DOM tree modified, refreshing');
+              module.refresh();
+            });
+            observer.observe(element, {
+              childList: true,
+              subtree: true
+            });
+            module.debug('Setting up mutation observer', observer);
+          }
+        },
+
+        refresh: function () {
+          module.remove.scrolling();
+          module.cacheSizes();
+          module.set.screenHeight();
+          module.set.type();
+          module.set.position();
+        },
+
+        refreshModals: function () {
+          $otherModals = $module.siblings(selector.modal);
+          $allModals = $otherModals.add($module);
+        },
+
+        attachEvents: function (selector, event) {
+          var $toggle = $(selector);
+          event = $.isFunction(module[event]) ? module[event] : module.toggle;
+          if ($toggle.length > 0) {
+            module.debug('Attaching modal events to element', selector, event);
+            $toggle.off(eventNamespace).on('click' + eventNamespace, event);
+          } else {
+            module.error(error.notFound, selector);
+          }
+        },
+
+        bind: {
+          events: function () {
+            module.verbose('Attaching events');
+            $module.on('click' + eventNamespace, selector.close, module.event.close).on('click' + eventNamespace, selector.approve, module.event.approve).on('click' + eventNamespace, selector.deny, module.event.deny);
+            $window.on('resize' + elementEventNamespace, module.event.resize);
+          }
+        },
+
+        get: {
+          id: function () {
+            return (Math.random().toString(16) + '000000000').substr(2, 8);
+          }
+        },
+
+        event: {
+          approve: function () {
+            if (settings.onApprove.call(element, $(this)) === false) {
+              module.verbose('Approve callback returned false cancelling hide');
+              return;
+            }
+            module.hide();
+          },
+          deny: function () {
+            if (settings.onDeny.call(element, $(this)) === false) {
+              module.verbose('Deny callback returned false cancelling hide');
+              return;
+            }
+            module.hide();
+          },
+          close: function () {
+            module.hide();
+          },
+          click: function (event) {
+            var $target = $(event.target),
+                isInModal = $target.closest(selector.modal).length > 0,
+                isInDOM = $.contains(document.documentElement, event.target);
+            if (!isInModal && isInDOM) {
+              module.debug('Dimmer clicked, hiding all modals');
+              if (module.is.active()) {
+                module.remove.clickaway();
+                if (settings.allowMultiple) {
+                  module.hide();
+                } else {
+                  module.hideAll();
+                }
+              }
+            }
+          },
+          debounce: function (method, delay) {
+            clearTimeout(module.timer);
+            module.timer = setTimeout(method, delay);
+          },
+          keyboard: function (event) {
+            var keyCode = event.which,
+                escapeKey = 27;
+            if (keyCode == escapeKey) {
+              if (settings.closable) {
+                module.debug('Escape key pressed hiding modal');
+                module.hide();
+              } else {
+                module.debug('Escape key pressed, but closable is set to false');
+              }
+              event.preventDefault();
+            }
+          },
+          resize: function () {
+            if ($dimmable.dimmer('is active')) {
+              requestAnimationFrame(module.refresh);
+            }
+          }
+        },
+
+        toggle: function () {
+          if (module.is.active() || module.is.animating()) {
+            module.hide();
+          } else {
+            module.show();
+          }
+        },
+
+        show: function (callback) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          module.refreshModals();
+          module.showModal(callback);
+        },
+
+        hide: function (callback) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          module.refreshModals();
+          module.hideModal(callback);
+        },
+
+        showModal: function (callback) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          if (module.is.animating() || !module.is.active()) {
+
+            module.showDimmer();
+            module.cacheSizes();
+            module.set.position();
+            module.set.screenHeight();
+            module.set.type();
+            module.set.clickaway();
+
+            if (!settings.allowMultiple && module.others.active()) {
+              module.hideOthers(module.showModal);
+            } else {
+              settings.onShow.call(element);
+              if (settings.transition && $.fn.transition !== undefined && $module.transition('is supported')) {
+                module.debug('Showing modal with css animations');
+                $module.transition({
+                  debug: settings.debug,
+                  animation: settings.transition + ' in',
+                  queue: settings.queue,
+                  duration: settings.duration,
+                  useFailSafe: true,
+                  onComplete: function () {
+                    settings.onVisible.apply(element);
+                    if (settings.keyboardShortcuts) {
+                      module.add.keyboardShortcuts();
+                    }
+                    module.save.focus();
+                    module.set.active();
+                    if (settings.autofocus) {
+                      module.set.autofocus();
+                    }
+                    callback();
+                  }
+                });
+              } else {
+                module.error(error.noTransition);
+              }
+            }
+          } else {
+            module.debug('Modal is already visible');
+          }
+        },
+
+        hideModal: function (callback, keepDimmed) {
+          callback = $.isFunction(callback) ? callback : function () {};
+          module.debug('Hiding modal');
+          if (settings.onHide.call(element, $(this)) === false) {
+            module.verbose('Hide callback returned false cancelling hide');
+            return;
+          }
+
+          if (module.is.animating() || module.is.active()) {
+            if (settings.transition && $.fn.transition !== undefined && $module.transition('is supported')) {
+              module.remove.active();
+              $module.transition({
+                debug: settings.debug,
+                animation: settings.transition + ' out',
+                queue: settings.queue,
+                duration: settings.duration,
+                useFailSafe: true,
+                onStart: function () {
+                  if (!module.others.active() && !keepDimmed) {
+                    module.hideDimmer();
+                  }
+                  if (settings.keyboardShortcuts) {
+                    module.remove.keyboardShortcuts();
+                  }
+                },
+                onComplete: function () {
+                  settings.onHidden.call(element);
+                  module.restore.focus();
+                  callback();
+                }
+              });
+            } else {
+              module.error(error.noTransition);
+            }
+          }
+        },
+
+        showDimmer: function () {
+          if ($dimmable.dimmer('is animating') || !$dimmable.dimmer('is active')) {
+            module.debug('Showing dimmer');
+            $dimmable.dimmer('show');
+          } else {
+            module.debug('Dimmer already visible');
+          }
+        },
+
+        hideDimmer: function () {
+          if ($dimmable.dimmer('is animating') || $dimmable.dimmer('is active')) {
+            $dimmable.dimmer('hide', function () {
+              module.remove.clickaway();
+              module.remove.screenHeight();
+            });
+          } else {
+            module.debug('Dimmer is not visible cannot hide');
+            return;
+          }
+        },
+
+        hideAll: function (callback) {
+          var $visibleModals = $allModals.filter('.' + className.active + ', .' + className.animating);
+          callback = $.isFunction(callback) ? callback : function () {};
+          if ($visibleModals.length > 0) {
+            module.debug('Hiding all visible modals');
+            module.hideDimmer();
+            $visibleModals.modal('hide modal', callback);
+          }
+        },
+
+        hideOthers: function (callback) {
+          var $visibleModals = $otherModals.filter('.' + className.active + ', .' + className.animating);
+          callback = $.isFunction(callback) ? callback : function () {};
+          if ($visibleModals.length > 0) {
+            module.debug('Hiding other modals', $otherModals);
+            $visibleModals.modal('hide modal', callback, true);
+          }
+        },
+
+        others: {
+          active: function () {
+            return $otherModals.filter('.' + className.active).length > 0;
+          },
+          animating: function () {
+            return $otherModals.filter('.' + className.animating).length > 0;
+          }
+        },
+
+        add: {
+          keyboardShortcuts: function () {
+            module.verbose('Adding keyboard shortcuts');
+            $document.on('keyup' + eventNamespace, module.event.keyboard);
+          }
+        },
+
+        save: {
+          focus: function () {
+            $focusedElement = $(document.activeElement).blur();
+          }
+        },
+
+        restore: {
+          focus: function () {
+            if ($focusedElement && $focusedElement.length > 0) {
+              $focusedElement.focus();
+            }
+          }
+        },
+
+        remove: {
+          active: function () {
+            $module.removeClass(className.active);
+          },
+          clickaway: function () {
+            if (settings.closable) {
+              $dimmer.off('click' + elementEventNamespace);
+            }
+          },
+          bodyStyle: function () {
+            if ($body.attr('style') === '') {
+              module.verbose('Removing style attribute');
+              $body.removeAttr('style');
+            }
+          },
+          screenHeight: function () {
+            module.debug('Removing page height');
+            $body.css('height', '');
+          },
+          keyboardShortcuts: function () {
+            module.verbose('Removing keyboard shortcuts');
+            $document.off('keyup' + eventNamespace);
+          },
+          scrolling: function () {
+            $dimmable.removeClass(className.scrolling);
+            $module.removeClass(className.scrolling);
+          }
+        },
+
+        cacheSizes: function () {
+          var modalHeight = $module.outerHeight();
+          if (module.cache === undefined || modalHeight !== 0) {
+            module.cache = {
+              pageHeight: $(document).outerHeight(),
+              height: modalHeight + settings.offset,
+              contextHeight: settings.context == 'body' ? $(window).height() : $dimmable.height()
+            };
+          }
+          module.debug('Caching modal and container sizes', module.cache);
+        },
+
+        can: {
+          fit: function () {
+            return module.cache.height + settings.padding * 2 < module.cache.contextHeight;
+          }
+        },
+
+        is: {
+          active: function () {
+            return $module.hasClass(className.active);
+          },
+          animating: function () {
+            return $module.transition('is supported') ? $module.transition('is animating') : $module.is(':visible');
+          },
+          scrolling: function () {
+            return $dimmable.hasClass(className.scrolling);
+          },
+          modernBrowser: function () {
+            // appName for IE11 reports 'Netscape' can no longer use
+            return !(window.ActiveXObject || "ActiveXObject" in window);
+          }
+        },
+
+        set: {
+          autofocus: function () {
+            var $inputs = $module.find('[tabindex], :input').filter(':visible'),
+                $autofocus = $inputs.filter('[autofocus]'),
+                $input = $autofocus.length > 0 ? $autofocus.first() : $inputs.first();
+            if ($input.length > 0) {
+              $input.focus();
+            }
+          },
+          clickaway: function () {
+            if (settings.closable) {
+              $dimmer.on('click' + elementEventNamespace, module.event.click);
+            }
+          },
+          screenHeight: function () {
+            if (module.can.fit()) {
+              $body.css('height', '');
+            } else {
+              module.debug('Modal is taller than page content, resizing page height');
+              $body.css('height', module.cache.height + settings.padding * 2);
+            }
+          },
+          active: function () {
+            $module.addClass(className.active);
+          },
+          scrolling: function () {
+            $dimmable.addClass(className.scrolling);
+            $module.addClass(className.scrolling);
+          },
+          type: function () {
+            if (module.can.fit()) {
+              module.verbose('Modal fits on screen');
+              if (!module.others.active() && !module.others.animating()) {
+                module.remove.scrolling();
+              }
+            } else {
+              module.verbose('Modal cannot fit on screen setting to scrolling');
+              module.set.scrolling();
+            }
+          },
+          position: function () {
+            module.verbose('Centering modal on page', module.cache);
+            if (module.can.fit()) {
+              $module.css({
+                top: '',
+                marginTop: -(module.cache.height / 2)
+              });
+            } else {
+              $module.css({
+                marginTop: '',
+                top: $document.scrollTop()
+              });
+            }
+          },
+          undetached: function () {
+            $dimmable.addClass(className.undetached);
+          }
+        },
+
+        setting: function (name, value) {
+          module.debug('Changing setting', name, value);
+          if ($.isPlainObject(name)) {
+            $.extend(true, settings, name);
+          } else if (value !== undefined) {
+            if ($.isPlainObject(settings[name])) {
+              $.extend(true, settings[name], value);
+            } else {
+              settings[name] = value;
+            }
+          } else {
+            return settings[name];
+          }
+        },
+        internal: function (name, value) {
+          if ($.isPlainObject(name)) {
+            $.extend(true, module, name);
+          } else if (value !== undefined) {
+            module[name] = value;
+          } else {
+            return module[name];
+          }
+        },
+        debug: function () {
+          if (!settings.silent && settings.debug) {
+            if (settings.performance) {
+              module.performance.log(arguments);
+            } else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function () {
+          if (!settings.silent && settings.verbose && settings.debug) {
+            if (settings.performance) {
+              module.performance.log(arguments);
+            } else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function () {
+          if (!settings.silent) {
+            module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+            module.error.apply(console, arguments);
+          }
+        },
+        performance: {
+          log: function (message) {
+            var currentTime, executionTime, previousTime;
+            if (settings.performance) {
+              currentTime = new Date().getTime();
+              previousTime = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time = currentTime;
+              performance.push({
+                'Name': message[0],
+                'Arguments': [].slice.call(message, 1) || '',
+                'Element': element,
+                'Execution Time': executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function () {
+            var title = settings.name + ':',
+                totalTime = 0;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function (index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if (moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if ((console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if (console.table) {
+                console.table(performance);
+              } else {
+                $.each(performance, function (index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time'] + 'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function (query, passedArguments, context) {
+          var object = instance,
+              maxDepth,
+              found,
+              response;
+          passedArguments = passedArguments || queryArguments;
+          context = element || context;
+          if (typeof query == 'string' && object !== undefined) {
+            query = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function (depth, value) {
+              var camelCaseValue = depth != maxDepth ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1) : query;
+              if ($.isPlainObject(object[camelCaseValue]) && depth != maxDepth) {
+                object = object[camelCaseValue];
+              } else if (object[camelCaseValue] !== undefined) {
+                found = object[camelCaseValue];
+                return false;
+              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+                object = object[value];
+              } else if (object[value] !== undefined) {
+                found = object[value];
+                return false;
+              } else {
+                return false;
+              }
+            });
+          }
+          if ($.isFunction(found)) {
+            response = found.apply(context, passedArguments);
+          } else if (found !== undefined) {
+            response = found;
+          }
+          if ($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          } else if (returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          } else if (response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+
+      if (methodInvoked) {
+        if (instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      } else {
+        if (instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+    });
+
+    return returnedValue !== undefined ? returnedValue : this;
+  };
+
+  $.fn.modal.settings = {
+
+    name: 'Modal',
+    namespace: 'modal',
+
+    silent: false,
+    debug: false,
+    verbose: false,
+    performance: true,
+
+    observeChanges: false,
+
+    allowMultiple: false,
+    detachable: true,
+    closable: true,
+    autofocus: true,
+
+    inverted: false,
+    blurring: false,
+
+    dimmerSettings: {
+      closable: false,
+      useCSS: true
+    },
+
+    // whether to use keyboard shortcuts
+    keyboardShortcuts: true,
+
+    context: 'body',
+
+    queue: false,
+    duration: 500,
+    offset: 0,
+    transition: 'scale',
+
+    // padding with edge of page
+    padding: 50,
+
+    // called before show animation
+    onShow: function () {},
+
+    // called after show animation
+    onVisible: function () {},
+
+    // called before hide animation
+    onHide: function () {
+      return true;
+    },
+
+    // called after hide animation
+    onHidden: function () {},
+
+    // called after approve selector match
+    onApprove: function () {
+      return true;
+    },
+
+    // called after deny selector match
+    onDeny: function () {
+      return true;
+    },
+
+    selector: {
+      close: '> .close',
+      approve: '.actions .positive, .actions .approve, .actions .ok',
+      deny: '.actions .negative, .actions .deny, .actions .cancel',
+      modal: '.ui.modal'
+    },
+    error: {
+      dimmer: 'UI Dimmer, a required component is not included in this page',
+      method: 'The method you called is not defined.',
+      notFound: 'The element you specified could not be found'
+    },
+    className: {
+      active: 'active',
+      animating: 'animating',
+      blurring: 'blurring',
+      scrolling: 'scrolling',
+      undetached: 'undetached'
+    }
+  };
+})(jQuery, window, document);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -16300,7 +17955,7 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -17074,7 +18729,7 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -17978,7 +19633,7 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -19096,13 +20751,13 @@ module.exports = Component.exports
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/**
@@ -20687,7 +22342,7 @@ jQuery.trumbowyg = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29260,10 +30915,140 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(69)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40), __webpack_require__(79)))
 
 /***/ }),
-/* 15 */
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'asset-element',
+    props: ['element'],
+    methods: {
+        removeElement: function (event) {
+            $(this.$el).transition({
+                animation: 'fade',
+                onHide: function () {
+                    $(this).remove();
+                }
+            });
+
+            this.$emit('elementRemoved', this.element);
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    name: 'assets',
+    props: {
+        config: {}
+    },
+    data: function () {
+        const initialElementCount = Object.keys(this.config.elements).length;
+
+        return {
+            modal: null,
+            elements: this.config.elements,
+            canAddMore: this.config.limit === '' || initialElementCount < this.config.limit,
+            options: {
+                ghostClass: 'disabled',
+                disabled: initialElementCount <= 1
+            }
+        };
+    },
+    components: {
+        'draggable': __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        'asset-element': __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default.a
+    },
+    mounted: function () {
+        this.modal = $('.ui.modal', this.$el).modal();
+    },
+    methods: {
+        onElementRemoved: function (element) {
+            delete this.elements[element.id];
+            this.updateState();
+        },
+        updateState: function () {
+            const elementCount = Object.keys(this.elements).length;
+
+            this.$children[0]._sortable.option("disabled", elementCount <= 1);
+
+            if (this.config.limit !== '') {
+                this.canAddMore = elementCount < this.config.limit;
+            }
+        },
+        launchElementSelector: function () {
+            this.modal.modal('show');
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29298,7 +31083,7 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29333,34 +31118,34 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Field_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__TextArea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RichText_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Matrix_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__Assets_vue__);
 //
 //
@@ -29423,7 +31208,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 18 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29454,14 +31239,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 19 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__);
 //
 //
@@ -29579,7 +31364,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 20 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29784,7 +31569,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29804,7 +31589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 22 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29842,7 +31627,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29876,7 +31661,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29895,7 +31680,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-const trumbowygSvgPath = __webpack_require__(36);
+const trumbowygSvgPath = __webpack_require__(42);
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'rich-text',
@@ -29926,7 +31711,7 @@ const trumbowygSvgPath = __webpack_require__(36);
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29980,7 +31765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 26 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30045,76 +31830,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.matrix-header {\n  height: 1em;\n}\n.matrix-header .ui.buttons {\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n.matrix-footer {\n  margin-top: 1rem;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.form input[type=number] {\n  width: auto;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "/**\n * Trumbowyg v2.4.2 - A lightweight WYSIWYG editor\n * Default stylesheet for Trumbowyg editor\n * ------------------------\n * @link http://alex-d.github.io/Trumbowyg\n * @license MIT\n * @author Alexandre Demode (Alex-D)\n *         Twitter : @AlexandreDemode\n *         Website : alex-d.fr\n */\n#trumbowyg-icons {\n  overflow: hidden;\n  visibility: hidden;\n  height: 0;\n  width: 0;\n}\n#trumbowyg-icons svg {\n    height: 0;\n    width: 0;\n}\n.trumbowyg-box *,\n.trumbowyg-box *::before,\n.trumbowyg-box *::after {\n  box-sizing: border-box;\n}\n.trumbowyg-box svg {\n  width: 17px;\n  height: 100%;\n  fill: #222;\n}\n.trumbowyg-box,\n.trumbowyg-editor {\n  display: block;\n  position: relative;\n  border: 1px solid #DDD;\n  width: 100%;\n  min-height: 300px;\n  margin: 17px auto;\n}\n.trumbowyg-box .trumbowyg-editor {\n  margin: 0 auto;\n}\n.trumbowyg-box.trumbowyg-fullscreen {\n  background: #FEFEFE;\n  border: none !important;\n}\n.trumbowyg-editor,\n.trumbowyg-textarea {\n  position: relative;\n  box-sizing: border-box;\n  padding: 20px;\n  min-height: 300px;\n  width: 100%;\n  border-style: none;\n  resize: none;\n  outline: none;\n  overflow: auto;\n}\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n  color: transparent !important;\n  text-shadow: 0 0 7px #333;\n}\n@media screen and (min-width: 0 \\0 ) {\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n      color: rgba(200, 200, 200, 0.6) !important;\n}\n}\n@supports (-ms-accelerator: true) {\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n      color: rgba(200, 200, 200, 0.6) !important;\n}\n}\n.trumbowyg-box-blur .trumbowyg-editor img,\n.trumbowyg-box-blur .trumbowyg-editor hr {\n  opacity: 0.2;\n}\n.trumbowyg-textarea {\n  position: relative;\n  display: block;\n  overflow: auto;\n  border: none;\n  white-space: normal;\n  font-size: 14px;\n  font-family: \"Inconsolata\", \"Consolas\", \"Courier\", \"Courier New\", sans-serif;\n  line-height: 18px;\n}\n.trumbowyg-box.trumbowyg-editor-visible .trumbowyg-textarea {\n  height: 1px !important;\n  width: 25%;\n  min-height: 0 !important;\n  padding: 0 !important;\n  background: none;\n  opacity: 0 !important;\n}\n.trumbowyg-box.trumbowyg-editor-hidden .trumbowyg-textarea {\n  display: block;\n}\n.trumbowyg-box.trumbowyg-editor-hidden .trumbowyg-editor {\n  display: none;\n}\n.trumbowyg-box.trumbowyg-disabled .trumbowyg-textarea {\n  opacity: 0.8;\n  background: none;\n}\n.trumbowyg-editor[contenteditable=true]:empty:not(:focus)::before {\n  content: attr(placeholder);\n  color: #999;\n  pointer-events: none;\n}\n.trumbowyg-button-pane {\n  display: flex;\n  flex-flow: row wrap;\n  width: 100%;\n  min-height: 36px;\n  background: #ecf0f1;\n  border-bottom: 1px solid #d7e0e2;\n  margin: 0;\n  padding: 0 5px;\n  list-style-type: none;\n  line-height: 10px;\n  backface-visibility: hidden;\n}\n.trumbowyg-button-pane::after {\n    content: \" \";\n    display: block;\n    position: absolute;\n    top: 36px;\n    left: 0;\n    right: 0;\n    width: 100%;\n    height: 1px;\n    background: #d7e0e2;\n}\n.trumbowyg-button-pane .trumbowyg-button-group {\n    display: flex;\n    flex-flow: row wrap;\n}\n.trumbowyg-button-pane .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n      color: transparent;\n}\n.trumbowyg-button-pane .trumbowyg-button-group:not(:empty) + .trumbowyg-button-group::before {\n      content: \" \";\n      display: block;\n      width: 1px;\n      background: #d7e0e2;\n      margin: 0 5px;\n      height: 35px;\n}\n.trumbowyg-button-pane button {\n    display: block;\n    position: relative;\n    width: 35px;\n    height: 35px;\n    padding: 1px 6px !important;\n    margin-bottom: 1px;\n    overflow: hidden;\n    border: none;\n    cursor: pointer;\n    background: none;\n    transition: background-color 150ms, opacity 150ms;\n}\n.trumbowyg-button-pane button.trumbowyg-textual-button {\n      width: auto;\n      line-height: 35px;\n}\n.trumbowyg-button-pane.trumbowyg-disable button:not(.trumbowyg-not-disable):not(.trumbowyg-active),\n  .trumbowyg-disabled .trumbowyg-button-pane button:not(.trumbowyg-not-disable):not(.trumbowyg-viewHTML-button) {\n    opacity: 0.2;\n    cursor: default;\n}\n.trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::before,\n  .trumbowyg-disabled .trumbowyg-button-pane .trumbowyg-button-group::before {\n    background: #e3e9eb;\n}\n.trumbowyg-button-pane button:not(.trumbowyg-disable):hover,\n  .trumbowyg-button-pane button:not(.trumbowyg-disable):focus,\n  .trumbowyg-button-pane button.trumbowyg-active {\n    background-color: #FFF;\n    outline: none;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown::after {\n    display: block;\n    content: \" \";\n    position: absolute;\n    top: 25px;\n    right: 3px;\n    height: 0;\n    width: 0;\n    border: 3px solid transparent;\n    border-top-color: #555;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button {\n    padding-left: 10px !important;\n    padding-right: 18px !important;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button::after {\n      top: 17px;\n      right: 7px;\n}\n.trumbowyg-button-pane .trumbowyg-right {\n    margin-left: auto;\n}\n.trumbowyg-button-pane .trumbowyg-right::before {\n      display: none !important;\n}\n.trumbowyg-dropdown {\n  width: 200px;\n  border: 1px solid #ecf0f1;\n  padding: 5px 0;\n  border-top: none;\n  background: #FFF;\n  margin-left: -1px;\n  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 3px;\n}\n.trumbowyg-dropdown button {\n    display: block;\n    width: 100%;\n    height: 35px;\n    line-height: 35px;\n    text-decoration: none;\n    background: #FFF;\n    padding: 0 10px;\n    color: #333 !important;\n    border: none;\n    cursor: pointer;\n    text-align: left;\n    font-size: 15px;\n    transition: all 150ms;\n}\n.trumbowyg-dropdown button:hover, .trumbowyg-dropdown button:focus {\n      background: #ecf0f1;\n}\n.trumbowyg-dropdown button svg {\n      float: left;\n      margin-right: 14px;\n}\n\n/* Modal box */\n.trumbowyg-modal {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 520px;\n  width: 100%;\n  height: 350px;\n  z-index: 11;\n  overflow: hidden;\n  backface-visibility: hidden;\n}\n.trumbowyg-modal-box {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 500px;\n  width: calc(100% - 20px);\n  padding-bottom: 45px;\n  z-index: 1;\n  background-color: #FFF;\n  text-align: center;\n  font-size: 14px;\n  box-shadow: rgba(0, 0, 0, 0.2) 0 2px 3px;\n  backface-visibility: hidden;\n}\n.trumbowyg-modal-box .trumbowyg-modal-title {\n    font-size: 24px;\n    font-weight: bold;\n    margin: 0 0 20px;\n    padding: 15px 0 13px;\n    display: block;\n    border-bottom: 1px solid #EEE;\n    color: #333;\n    background: #fbfcfc;\n}\n.trumbowyg-modal-box .trumbowyg-progress {\n    width: 100%;\n    height: 3px;\n    position: absolute;\n    top: 58px;\n}\n.trumbowyg-modal-box .trumbowyg-progress .trumbowyg-progress-bar {\n      background: #2BC06A;\n      height: 100%;\n      transition: width 150ms linear;\n}\n.trumbowyg-modal-box label {\n    display: block;\n    position: relative;\n    margin: 15px 12px;\n    height: 29px;\n    line-height: 29px;\n    overflow: hidden;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos {\n      display: block;\n      text-align: left;\n      height: 25px;\n      line-height: 25px;\n      transition: all 150ms;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos span {\n        display: block;\n        color: #69878f;\n        background-color: #fbfcfc;\n        border: 1px solid #DEDEDE;\n        padding: 0 7px;\n        width: 150px;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos span.trumbowyg-msg-error {\n        color: #e74c3c;\n}\n.trumbowyg-modal-box label.trumbowyg-input-error input,\n    .trumbowyg-modal-box label.trumbowyg-input-error textarea {\n      border: 1px solid #e74c3c;\n}\n.trumbowyg-modal-box label.trumbowyg-input-error .trumbowyg-input-infos {\n      margin-top: -27px;\n}\n.trumbowyg-modal-box label input {\n      position: absolute;\n      top: 0;\n      right: 0;\n      height: 27px;\n      line-height: 27px;\n      border: 1px solid #DEDEDE;\n      background: #fff;\n      font-size: 14px;\n      max-width: 330px;\n      width: 70%;\n      padding: 0 7px;\n      transition: all 150ms;\n}\n.trumbowyg-modal-box label input:hover, .trumbowyg-modal-box label input:focus {\n        outline: none;\n        border: 1px solid #95a5a6;\n}\n.trumbowyg-modal-box label input:focus {\n        background: #fbfcfc;\n}\n.trumbowyg-modal-box .error {\n    margin-top: 25px;\n    display: block;\n    color: red;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button {\n    position: absolute;\n    bottom: 10px;\n    right: 0;\n    text-decoration: none;\n    color: #FFF;\n    display: block;\n    width: 100px;\n    height: 35px;\n    line-height: 33px;\n    margin: 0 10px;\n    background-color: #333;\n    border: none;\n    cursor: pointer;\n    font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif;\n    font-size: 16px;\n    transition: all 150ms;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit {\n      right: 110px;\n      background: #2bc06a;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:hover, .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:focus {\n        background: #40d47e;\n        outline: none;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:active {\n        background: #25a25a;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset {\n      color: #555;\n      background: #e6e6e6;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:hover, .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:focus {\n        background: #fbfbfb;\n        outline: none;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:active {\n        background: #d5d5d5;\n}\n.trumbowyg-overlay {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.5);\n  width: 100%;\n  left: 0;\n  display: none;\n  z-index: 10;\n}\n\n/**\n * Fullscreen\n */\nbody.trumbowyg-body-fullscreen {\n  overflow: hidden;\n}\n.trumbowyg-fullscreen {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  z-index: 99999;\n}\n.trumbowyg-fullscreen.trumbowyg-box,\n  .trumbowyg-fullscreen .trumbowyg-editor {\n    border: none;\n}\n.trumbowyg-fullscreen .trumbowyg-editor,\n  .trumbowyg-fullscreen .trumbowyg-textarea {\n    height: calc(100% - 37px) !important;\n    overflow: auto;\n}\n.trumbowyg-fullscreen .trumbowyg-overlay {\n    height: 100% !important;\n}\n.trumbowyg-fullscreen .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n    color: #222;\n    fill: transparent;\n}\n.trumbowyg-editor {\n  /*\n     * lset for resetCss option\n     */\n}\n.trumbowyg-editor object,\n  .trumbowyg-editor embed,\n  .trumbowyg-editor video,\n  .trumbowyg-editor img {\n    max-width: 100%;\n}\n.trumbowyg-editor video,\n  .trumbowyg-editor img {\n    height: auto;\n}\n.trumbowyg-editor img {\n    cursor: move;\n}\n.trumbowyg-editor.trumbowyg-reset-css {\n    background: #FEFEFE !important;\n    font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif !important;\n    font-size: 14px !important;\n    line-height: 1.45em !important;\n    white-space: normal !important;\n    color: #333;\n}\n.trumbowyg-editor.trumbowyg-reset-css a {\n      color: #15c !important;\n      text-decoration: underline !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css div,\n    .trumbowyg-editor.trumbowyg-reset-css p,\n    .trumbowyg-editor.trumbowyg-reset-css ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol,\n    .trumbowyg-editor.trumbowyg-reset-css blockquote {\n      box-shadow: none !important;\n      background: none !important;\n      margin: 0 !important;\n      margin-bottom: 15px !important;\n      line-height: 1.4em !important;\n      font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif !important;\n      font-size: 14px !important;\n      border: none;\n}\n.trumbowyg-editor.trumbowyg-reset-css iframe,\n    .trumbowyg-editor.trumbowyg-reset-css object,\n    .trumbowyg-editor.trumbowyg-reset-css hr {\n      margin-bottom: 15px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css blockquote {\n      margin-left: 32px !important;\n      font-style: italic !important;\n      color: #555;\n}\n.trumbowyg-editor.trumbowyg-reset-css ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol {\n      padding-left: 20px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css ul ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol ol,\n    .trumbowyg-editor.trumbowyg-reset-css ul ol,\n    .trumbowyg-editor.trumbowyg-reset-css ol ul {\n      border: none;\n      margin: 2px !important;\n      padding: 0 !important;\n      padding-left: 24px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css hr {\n      display: block;\n      height: 1px;\n      border: none;\n      border-top: 1px solid #CCC;\n}\n.trumbowyg-editor.trumbowyg-reset-css h1,\n    .trumbowyg-editor.trumbowyg-reset-css h2,\n    .trumbowyg-editor.trumbowyg-reset-css h3,\n    .trumbowyg-editor.trumbowyg-reset-css h4 {\n      color: #111;\n      background: none;\n      margin: 0 !important;\n      padding: 0 !important;\n      font-weight: bold;\n}\n.trumbowyg-editor.trumbowyg-reset-css h1 {\n      font-size: 32px !important;\n      line-height: 38px !important;\n      margin-bottom: 20px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h2 {\n      font-size: 26px !important;\n      line-height: 34px !important;\n      margin-bottom: 15px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h3 {\n      font-size: 22px !important;\n      line-height: 28px !important;\n      margin-bottom: 7px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h4 {\n      font-size: 16px !important;\n      line-height: 22px !important;\n      margin-bottom: 7px !important;\n}\n\n/*\n * Dark theme\n */\n.trumbowyg-dark .trumbowyg-textarea {\n  background: #111;\n  color: #ddd;\n}\n.trumbowyg-dark .trumbowyg-box {\n  border: 1px solid #343434;\n}\n.trumbowyg-dark .trumbowyg-box.trumbowyg-fullscreen {\n    background: #111;\n}\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n    text-shadow: 0 0 7px #ccc;\n}\n@media screen and (min-width: 0 \\0 ) {\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n        color: rgba(20, 20, 20, 0.6) !important;\n}\n}\n@supports (-ms-accelerator: true) {\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n        color: rgba(20, 20, 20, 0.6) !important;\n}\n}\n.trumbowyg-dark .trumbowyg-box svg {\n    fill: #ecf0f1;\n    color: #ecf0f1;\n}\n.trumbowyg-dark .trumbowyg-button-pane {\n  background-color: #222;\n  border-bottom-color: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane::after {\n    background: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty)::before {\n    background-color: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty) .trumbowyg-fullscreen-button svg {\n    color: transparent;\n}\n.trumbowyg-dark .trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::before {\n    background-color: #2a2a2a;\n}\n.trumbowyg-dark .trumbowyg-button-pane button:not(.trumbowyg-disable):hover,\n  .trumbowyg-dark .trumbowyg-button-pane button:not(.trumbowyg-disable):focus,\n  .trumbowyg-dark .trumbowyg-button-pane button.trumbowyg-active {\n    background-color: #333;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-open-dropdown::after {\n    border-top-color: #fff;\n}\n.trumbowyg-dark .trumbowyg-fullscreen .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n  color: #ecf0f1;\n  fill: transparent;\n}\n.trumbowyg-dark .trumbowyg-dropdown {\n  border-color: #222;\n  background: #333;\n  box-shadow: rgba(0, 0, 0, 0.3) 0 2px 3px;\n}\n.trumbowyg-dark .trumbowyg-dropdown button {\n    background: #333;\n    color: #fff !important;\n}\n.trumbowyg-dark .trumbowyg-dropdown button:hover, .trumbowyg-dark .trumbowyg-dropdown button:focus {\n      background: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box {\n  background-color: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-title {\n    border-bottom: 1px solid #555;\n    color: #fff;\n    background: #3c3c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label {\n    display: block;\n    position: relative;\n    margin: 15px 12px;\n    height: 27px;\n    line-height: 27px;\n    overflow: hidden;\n}\n.trumbowyg-dark .trumbowyg-modal-box label .trumbowyg-input-infos span {\n      color: #eee;\n      background-color: #2f2f2f;\n      border-color: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box label .trumbowyg-input-infos span.trumbowyg-msg-error {\n      color: #e74c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label.trumbowyg-input-error input,\n    .trumbowyg-dark .trumbowyg-modal-box label.trumbowyg-input-error textarea {\n      border-color: #e74c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input {\n      border-color: #222;\n      color: #eee;\n      background: #333;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input:hover, .trumbowyg-dark .trumbowyg-modal-box label input:focus {\n        border-color: #626262;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input:focus {\n        background-color: #2f2f2f;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit {\n    background: #1b7943;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:hover, .trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:focus {\n      background: #25a25a;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:active {\n      background: #176437;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset {\n    background: #333;\n    color: #ccc;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:hover, .trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:focus {\n      background: #444;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:active {\n      background: #111;\n}\n.trumbowyg-dark .trumbowyg-overlay {\n  background-color: rgba(15, 15, 15, 0.6);\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: auto;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: auto;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -30123,7 +31838,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .ui.top.attached.label {\n  z-index: 2;\n}\n.matrix-block .actions {\n  /*position: absolute;*/\n  /*z-index: 2;*/\n  /*right: 0.8em;*/\n  /*top: 5px;*/\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n", ""]);
+exports.push([module.i, "\n.ui.labels .ui.image.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n  user-select: none;\n}\n", ""]);
 
 // exports
 
@@ -30137,13 +31852,97 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.field {\n  position: relative;\n}\n.field .instructions {\n    font-size: 0.85em;\n    margin-bottom: 0.5em;\n}\n", ""]);
+exports.push([module.i, "\n.matrix-header {\n  height: 1em;\n}\n.matrix-header .ui.buttons {\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n.matrix-footer {\n  margin-top: 1rem;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui.form input[type=number] {\n  width: auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "/**\n * Trumbowyg v2.4.2 - A lightweight WYSIWYG editor\n * Default stylesheet for Trumbowyg editor\n * ------------------------\n * @link http://alex-d.github.io/Trumbowyg\n * @license MIT\n * @author Alexandre Demode (Alex-D)\n *         Twitter : @AlexandreDemode\n *         Website : alex-d.fr\n */\n#trumbowyg-icons {\n  overflow: hidden;\n  visibility: hidden;\n  height: 0;\n  width: 0;\n}\n#trumbowyg-icons svg {\n    height: 0;\n    width: 0;\n}\n.trumbowyg-box *,\n.trumbowyg-box *::before,\n.trumbowyg-box *::after {\n  box-sizing: border-box;\n}\n.trumbowyg-box svg {\n  width: 17px;\n  height: 100%;\n  fill: #222;\n}\n.trumbowyg-box,\n.trumbowyg-editor {\n  display: block;\n  position: relative;\n  border: 1px solid #DDD;\n  width: 100%;\n  min-height: 300px;\n  margin: 17px auto;\n}\n.trumbowyg-box .trumbowyg-editor {\n  margin: 0 auto;\n}\n.trumbowyg-box.trumbowyg-fullscreen {\n  background: #FEFEFE;\n  border: none !important;\n}\n.trumbowyg-editor,\n.trumbowyg-textarea {\n  position: relative;\n  box-sizing: border-box;\n  padding: 20px;\n  min-height: 300px;\n  width: 100%;\n  border-style: none;\n  resize: none;\n  outline: none;\n  overflow: auto;\n}\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n  color: transparent !important;\n  text-shadow: 0 0 7px #333;\n}\n@media screen and (min-width: 0 \\0 ) {\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n      color: rgba(200, 200, 200, 0.6) !important;\n}\n}\n@supports (-ms-accelerator: true) {\n.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-box-blur .trumbowyg-editor::before {\n      color: rgba(200, 200, 200, 0.6) !important;\n}\n}\n.trumbowyg-box-blur .trumbowyg-editor img,\n.trumbowyg-box-blur .trumbowyg-editor hr {\n  opacity: 0.2;\n}\n.trumbowyg-textarea {\n  position: relative;\n  display: block;\n  overflow: auto;\n  border: none;\n  white-space: normal;\n  font-size: 14px;\n  font-family: \"Inconsolata\", \"Consolas\", \"Courier\", \"Courier New\", sans-serif;\n  line-height: 18px;\n}\n.trumbowyg-box.trumbowyg-editor-visible .trumbowyg-textarea {\n  height: 1px !important;\n  width: 25%;\n  min-height: 0 !important;\n  padding: 0 !important;\n  background: none;\n  opacity: 0 !important;\n}\n.trumbowyg-box.trumbowyg-editor-hidden .trumbowyg-textarea {\n  display: block;\n}\n.trumbowyg-box.trumbowyg-editor-hidden .trumbowyg-editor {\n  display: none;\n}\n.trumbowyg-box.trumbowyg-disabled .trumbowyg-textarea {\n  opacity: 0.8;\n  background: none;\n}\n.trumbowyg-editor[contenteditable=true]:empty:not(:focus)::before {\n  content: attr(placeholder);\n  color: #999;\n  pointer-events: none;\n}\n.trumbowyg-button-pane {\n  display: flex;\n  flex-flow: row wrap;\n  width: 100%;\n  min-height: 36px;\n  background: #ecf0f1;\n  border-bottom: 1px solid #d7e0e2;\n  margin: 0;\n  padding: 0 5px;\n  list-style-type: none;\n  line-height: 10px;\n  backface-visibility: hidden;\n}\n.trumbowyg-button-pane::after {\n    content: \" \";\n    display: block;\n    position: absolute;\n    top: 36px;\n    left: 0;\n    right: 0;\n    width: 100%;\n    height: 1px;\n    background: #d7e0e2;\n}\n.trumbowyg-button-pane .trumbowyg-button-group {\n    display: flex;\n    flex-flow: row wrap;\n}\n.trumbowyg-button-pane .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n      color: transparent;\n}\n.trumbowyg-button-pane .trumbowyg-button-group:not(:empty) + .trumbowyg-button-group::before {\n      content: \" \";\n      display: block;\n      width: 1px;\n      background: #d7e0e2;\n      margin: 0 5px;\n      height: 35px;\n}\n.trumbowyg-button-pane button {\n    display: block;\n    position: relative;\n    width: 35px;\n    height: 35px;\n    padding: 1px 6px !important;\n    margin-bottom: 1px;\n    overflow: hidden;\n    border: none;\n    cursor: pointer;\n    background: none;\n    transition: background-color 150ms, opacity 150ms;\n}\n.trumbowyg-button-pane button.trumbowyg-textual-button {\n      width: auto;\n      line-height: 35px;\n}\n.trumbowyg-button-pane.trumbowyg-disable button:not(.trumbowyg-not-disable):not(.trumbowyg-active),\n  .trumbowyg-disabled .trumbowyg-button-pane button:not(.trumbowyg-not-disable):not(.trumbowyg-viewHTML-button) {\n    opacity: 0.2;\n    cursor: default;\n}\n.trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::before,\n  .trumbowyg-disabled .trumbowyg-button-pane .trumbowyg-button-group::before {\n    background: #e3e9eb;\n}\n.trumbowyg-button-pane button:not(.trumbowyg-disable):hover,\n  .trumbowyg-button-pane button:not(.trumbowyg-disable):focus,\n  .trumbowyg-button-pane button.trumbowyg-active {\n    background-color: #FFF;\n    outline: none;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown::after {\n    display: block;\n    content: \" \";\n    position: absolute;\n    top: 25px;\n    right: 3px;\n    height: 0;\n    width: 0;\n    border: 3px solid transparent;\n    border-top-color: #555;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button {\n    padding-left: 10px !important;\n    padding-right: 18px !important;\n}\n.trumbowyg-button-pane .trumbowyg-open-dropdown.trumbowyg-textual-button::after {\n      top: 17px;\n      right: 7px;\n}\n.trumbowyg-button-pane .trumbowyg-right {\n    margin-left: auto;\n}\n.trumbowyg-button-pane .trumbowyg-right::before {\n      display: none !important;\n}\n.trumbowyg-dropdown {\n  width: 200px;\n  border: 1px solid #ecf0f1;\n  padding: 5px 0;\n  border-top: none;\n  background: #FFF;\n  margin-left: -1px;\n  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 3px;\n}\n.trumbowyg-dropdown button {\n    display: block;\n    width: 100%;\n    height: 35px;\n    line-height: 35px;\n    text-decoration: none;\n    background: #FFF;\n    padding: 0 10px;\n    color: #333 !important;\n    border: none;\n    cursor: pointer;\n    text-align: left;\n    font-size: 15px;\n    transition: all 150ms;\n}\n.trumbowyg-dropdown button:hover, .trumbowyg-dropdown button:focus {\n      background: #ecf0f1;\n}\n.trumbowyg-dropdown button svg {\n      float: left;\n      margin-right: 14px;\n}\n\n/* Modal box */\n.trumbowyg-modal {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 520px;\n  width: 100%;\n  height: 350px;\n  z-index: 11;\n  overflow: hidden;\n  backface-visibility: hidden;\n}\n.trumbowyg-modal-box {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  max-width: 500px;\n  width: calc(100% - 20px);\n  padding-bottom: 45px;\n  z-index: 1;\n  background-color: #FFF;\n  text-align: center;\n  font-size: 14px;\n  box-shadow: rgba(0, 0, 0, 0.2) 0 2px 3px;\n  backface-visibility: hidden;\n}\n.trumbowyg-modal-box .trumbowyg-modal-title {\n    font-size: 24px;\n    font-weight: bold;\n    margin: 0 0 20px;\n    padding: 15px 0 13px;\n    display: block;\n    border-bottom: 1px solid #EEE;\n    color: #333;\n    background: #fbfcfc;\n}\n.trumbowyg-modal-box .trumbowyg-progress {\n    width: 100%;\n    height: 3px;\n    position: absolute;\n    top: 58px;\n}\n.trumbowyg-modal-box .trumbowyg-progress .trumbowyg-progress-bar {\n      background: #2BC06A;\n      height: 100%;\n      transition: width 150ms linear;\n}\n.trumbowyg-modal-box label {\n    display: block;\n    position: relative;\n    margin: 15px 12px;\n    height: 29px;\n    line-height: 29px;\n    overflow: hidden;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos {\n      display: block;\n      text-align: left;\n      height: 25px;\n      line-height: 25px;\n      transition: all 150ms;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos span {\n        display: block;\n        color: #69878f;\n        background-color: #fbfcfc;\n        border: 1px solid #DEDEDE;\n        padding: 0 7px;\n        width: 150px;\n}\n.trumbowyg-modal-box label .trumbowyg-input-infos span.trumbowyg-msg-error {\n        color: #e74c3c;\n}\n.trumbowyg-modal-box label.trumbowyg-input-error input,\n    .trumbowyg-modal-box label.trumbowyg-input-error textarea {\n      border: 1px solid #e74c3c;\n}\n.trumbowyg-modal-box label.trumbowyg-input-error .trumbowyg-input-infos {\n      margin-top: -27px;\n}\n.trumbowyg-modal-box label input {\n      position: absolute;\n      top: 0;\n      right: 0;\n      height: 27px;\n      line-height: 27px;\n      border: 1px solid #DEDEDE;\n      background: #fff;\n      font-size: 14px;\n      max-width: 330px;\n      width: 70%;\n      padding: 0 7px;\n      transition: all 150ms;\n}\n.trumbowyg-modal-box label input:hover, .trumbowyg-modal-box label input:focus {\n        outline: none;\n        border: 1px solid #95a5a6;\n}\n.trumbowyg-modal-box label input:focus {\n        background: #fbfcfc;\n}\n.trumbowyg-modal-box .error {\n    margin-top: 25px;\n    display: block;\n    color: red;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button {\n    position: absolute;\n    bottom: 10px;\n    right: 0;\n    text-decoration: none;\n    color: #FFF;\n    display: block;\n    width: 100px;\n    height: 35px;\n    line-height: 33px;\n    margin: 0 10px;\n    background-color: #333;\n    border: none;\n    cursor: pointer;\n    font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif;\n    font-size: 16px;\n    transition: all 150ms;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit {\n      right: 110px;\n      background: #2bc06a;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:hover, .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:focus {\n        background: #40d47e;\n        outline: none;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:active {\n        background: #25a25a;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset {\n      color: #555;\n      background: #e6e6e6;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:hover, .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:focus {\n        background: #fbfbfb;\n        outline: none;\n}\n.trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:active {\n        background: #d5d5d5;\n}\n.trumbowyg-overlay {\n  position: absolute;\n  background-color: rgba(255, 255, 255, 0.5);\n  width: 100%;\n  left: 0;\n  display: none;\n  z-index: 10;\n}\n\n/**\n * Fullscreen\n */\nbody.trumbowyg-body-fullscreen {\n  overflow: hidden;\n}\n.trumbowyg-fullscreen {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  z-index: 99999;\n}\n.trumbowyg-fullscreen.trumbowyg-box,\n  .trumbowyg-fullscreen .trumbowyg-editor {\n    border: none;\n}\n.trumbowyg-fullscreen .trumbowyg-editor,\n  .trumbowyg-fullscreen .trumbowyg-textarea {\n    height: calc(100% - 37px) !important;\n    overflow: auto;\n}\n.trumbowyg-fullscreen .trumbowyg-overlay {\n    height: 100% !important;\n}\n.trumbowyg-fullscreen .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n    color: #222;\n    fill: transparent;\n}\n.trumbowyg-editor {\n  /*\n     * lset for resetCss option\n     */\n}\n.trumbowyg-editor object,\n  .trumbowyg-editor embed,\n  .trumbowyg-editor video,\n  .trumbowyg-editor img {\n    max-width: 100%;\n}\n.trumbowyg-editor video,\n  .trumbowyg-editor img {\n    height: auto;\n}\n.trumbowyg-editor img {\n    cursor: move;\n}\n.trumbowyg-editor.trumbowyg-reset-css {\n    background: #FEFEFE !important;\n    font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif !important;\n    font-size: 14px !important;\n    line-height: 1.45em !important;\n    white-space: normal !important;\n    color: #333;\n}\n.trumbowyg-editor.trumbowyg-reset-css a {\n      color: #15c !important;\n      text-decoration: underline !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css div,\n    .trumbowyg-editor.trumbowyg-reset-css p,\n    .trumbowyg-editor.trumbowyg-reset-css ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol,\n    .trumbowyg-editor.trumbowyg-reset-css blockquote {\n      box-shadow: none !important;\n      background: none !important;\n      margin: 0 !important;\n      margin-bottom: 15px !important;\n      line-height: 1.4em !important;\n      font-family: \"Trebuchet MS\", Helvetica, Verdana, sans-serif !important;\n      font-size: 14px !important;\n      border: none;\n}\n.trumbowyg-editor.trumbowyg-reset-css iframe,\n    .trumbowyg-editor.trumbowyg-reset-css object,\n    .trumbowyg-editor.trumbowyg-reset-css hr {\n      margin-bottom: 15px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css blockquote {\n      margin-left: 32px !important;\n      font-style: italic !important;\n      color: #555;\n}\n.trumbowyg-editor.trumbowyg-reset-css ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol {\n      padding-left: 20px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css ul ul,\n    .trumbowyg-editor.trumbowyg-reset-css ol ol,\n    .trumbowyg-editor.trumbowyg-reset-css ul ol,\n    .trumbowyg-editor.trumbowyg-reset-css ol ul {\n      border: none;\n      margin: 2px !important;\n      padding: 0 !important;\n      padding-left: 24px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css hr {\n      display: block;\n      height: 1px;\n      border: none;\n      border-top: 1px solid #CCC;\n}\n.trumbowyg-editor.trumbowyg-reset-css h1,\n    .trumbowyg-editor.trumbowyg-reset-css h2,\n    .trumbowyg-editor.trumbowyg-reset-css h3,\n    .trumbowyg-editor.trumbowyg-reset-css h4 {\n      color: #111;\n      background: none;\n      margin: 0 !important;\n      padding: 0 !important;\n      font-weight: bold;\n}\n.trumbowyg-editor.trumbowyg-reset-css h1 {\n      font-size: 32px !important;\n      line-height: 38px !important;\n      margin-bottom: 20px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h2 {\n      font-size: 26px !important;\n      line-height: 34px !important;\n      margin-bottom: 15px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h3 {\n      font-size: 22px !important;\n      line-height: 28px !important;\n      margin-bottom: 7px !important;\n}\n.trumbowyg-editor.trumbowyg-reset-css h4 {\n      font-size: 16px !important;\n      line-height: 22px !important;\n      margin-bottom: 7px !important;\n}\n\n/*\n * Dark theme\n */\n.trumbowyg-dark .trumbowyg-textarea {\n  background: #111;\n  color: #ddd;\n}\n.trumbowyg-dark .trumbowyg-box {\n  border: 1px solid #343434;\n}\n.trumbowyg-dark .trumbowyg-box.trumbowyg-fullscreen {\n    background: #111;\n}\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n    text-shadow: 0 0 7px #ccc;\n}\n@media screen and (min-width: 0 \\0 ) {\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n        color: rgba(20, 20, 20, 0.6) !important;\n}\n}\n@supports (-ms-accelerator: true) {\n.trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor *, .trumbowyg-dark .trumbowyg-box.trumbowyg-box-blur .trumbowyg-editor::before {\n        color: rgba(20, 20, 20, 0.6) !important;\n}\n}\n.trumbowyg-dark .trumbowyg-box svg {\n    fill: #ecf0f1;\n    color: #ecf0f1;\n}\n.trumbowyg-dark .trumbowyg-button-pane {\n  background-color: #222;\n  border-bottom-color: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane::after {\n    background: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty)::before {\n    background-color: #343434;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-button-group:not(:empty) .trumbowyg-fullscreen-button svg {\n    color: transparent;\n}\n.trumbowyg-dark .trumbowyg-button-pane.trumbowyg-disable .trumbowyg-button-group::before {\n    background-color: #2a2a2a;\n}\n.trumbowyg-dark .trumbowyg-button-pane button:not(.trumbowyg-disable):hover,\n  .trumbowyg-dark .trumbowyg-button-pane button:not(.trumbowyg-disable):focus,\n  .trumbowyg-dark .trumbowyg-button-pane button.trumbowyg-active {\n    background-color: #333;\n}\n.trumbowyg-dark .trumbowyg-button-pane .trumbowyg-open-dropdown::after {\n    border-top-color: #fff;\n}\n.trumbowyg-dark .trumbowyg-fullscreen .trumbowyg-button-group .trumbowyg-fullscreen-button svg {\n  color: #ecf0f1;\n  fill: transparent;\n}\n.trumbowyg-dark .trumbowyg-dropdown {\n  border-color: #222;\n  background: #333;\n  box-shadow: rgba(0, 0, 0, 0.3) 0 2px 3px;\n}\n.trumbowyg-dark .trumbowyg-dropdown button {\n    background: #333;\n    color: #fff !important;\n}\n.trumbowyg-dark .trumbowyg-dropdown button:hover, .trumbowyg-dark .trumbowyg-dropdown button:focus {\n      background: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box {\n  background-color: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-title {\n    border-bottom: 1px solid #555;\n    color: #fff;\n    background: #3c3c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label {\n    display: block;\n    position: relative;\n    margin: 15px 12px;\n    height: 27px;\n    line-height: 27px;\n    overflow: hidden;\n}\n.trumbowyg-dark .trumbowyg-modal-box label .trumbowyg-input-infos span {\n      color: #eee;\n      background-color: #2f2f2f;\n      border-color: #222;\n}\n.trumbowyg-dark .trumbowyg-modal-box label .trumbowyg-input-infos span.trumbowyg-msg-error {\n      color: #e74c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label.trumbowyg-input-error input,\n    .trumbowyg-dark .trumbowyg-modal-box label.trumbowyg-input-error textarea {\n      border-color: #e74c3c;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input {\n      border-color: #222;\n      color: #eee;\n      background: #333;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input:hover, .trumbowyg-dark .trumbowyg-modal-box label input:focus {\n        border-color: #626262;\n}\n.trumbowyg-dark .trumbowyg-modal-box label input:focus {\n        background-color: #2f2f2f;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit {\n    background: #1b7943;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:hover, .trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:focus {\n      background: #25a25a;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-submit:active {\n      background: #176437;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset {\n    background: #333;\n    color: #ccc;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:hover, .trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:focus {\n      background: #444;\n}\n.trumbowyg-dark .trumbowyg-modal-box .trumbowyg-modal-button.trumbowyg-modal-reset:active {\n      background: #111;\n}\n.trumbowyg-dark .trumbowyg-overlay {\n  background-color: rgba(15, 15, 15, 0.6);\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .ui.top.attached.label {\n  z-index: 2;\n}\n.matrix-block .actions {\n  /*position: absolute;*/\n  /*z-index: 2;*/\n  /*right: 0.8em;*/\n  /*top: 5px;*/\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.field {\n  position: relative;\n}\n.field .instructions {\n    font-size: 0.85em;\n    margin-bottom: 0.5em;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 40 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -30329,7 +32128,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 35 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -31724,20 +33523,92 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1ibG9ja3F1b3RlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yMS4zIDMxLjloLS42Yy44LTEuMiAxLjktMi4yIDMuNC0zLjIgMi4xLTEuNCA1LTIuNyA5LjItMy4zbC0xLjQtOC45Yy00LjcuNy04LjUgMi4xLTExLjcgNC0yLjQgMS40LTQuMyAzLjEtNS44IDQuOS0yLjMgMi43LTMuNyA1LjctNC41IDguNS0uOCAyLjgtMSA1LjQtMSA3LjUgMCAyLjMuMyA0IC40IDQuOCAwIC4xLjEuMy4xLjQgMS4yIDUuNCA2LjEgOS41IDExLjkgOS41IDYuNyAwIDEyLjItNS40IDEyLjItMTIuMnMtNS41LTEyLTEyLjItMTJ6TTQ5LjUgMzEuOWgtLjZjLjgtMS4yIDEuOS0yLjIgMy40LTMuMiAyLjEtMS40IDUtMi43IDkuMi0zLjNsLTEuNC04LjljLTQuNy43LTguNSAyLjEtMTEuNyA0LTIuNCAxLjQtNC4zIDMuMS01LjggNC45LTIuMyAyLjctMy43IDUuNy00LjUgOC41LS44IDIuOC0xIDUuNC0xIDcuNSAwIDIuMy4zIDQgLjQgNC44IDAgLjEuMS4zLjEuNCAxLjIgNS40IDYuMSA5LjUgMTEuOSA5LjUgNi43IDAgMTIuMi01LjQgMTIuMi0xMi4ycy01LjUtMTItMTIuMi0xMnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctYm9sZCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNTEuMSAzNy44Yy0xLjEtMS40LTIuNS0yLjUtNC4yLTMuMyAxLjItLjggMi4xLTEuOCAyLjgtMyAxLTEuNiAxLjUtMy41IDEuNS01LjMgMC0yLS42LTQtMS43LTUuOC0xLjEtMS44LTIuOC0zLjItNC44LTQuMS0yLS45LTQuNi0xLjMtNy44LTEuM2gtMTZ2NDJoMTYuM2MyLjYgMCA0LjgtLjIgNi43LS43IDEuOS0uNSAzLjQtMS4yIDQuNy0yLjEgMS4zLTEgMi40LTIuNCAzLjItNC4xLjktMS43IDEuMy0zLjYgMS4zLTUuNy4yLTIuNS0uNS00LjctMi02LjZ6TTQwLjggNTAuMmMtLjYuMS0xLjguMi0zLjQuMmgtOVYzOC41aDguM2MyLjUgMCA0LjQuMiA1LjYuNiAxLjIuNCAyIDEgMi43IDIgLjYuOSAxIDIgMSAzLjMgMCAxLjEtLjIgMi4xLS43IDIuOS0uNS45LTEgMS41LTEuNyAxLjktLjguNC0xLjcuOC0yLjggMXptMi42LTIwLjRjLS41LjctMS4zIDEuMy0yLjUgMS42LS44LjMtMi41LjQtNC44LjRoLTcuN1YyMS42aDcuMWMxLjQgMCAyLjYgMCAzLjYuMXMxLjcuMiAyLjIuNGMxIC4zIDEuNy44IDIuMiAxLjcuNS45LjggMS44LjggMy0uMSAxLjMtLjQgMi4yLS45IDN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWNsb3NlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik01NyAyMC41bC01LjQtNS40LTE1LjUgMTUuNS0xNS42LTE1LjUtNS40IDUuNEwzMC43IDM2IDE1LjEgNTEuNWw1LjQgNS40IDE1LjYtMTUuNSAxNS41IDE1LjUgNS40LTUuNEw0MS41IDM2eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1jcmVhdGUtbGluayIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzEuMSA0OC45bC02LjcgNi43Yy0uOC44LTEuNi45LTIuMS45cy0xLjQtLjEtMi4xLS45TDE1IDUwLjRjLTEuMS0xLjEtMS4xLTMuMSAwLTQuMmw2LjEtNi4xLjItLjIgNi41LTYuNWMtMS4yLS42LTIuNS0uOS0zLjgtLjktMi4zIDAtNC42LjktNi4zIDIuNkwxMSA0MS44Yy0zLjUgMy41LTMuNSA5LjIgMCAxMi43bDUuMiA1LjJjMS43IDEuNyA0IDIuNiA2LjMgMi42czQuNi0uOSA2LjMtMi42bDYuNy02LjdjMi41LTIuNiAzLjEtNi43IDEuNS0xMGwtNS45IDUuOXpNMzguNyAyMi41bDYuNy02LjdjLjgtLjggMS42LS45IDIuMS0uOXMxLjQuMSAyLjEuOWw1LjIgNS4yYzEuMSAxLjEgMS4xIDMuMSAwIDQuMmwtNi4xIDYuMS0uMi4yTDQyIDM4YzEuMi42IDIuNS45IDMuOC45IDIuMyAwIDQuNi0uOSA2LjMtMi42bDYuNy02LjdjMy41LTMuNSAzLjUtOS4yIDAtMTIuN2wtNS4yLTUuMmMtMS43LTEuNy00LTIuNi02LjMtMi42cy00LjYuOS02LjMgMi42bC02LjcgNi43Yy0yLjcgMi43LTMuMyA2LjktMS43IDEwLjJsNi4xLTYuMWMwIC4xIDAgLjEgMCAweiIvPjxwYXRoIGQ9Ik00NC4yIDMwLjVjLjItLjIuNC0uNi40LS45IDAtLjMtLjEtLjYtLjQtLjlsLTIuMy0yLjNjLS4zLS4yLS42LS40LS45LS40LS4zIDAtLjYuMS0uOS40TDI1LjkgNDAuNmMtLjIuMi0uNC42LS40LjkgMCAuMy4xLjYuNC45bDIuMyAyLjNjLjIuMi42LjQuOS40LjMgMCAuNi0uMS45LS40bDE0LjItMTQuMnpNNDkuOSA1NS40aC04LjV2LTVoOC41di04LjloNS4ydjguOWg4LjV2NWgtOC41djguOWgtNS4ydi04Ljl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWRlbCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNDUuOCA0NWMwIDEtLjMgMS45LS45IDIuOC0uNi45LTEuNiAxLjYtMyAyLjFzLTMuMS44LTUgLjhjLTIuMSAwLTQtLjQtNS43LTEuMS0xLjctLjctMi45LTEuNy0zLjYtMi43LS44LTEuMS0xLjMtMi42LTEuNS00LjVsLS4xLS44LTYuNy42di45Yy4xIDIuOC45IDUuNCAyLjMgNy42IDEuNSAyLjMgMy41IDQgNi4xIDUuMSAyLjYgMS4xIDUuNyAxLjYgOS40IDEuNiAyLjkgMCA1LjYtLjUgOC0xLjYgMi40LTEuMSA0LjMtMi43IDUuNi00LjcgMS4zLTIgMi00LjIgMi02LjUgMC0xLjYtLjMtMy4xLS45LTQuNWwtLjItLjZINDRjMCAuMSAxLjggMi4zIDEuOCA1LjV6TTI5IDI4LjljLS44LS44LTEuMi0xLjctMS4yLTIuOSAwLS43LjEtMS4zLjQtMS45LjMtLjYuNy0xLjEgMS40LTEuNi42LS41IDEuNC0uOSAyLjUtMS4xIDEuMS0uMyAyLjQtLjQgMy45LS40IDIuOSAwIDUgLjYgNi4zIDEuNyAxLjMgMS4xIDIuMSAyLjcgMi40IDUuMWwuMS45IDYuOC0uNXYtLjljLS4xLTIuNS0uOC00LjctMi4xLTYuN3MtMy4yLTMuNS01LjYtNC41Yy0yLjQtMS01LjEtMS41LTguMS0xLjUtMi44IDAtNS4zLjUtNy42IDEuNC0yLjMgMS00LjIgMi40LTUuNCA0LjMtMS4yIDEuOS0xLjkgMy45LTEuOSA2LjEgMCAxLjcuNCAzLjQgMS4yIDQuOWwuMy41aDExLjhjLTIuMy0uOS0zLjktMS43LTUuMi0yLjl6bTEzLjMtNi4yek0yMi43IDIwLjN6TTEzIDM0LjFoNDYuMXYzLjRIMTN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWVtIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yNiA1N2wxMC4xLTQyaDcuMkwzMy4yIDU3SDI2eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1mdWxsc2NyZWVuIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yNS4yIDcuMUg3LjF2MTcuN2w2LjctNi41IDEwLjUgMTAuNSA0LjUtNC41LTEwLjQtMTAuNXpNNDcuMiA3LjFsNi41IDYuNy0xMC41IDEwLjUgNC41IDQuNSAxMC41LTEwLjQgNi43IDYuOFY3LjF6TTQ3LjcgNDMuMmwtNC41IDQuNSAxMC40IDEwLjUtNi44IDYuN2gxOC4xVjQ3LjJsLTYuNyA2LjV6TTI0LjMgNDMuMkwxMy44IDUzLjZsLTYuNy02Ljh2MTguMWgxNy43bC02LjUtNi43IDEwLjUtMTAuNXoiLz48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMC43IDI4LjhoMTguMVYxMS4ybC02LjYgNi40TDExLjYgNy4xbC00LjUgNC41IDEwLjUgMTAuNXpNNjAuOCAyOC44bC02LjQtNi42IDEwLjUtMTAuNi00LjUtNC41LTEwLjUgMTAuNS02LjctNi45djE4LjF6TTYwLjQgNjQuOWw0LjUtNC41LTEwLjUtMTAuNSA2LjktNi43SDQzLjJ2MTcuNmw2LjYtNi40ek0xMS42IDY0LjlsMTAuNS0xMC41IDYuNyA2LjlWNDMuMkgxMS4xbDYuNSA2LjZMNy4xIDYwLjR6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWgxIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02LjQgMTQuOWg3LjR2MTYuN2gxOS4xVjE0LjloNy40VjU3aC03LjRWMzhIMTMuOHYxOUg2LjRWMTQuOXpNNDcuOCAyMi41YzEuNCAwIDIuOC0uMSA0LjEtLjQgMS4zLS4yIDIuNS0uNiAzLjYtMS4yIDEuMS0uNSAyLTEuMyAyLjgtMi4xLjgtLjkgMS4zLTEuOSAxLjUtMy4yaDUuNXY0MS4yaC03LjR2LTI5SDQ3Ljh2LTUuM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaDIiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTEuNSAxNC45aDcuNHYxNi43SDI4VjE0LjloNy40VjU3SDI4VjM4SDguOHYxOUgxLjVWMTQuOXpNNzAuMiA1Ni45SDQyYzAtMy40LjktNi40IDIuNS05czMuOC00LjggNi42LTYuN2MxLjMtMSAyLjctMS45IDQuMi0yLjkgMS41LS45IDIuOC0xLjkgNC0zIDEuMi0xLjEgMi4yLTIuMiAzLTMuNC44LTEuMiAxLjItMi43IDEuMi00LjMgMC0uNy0uMS0xLjUtLjMtMi40cy0uNS0xLjYtMS0yLjRjLS41LS43LTEuMi0xLjMtMi4xLTEuOC0uOS0uNS0yLjEtLjctMy41LS43LTEuMyAwLTIuNC4zLTMuMy44cy0xLjYgMS4zLTIuMSAyLjItLjkgMi0xLjIgMy4zYy0uMyAxLjMtLjQgMi42LS40IDQuMWgtNi43YzAtMi4zLjMtNC40LjktNi4zLjYtMS45IDEuNS0zLjYgMi43LTUgMS4yLTEuNCAyLjctMi41IDQuNC0zLjMgMS43LS44IDMuOC0xLjIgNi4xLTEuMiAyLjUgMCA0LjYuNCA2LjMgMS4yIDEuNy44IDMuMSAxLjkgNC4xIDMuMSAxIDEuMyAxLjggMi42IDIuMiA0LjEuNCAxLjUuNiAyLjkuNiA0LjIgMCAxLjYtLjMgMy4xLS44IDQuNS0uNSAxLjMtMS4yIDIuNi0yLjEgMy43LS45IDEuMS0xLjggMi4yLTIuOSAzLjEtMS4xLjktMi4yIDEuOC0zLjQgMi43LTEuMi44LTIuNCAxLjYtMy41IDIuNC0xLjIuNy0yLjMgMS41LTMuMyAyLjItMSAuNy0xLjkgMS41LTIuNiAyLjMtLjcuOC0xLjMgMS43LTEuNSAyLjZoMjAuMXY1Ljl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWgzIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0xLjQgMTQuNWg3LjR2MTYuN2gxOS4xVjE0LjVoNy40djQyLjFoLTcuNHYtMTlIOC44djE5SDEuNFYxNC41ek01My4xIDMyLjRjMS4xIDAgMi4yIDAgMy4zLS4yIDEuMS0uMiAyLjEtLjUgMi45LTEgLjktLjUgMS42LTEuMiAyLjEtMiAuNS0uOS44LTEuOS44LTMuMiAwLTEuOC0uNi0zLjItMS44LTQuMi0xLjItMS4xLTIuNy0xLjYtNC42LTEuNi0xLjIgMC0yLjIuMi0zLjEuNy0uOS41LTEuNiAxLjEtMi4yIDEuOS0uNi44LTEgMS43LTEuMyAyLjctLjMgMS0uNCAyLS40IDMuMWgtNi43Yy4xLTIgLjUtMy45IDEuMS01LjYuNy0xLjcgMS42LTMuMiAyLjctNC40czIuNi0yLjIgNC4yLTIuOWMxLjYtLjcgMy41LTEuMSA1LjYtMS4xIDEuNiAwIDMuMi4yIDQuNy43IDEuNi41IDIuOSAxLjIgNC4yIDIuMSAxLjIuOSAyLjIgMi4xIDMgMy40LjcgMS40IDEuMSAzIDEuMSA0LjggMCAyLjEtLjUgMy45LTEuNCA1LjQtLjkgMS42LTIuNCAyLjctNC40IDMuNHYuMWMyLjQuNSA0LjIgMS42IDUuNSAzLjUgMS4zIDEuOSAyIDQuMSAyIDYuOCAwIDItLjQgMy43LTEuMiA1LjMtLjggMS42LTEuOCAyLjktMy4yIDMuOS0xLjMgMS4xLTIuOSAxLjktNC43IDIuNS0xLjguNi0zLjYuOS01LjYuOS0yLjQgMC00LjUtLjMtNi4zLTFzLTMuMy0xLjctNC41LTIuOWMtMS4yLTEuMy0yLjEtMi44LTIuNy00LjUtLjYtMS44LTEtMy43LTEtNS45aDYuN2MtLjEgMi41LjUgNC42IDEuOSA2LjMgMS4zIDEuNyAzLjMgMi41IDUuOSAyLjUgMi4yIDAgNC4xLS42IDUuNi0xLjkgMS41LTEuMyAyLjMtMy4xIDIuMy01LjQgMC0xLjYtLjMtMi45LS45LTMuOC0uNi0uOS0xLjUtMS43LTIuNS0yLjItMS0uNS0yLjItLjgtMy40LS45LTEuMy0uMS0yLjYtLjItMy45LS4xdi01LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWg0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0xLjUgMTQuOWg3LjR2MTYuN0gyOFYxNC45aDcuNFY1N0gyOFYzOEg4Ljl2MTlIMS41VjE0Ljl6TTcwLjUgNDcuMmgtNS4zVjU3aC02LjR2LTkuOEg0MS4ydi02LjdsMTcuNy0yNC44aDYuNHYyNi4yaDUuM3Y1LjN6bS0yNC4yLTUuM2gxMi41VjIzLjdoLS4xTDQ2LjMgNDEuOXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaG9yaXpvbnRhbC1ydWxlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik05LjEgMzJoNTR2OGgtNTR6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWluc2VydC1pbWFnZSIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNjQgMTd2MzhIOFYxN2g1Nm04LThIMHY1NGg3MlY5eiIvPjxwYXRoIGQ9Ik0xNy41IDIyQzE1IDIyIDEzIDI0IDEzIDI2LjVzMiA0LjUgNC41IDQuNSA0LjUtMiA0LjUtNC41LTItNC41LTQuNS00LjV6TTE2IDUwaDI3TDI5LjUgMzJ6TTM2IDM2LjJsOC45LTguNUw2MC4yIDUwSDQ1LjlTMzUuNiAzNS45IDM2IDM2LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWl0YWxpYyIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMjYgNTdsMTAuMS00Mmg3LjJMMzMuMiA1N0gyNnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctanVzdGlmeS1jZW50ZXIiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNMTggMzJoMzZ2OEgxOHoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctanVzdGlmeS1mdWxsIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik05IDE0aDU0djhIOXpNOSA1MGg1NHY4SDl6TTkgMzJoNTR2OEg5eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1qdXN0aWZ5LWxlZnQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNOSAzMmgzNnY4SDl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWp1c3RpZnktcmlnaHQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNMjcgMzJoMzZ2OEgyN3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctbGluayIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzAuOSA0OS4xbC02LjcgNi43Yy0uOC44LTEuNi45LTIuMS45cy0xLjQtLjEtMi4xLS45bC01LjItNS4yYy0xLjEtMS4xLTEuMS0zLjEgMC00LjJsNi4xLTYuMS4yLS4yIDYuNS02LjVjLTEuMi0uNi0yLjUtLjktMy44LS45LTIuMyAwLTQuNi45LTYuMyAyLjZMMTAuOCA0MmMtMy41IDMuNS0zLjUgOS4yIDAgMTIuN2w1LjIgNS4yYzEuNyAxLjcgNCAyLjYgNi4zIDIuNnM0LjYtLjkgNi4zLTIuNmw2LjctNi43QzM4IDUwLjUgMzguNiA0Ni4zIDM3IDQzbC02LjEgNi4xek0zOC41IDIyLjdsNi43LTYuN2MuOC0uOCAxLjYtLjkgMi4xLS45czEuNC4xIDIuMS45bDUuMiA1LjJjMS4xIDEuMSAxLjEgMy4xIDAgNC4ybC02LjEgNi4xLS4yLjItNi41IDYuNWMxLjIuNiAyLjUuOSAzLjguOSAyLjMgMCA0LjYtLjkgNi4zLTIuNmw2LjctNi43YzMuNS0zLjUgMy41LTkuMiAwLTEyLjdsLTUuMi01LjJjLTEuNy0xLjctNC0yLjYtNi4zLTIuNnMtNC42LjktNi4zIDIuNmwtNi43IDYuN2MtMi43IDIuNy0zLjMgNi45LTEuNyAxMC4ybDYuMS02LjF6Ii8+PHBhdGggZD0iTTQ0LjEgMzAuN2MuMi0uMi40LS42LjQtLjkgMC0uMy0uMS0uNi0uNC0uOWwtMi4zLTIuM2MtLjItLjItLjYtLjQtLjktLjQtLjMgMC0uNi4xLS45LjRMMjUuOCA0MC44Yy0uMi4yLS40LjYtLjQuOSAwIC4zLjEuNi40LjlsMi4zIDIuM2MuMi4yLjYuNC45LjQuMyAwIC42LS4xLjktLjRsMTQuMi0xNC4yeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1vcmRlcmVkLWxpc3QiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI3IDE0aDM2djhIMjd6TTI3IDUwaDM2djhIMjd6TTI3IDMyaDM2djhIMjd6TTExLjggMTUuOFYyMmgxLjh2LTcuOGgtMS41bC0yLjEgMSAuMyAxLjN6TTEyLjEgMzguNWwuNy0uNmMxLjEtMSAyLjEtMi4xIDIuMS0zLjQgMC0xLjQtMS0yLjQtMi43LTIuNC0xLjEgMC0yIC40LTIuNi44bC41IDEuM2MuNC0uMyAxLS42IDEuNy0uNi45IDAgMS4zLjUgMS4zIDEuMSAwIC45LS45IDEuOC0yLjYgMy4zbC0xIC45VjQwSDE1di0xLjVoLTIuOXpNMTMuMyA1My45YzEtLjQgMS40LTEgMS40LTEuOCAwLTEuMS0uOS0xLjktMi42LTEuOS0xIDAtMS45LjMtMi40LjZsLjQgMS4zYy4zLS4yIDEtLjUgMS42LS41LjggMCAxLjIuMyAxLjIuOCAwIC43LS44LjktMS40LjloLS43djEuM2guN2MuOCAwIDEuNi4zIDEuNiAxLjEgMCAuNi0uNSAxLTEuNCAxLS43IDAtMS41LS4zLTEuOC0uNWwtLjQgMS40Yy41LjMgMS4zLjYgMi4zLjYgMiAwIDMuMi0xIDMuMi0yLjQgMC0xLjEtLjgtMS44LTEuNy0xLjl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXAiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTQ3LjggMTUuMUgzMC4xYy00LjcgMC04LjUgMy43LTguNSA4LjRzMy43IDguNCA4LjQgOC40djI1aDdWMTkuOGgzdjM3LjFoNC4xVjE5LjhoMy43di00Ljd6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXJlZG8iIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTEwLjggNTEuMmMwLTUuMSAyLjEtOS43IDUuNC0xMy4xIDMuMy0zLjMgOC01LjQgMTMuMS01LjRINDZ2LTEyTDYxLjMgMzYgNDUuOSA1MS4zVjM5LjFIMjkuM2MtMy4zIDAtNi40IDEuMy04LjUgMy41LTIuMiAyLjItMy41IDUuMi0zLjUgOC41aC02LjV6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXJlbW92ZWZvcm1hdCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNTguMiA1NC42TDUyIDQ4LjVsMy42LTMuNiA2LjEgNi4xIDYuNC02LjQgMy44IDMuOC02LjQgNi40IDYuMSA2LjEtMy42IDMuNi02LjEtNi4xLTYuNCA2LjQtMy43LTMuOCA2LjQtNi40ek0yMS43IDUyLjFINTBWNTdIMjEuN3pNMTguOCAxNS4yaDM0LjF2Ni40SDM5LjV2MjQuMmgtNy40VjIxLjVIMTguOHYtNi4zeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1zdHJpa2V0aHJvdWdoIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik00NS44IDQ1YzAgMS0uMyAxLjktLjkgMi44LS42LjktMS42IDEuNi0zIDIuMXMtMy4xLjgtNSAuOGMtMi4xIDAtNC0uNC01LjctMS4xLTEuNy0uNy0yLjktMS43LTMuNi0yLjctLjgtMS4xLTEuMy0yLjYtMS41LTQuNWwtLjEtLjgtNi43LjZ2LjljLjEgMi44LjkgNS40IDIuMyA3LjYgMS41IDIuMyAzLjUgNCA2LjEgNS4xIDIuNiAxLjEgNS43IDEuNiA5LjQgMS42IDIuOSAwIDUuNi0uNSA4LTEuNiAyLjQtMS4xIDQuMy0yLjcgNS42LTQuNyAxLjMtMiAyLTQuMiAyLTYuNSAwLTEuNi0uMy0zLjEtLjktNC41bC0uMi0uNkg0NGMwIC4xIDEuOCAyLjMgMS44IDUuNXpNMjkgMjguOWMtLjgtLjgtMS4yLTEuNy0xLjItMi45IDAtLjcuMS0xLjMuNC0xLjkuMy0uNi43LTEuMSAxLjQtMS42LjYtLjUgMS40LS45IDIuNS0xLjEgMS4xLS4zIDIuNC0uNCAzLjktLjQgMi45IDAgNSAuNiA2LjMgMS43IDEuMyAxLjEgMi4xIDIuNyAyLjQgNS4xbC4xLjkgNi44LS41di0uOWMtLjEtMi41LS44LTQuNy0yLjEtNi43cy0zLjItMy41LTUuNi00LjVjLTIuNC0xLTUuMS0xLjUtOC4xLTEuNS0yLjggMC01LjMuNS03LjYgMS40LTIuMyAxLTQuMiAyLjQtNS40IDQuMy0xLjIgMS45LTEuOSAzLjktMS45IDYuMSAwIDEuNy40IDMuNCAxLjIgNC45bC4zLjVoMTEuOGMtMi4zLS45LTMuOS0xLjctNS4yLTIuOXptMTMuMy02LjJ6TTIyLjcgMjAuM3pNMTMgMzQuMWg0Ni4xdjMuNEgxM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctc3Ryb25nIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik01MS4xIDM3LjhjLTEuMS0xLjQtMi41LTIuNS00LjItMy4zIDEuMi0uOCAyLjEtMS44IDIuOC0zIDEtMS42IDEuNS0zLjUgMS41LTUuMyAwLTItLjYtNC0xLjctNS44LTEuMS0xLjgtMi44LTMuMi00LjgtNC4xLTItLjktNC42LTEuMy03LjgtMS4zaC0xNnY0MmgxNi4zYzIuNiAwIDQuOC0uMiA2LjctLjcgMS45LS41IDMuNC0xLjIgNC43LTIuMSAxLjMtMSAyLjQtMi40IDMuMi00LjEuOS0xLjcgMS4zLTMuNiAxLjMtNS43LjItMi41LS41LTQuNy0yLTYuNnpNNDAuOCA1MC4yYy0uNi4xLTEuOC4yLTMuNC4yaC05VjM4LjVoOC4zYzIuNSAwIDQuNC4yIDUuNi42IDEuMi40IDIgMSAyLjcgMiAuNi45IDEgMiAxIDMuMyAwIDEuMS0uMiAyLjEtLjcgMi45LS41LjktMSAxLjUtMS43IDEuOS0uOC40LTEuNy44LTIuOCAxem0yLjYtMjAuNGMtLjUuNy0xLjMgMS4zLTIuNSAxLjYtLjguMy0yLjUuNC00LjguNGgtNy43VjIxLjZoNy4xYzEuNCAwIDIuNiAwIDMuNi4xczEuNy4yIDIuMi40YzEgLjMgMS43LjggMi4yIDEuNy41LjkuOCAxLjguOCAzLS4xIDEuMy0uNCAyLjItLjkgM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctc3Vic2NyaXB0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMiAxNWg3LjhMNTYgNTcuMWgtNy45TDQ0LjMgNDZIMjcuNGwtNCAxMS4xaC03LjZMMzIgMTV6bS0yLjUgMjUuNGgxMi45TDM2IDIyLjNoLS4ybC02LjMgMTguMXpNNTguNyA1OS45Yy42LTEuNCAyLTIuOCA0LjEtNC40IDEuOS0xLjMgMy4xLTIuMyAzLjctMi45LjgtLjkgMS4zLTEuOSAxLjMtMyAwLS45LS4yLTEuNi0uNy0yLjItLjUtLjYtMS4yLS45LTIuMS0uOS0xLjIgMC0yLjEuNS0yLjUgMS40LS4zLjUtLjQgMS40LS41IDIuNWgtNGMuMS0xLjguNC0zLjIgMS00LjMgMS4xLTIuMSAzLTMuMSA1LjgtMy4xIDIuMiAwIDMuOS42IDUuMiAxLjggMS4zIDEuMiAxLjkgMi44IDEuOSA0LjggMCAxLjUtLjUgMi45LTEuNCA0LjEtLjYuOC0xLjYgMS43LTMgMi42TDY2IDU3LjdjLTEgLjctMS43IDEuMi0yLjEgMS42LS40LjMtLjcuNy0xIDEuMUg3MlY2NEg1Ny44YzAtMS41LjMtMi44LjktNC4xeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1zdXBlcnNjcmlwdCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzIgMTVoNy44TDU2IDU3LjFoLTcuOWwtNC0xMS4xSDI3LjRsLTQgMTEuMWgtNy42TDMyIDE1em0tMi41IDI1LjRoMTIuOUwzNiAyMi4zaC0uMmwtNi4zIDE4LjF6TTQ5LjYgMjguOGMuNS0xLjEgMS42LTIuMyAzLjQtMy42IDEuNS0xLjEgMi41LTEuOSAzLTIuNC43LS43IDEtMS42IDEtMi40IDAtLjctLjItMS4zLS42LTEuOC0uNC0uNS0xLS43LTEuNy0uNy0xIDAtMS43LjQtMi4xIDEuMS0uMi40LS4zIDEuMS0uNCAyLjFINDljLjEtMS41LjMtMi42LjgtMy41LjktMS43IDIuNS0yLjYgNC44LTIuNiAxLjggMCAzLjIuNSA0LjMgMS41IDEuMSAxIDEuNiAyLjMgMS42IDQgMCAxLjMtLjQgMi40LTEuMSAzLjQtLjUuNy0xLjMgMS40LTIuNCAyLjJsLTEuMyAxYy0uOC42LTEuNCAxLTEuNyAxLjMtLjMuMy0uNi42LS44LjloNy40djNINDguOGMwLTEuMy4zLTIuNC44LTMuNXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdGFibGUiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI1LjY4NiA1MS4zOHYtNi4zNDdxMC0uNDYyLS4yOTctLjc2LS4yOTgtLjI5Ny0uNzYxLS4yOTdIMTQuMDRxLS40NjMgMC0uNzYxLjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43Ni4yOThoMTAuNTg5cS40NjMgMCAuNzYtLjI5OC4yOTgtLjI5Ny4yOTgtLjc2em0wLTEyLjY5MnYtNi4zNDZxMC0uNDYzLS4yOTctLjc2LS4yOTgtLjI5OC0uNzYxLS4yOThIMTQuMDRxLS40NjMgMC0uNzYxLjI5OC0uMjk4LjI5Ny0uMjk4Ljc2djYuMzQ2cTAgLjQ2Mi4yOTguNzYuMjk4LjI5Ny43Ni4yOTdoMTAuNTg5cS40NjMgMCAuNzYtLjI5Ny4yOTgtLjI5OC4yOTgtLjc2em0xNi45NCAxMi42OTF2LTYuMzQ2cTAtLjQ2Mi0uMjk3LS43Ni0uMjk4LS4yOTctLjc2MS0uMjk3SDMwLjk4cS0uNDYzIDAtLjc2LjI5Ny0uMjk5LjI5OC0uMjk5Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTguMjk5LS4yOTcuMjk5LS43NnptLTE2Ljk0LTI1LjM4M3YtNi4zNDVxMC0uNDYzLS4yOTctLjc2LS4yOTgtLjI5OC0uNzYxLS4yOThIMTQuMDRxLS40NjMgMC0uNzYxLjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43Ni4yOThoMTAuNTg5cS40NjMgMCAuNzYtLjI5OC4yOTgtLjI5Ny4yOTgtLjc2em0xNi45NCAxMi42OTJ2LTYuMzQ2cTAtLjQ2My0uMjk3LS43Ni0uMjk4LS4yOTgtLjc2MS0uMjk4SDMwLjk4cS0uNDYzIDAtLjc2LjI5OC0uMjk5LjI5Ny0uMjk5Ljc2djYuMzQ2cTAgLjQ2Mi4yOTguNzYuMjk4LjI5Ny43NjEuMjk3aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTcuMjk5LS4yOTguMjk5LS43NnptMTYuOTQgMTIuNjkxdi02LjM0NnEwLS40NjItLjI5Ny0uNzYtLjI5OC0uMjk3LS43Ni0uMjk3SDQ3LjkycS0uNDYzIDAtLjc2LjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTcuNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk4LjI5OC0uMjk3LjI5OC0uNzZ6bS0xNi45NC0yNS4zODN2LTYuMzQ1cTAtLjQ2My0uMjk3LS43Ni0uMjk4LS4yOTgtLjc2MS0uMjk4SDMwLjk4cS0uNDYzIDAtLjc2LjI5Ny0uMjk5LjI5OC0uMjk5Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTguMjk5LS4yOTcuMjk5LS43NnptMTYuOTQgMTIuNjkydi02LjM0NnEwLS40NjMtLjI5Ny0uNzYtLjI5OC0uMjk4LS43Ni0uMjk4SDQ3LjkycS0uNDYzIDAtLjc2LjI5OC0uMjk4LjI5Ny0uMjk4Ljc2djYuMzQ2cTAgLjQ2Mi4yOTcuNzYuMjk4LjI5Ny43NjEuMjk3aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk3LjI5OC0uMjk4LjI5OC0uNzZ6bTAtMTIuNjkydi02LjM0NXEwLS40NjMtLjI5Ny0uNzYtLjI5OC0uMjk4LS43Ni0uMjk4SDQ3LjkycS0uNDYzIDAtLjc2LjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTcuNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk4LjI5OC0uMjk3LjI5OC0uNzZ6bTQuMjM2LTEwLjU3NnYzNS45NnEwIDIuMTgtMS41NTUgMy43MzQtMS41NTUgMS41NTMtMy43MzkgMS41NTNIMTQuMDRxLTIuMTg0IDAtMy43MzktMS41NTMtMS41NTUtMS41NTMtMS41NTUtMy43MzVWMTUuNDJxMC0yLjE4MSAxLjU1NS0zLjczNSAxLjU1NS0xLjU1MyAzLjczOS0xLjU1M2g0NC40NjhxMi4xODQgMCAzLjczOSAxLjU1MyAxLjU1NSAxLjU1NCAxLjU1NSAzLjczNXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5kZXJsaW5lIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zNiAzNXpNMTUuMiA1NS45aDQxLjZWNTlIMTUuMnpNMjEuMSAxMy45aDYuNHYyMS4yYzAgMS4yLjEgMi41LjIgMy43LjEgMS4zLjUgMi40IDEgMy40LjYgMSAxLjQgMS44IDIuNiAyLjUgMS4xLjYgMi43IDEgNC44IDEgMi4xIDAgMy43LS4zIDQuOC0xIDEuMS0uNiAyLTEuNSAyLjYtMi41LjYtMSAuOS0yLjEgMS0zLjQuMS0xLjMuMi0yLjUuMi0zLjdWMTMuOUg1MXYyMy4zYzAgMi4zLS40IDQuNC0xLjEgNi4xLS43IDEuNy0xLjcgMy4yLTMgNC40LTEuMyAxLjItMi45IDItNC43IDIuNi0xLjguNi0zLjkuOS02LjEuOS0yLjIgMC00LjMtLjMtNi4xLS45LTEuOC0uNi0zLjQtMS41LTQuNy0yLjYtMS4zLTEuMi0yLjMtMi42LTMtNC40LS43LTEuNy0xLjEtMy44LTEuMS02LjFWMTMuOXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5kbyIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNjEuMiA1MS4yYzAtNS4xLTIuMS05LjctNS40LTEzLjEtMy4zLTMuMy04LTUuNC0xMy4xLTUuNEgyNi4xdi0xMkwxMC44IDM2bDE1LjMgMTUuM1YzOS4xaDE2LjdjMy4zIDAgNi40IDEuMyA4LjUgMy41IDIuMiAyLjIgMy41IDUuMiAzLjUgOC41aDYuNHoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5saW5rIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMC45IDQ5LjFsLTYuNyA2LjdjLS44LjgtMS42LjktMi4xLjlzLTEuNC0uMS0yLjEtLjlsLTUuMi01LjJjLTEuMS0xLjEtMS4xLTMuMSAwLTQuMmw2LjEtNi4xLjItLjIgNi41LTYuNWMtMS4yLS42LTIuNS0uOS0zLjgtLjktMi4zIDAtNC42LjktNi4zIDIuNkwxMC44IDQyYy0zLjUgMy41LTMuNSA5LjIgMCAxMi43bDUuMiA1LjJjMS43IDEuNyA0IDIuNiA2LjMgMi42czQuNi0uOSA2LjMtMi42bDYuNy02LjdDMzggNTAuNSAzOC42IDQ2LjMgMzcgNDNsLTYuMSA2LjF6TTM4LjUgMjIuN2w2LjctNi43Yy44LS44IDEuNi0uOSAyLjEtLjlzMS40LjEgMi4xLjlsNS4yIDUuMmMxLjEgMS4xIDEuMSAzLjEgMCA0LjJsLTYuMSA2LjEtLjIuMi02LjUgNi41YzEuMi42IDIuNS45IDMuOC45IDIuMyAwIDQuNi0uOSA2LjMtMi42bDYuNy02LjdjMy41LTMuNSAzLjUtOS4yIDAtMTIuN2wtNS4yLTUuMmMtMS43LTEuNy00LTIuNi02LjMtMi42cy00LjYuOS02LjMgMi42bC02LjcgNi43Yy0yLjcgMi43LTMuMyA2LjktMS43IDEwLjJsNi4xLTYuMXoiLz48cGF0aCBkPSJNNDQuMSAzMC43Yy4yLS4yLjQtLjYuNC0uOSAwLS4zLS4xLS42LS40LS45bC0yLjMtMi4zYy0uMi0uMi0uNi0uNC0uOS0uNC0uMyAwLS42LjEtLjkuNEwyNS44IDQwLjhjLS4yLjItLjQuNi0uNC45IDAgLjMuMS42LjQuOWwyLjMgMi4zYy4yLjIuNi40LjkuNC4zIDAgLjYtLjEuOS0uNGwxNC4yLTE0LjJ6TTQxLjMgNTUuOHYtNWgyMi4ydjVINDEuM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5vcmRlcmVkLWxpc3QiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI3IDE0aDM2djhIMjd6TTI3IDUwaDM2djhIMjd6TTkgNTBoOXY4SDl6TTkgMzJoOXY4SDl6TTkgMTRoOXY4SDl6TTI3IDMyaDM2djhIMjd6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXZpZXctaHRtbCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ik0yNi45IDE3LjlMOSAzNi4yIDI2LjkgNTRNNDUgNTRsMTcuOS0xOC4zTDQ1IDE3LjkiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctYmFzZTY0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02NCAxN3YzOEg4VjE3aDU2bTgtOEgwdjU0aDcyVjl6Ii8+PHBhdGggZD0iTTI5LjkgMjguOWMtLjUtLjUtMS4xLS44LTEuOC0uOHMtMS40LjItMS45LjdjLS41LjQtLjkgMS0xLjIgMS42LS4zLjYtLjUgMS4zLS42IDIuMS0uMS43LS4yIDEuNC0uMiAxLjlsLjEuMWMuNi0uOCAxLjItMS40IDItMS44LjgtLjQgMS43LS41IDIuNy0uNS45IDAgMS44LjIgMi42LjYuOC40IDEuNi45IDIuMiAxLjUuNi42IDEgMS4zIDEuMiAyLjIuMy44LjQgMS42LjQgMi41IDAgMS4xLS4yIDIuMS0uNSAzLS4zLjktLjggMS43LTEuNSAyLjQtLjYuNy0xLjQgMS4yLTIuMyAxLjYtLjkuNC0xLjkuNi0zIC42LTEuNiAwLTIuOC0uMy0zLjktLjktMS0uNi0xLjgtMS40LTIuNS0yLjQtLjYtMS0xLTIuMS0xLjMtMy40LS4yLTEuMy0uNC0yLjYtLjQtMy45IDAtMS4zLjEtMi42LjQtMy44LjMtMS4zLjgtMi40IDEuNC0zLjUuNy0xIDEuNS0xLjkgMi41LTIuNSAxLS42IDIuMy0xIDMuOC0xIC45IDAgMS43LjEgMi41LjQuOC4zIDEuNC42IDIgMS4xLjYuNSAxLjEgMS4xIDEuNCAxLjguNC43LjYgMS41LjcgMi41aC00YzAtMS0uMy0xLjYtLjgtMi4xem0tMy41IDYuOGMtLjQuMi0uOC41LTEgLjgtLjMuNC0uNS44LS42IDEuMi0uMS41LS4yIDEtLjIgMS41cy4xLjkuMiAxLjRjLjEuNS40LjkuNiAxLjIuMy40LjYuNyAxIC45LjQuMi45LjMgMS40LjMuNSAwIDEtLjEgMS4zLS4zLjQtLjIuNy0uNSAxLS45LjMtLjQuNS0uOC42LTEuMi4xLS41LjItLjkuMi0xLjQgMC0uNS0uMS0xLS4yLTEuNC0uMS0uNS0uMy0uOS0uNi0xLjItLjMtLjQtLjYtLjctMS0uOS0uNC0uMi0uOS0uMy0xLjQtLjMtLjQgMC0uOS4xLTEuMy4zek0zNi4zIDQxLjN2LTMuOGw5LTEyLjFINDl2MTIuNGgyLjd2My41SDQ5djQuOGgtNHYtNC44aC04Ljd6TTQ1IDMwLjdsLTUuMyA3LjJoNS40bC0uMS03LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWJhY2stY29sb3IiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTM2LjUgMjIuM2wtNi4zIDE4LjFINDNsLTYuMy0xOC4xeiIvPjxwYXRoIGQ9Ik05IDguOXY1NC4yaDU0LjFWOC45SDl6bTM5LjkgNDguMkw0NSA0NkgyOC4ybC0zLjkgMTEuMWgtNy42TDMyLjggMTVoNy44bDE2LjIgNDIuMWgtNy45eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1mb3JlLWNvbG9yIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMiAxNWg3LjhMNTYgNTcuMWgtNy45bC00LTExLjFIMjcuNGwtNCAxMS4xaC03LjZMMzIgMTV6bS0yLjUgMjUuNGgxMi45TDM2IDIyLjNoLS4ybC02LjMgMTguMXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctZW1vamkiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTM2LjA1IDlDMjEuMDkgOSA4Ljk0OSAyMS4xNDEgOC45NDkgMzYuMTAxYzAgMTQuOTYgMTIuMTQxIDI3LjEwMSAyNy4xMDEgMjcuMTAxIDE0Ljk2IDAgMjcuMTAxLTEyLjE0MSAyNy4xMDEtMjcuMTAxUzUxLjAxIDkgMzYuMDUgOXptOS43NTcgMTUuMDk1YzIuNjUxIDAgNC40MTggMS43NjcgNC40MTggNC40MThzLTEuNzY3IDQuNDE4LTQuNDE4IDQuNDE4LTQuNDE4LTEuNzY3LTQuNDE4LTQuNDE4IDEuNzY3LTQuNDE4IDQuNDE4LTQuNDE4em0tMTkuNDc5IDBjMi42NTEgMCA0LjQxOCAxLjc2NyA0LjQxOCA0LjQxOHMtMS43NjcgNC40MTgtNC40MTggNC40MTgtNC40MTgtMS43NjctNC40MTgtNC40MTggMS43NjctNC40MTggNC40MTgtNC40MTh6bTkuNzIyIDMwLjQzNmMtMTQuMDkzIDAtMTYuMjYxLTEzLjAwOS0xNi4yNjEtMTMuMDA5aDMyLjUyMlM1MC4xNDMgNTQuNTMxIDM2LjA1IDU0LjUzMXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaW5zZXJ0LWF1ZGlvIiB2aWV3Qm94PSIwIDAgOCA4Ij48cGF0aCBkPSJNMy4zNDQgMEwyIDJIMHY0aDJsMS4zNDQgMkg0VjBoLS42NTZ6TTUgMXYxYy4xNTIgMCAuMzEzLjAyNi40NjkuMDYzSDUuNWMuODYuMjE1IDEuNS45OTUgMS41IDEuOTM4YTEuOTkgMS45OSAwIDAgMS0yIDIuMDAxdjFhMi45ODggMi45ODggMCAwIDAgMy0zIDIuOTg4IDIuOTg4IDAgMCAwLTMtM3ptMCAydjJsLjI1LS4wMzFDNS42ODMgNC44NTEgNiA0LjQ2MiA2IDRjMC0uNDQ2LS4zMjUtLjgxOS0uNzUtLjkzOHYtLjAzMWgtLjAzMUw1IDN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLW5vZW1iZWQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTMxLjUgMzMuNlYyNWwxMSAxMS0xMSAxMXYtOC44eiIvPjxwYXRoIGQ9Ik02NCAxN3YzOEg4VjE3aDU2bTgtOEgwdjU0aDcyVjl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXByZWZvcm1hdHRlZCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMTAuMyAzMy41Yy40IDAgLjktLjEgMS41LS4yczEuMi0uMyAxLjgtLjdjLjYtLjMgMS4xLS44IDEuNS0xLjMuNC0uNS42LTEuMy42LTIuMVYxNy4xYzAtMS40LjMtMi42LjgtMy42czEuMi0xLjkgMi0yLjVjLjgtLjcgMS42LTEuMiAyLjUtMS41LjktLjMgMS42LS41IDIuMi0uNWg1LjN2NS4zaC0zLjJjLS43IDAtMS4zLjEtMS44LjQtLjQuMy0uOC42LTEgMS0uMi40LS40LjktLjQgMS4zLS4xLjUtLjEuOS0uMSAxLjR2MTEuNGMwIDEuMi0uMiAyLjEtLjcgMi45LS41LjgtMSAxLjQtMS43IDEuOC0uNi40LTEuMy44LTIgMS0uNy4yLTEuMy4zLTEuNy40di4xYy41IDAgMSAuMSAxLjcuMy43LjIgMS4zLjUgMiAuOS42LjUgMS4yIDEuMSAxLjcgMS45LjUuOC43IDIgLjcgMy40djExLjFjMCAuNCAwIC45LjEgMS40LjEuNS4yLjkuNCAxLjNzLjYuNyAxIDFjLjQuMyAxIC40IDEuOC40aDMuMlY2M2gtNS4zYy0uNiAwLTEuNC0uMi0yLjItLjUtLjktLjMtMS43LS44LTIuNS0xLjVzLTEuNC0xLjUtMi0yLjVjLS41LTEtLjgtMi4yLS44LTMuNlY0My41YzAtLjktLjItMS43LS42LTIuMy0uNC0uNi0uOS0xLjEtMS41LTEuNS0uNi0uNC0xLjItLjYtMS44LS43LS42LS4xLTEuMS0uMi0xLjUtLjJ2LTUuM3pNNjEuOCAzOC43Yy0uNCAwLTEgLjEtMS42LjItLjYuMS0xLjIuNC0xLjguNy0uNi4zLTEuMS43LTEuNSAxLjMtLjQuNS0uNiAxLjMtLjYgMi4xdjEyLjFjMCAxLjQtLjMgMi42LS44IDMuNnMtMS4yIDEuOS0yIDIuNWMtLjguNy0xLjYgMS4yLTIuNSAxLjUtLjkuMy0xLjYuNS0yLjIuNWgtNS4zdi01LjNoMy4yYy43IDAgMS4zLS4xIDEuOC0uNC40LS4zLjgtLjYgMS0xIC4yLS40LjQtLjkuNC0xLjMuMS0uNS4xLS45LjEtMS40VjQyLjNjMC0xLjIuMi0yLjEuNy0yLjkuNS0uOCAxLTEuNCAxLjctMS44LjYtLjQgMS4zLS44IDItMSAuNy0uMiAxLjMtLjMgMS43LS40di0uMWMtLjUgMC0xLS4xLTEuNy0uMy0uNy0uMi0xLjMtLjUtMi0uOS0uNi0uNC0xLjItMS4xLTEuNy0xLjktLjUtLjgtLjctMi0uNy0zLjRWMTguNWMwLS40IDAtLjktLjEtMS40LS4xLS41LS4yLS45LS40LTEuM3MtLjYtLjctMS0xYy0uNC0uMy0xLS40LTEuOC0uNGgtMy4yVjkuMWg1LjNjLjYgMCAxLjQuMiAyLjIuNS45LjMgMS43LjggMi41IDEuNXMxLjQgMS41IDIgMi41Yy41IDEgLjggMi4yLjggMy42djExLjZjMCAuOS4yIDEuNy42IDIuMy40LjYuOSAxLjEgMS41IDEuNS42LjQgMS4yLjYgMS44LjcuNi4xIDEuMi4yIDEuNi4ydjUuMnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdXBsb2FkIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02NCAyN3YyOEg4VjI3SDB2MzZoNzJWMjdoLTh6Ii8+PHBhdGggZD0iTTMyLjEgNi43aDh2MzMuNmgtOHoiLz48cGF0aCBkPSJNNDggMzUuOUwzNiA0OS42IDI0IDM2aDI0eiIvPjwvc3ltYm9sPjwvc3ZnPg=="
 
 /***/ }),
-/* 37 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(15),
+  __webpack_require__(18),
   /* template */
-  __webpack_require__(57),
+  __webpack_require__(64),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/AssetElement.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AssetElement.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-68d05632", Component.options)
+  } else {
+    hotAPI.reload("data-v-68d05632", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(70)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(19),
+  /* template */
+  __webpack_require__(56),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/Assets.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Assets.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1f9262c9", Component.options)
+  } else {
+    hotAPI.reload("data-v-1f9262c9", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(20),
+  /* template */
+  __webpack_require__(67),
   /* scopeId */
   null,
   /* cssModules */
@@ -31764,18 +33635,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 38 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(64)
+__webpack_require__(75)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(16),
+  __webpack_require__(21),
   /* template */
-  __webpack_require__(55),
+  __webpack_require__(65),
   /* scopeId */
   null,
   /* cssModules */
@@ -31802,14 +33673,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 39 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(18),
+  __webpack_require__(23),
   /* template */
-  __webpack_require__(58),
+  __webpack_require__(68),
   /* scopeId */
   null,
   /* cssModules */
@@ -31836,18 +33707,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 40 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(60)
+__webpack_require__(71)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(19),
+  __webpack_require__(24),
   /* template */
-  __webpack_require__(49),
+  __webpack_require__(58),
   /* scopeId */
   null,
   /* cssModules */
@@ -31874,18 +33745,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(65)
+__webpack_require__(76)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(20),
+  __webpack_require__(25),
   /* template */
-  __webpack_require__(56),
+  __webpack_require__(66),
   /* scopeId */
   null,
   /* cssModules */
@@ -31912,14 +33783,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 42 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(21),
+  __webpack_require__(26),
   /* template */
-  __webpack_require__(48),
+  __webpack_require__(57),
   /* scopeId */
   null,
   /* cssModules */
@@ -31946,18 +33817,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 43 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(63)
+__webpack_require__(74)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(22),
+  __webpack_require__(27),
   /* template */
-  __webpack_require__(54),
+  __webpack_require__(63),
   /* scopeId */
   null,
   /* cssModules */
@@ -31984,14 +33855,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 44 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(23),
+  __webpack_require__(28),
   /* template */
-  __webpack_require__(53),
+  __webpack_require__(62),
   /* scopeId */
   null,
   /* cssModules */
@@ -32018,18 +33889,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 45 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(62)
+__webpack_require__(73)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(24),
+  __webpack_require__(29),
   /* template */
-  __webpack_require__(52),
+  __webpack_require__(61),
   /* scopeId */
   null,
   /* cssModules */
@@ -32056,14 +33927,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 46 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(25),
+  __webpack_require__(30),
   /* template */
-  __webpack_require__(51),
+  __webpack_require__(60),
   /* scopeId */
   null,
   /* cssModules */
@@ -32090,18 +33961,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 47 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(61)
+__webpack_require__(72)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(26),
+  __webpack_require__(31),
   /* template */
-  __webpack_require__(50),
+  __webpack_require__(59),
   /* scopeId */
   null,
   /* cssModules */
@@ -32128,7 +33999,65 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 48 */
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name,
+      "value": ""
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "ui labels"
+  }, [_c('draggable', {
+    attrs: {
+      "options": _vm.options
+    }
+  }, _vm._l((_vm.elements), function(element) {
+    return _c('asset-element', {
+      attrs: {
+        "element": element
+      },
+      on: {
+        "elementRemoved": _vm.onElementRemoved
+      }
+    })
+  }))], 1), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
+    staticClass: "ui small basic labeled icon button",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.launchElementSelector
+    }
+  }, [_c('i', {
+    staticClass: "add icon"
+  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ui modal"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_vm._v("\n            TODO: load element index here\n        ")]), _vm._v(" "), _c('div', {
+    staticClass: "actions"
+  }, [_c('div', {
+    staticClass: "ui button"
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c('div', {
+    staticClass: "ui disabled positive button"
+  }, [_vm._v("Select")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1f9262c9", module.exports)
+  }
+}
+
+/***/ }),
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32145,7 +34074,7 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32226,7 +34155,7 @@ if (false) {
 }
 
 /***/ }),
-/* 50 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32269,7 +34198,7 @@ if (false) {
 }
 
 /***/ }),
-/* 51 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32307,7 +34236,7 @@ if (false) {
 }
 
 /***/ }),
-/* 52 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32330,7 +34259,7 @@ if (false) {
 }
 
 /***/ }),
-/* 53 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32378,7 +34307,7 @@ if (false) {
 }
 
 /***/ }),
-/* 54 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32428,7 +34357,41 @@ if (false) {
 }
 
 /***/ }),
-/* 55 */
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ui image label"
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.element.name
+    },
+    domProps: {
+      "value": _vm.element.id
+    }
+  }), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": _vm.element.thumbUrl
+    }
+  }), _vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), _c('i', {
+    staticClass: "delete icon",
+    on: {
+      "click": _vm.removeElement
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-68d05632", module.exports)
+  }
+}
+
+/***/ }),
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32471,7 +34434,7 @@ if (false) {
 }
 
 /***/ }),
-/* 56 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32586,7 +34549,7 @@ if (false) {
 }
 
 /***/ }),
-/* 57 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32653,7 +34616,7 @@ if (false) {
 }
 
 /***/ }),
-/* 58 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32686,7 +34649,7 @@ if (false) {
 }
 
 /***/ }),
-/* 59 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -32718,13 +34681,39 @@ if (false) {
 }
 
 /***/ }),
-/* 60 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(27);
+var content = __webpack_require__(32);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("6dec5da1", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(33);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32744,13 +34733,13 @@ if(false) {
 }
 
 /***/ }),
-/* 61 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(28);
+var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32770,13 +34759,13 @@ if(false) {
 }
 
 /***/ }),
-/* 62 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(29);
+var content = __webpack_require__(35);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32796,13 +34785,13 @@ if(false) {
 }
 
 /***/ }),
-/* 63 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(36);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32822,13 +34811,13 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(31);
+var content = __webpack_require__(37);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32848,13 +34837,13 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(32);
+var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32874,13 +34863,13 @@ if(false) {
 }
 
 /***/ }),
-/* 66 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(33);
+var content = __webpack_require__(39);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -32900,7 +34889,7 @@ if(false) {
 }
 
 /***/ }),
-/* 67 */
+/* 78 */
 /***/ (function(module, exports) {
 
 /**
@@ -32933,295 +34922,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-(function () {
-  "use strict";
-
-  function buildDraggable(Sortable) {
-    function removeNode(node) {
-      node.parentElement.removeChild(node);
-    }
-
-    function insertNodeAt(fatherNode, node, position) {
-      if (position < fatherNode.children.length) {
-        fatherNode.insertBefore(node, fatherNode.children[position]);
-      } else {
-        fatherNode.appendChild(node);
-      }
-    }
-
-    function computeVmIndex(vnodes, element) {
-      return vnodes.map(function (elt) {
-        return elt.elm;
-      }).indexOf(element);
-    }
-
-    function _computeIndexes(slots, children) {
-      return !slots ? [] : Array.prototype.map.call(children, function (elt) {
-        return computeVmIndex(slots, elt);
-      });
-    }
-
-    function emit(evtName, evtData) {
-      this.$emit(evtName.toLowerCase(), evtData);
-    }
-
-    function delegateAndEmit(evtName) {
-      var _this = this;
-
-      return function (evtData) {
-        if (_this.list !== null) {
-          _this['onDrag' + evtName](evtData);
-        }
-        emit.call(_this, evtName, evtData);
-      };
-    }
-
-    var eventsListened = ['Start', 'Add', 'Remove', 'Update', 'End'];
-    var eventsToEmit = ['Choose', 'Sort', 'Filter', 'Clone'];
-    var readonlyProperties = ['Move'].concat(eventsListened, eventsToEmit).map(function (evt) {
-      return 'on' + evt;
-    });
-    var draggingElement = null;
-
-    var props = {
-      options: Object,
-      list: {
-        type: Array,
-        required: false,
-        default: null
-      },
-      clone: {
-        type: Function,
-        default: function _default(original) {
-          return original;
-        }
-      },
-      element: {
-        type: String,
-        default: 'div'
-      },
-      move: {
-        type: Function,
-        default: null
-      }
-    };
-
-    var draggableComponent = {
-      props: props,
-
-      data: function data() {
-        return {
-          transitionMode: false
-        };
-      },
-      render: function render(h) {
-        if (this.$slots.default && this.$slots.default.length === 1) {
-          var child = this.$slots.default[0];
-          if (child.componentOptions && child.componentOptions.tag === "transition-group") {
-            this.transitionMode = true;
-          }
-        }
-        return h(this.element, null, this.$slots.default);
-      },
-      mounted: function mounted() {
-        var _this2 = this;
-
-        var optionsAdded = {};
-        eventsListened.forEach(function (elt) {
-          optionsAdded['on' + elt] = delegateAndEmit.call(_this2, elt);
-        });
-
-        eventsToEmit.forEach(function (elt) {
-          optionsAdded['on' + elt] = emit.bind(_this2, elt);
-        });
-
-        var options = _extends({}, this.options, optionsAdded, { onMove: function onMove(evt) {
-            return _this2.onDragMove(evt);
-          } });
-        this._sortable = new Sortable(this.rootContainer, options);
-        this.computeIndexes();
-      },
-      beforeDestroy: function beforeDestroy() {
-        this._sortable.destroy();
-      },
-
-
-      computed: {
-        rootContainer: function rootContainer() {
-          return this.transitionMode ? this.$el.children[0] : this.$el;
-        }
-      },
-
-      watch: {
-        options: function options(newOptionValue) {
-          for (var property in newOptionValue) {
-            if (readonlyProperties.indexOf(property) == -1) {
-              this._sortable.option(property, newOptionValue[property]);
-            }
-          }
-        },
-        list: function list() {
-          this.computeIndexes();
-        }
-      },
-
-      methods: {
-        getChildrenNodes: function getChildrenNodes() {
-          var rawNodes = this.$slots.default;
-          return this.transitionMode ? rawNodes[0].child.$slots.default : rawNodes;
-        },
-        computeIndexes: function computeIndexes() {
-          var _this3 = this;
-
-          this.$nextTick(function () {
-            _this3.visibleIndexes = _computeIndexes(_this3.getChildrenNodes(), _this3.rootContainer.children);
-          });
-        },
-        getUnderlyingVm: function getUnderlyingVm(htmlElt) {
-          var index = computeVmIndex(this.getChildrenNodes(), htmlElt);
-          var element = this.list[index];
-          return { index: index, element: element };
-        },
-        getUnderlyingPotencialDraggableComponent: function getUnderlyingPotencialDraggableComponent(_ref) {
-          var __vue__ = _ref.__vue__;
-
-          if (!__vue__ || !__vue__.$options || __vue__.$options._componentTag !== "transition-group") {
-            return __vue__;
-          }
-          return __vue__.$parent;
-        },
-        emitChanges: function emitChanges(evt) {
-          var _this4 = this;
-
-          this.$nextTick(function () {
-            _this4.$emit('change', evt);
-          });
-        },
-        spliceList: function spliceList() {
-          var _list;
-
-          (_list = this.list).splice.apply(_list, arguments);
-        },
-        updatePosition: function updatePosition(oldIndex, newIndex) {
-          this.list.splice(newIndex, 0, this.list.splice(oldIndex, 1)[0]);
-        },
-        getRelatedContextFromMoveEvent: function getRelatedContextFromMoveEvent(_ref2) {
-          var to = _ref2.to,
-              related = _ref2.related;
-
-          var component = this.getUnderlyingPotencialDraggableComponent(to);
-          if (!component) {
-            return { component: component };
-          }
-          var list = component.list;
-          var context = { list: list, component: component };
-          if (to !== related && list && component.getUnderlyingVm) {
-            var destination = component.getUnderlyingVm(related);
-            return _extends(destination, context);
-          }
-
-          return context;
-        },
-        getVmIndex: function getVmIndex(domIndex) {
-          var indexes = this.visibleIndexes;
-          var numberIndexes = indexes.length;
-          return domIndex > numberIndexes - 1 ? numberIndexes : indexes[domIndex];
-        },
-        onDragStart: function onDragStart(evt) {
-          this.context = this.getUnderlyingVm(evt.item);
-          evt.item._underlying_vm_ = this.clone(this.context.element);
-          draggingElement = evt.item;
-        },
-        onDragAdd: function onDragAdd(evt) {
-          var element = evt.item._underlying_vm_;
-          if (element === undefined) {
-            return;
-          }
-          removeNode(evt.item);
-          var newIndex = this.getVmIndex(evt.newIndex);
-          this.spliceList(newIndex, 0, element);
-          this.computeIndexes();
-          var added = { element: element, newIndex: newIndex };
-          this.emitChanges({ added: added });
-        },
-        onDragRemove: function onDragRemove(evt) {
-          insertNodeAt(this.rootContainer, evt.item, evt.oldIndex);
-          var isCloning = !!evt.clone;
-          if (isCloning) {
-            removeNode(evt.clone);
-            return;
-          }
-          var oldIndex = this.context.index;
-          this.spliceList(oldIndex, 1);
-          var removed = { element: this.context.element, oldIndex: oldIndex };
-          this.emitChanges({ removed: removed });
-        },
-        onDragUpdate: function onDragUpdate(evt) {
-          removeNode(evt.item);
-          insertNodeAt(evt.from, evt.item, evt.oldIndex);
-          var oldIndex = this.context.index;
-          var newIndex = this.getVmIndex(evt.newIndex);
-          this.updatePosition(oldIndex, newIndex);
-          var moved = { element: this.context.element, oldIndex: oldIndex, newIndex: newIndex };
-          this.emitChanges({ moved: moved });
-        },
-        computeFutureIndex: function computeFutureIndex(relatedContext, evt) {
-          if (!relatedContext.element) {
-            return 0;
-          }
-          var domChildren = [].concat(_toConsumableArray(evt.to.children));
-          var currentDOMIndex = domChildren.indexOf(evt.related);
-          var currentIndex = relatedContext.component.getVmIndex(currentDOMIndex);
-          var draggedInList = domChildren.indexOf(draggingElement) != -1;
-          return draggedInList ? currentIndex : currentIndex + 1;
-        },
-        onDragMove: function onDragMove(evt) {
-          var onMove = this.move;
-          if (!onMove || !this.list) {
-            return true;
-          }
-
-          var relatedContext = this.getRelatedContextFromMoveEvent(evt);
-          var draggedContext = this.context;
-          var futureIndex = this.computeFutureIndex(relatedContext, evt);
-          _extends(draggedContext, { futureIndex: futureIndex });
-          _extends(evt, { relatedContext: relatedContext, draggedContext: draggedContext });
-          return onMove(evt);
-        },
-        onDragEnd: function onDragEnd(evt) {
-          this.computeIndexes();
-          draggingElement = null;
-        }
-      }
-    };
-    return draggableComponent;
-  }
-
-  if (true) {
-    var Sortable = __webpack_require__(35);
-    module.exports = buildDraggable(Sortable);
-  } else if (typeof define == "function" && define.amd) {
-    define(['sortablejs'], function (Sortable) {
-      return buildDraggable(Sortable);
-    });
-  } else if (window && window.Vue && window.Sortable) {
-    var draggable = buildDraggable(window.Sortable);
-    Vue.component('draggable', draggable);
-  }
-})();
-
-/***/ }),
-/* 69 */
+/* 79 */
 /***/ (function(module, exports) {
 
 var g;
@@ -33248,33 +34949,39 @@ module.exports = g;
 
 
 /***/ }),
-/* 70 */
+/* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__semantic_dist_semantic_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__semantic_dist_components_form__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__semantic_dist_components_checkbox__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__semantic_dist_components_checkbox__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__semantic_dist_components_checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__semantic_dist_components_checkbox__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__semantic_dist_components_dropdown__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__semantic_dist_components_dropdown__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__semantic_dist_components_dropdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__semantic_dist_components_dropdown__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__semantic_dist_components_tab__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__semantic_dist_components_tab__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__semantic_dist_components_tab___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__semantic_dist_components_tab__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_transition__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_transition___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_transition__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_state__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_state___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_state__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_visibility__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_visibility___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_visibility__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__node_modules_trumbowyg_dist_trumbowyg_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__node_modules_trumbowyg_dist_trumbowyg_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__node_modules_trumbowyg_dist_trumbowyg_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Field_vue__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_Field_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_dimmer__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_dimmer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__semantic_dist_components_dimmer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_modal__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__semantic_dist_components_modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_transition__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_transition___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__semantic_dist_components_transition__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__semantic_dist_components_state__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__semantic_dist_components_state___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__semantic_dist_components_state__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__semantic_dist_components_visibility__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__semantic_dist_components_visibility___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__semantic_dist_components_visibility__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__node_modules_trumbowyg_dist_trumbowyg_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__node_modules_trumbowyg_dist_trumbowyg_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__node_modules_trumbowyg_dist_trumbowyg_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Field_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_Field_vue__);
+
+
 
 
 
@@ -33293,10 +35000,10 @@ module.exports = g;
 
 // Field layout tabs
 if (document.querySelector('#field-layout')) {
-    new __WEBPACK_IMPORTED_MODULE_9_vue___default.a({
+    new __WEBPACK_IMPORTED_MODULE_11_vue___default.a({
         el: '#field-layout',
         components: {
-            'field': __WEBPACK_IMPORTED_MODULE_10__components_Field_vue___default.a
+            'field': __WEBPACK_IMPORTED_MODULE_12__components_Field_vue___default.a
         },
         mounted: function () {
             $('.tabular .item', this.$el).tab();
@@ -33304,321 +35011,6 @@ if (document.querySelector('#field-layout')) {
     });
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    name: 'assets',
-    props: {
-        config: {}
-    },
-    data: function () {
-
-        const initialElementCount = Object.keys(this.config.elements).length;
-
-        return {
-            elements: this.config.elements,
-            canAddMore: this.config.limit === '' || initialElementCount < this.config.limit,
-            options: {
-                ghostClass: 'disabled',
-                disabled: initialElementCount <= 1
-            }
-        };
-    },
-    components: {
-        'draggable': __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
-        'asset-element': __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default.a
-    },
-    methods: {
-        onElementRemoved: function (element) {
-            delete this.elements[element.id];
-            this.updateState();
-        },
-        updateState: function () {
-            const elementCount = Object.keys(this.elements).length;
-
-            this.$children[0]._sortable.option("disabled", elementCount <= 1);
-
-            if (this.config.limit !== '') {
-                this.canAddMore = elementCount < this.config.limit;
-            }
-        }
-    }
-};
-
-/***/ }),
-/* 79 */,
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(91)
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(78),
-  /* template */
-  __webpack_require__(82),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/Assets.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Assets.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1f9262c9", Component.options)
-  } else {
-    hotAPI.reload("data-v-1f9262c9", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 81 */,
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": _vm.config.name,
-      "value": ""
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "ui labels"
-  }, [_c('draggable', {
-    attrs: {
-      "options": _vm.options
-    }
-  }, _vm._l((_vm.elements), function(element) {
-    return _c('asset-element', {
-      attrs: {
-        "element": element
-      },
-      on: {
-        "elementRemoved": _vm.onElementRemoved
-      }
-    })
-  }))], 1), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
-    staticClass: "ui small basic labeled icon button",
-    attrs: {
-      "type": "button"
-    }
-  }, [_c('i', {
-    staticClass: "add icon"
-  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e()])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1f9262c9", module.exports)
-  }
-}
-
-/***/ }),
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    name: 'asset-element',
-    props: ['element'],
-    methods: {
-        removeElement: function (event) {
-            $(this.$el).transition({
-                animation: 'fade',
-                onHide: function () {
-                    $(this).remove();
-                }
-            });
-
-            this.$emit('elementRemoved', this.element);
-        }
-    }
-};
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(87),
-  /* template */
-  __webpack_require__(89),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/josh/Development/plugins/fffields/src/components/AssetElement.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AssetElement.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-68d05632", Component.options)
-  } else {
-    hotAPI.reload("data-v-68d05632", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "ui image label"
-  }, [_c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": _vm.element.name
-    },
-    domProps: {
-      "value": _vm.element.id
-    }
-  }), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": _vm.element.thumbUrl
-    }
-  }), _vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), _c('i', {
-    staticClass: "delete icon",
-    on: {
-      "click": _vm.removeElement
-    }
-  })])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-68d05632", module.exports)
-  }
-}
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.labels .ui.image.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n  user-select: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(90);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("6dec5da1", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue", function() {
-     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
 
 /***/ })
 /******/ ]);

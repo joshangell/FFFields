@@ -40,6 +40,8 @@
     "checkbox",
     "dropdown",
     "tab",
+    "dimmer",
+    "modal",
     "transition",
     "state",
     "visibility"
