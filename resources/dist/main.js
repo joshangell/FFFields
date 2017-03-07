@@ -33346,6 +33346,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -33410,7 +33412,13 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
+  return _c('div', [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name,
+      "value": ""
+    }
+  }), _vm._v(" "), _c('div', {
     staticClass: "ui labels"
   }, _vm._l((_vm.elements), function(element) {
     return _c('asset-element', {
@@ -33444,7 +33452,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -33457,8 +33465,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
-    props: ['element']
+    props: ['element'],
+    methods: {
+        removeElement: function (event) {
+            $(this.$el).transition({
+                animation: 'fade',
+                onHide: function () {
+                    $(this).remove();
+                }
+            });
+        }
+    }
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
 /* 88 */
@@ -33514,7 +33533,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.element.thumbUrl
     }
   }), _vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), _c('i', {
-    staticClass: "delete icon"
+    staticClass: "delete icon",
+    on: {
+      "click": _vm.removeElement
+    }
   })])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
