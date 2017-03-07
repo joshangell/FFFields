@@ -49,7 +49,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
 
         if ($criteria) {
             foreach ($criteria as $element) {
-                $elements[] = [
+                $elements[$element->id] = [
                     'id'       => $element->id,
                     'name'     => $name . '[]',
                     'label'    => HtmlHelper::encode($element),

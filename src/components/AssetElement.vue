@@ -19,6 +19,8 @@
                         $(this).remove();
                     }
                 });
+
+                this.$emit('elementRemoved', this.element);
             }
         }
     }

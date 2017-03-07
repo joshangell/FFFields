@@ -4,7 +4,7 @@
 
         <div class="ui labels">
             <draggable v-bind:options="options">
-                <asset-element v-for="element in elements" v-bind:element="element"></asset-element>
+                <asset-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></asset-element>
             </draggable>
         </div>
 
@@ -38,7 +38,7 @@
                 elements: this.config.elements,
                 options: {
                     ghostClass: 'disabled',
-                    disabled: this.config.elements.length <= 1
+                    disabled: Object.keys(this.config.elements).length <= 1
                 },
             }
         },
@@ -46,5 +46,15 @@
             'draggable'     : Draggable,
             'asset-element' : AssetElement,
         },
+        methods: {
+            onElementRemoved: function(element) {
+                delete this.elements[element.id];
+                this.updateDraggable();
+            },
+            updateDraggable: function()
+            {
+                this.$children[0]._sortable.option("disabled", Object.keys(this.elements).length <= 1);
+            }
+        }
     }
 </script>

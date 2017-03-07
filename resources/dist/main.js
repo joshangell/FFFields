@@ -29728,11 +29728,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         toggleCollapse: function (event) {
-            if (this.collapsed) {
-                this.collapsed = false;
-            } else {
-                this.collapsed = true;
-            }
+            this.collapsed = !this.collapsed;
 
             $('.ui.form', this.$el).transition({
                 animation: 'slide down'
@@ -33366,13 +33362,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             elements: this.config.elements,
             options: {
                 ghostClass: 'disabled',
-                disabled: this.config.elements.length <= 1
+                disabled: Object.keys(this.config.elements).length <= 1
             }
         };
     },
     components: {
         'draggable': __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
         'asset-element': __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default.a
+    },
+    methods: {
+        onElementRemoved: function (element) {
+            delete this.elements[element.id];
+            this.updateDraggable();
+        },
+        updateDraggable: function () {
+            this.$children[0]._sortable.option("disabled", Object.keys(this.elements).length <= 1);
+        }
     }
 };
 
@@ -33437,6 +33442,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('asset-element', {
       attrs: {
         "element": element
+      },
+      on: {
+        "elementRemoved": _vm.onElementRemoved
       }
     })
   }))], 1), _vm._v(" "), _c('button', {
@@ -33487,6 +33495,8 @@ if (false) {
                     $(this).remove();
                 }
             });
+
+            this.$emit('elementRemoved', this.element);
         }
     }
 };
