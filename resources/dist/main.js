@@ -29521,9 +29521,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -33325,8 +33322,10 @@ if (document.querySelector('#field-layout')) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__AssetElement_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AssetElement_vue__);
 //
 //
 //
@@ -33348,6 +33347,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -33359,11 +33363,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function () {
         return {
-            elements: this.config.elements
+            elements: this.config.elements,
+            options: {
+                ghostClass: 'disabled',
+                disabled: this.config.elements.length <= 1
+            }
         };
     },
     components: {
-        'asset-element': __WEBPACK_IMPORTED_MODULE_0__AssetElement_vue___default.a
+        'draggable': __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        'asset-element': __WEBPACK_IMPORTED_MODULE_1__AssetElement_vue___default.a
     }
 };
 
@@ -33420,13 +33429,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "ui labels"
+  }, [_c('draggable', {
+    attrs: {
+      "options": _vm.options
+    }
   }, _vm._l((_vm.elements), function(element) {
     return _c('asset-element', {
       attrs: {
         "element": element
       }
     })
-  })), _vm._v(" "), _c('button', {
+  }))], 1), _vm._v(" "), _c('button', {
     staticClass: "ui small basic labeled icon button",
     attrs: {
       "type": "button"
@@ -33556,7 +33569,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.ui.labels .ui.image.label {\n  margin-bottom: 0.5rem;\n}\n", ""]);
+exports.push([module.i, "\n.ui.labels .ui.image.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n  user-select: none;\n}\n", ""]);
 
 // exports
 

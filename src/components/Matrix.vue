@@ -42,8 +42,6 @@
 </template>
 
 <style lang="scss">
-    .matrix {
-    }
     .matrix-header {
         height: 1em;
         .ui.buttons {
@@ -53,7 +51,6 @@
             right: 0;
         }
     }
-
     .matrix-footer {
         margin-top: 1rem;
     }
