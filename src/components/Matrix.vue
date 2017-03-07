@@ -20,7 +20,7 @@
         </draggable>
 
         <div class="matrix-footer">
-            <div class="ui buttons">
+            <div class="ui small buttons">
                 <template v-for="(blockType, index) in blockTypes">
                     <template v-if="index == 0">
                         <button class="ui labeled icon button" role="button" v-on:click="addBlock(blockType, $event)">
