@@ -1,6 +1,13 @@
 <template>
-    <div class="ui labels">
-        <asset-element v-for="element in elements" v-bind:element="element"></asset-element>
+    <div>
+        <div class="ui labels">
+            <asset-element v-for="element in elements" v-bind:element="element"></asset-element>
+        </div>
+
+        <button type="button" class="ui small basic labeled icon button">
+            <i class="add icon"></i>
+            {{ config.selectionLabel }}
+        </button>
     </div>
 </template>
 

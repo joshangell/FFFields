@@ -64,18 +64,14 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'locale' => craft()->getLanguage()
         ];
 
-
-
-
-
-
         // Return the config
         $config = [
             'id'       => $id,
             'name'     => $name,
             'elements' => $elements,
             'sources'  => $settings->sources,
-            'criteria' => $selectionCriteria
+            'criteria' => $selectionCriteria,
+            'selectionLabel' => ($settings->selectionLabel ? Craft::t($settings->selectionLabel) : Craft::t('Add an asset'))
         ];
 
 

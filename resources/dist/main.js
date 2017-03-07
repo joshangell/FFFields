@@ -32197,7 +32197,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })), _vm._v(" "), _c('div', {
     staticClass: "matrix-footer"
   }, [_c('div', {
-    staticClass: "ui buttons"
+    staticClass: "ui small buttons"
   }, [_vm._l((_vm.blockTypes), function(blockType, index) {
     return [(index == 0) ? [_c('button', {
       staticClass: "ui labeled icon button",
@@ -33339,6 +33339,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33403,7 +33410,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('div', {
     staticClass: "ui labels"
   }, _vm._l((_vm.elements), function(element) {
     return _c('asset-element', {
@@ -33411,7 +33418,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "element": element
       }
     })
-  }))
+  })), _vm._v(" "), _c('button', {
+    staticClass: "ui small basic labeled icon button",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('i', {
+    staticClass: "add icon"
+  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
