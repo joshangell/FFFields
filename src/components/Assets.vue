@@ -15,7 +15,10 @@
 
         <div class="ui modal">
             <div class="content">
-                TODO: load element index here
+                <!-- TODO this will need toggling based on viewMode of field -->
+                <div class="ui cards">
+                    <asset-element v-for="element in modalElements" v-bind:element="element"></asset-element>
+                </div>
             </div>
             <div class="actions">
                 <div class="ui button">Cancel</div>
@@ -47,9 +50,11 @@
             const initialElementCount = Object.keys(this.config.elements).length;
 
             return {
-                modal: null,
-                elements: this.config.elements,
-                canAddMore: (this.config.limit === '' || initialElementCount < this.config.limit),
+                modal:         null,
+                initialized:   false,
+                elements:      this.config.elements,
+                modalElements: null,
+                canAddMore:    (this.config.limit === '' || initialElementCount < this.config.limit),
                 options: {
                     ghostClass: 'disabled',
                     disabled: initialElementCount <= 1
@@ -64,10 +69,12 @@
             this.modal = $('.ui.modal', this.$el).modal();
         },
         methods: {
+
             onElementRemoved: function(element) {
                 delete this.elements[element.id];
                 this.updateState();
             },
+
             updateState: function() {
                 const elementCount = Object.keys(this.elements).length;
 
@@ -77,10 +84,55 @@
                     this.canAddMore = elementCount < this.config.limit;
                 }
             },
+
             launchElementSelector: function()
             {
-                this.modal.modal('show');
+                if (!this.initialized) {
+                    this.initializeModal();
+                } else {
+                    this.modal.modal('show');
+                }
+            },
+
+            initializeModal: function()
+            {
+
+                const _this = this;
+
+                const data = {
+                    fieldName: this.config.name,
+                    sources: this.config.sources,
+                    elementType: 'Asset',
+                    context: 'index',
+                };
+
+                if (typeof window.FFFields.csrfTokenName != 'undefined') {
+                    data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
+                }
+
+                $.ajax({
+                    url: window.FFFields.actionUrl + '/fffields/elements/getElements',
+                    type: 'POST',
+                    data: data,
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + errorThrown);
+                    },
+                    complete: function(jqXHR, textStatus)
+                    {
+                        if (textStatus != 'success') {
+                            alert('An unknown error occurred.');
+                            return;
+                        }
+
+                        _this.modalElements = jqXHR.responseJSON.elements;
+                        _this.modal.modal('show');
+                        _this.initialized = true;
+                    }
+                });
+
             }
+
         }
     }
 </script>

@@ -30932,6 +30932,21 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
@@ -30996,6 +31011,9 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
 
 
 
@@ -31011,7 +31029,9 @@ module.exports = Vue$3;
 
         return {
             modal: null,
+            initialized: false,
             elements: this.config.elements,
+            modalElements: null,
             canAddMore: this.config.limit === '' || initialElementCount < this.config.limit,
             options: {
                 ghostClass: 'disabled',
@@ -31027,10 +31047,12 @@ module.exports = Vue$3;
         this.modal = $('.ui.modal', this.$el).modal();
     },
     methods: {
+
         onElementRemoved: function (element) {
             delete this.elements[element.id];
             this.updateState();
         },
+
         updateState: function () {
             const elementCount = Object.keys(this.elements).length;
 
@@ -31040,9 +31062,50 @@ module.exports = Vue$3;
                 this.canAddMore = elementCount < this.config.limit;
             }
         },
+
         launchElementSelector: function () {
-            this.modal.modal('show');
+            if (!this.initialized) {
+                this.initializeModal();
+            } else {
+                this.modal.modal('show');
+            }
+        },
+
+        initializeModal: function () {
+
+            const _this = this;
+
+            const data = {
+                fieldName: this.config.name,
+                sources: this.config.sources,
+                elementType: 'Asset',
+                context: 'index'
+            };
+
+            if (typeof window.FFFields.csrfTokenName != 'undefined') {
+                data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
+            }
+
+            $.ajax({
+                url: window.FFFields.actionUrl + '/fffields/elements/getElements',
+                type: 'POST',
+                data: data,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + errorThrown);
+                },
+                complete: function (jqXHR, textStatus) {
+                    if (textStatus != 'success') {
+                        alert('An unknown error occurred.');
+                        return;
+                    }
+
+                    _this.modalElements = jqXHR.responseJSON.elements;
+                    _this.modal.modal('show');
+                    _this.initialized = true;
+                }
+            });
         }
+
     }
 };
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -31503,7 +31566,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function () {
         return {
-            collapsed: this.block.enabled.value === '1' ? false : true,
+            collapsed: this.block.enabled.value !== '1',
             enabled: this.block.enabled.value
         };
     },
@@ -31540,7 +31603,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         toggleEnabled: function (event) {
             if (this.enabled === '1') {
                 this.enabled = '0';
-
                 this.collapse();
             } else {
                 this.enabled = '1';
@@ -34034,19 +34096,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "add icon"
-  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "ui modal"
   }, [_c('div', {
     staticClass: "content"
-  }, [_vm._v("\n            TODO: load element index here\n        ")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "ui cards"
+  }, _vm._l((_vm.modalElements), function(element) {
+    return _c('asset-element', {
+      attrs: {
+        "element": element
+      }
+    })
+  }))]), _vm._v(" "), _vm._m(0)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "actions"
   }, [_c('div', {
     staticClass: "ui button"
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('div', {
     staticClass: "ui disabled positive button"
-  }, [_vm._v("Select")])])])
+  }, [_vm._v("Select")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -34362,8 +34432,23 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "ui image label"
-  }, [_c('input', {
+    class: [_vm.element.viewMode === 'large' ? 'ui card' : 'ui image label']
+  }, [(_vm.element.viewMode === 'large') ? [_c('div', {
+    staticClass: "image"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.element.thumbUrl
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [(_vm.element.context === 'field') ? _c('i', {
+    staticClass: "right floated delete icon",
+    on: {
+      "click": _vm.removeElement
+    }
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "header"
+  }, [_vm._v(_vm._s(_vm.element.label))]), _vm._v(" "), _vm._m(0)])] : [_c('input', {
     attrs: {
       "type": "hidden",
       "name": _vm.element.name
@@ -34375,13 +34460,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": _vm.element.thumbUrl
     }
-  }), _vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), _c('i', {
+  }), _vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
     }
-  })])
-},staticRenderFns: []}
+  }) : _vm._e()]], 2)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "meta"
+  }, [_c('span', {
+    staticClass: "date"
+  }, [_vm._v("Create in Sep 2014")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

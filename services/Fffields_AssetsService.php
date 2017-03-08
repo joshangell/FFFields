@@ -45,18 +45,11 @@ class Fffields_AssetsService extends BaseApplicationComponent
         $criteria->localeEnabled = null;
 
         // Transform that criteria model to elements our js can understand
-        $elements = [];
-
-        if ($criteria) {
-            foreach ($criteria as $element) {
-                $elements[$element->id] = [
-                    'id'       => $element->id,
-                    'name'     => $name . '[]',
-                    'label'    => HtmlHelper::encode($element),
-                    'thumbUrl' => ($settings->viewMode === 'large' ? $element->getThumbUrl(100) : $element->getThumbUrl(50))
-                ];
-            }
-        }
+        $elements = $this->transformCriteria($criteria, [
+            'name' => $name,
+            'viewMode' => $settings->viewMode,
+            'context' => 'field'
+        ]);
 
         // Work out any weird selection criteria
         $selectionCriteria = [
@@ -72,25 +65,39 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'sources'        => $settings->sources,
             'criteria'       => $selectionCriteria,
             'limit'          => $settings->limit,
+            'viewMode'       => $settings->viewMode,
             'selectionLabel' => ($settings->selectionLabel ? Craft::t($settings->selectionLabel) : Craft::t('Add an asset'))
         ];
 
-
-//        'jsClass'            => $this->inputJsClass,
 //        'elementType'        => new ElementTypeVariable($this->getElementType()),
-//        'id'                 => craft()->templates->formatInputId($name),
 //        'fieldId'            => $this->model->id,
 //        'storageKey'         => 'field.'.$this->model->id,
-//        'name'               => $name,
-//        'elements'           => $criteria,
-//        'sources'            => $this->getInputSources(),
-//        'criteria'           => $selectionCriteria,
 //        'sourceElementId'    => (isset($this->element->id) ? $this->element->id : null),
-//        'limit'              => ($this->allowLimit ? $settings->limit : null),
-//        'viewMode'           => $this->getViewMode(),
-//        'selectionLabel'     => ($settings->selectionLabel ? Craft::t($settings->selectionLabel) : $this->getAddButtonLabel())
 
         return $config;
+
+    }
+
+
+    public function transformCriteria($criteria, $params)
+    {
+
+        $elements = [];
+
+        if ($criteria) {
+            foreach ($criteria as $element) {
+                $elements[$element->id] = [
+                    'id'       => $element->id,
+                    'name'     => $params['name'] . '[]',
+                    'context'  => $params['context'],
+                    'label'    => HtmlHelper::encode($element),
+                    'viewMode' => $params['viewMode'],
+                    'thumbUrl' => ($params['viewMode'] === 'large' ? $element->getThumbUrl(100) : $element->getThumbUrl(50))
+                ];
+            }
+        }
+
+        return $elements;
 
     }
 
