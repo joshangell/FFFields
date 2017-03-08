@@ -74,6 +74,10 @@
             selectElement: function(event) {
                 if (this.element.context === 'index' && !this.element.disabled) {
                     this.selected = !this.selected;
+                    this.$emit('elementSelected', {
+                        selected: this.selected,
+                        element: this.element
+                    });
                 }
             }
         }

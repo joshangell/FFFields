@@ -30998,6 +30998,10 @@ module.exports = Vue$3;
         selectElement: function (event) {
             if (this.element.context === 'index' && !this.element.disabled) {
                 this.selected = !this.selected;
+                this.$emit('elementSelected', {
+                    selected: this.selected,
+                    element: this.element
+                });
             }
         }
     }
@@ -31070,7 +31074,12 @@ module.exports = Vue$3;
             initialized: false,
             elements: this.config.elements,
             modalElements: null,
+            selectedElementIds: [],
             canAddMore: this.config.limit === '' || initialElementCount < this.config.limit,
+            selectBtnClass: {
+                'ui ok positive button': true,
+                'disabled': true
+            },
             options: {
                 ghostClass: 'disabled',
                 disabled: initialElementCount <= 1
@@ -31091,10 +31100,7 @@ module.exports = Vue$3;
 
         onElementRemoved: function (element) {
             delete this.elements[element.id];
-            this.updateState();
-        },
 
-        updateState: function () {
             const elementCount = Object.keys(this.elements).length;
 
             this.$children[0]._sortable.option("disabled", elementCount <= 1);
@@ -31102,6 +31108,19 @@ module.exports = Vue$3;
             if (this.config.limit !== '') {
                 this.canAddMore = elementCount < this.config.limit;
             }
+        },
+
+        onElementSelected: function (obj) {
+            if (obj.selected) {
+                this.selectedElementIds.push(obj.element.id);
+            } else {
+                const i = this.selectedElementIds.indexOf(obj.element.id);
+                if (i != -1) {
+                    this.selectedElementIds.splice(i, 1);
+                }
+            }
+
+            this.selectBtnClass.disabled = this.selectedElementIds.length < 1;
         },
 
         launchElementSelector: function () {
@@ -34640,14 +34659,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('asset-element', {
       attrs: {
         "element": element
+      },
+      on: {
+        "elementSelected": _vm.onElementSelected
       }
     })
   }))]) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "actions"
   }, [_c('div', {
-    staticClass: "ui button"
+    staticClass: "ui cancel button"
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('div', {
-    staticClass: "ui disabled positive button"
+    class: _vm.selectBtnClass
   }, [_vm._v("Select")])]) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true

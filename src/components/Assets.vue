@@ -19,13 +19,13 @@
             <div class="content" v-if="modalElements">
                 <!-- TODO this will need toggling based on viewMode of field -->
                 <div class="ui six doubling cards">
-                    <asset-element v-for="element in modalElements" v-bind:element="element"></asset-element>
+                    <asset-element v-for="element in modalElements" v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
                 </div>
             </div>
 
             <div class="actions" v-if="modalElements">
-                <div class="ui button">Cancel</div>
-                <div class="ui disabled positive button">Select</div>
+                <div class="ui cancel button">Cancel</div>
+                <div v-bind:class="selectBtnClass">Select</div>
             </div>
         </div>
     </div>
@@ -47,12 +47,17 @@
             const initialElementCount = Object.keys(this.config.elements).length;
 
             return {
-                modal:         null,
-                $modal:        null,
-                initialized:   false,
-                elements:      this.config.elements,
-                modalElements: null,
-                canAddMore:    (this.config.limit === '' || initialElementCount < this.config.limit),
+                modal:              null,
+                $modal:             null,
+                initialized:        false,
+                elements:           this.config.elements,
+                modalElements:      null,
+                selectedElementIds: [],
+                canAddMore:         (this.config.limit === '' || initialElementCount < this.config.limit),
+                selectBtnClass: {
+                    'ui ok positive button' : true,
+                    'disabled' : true
+                },
                 options: {
                     ghostClass: 'disabled',
                     disabled: initialElementCount <= 1
@@ -73,10 +78,7 @@
 
             onElementRemoved: function(element) {
                 delete this.elements[element.id];
-                this.updateState();
-            },
 
-            updateState: function() {
                 const elementCount = Object.keys(this.elements).length;
 
                 this.$children[0]._sortable.option("disabled", elementCount <= 1);
@@ -84,6 +86,19 @@
                 if (this.config.limit !== '') {
                     this.canAddMore = elementCount < this.config.limit;
                 }
+            },
+
+            onElementSelected: function(obj) {
+                if (obj.selected) {
+                    this.selectedElementIds.push(obj.element.id);
+                } else {
+                    const i = this.selectedElementIds.indexOf(obj.element.id);
+                    if (i != -1) {
+                        this.selectedElementIds.splice(i, 1);
+                    }
+                }
+
+                this.selectBtnClass.disabled = (this.selectedElementIds.length < 1);
             },
 
             launchElementSelector: function()
