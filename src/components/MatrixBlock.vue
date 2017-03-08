@@ -130,7 +130,7 @@
         },
         data: function() {
             return {
-                collapsed: (this.block.enabled.value === '1' ? false : true),
+                collapsed: this.block.enabled.value !== '1',
                 enabled: this.block.enabled.value
             }
         },
@@ -167,9 +167,7 @@
             toggleEnabled: function(event) {
                 if (this.enabled === '1') {
                     this.enabled = '0';
-
                     this.collapse();
-
                 } else {
                     this.enabled = '1';
                     this.expand();
