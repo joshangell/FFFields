@@ -31091,9 +31091,15 @@ module.exports = Vue$3;
         'asset-element': __WEBPACK_IMPORTED_MODULE_2__AssetElement_vue___default.a
     },
     mounted: function () {
+        const _this = this;
+
         this.$modal = $('.ui.modal', this.$el);
         this.modal = this.$modal.modal({
-            observeChanges: true
+            observeChanges: true,
+            onApprove: function ($element) {
+                // TODO: get the actual elements here
+                console.log(_this.selectedElementIds);
+            }
         });
     },
     methods: {

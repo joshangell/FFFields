@@ -69,9 +69,15 @@
             'asset-element' : AssetElement,
         },
         mounted: function() {
+            const _this = this;
+
             this.$modal = $('.ui.modal', this.$el);
             this.modal = this.$modal.modal({
                 observeChanges: true,
+                onApprove: function($element) {
+                    // TODO: get the actual elements here
+                    console.log(_this.selectedElementIds);
+                }
             });
         },
         methods: {
