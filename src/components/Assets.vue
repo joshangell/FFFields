@@ -31,14 +31,6 @@
     </div>
 </template>
 
-<style lang="scss">
-    .ui.labels .ui.image.label {
-        margin-bottom: 0.5rem;
-        cursor: default;
-        user-select: none;
-    }
-</style>
-
 <script>
     import Draggable from 'vuedraggable';
 

@@ -21,8 +21,25 @@
 </template>
 
 <style lang="scss">
-    .card.disabled {
-        opacity: 0.35
+    .ui.card {
+        user-select: none;
+    }
+
+    .ui.card.disabled {
+        opacity: 0.35;
+    }
+
+    .ui.card .extra.content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: normal;
+    }
+
+    .ui.label {
+        margin-bottom: 0.5rem;
+        cursor: default;
+        user-select: none;
     }
 </style>
 

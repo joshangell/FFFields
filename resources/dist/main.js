@@ -30951,6 +30951,23 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
@@ -30999,14 +31016,6 @@ module.exports = Vue$3;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_imagesLoaded___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_imagesLoaded__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AssetElement_vue__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__AssetElement_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -31932,20 +31941,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.labels .ui.image.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n  user-select: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 32 */,
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34168,10 +34164,6 @@ module.exports = Component.exports
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(72)
-
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(19),
@@ -35309,32 +35301,7 @@ if (false) {
 }
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(32);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("6dec5da1", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue", function() {
-     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 72 */,
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35656,7 +35623,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.card.disabled {\n  opacity: 0.35;\n}\n", ""]);
+exports.push([module.i, "\n.ui.card {\n  user-select: none;\n}\n.ui.card.disabled {\n  opacity: 0.35;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n  user-select: none;\n}\n", ""]);
 
 // exports
 
