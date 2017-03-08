@@ -14,13 +14,16 @@
         </button>
 
         <div class="ui modal">
-            <div class="content">
+            <div class="ui large loader" v-if="!modalElements"></div>
+
+            <div class="content" v-if="modalElements">
                 <!-- TODO this will need toggling based on viewMode of field -->
-                <div class="ui cards">
+                <div class="ui six doubling cards">
                     <asset-element v-for="element in modalElements" v-bind:element="element"></asset-element>
                 </div>
             </div>
-            <div class="actions">
+
+            <div class="actions" v-if="modalElements">
                 <div class="ui button">Cancel</div>
                 <div class="ui disabled positive button">Select</div>
             </div>
@@ -39,6 +42,8 @@
 <script>
     import Draggable from 'vuedraggable';
 
+    import imagesLoaded from 'imagesLoaded';
+
     import AssetElement from './AssetElement.vue';
 
     export default {
@@ -51,6 +56,7 @@
 
             return {
                 modal:         null,
+                $modal:        null,
                 initialized:   false,
                 elements:      this.config.elements,
                 modalElements: null,
@@ -66,7 +72,10 @@
             'asset-element' : AssetElement,
         },
         mounted: function() {
-            this.modal = $('.ui.modal', this.$el).modal();
+            this.$modal = $('.ui.modal', this.$el);
+            this.modal = this.$modal.modal({
+                observeChanges: true,
+            });
         },
         methods: {
 
@@ -96,8 +105,7 @@
 
             initializeModal: function()
             {
-
-                const _this = this;
+                this.modal.modal('show');
 
                 const data = {
                     fieldName: this.config.name,
@@ -105,6 +113,8 @@
                     elementType: 'Asset',
                     context: 'index',
                 };
+
+                const _this = this;
 
                 if (typeof window.FFFields.csrfTokenName != 'undefined') {
                     data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
@@ -126,8 +136,16 @@
                         }
 
                         _this.modalElements = jqXHR.responseJSON.elements;
-                        _this.modal.modal('show');
-                        _this.initialized = true;
+
+                        imagesLoaded(_this.$modal, function()
+                        {
+                            setTimeout(function () {
+                                _this.modal.modal('cache sizes');
+                                _this.modal.modal('refresh');
+                                _this.initialized = true;
+                            }, 100)
+                        });
+
                     }
                 });
 

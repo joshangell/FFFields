@@ -36,6 +36,8 @@
     "grid",
     "menu",
     "message",
+    "card",
+    "loader",
     "item",
     "checkbox",
     "dropdown",

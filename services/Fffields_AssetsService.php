@@ -83,16 +83,30 @@ class Fffields_AssetsService extends BaseApplicationComponent
     {
 
         $elements = [];
+        $size = ($params['viewMode'] === 'large' ? 100 : 50);
 
         if ($criteria) {
             foreach ($criteria as $element) {
+                if ($element->hasThumb())
+                {
+                    $thumbUrl = $element->getUrl([
+                        'width' => $size,
+                        'height' => $size,
+                        'mode' => 'crop'
+                    ]) . '?d=' . $element->dateModified->getTimestamp();
+                }
+                else
+                {
+                    $thumbUrl = UrlHelper::getResourceUrl('icons/'.$element->getExtension());
+                }
+
                 $elements[$element->id] = [
                     'id'       => $element->id,
                     'name'     => $params['name'] . '[]',
                     'context'  => $params['context'],
                     'label'    => HtmlHelper::encode($element),
                     'viewMode' => $params['viewMode'],
-                    'thumbUrl' => ($params['viewMode'] === 'large' ? $element->getThumbUrl(100) : $element->getThumbUrl(50))
+                    'thumbUrl' => $thumbUrl
                 ];
             }
         }

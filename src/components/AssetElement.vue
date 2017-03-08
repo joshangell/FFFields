@@ -1,15 +1,12 @@
 <template>
-    <div v-bind:class="[element.viewMode === 'large' ? 'ui card' : 'ui image label']">
+    <div v-bind:class="classObject">
         <template v-if="element.viewMode === 'large'">
-            <div class="image">
+            <div class="image" style="">
                 <img v-bind:src="element.thumbUrl">
             </div>
-            <div class="content">
+            <div class="extra content">
+                {{ element.label }}
                 <i class="right floated delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
-                <div class="header">{{ element.label }}</div>
-                <div class="meta">
-                    <span class="date">Create in Sep 2014</span>
-                </div>
             </div>
         </template>
 
@@ -26,6 +23,16 @@
     export default {
         name: 'asset-element',
         props: ['element'],
+        data: function()
+        {
+            return {
+                classObject: {
+                    'ui link' : this.element.viewMode === 'large' && this.element.context === 'index',
+                    'card' : this.element.viewMode === 'large',
+                    'ui image label' : this.element.viewMode !== 'large'
+                }
+            }
+        },
         methods: {
             removeElement: function(event) {
                 $(this.$el).transition({
