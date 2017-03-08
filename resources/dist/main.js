@@ -30944,16 +30944,26 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
     props: ['element'],
     data: function () {
         return {
+            selected: false,
             classObject: {
-                'ui link': this.element.viewMode === 'large' && this.element.context === 'index',
+                'ui': true,
+                'link': this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
+                'disabled': this.element.disabled,
                 'card': this.element.viewMode === 'large',
-                'ui image label': this.element.viewMode !== 'large'
+                'image label': this.element.viewMode !== 'large'
             }
         };
     },
@@ -30967,6 +30977,11 @@ module.exports = Vue$3;
             });
 
             this.$emit('elementRemoved', this.element);
+        },
+        selectElement: function (event) {
+            if (this.element.context === 'index' && !this.element.disabled) {
+                this.selected = !this.selected;
+            }
         }
     }
 };
@@ -31095,7 +31110,8 @@ module.exports = Vue$3;
                 fieldName: this.config.name,
                 sources: this.config.sources,
                 elementType: 'Asset',
-                context: 'index'
+                context: 'index',
+                disabledElementIds: Object.keys(this.elements)
             };
 
             const _this = this;
@@ -34114,6 +34130,10 @@ module.exports = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5v
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(91)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(18),
@@ -34952,7 +34972,10 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    class: _vm.classObject
+    class: _vm.classObject,
+    on: {
+      "click": _vm.selectElement
+    }
   }, [(_vm.element.viewMode === 'large') ? [_c('div', {
     staticClass: "image"
   }, [_c('img', {
@@ -34961,7 +34984,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "extra content"
-  }, [_vm._v("\n            " + _vm._s(_vm.element.label) + "\n            "), (_vm.element.context === 'field') ? _c('i', {
+  }, [(_vm.selected) ? _c('i', {
+    staticClass: "check icon"
+  }) : _vm._e(), _vm._v("\n            " + _vm._s(_vm.element.label) + "\n            "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "right floated delete icon",
     on: {
       "click": _vm.removeElement
@@ -35614,6 +35639,53 @@ if (document.querySelector('#field-layout')) {
     });
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.card.disabled {\n  opacity: 0.35;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(90);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("44ab666a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-68d05632!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AssetElement.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-68d05632!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AssetElement.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

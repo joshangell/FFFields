@@ -112,6 +112,7 @@
                     sources: this.config.sources,
                     elementType: 'Asset',
                     context: 'index',
+                    disabledElementIds: Object.keys(this.elements)
                 };
 
                 const _this = this;

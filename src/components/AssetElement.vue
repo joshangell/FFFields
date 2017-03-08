@@ -1,10 +1,11 @@
 <template>
-    <div v-bind:class="classObject">
+    <div v-bind:class="classObject" v-on:click="selectElement">
         <template v-if="element.viewMode === 'large'">
-            <div class="image" style="">
+            <div class="image">
                 <img v-bind:src="element.thumbUrl">
             </div>
             <div class="extra content">
+                <i class="check icon" v-if="selected"></i>
                 {{ element.label }}
                 <i class="right floated delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
             </div>
@@ -19,6 +20,12 @@
     </div>
 </template>
 
+<style lang="scss">
+    .card.disabled {
+        opacity: 0.35
+    }
+</style>
+
 <script>
     export default {
         name: 'asset-element',
@@ -26,10 +33,13 @@
         data: function()
         {
             return {
+                selected: false,
                 classObject: {
-                    'ui link' : this.element.viewMode === 'large' && this.element.context === 'index',
+                    'ui' : true,
+                    'link' : this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
+                    'disabled' : this.element.disabled,
                     'card' : this.element.viewMode === 'large',
-                    'ui image label' : this.element.viewMode !== 'large'
+                    'image label' : this.element.viewMode !== 'large'
                 }
             }
         },
@@ -43,6 +53,11 @@
                 });
 
                 this.$emit('elementRemoved', this.element);
+            },
+            selectElement: function(event) {
+                if (this.element.context === 'index' && !this.element.disabled) {
+                    this.selected = !this.selected;
+                }
             }
         }
     }

@@ -85,6 +85,11 @@ class Fffields_AssetsService extends BaseApplicationComponent
         $elements = [];
         $size = ($params['viewMode'] === 'large' ? 100 : 50);
 
+        $disabledElementIds = [];
+        if (isset($params['disabledElementIds'])) {
+            $disabledElementIds = $params['disabledElementIds'];
+        }
+
         if ($criteria) {
             foreach ($criteria as $element) {
                 if ($element->hasThumb())
@@ -106,6 +111,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
                     'context'  => $params['context'],
                     'label'    => HtmlHelper::encode($element),
                     'viewMode' => $params['viewMode'],
+                    'disabled' => in_array($element->id, $disabledElementIds),
                     'thumbUrl' => $thumbUrl
                 ];
             }
