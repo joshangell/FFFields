@@ -32142,7 +32142,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n  pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.35;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n  pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -34829,7 +34829,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ui selectable celled table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Filename")]), _vm._v(" "), _c('th', [_vm._v("File Size")]), _vm._v(" "), _c('th', [_vm._v("File Modified Date")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.modalElements), function(element) {
     return _c('tr', {
-      class: [_vm.selectedElementIds.indexOf(element.id) != -1 ? 'positive' : ''],
+      class: [element.disabled ? 'disabled' : '', _vm.selectedElementIds.indexOf(element.id) != -1 ? 'positive' : ''],
       on: {
         "click": function($event) {
           _vm.toggleSelectModalElement(element)

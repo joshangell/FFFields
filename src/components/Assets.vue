@@ -47,7 +47,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="element in modalElements" v-bind:class="[selectedElementIds.indexOf(element.id) != -1 ? 'positive' : '']" v-on:click="toggleSelectModalElement(element)">
+                            <tr v-for="element in modalElements" v-bind:class="[element.disabled ? 'disabled' : '', selectedElementIds.indexOf(element.id) != -1 ? 'positive' : '']" v-on:click="toggleSelectModalElement(element)">
                                 <td>
                                     <asset-element v-bind:element="element"></asset-element>
                                 </td>

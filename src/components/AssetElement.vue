@@ -31,7 +31,7 @@
     }
 
     .ui.card.disabled {
-        opacity: 0.35;
+        opacity: 0.25;
     }
 
     .ui.card .extra.content {
