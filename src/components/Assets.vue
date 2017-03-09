@@ -1,12 +1,10 @@
 <template>
-    <div>
+    <div class="assets">
         <input type="hidden" v-bind:name="config.name" value="">
 
-        <div class="ui labels">
-            <draggable v-bind:options="options">
-                <asset-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></asset-element>
-            </draggable>
-        </div>
+        <draggable v-bind:options="options" v-bind:class="[config.viewMode === 'large' ? 'ui six doubling cards' : 'ui labels']">
+            <asset-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></asset-element>
+        </draggable>
 
         <button type="button" class="ui small basic labeled icon button" v-if="canAddMore" v-on:click="launchElementSelector">
             <i class="add icon"></i>
@@ -17,8 +15,7 @@
             <div class="ui large loader" v-if="!modalElements"></div>
 
             <div class="content" v-if="modalElements">
-                <!-- TODO this will need toggling based on viewMode of field -->
-                <div class="ui six doubling cards">
+                <div v-bind:class="[config.viewMode === 'large' ? 'ui six doubling cards' : 'ui labels']">
                     <asset-element v-for="element in modalElements" v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
                 </div>
             </div>
@@ -36,6 +33,8 @@
 
     import imagesLoaded from 'imagesLoaded';
 
+    import remove from 'lodash/remove';
+
     import AssetElement from './AssetElement.vue';
 
     export default {
@@ -44,8 +43,6 @@
             config: {},
         },
         data: function() {
-            const initialElementCount = Object.keys(this.config.elements).length;
-
             return {
                 modal:              null,
                 $modal:             null,
@@ -53,14 +50,15 @@
                 elements:           this.config.elements,
                 modalElements:      null,
                 selectedElementIds: [],
-                canAddMore:         (this.config.limit === '' || initialElementCount < this.config.limit),
+                canAddMore:         (this.config.limit === '' || this.config.elements.length < this.config.limit),
                 selectBtnClass: {
                     'ui ok positive button' : true,
                     'disabled' : true
                 },
                 options: {
+                    draggable: '.asset-element',
                     ghostClass: 'disabled',
-                    disabled: initialElementCount <= 1
+                    disabled: this.config.elements.length <= 1
                 },
             }
         },
@@ -76,21 +74,30 @@
                 observeChanges: true,
                 onApprove: function($element) {
                     // TODO: get the actual elements here
-                    console.log(_this.selectedElementIds);
+//                    console.log(_this.selectedElementIds);
                 }
             });
         },
         methods: {
 
             onElementRemoved: function(element) {
-                delete this.elements[element.id];
+                // TODO
+//                delete this.elements[element.id];
 
-                const elementCount = Object.keys(this.elements).length;
+                console.log(this.elements);
 
-                this.$children[0]._sortable.option("disabled", elementCount <= 1);
+                remove(this.elements, function(obj) {
+                    return obj.id === element.id;
+                });
+
+//                this.elements = newElements;
+
+                console.log(this.elements);
+
+                this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
 
                 if (this.config.limit !== '') {
-                    this.canAddMore = elementCount < this.config.limit;
+                    this.canAddMore = this.elements.length < this.config.limit;
                 }
             },
 
@@ -120,12 +127,18 @@
             {
                 this.modal.modal('show');
 
+                const disabledElementIds = [];
+
+                for (let i = 0; i < this.elements.length; i++) {
+                    disabledElementIds.push(this.elements[i].id);
+                }
+
                 const data = {
                     fieldName: this.config.name,
                     sources: this.config.sources,
                     elementType: 'Asset',
                     context: 'index',
-                    disabledElementIds: Object.keys(this.elements)
+                    disabledElementIds: disabledElementIds
                 };
 
                 const _this = this;

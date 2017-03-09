@@ -175,7 +175,9 @@ class FffieldsService extends BaseApplicationComponent
     {
         $config = $this->getFieldConfig($params);
 
-        $html = '<field v-bind:config="{{ config|json_encode() }}"></field>';
+        $config = JsonHelper::encode($config);
+
+        $html = '<field v-bind:config="{{ config }}"></field>';
 
         return craft()->templates->renderString($html, [ 'config' => $config ]);
     }

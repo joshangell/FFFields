@@ -105,7 +105,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
                     $thumbUrl = UrlHelper::getResourceUrl('icons/'.$element->getExtension());
                 }
 
-                $elements[$element->id] = [
+                $elements[] = [
                     'id'       => $element->id,
                     'name'     => $params['name'] . '[]',
                     'context'  => $params['context'],

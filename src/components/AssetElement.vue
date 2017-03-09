@@ -12,17 +12,22 @@
         </template>
 
         <template v-else>
-            <input type="hidden" v-bind:name="element.name" v-bind:value="element.id">
             <img v-bind:src="element.thumbUrl">
             {{ element.label }}
             <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
         </template>
+
+        <input type="hidden" v-bind:name="element.name" v-bind:value="element.id" v-if="element.context === 'field'">
     </div>
 </template>
 
 <style lang="scss">
-    .ui.card {
+    .asset-element {
         user-select: none;
+    }
+
+    .asset-element .image {
+        pointer-events: none;
     }
 
     .ui.card.disabled {
@@ -39,7 +44,6 @@
     .ui.label {
         margin-bottom: 0.5rem;
         cursor: default;
-        user-select: none;
     }
 </style>
 
@@ -56,7 +60,8 @@
                     'link' : this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
                     'disabled' : this.element.disabled,
                     'card' : this.element.viewMode === 'large',
-                    'image label' : this.element.viewMode !== 'large'
+                    'image label' : this.element.viewMode !== 'large',
+                    'asset-element' : true,
                 }
             }
         },
