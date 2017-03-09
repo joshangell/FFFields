@@ -35,7 +35,11 @@ class Fffields_ElementsController extends BaseController
         $elementType = $this->getElementType();
         $context = craft()->request->getParam('context');
         $name = craft()->request->getParam('fieldName');
+        $fieldId = craft()->request->getParam('fieldId');
         $disabledElementIds = craft()->request->getParam('disabledElementIds', array());
+
+        $field = craft()->fields->getFieldById($fieldId);
+        $viewMode = $field->getFieldType()->getSettings()->viewMode;
 
         if (is_array($sourceKeys))
         {
@@ -73,7 +77,7 @@ class Fffields_ElementsController extends BaseController
             'success' => true,
             'elements' => craft()->fffields_assets->transformCriteria($criteria, [
                 'name' => $name,
-                'viewMode' => 'large', // TODO get from field
+                'viewMode' => $viewMode,
                 'context' => $context,
                 'disabledElementIds' => $disabledElementIds
             ])

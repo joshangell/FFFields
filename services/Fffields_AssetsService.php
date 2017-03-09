@@ -66,6 +66,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'criteria'       => $selectionCriteria,
             'limit'          => $settings->limit,
             'viewMode'       => $settings->viewMode,
+            'fieldId'        => $field->id,
             'selectionLabel' => ($settings->selectionLabel ? Craft::t($settings->selectionLabel) : Craft::t('Add an asset'))
         ];
 

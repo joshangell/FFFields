@@ -31162,6 +31162,7 @@ module.exports = Vue$3;
 
             const data = {
                 fieldName: this.config.name,
+                fieldId: this.config.fieldId,
                 sources: this.config.sources,
                 elementType: 'Asset',
                 context: 'index',
