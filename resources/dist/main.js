@@ -30975,10 +30975,15 @@ module.exports = Vue$3;
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
-    props: ['element'],
+    props: ['element', 'selectedElementIds'],
     data: function () {
+        let selected = false;
+        if (Array.isArray(this.selectedElementIds)) {
+            selected = this.selectedElementIds.indexOf(this.element.id) != -1;
+        }
+
         return {
-            selected: false,
+            selected: selected,
             classObject: {
                 'ui': true,
                 'link': this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
@@ -31005,7 +31010,7 @@ module.exports = Vue$3;
                 this.selected = !this.selected;
                 this.$emit('elementSelected', {
                     selected: this.selected,
-                    element: this.element
+                    elementId: this.element.id
                 });
             }
         }
@@ -31174,15 +31179,17 @@ module.exports = Vue$3;
 
         onElementSelected: function (obj) {
             if (obj.selected) {
-                this.selectedElementIds.push(obj.element.id);
+                this.selectedElementIds.push(obj.elementId);
             } else {
-                const i = this.selectedElementIds.indexOf(obj.element.id);
+                const i = this.selectedElementIds.indexOf(obj.elementId);
                 if (i != -1) {
                     this.selectedElementIds.splice(i, 1);
                 }
             }
 
             this.selectBtnClasses.disabled = this.selectedElementIds.length < 1;
+
+            console.log(this.selectedElementIds);
         },
 
         launchElementSelector: function () {
@@ -31205,6 +31212,15 @@ module.exports = Vue$3;
             this.modalElements.map(function (el) {
                 el.viewMode = _this.modalViewMode;
                 return el;
+            });
+        },
+
+        toggleSelectModalElement: function (element) {
+            const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
+
+            this.onElementSelected({
+                selected: !currentStatus,
+                elementId: element.id
             });
         },
 
@@ -34784,21 +34800,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.modalElements), function(element) {
     return _c('asset-element', {
       attrs: {
-        "element": element
+        "element": element,
+        "selectedElementIds": _vm.selectedElementIds
       },
       on: {
         "elementSelected": _vm.onElementSelected
       }
     })
   }))] : [_c('table', {
-    staticClass: "ui celled striped table"
+    staticClass: "ui selectable celled table"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Filename")]), _vm._v(" "), _c('th', [_vm._v("File Size")]), _vm._v(" "), _c('th', [_vm._v("File Modified Date")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.modalElements), function(element) {
-    return _c('tr', [_c('td', [_c('asset-element', {
+    return _c('tr', {
+      class: [_vm.selectedElementIds.indexOf(element.id) != -1 ? 'positive' : ''],
+      on: {
+        "click": function($event) {
+          _vm.toggleSelectModalElement(element)
+        }
+      }
+    }, [_c('td', [_c('asset-element', {
       attrs: {
         "element": element
-      },
-      on: {
-        "elementSelected": _vm.onElementSelected
       }
     })], 1), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.filename))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.size))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.dateModified))])])
   }))])]], 2) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {

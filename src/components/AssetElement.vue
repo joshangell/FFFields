@@ -50,11 +50,16 @@
 <script>
     export default {
         name: 'asset-element',
-        props: ['element'],
+        props: ['element','selectedElementIds'],
         data: function()
         {
+            let selected = false;
+            if (Array.isArray(this.selectedElementIds)) {
+                selected = this.selectedElementIds.indexOf(this.element.id) != -1;
+            }
+
             return {
-                selected: false,
+                selected: selected,
                 classObject: {
                     'ui' : true,
                     'link' : this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
@@ -81,7 +86,7 @@
                     this.selected = !this.selected;
                     this.$emit('elementSelected', {
                         selected: this.selected,
-                        element: this.element
+                        elementId: this.element.id
                     });
                 }
             }

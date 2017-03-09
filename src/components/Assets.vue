@@ -32,12 +32,12 @@
 
                 <template v-if="modalViewMode === 'large'">
                     <div class="ui eight doubling cards">
-                        <asset-element v-for="element in modalElements" v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
+                        <asset-element v-for="element in modalElements" v-bind:element="element" v-bind:selectedElementIds="selectedElementIds" v-on:elementSelected="onElementSelected"></asset-element>
                     </div>
                 </template>
 
                 <template v-else>
-                    <table class="ui celled striped table">
+                    <table class="ui selectable celled table">
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -47,9 +47,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="element in modalElements">
+                            <tr v-for="element in modalElements" v-bind:class="[selectedElementIds.indexOf(element.id) != -1 ? 'positive' : '']" v-on:click="toggleSelectModalElement(element)">
                                 <td>
-                                    <asset-element v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
+                                    <asset-element v-bind:element="element"></asset-element>
                                 </td>
                                 <td>{{ element.filename }}</td>
                                 <td>{{ element.size }}</td>
@@ -145,15 +145,17 @@
 
             onElementSelected: function(obj) {
                 if (obj.selected) {
-                    this.selectedElementIds.push(obj.element.id);
+                    this.selectedElementIds.push(obj.elementId);
                 } else {
-                    const i = this.selectedElementIds.indexOf(obj.element.id);
+                    const i = this.selectedElementIds.indexOf(obj.elementId);
                     if (i != -1) {
                         this.selectedElementIds.splice(i, 1);
                     }
                 }
 
                 this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
+
+                console.log(this.selectedElementIds);
             },
 
             launchElementSelector: function()
@@ -178,6 +180,16 @@
                 this.modalElements.map(function(el) {
                     el.viewMode = _this.modalViewMode;
                     return el
+                });
+            },
+
+            toggleSelectModalElement: function(element)
+            {
+                const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
+
+                this.onElementSelected({
+                    selected: !currentStatus,
+                    elementId: element.id
                 });
             },
 
