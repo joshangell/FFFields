@@ -84,6 +84,7 @@
     import imagesLoaded from 'imagesLoaded';
 
     import remove from 'lodash/remove';
+    import extend from 'lodash/assignIn';
 
     import AssetElement from './AssetElement.vue';
 
@@ -124,8 +125,25 @@
             this.modal = this.$modal.modal({
                 observeChanges: true,
                 onApprove: function($element) {
-                    // TODO: get the actual elements here
-//                    console.log(_this.selectedElementIds);
+                    for (let i = 0; i < _this.modalElements.length; i++) {
+                        if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {
+
+                            // Set some props on the modal element in question
+//                            _this.modalElements[i].disabled = true;
+//                            _this.modalElements[i].selected = false;
+
+                            // Clone the element
+                            const newElement = extend({}, _this.modalElements[i]);
+
+                            // Set up some props on the new element
+                            newElement.context = 'field';
+                            newElement.disabled = false;
+//                            newElement.viewMode = _this.elements[0].viewMode;
+
+                            // Push it onto the field
+                            _this.elements.push(newElement);
+                        }
+                    }
                 }
             });
         },
@@ -154,8 +172,6 @@
                 }
 
                 this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
-
-                console.log(this.selectedElementIds);
             },
 
             launchElementSelector: function()
