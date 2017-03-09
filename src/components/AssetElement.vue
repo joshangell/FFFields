@@ -41,6 +41,15 @@
         word-wrap: normal;
     }
 
+    .ui.card .extra.content .delete.icon {
+        margin-right: 0;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+    .ui.card .extra.content .delete.icon:hover {
+        opacity: 1;
+    }
+
     .ui.label {
         margin-bottom: 0.5rem;
         cursor: default;

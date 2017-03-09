@@ -30972,6 +30972,15 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
@@ -32142,7 +32151,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n  pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n  pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.card .extra.content .delete.icon {\n  margin-right: 0;\n  cursor: pointer;\n  opacity: 0.5;\n}\n.ui.card .extra.content .delete.icon:hover {\n  opacity: 1;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
 
 // exports
 
