@@ -31123,6 +31123,10 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -34769,7 +34773,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }), _vm._v(" "), _c('draggable', {
-    class: [_vm.config.viewMode === 'large' ? 'ui six doubling cards' : 'ui labels'],
+    class: [_vm.config.viewMode === 'large' ? 'ui eight doubling cards' : 'ui labels'],
     attrs: {
       "options": _vm.options
     }
@@ -39780,7 +39784,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
+exports.push([module.i, "\n.assets > .ui.button {\n  margin-top: 1rem;\n}\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
 
 // exports
 
