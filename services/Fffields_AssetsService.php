@@ -71,7 +71,6 @@ class Fffields_AssetsService extends BaseApplicationComponent
         ];
 
 //        'elementType'        => new ElementTypeVariable($this->getElementType()),
-//        'fieldId'            => $this->model->id,
 //        'storageKey'         => 'field.'.$this->model->id,
 //        'sourceElementId'    => (isset($this->element->id) ? $this->element->id : null),
 
@@ -79,10 +78,16 @@ class Fffields_AssetsService extends BaseApplicationComponent
 
     }
 
-
+    /**
+     * Transforms a criteria object into an array of elements.
+     *
+     * @param $criteria
+     * @param $params
+     *
+     * @return array
+     */
     public function transformCriteria($criteria, $params)
     {
-
         $elements = [];
         $size = ($params['viewMode'] === 'large' ? 100 : 50);
 
@@ -107,19 +112,21 @@ class Fffields_AssetsService extends BaseApplicationComponent
                 }
 
                 $elements[] = [
-                    'id'       => $element->id,
-                    'name'     => $params['name'] . '[]',
-                    'context'  => $params['context'],
-                    'label'    => HtmlHelper::encode($element),
-                    'viewMode' => $params['viewMode'],
-                    'disabled' => in_array($element->id, $disabledElementIds),
-                    'thumbUrl' => $thumbUrl
+                    'id'           => $element->id,
+                    'name'         => $params['name'] . '[]',
+                    'context'      => $params['context'],
+                    'label'        => HtmlHelper::encode($element),
+                    'viewMode'     => $params['viewMode'],
+                    'disabled'     => in_array($element->id, $disabledElementIds),
+                    'thumbUrl'     => $thumbUrl,
+                    'filename'     => $element->filename,
+                    'size'         => craft()->formatter->formatSize($element->size),
+                    'dateModified' => $element->dateModified->localeDate()
                 ];
             }
         }
 
         return $elements;
-
     }
 
 }

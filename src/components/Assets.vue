@@ -11,22 +11,72 @@
             {{ config.selectionLabel }}
         </button>
 
-        <div class="ui modal">
+        <div class="ui large modal">
+
+            <div class="header">
+                <div class="ui basic buttons">
+                    <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
+                        <i class="left grid layout icon"></i>
+                        Grid
+                    </div>
+                    <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui right labeled icon button' : 'ui right labeled icon button disabled']" v-on:click="toggleModalViewMode">
+                        List
+                        <i class="right list layout icon"></i>
+                    </div>
+                </div>
+            </div>
+
             <div class="ui large loader" v-if="!modalElements"></div>
 
             <div class="content" v-if="modalElements">
-                <div v-bind:class="[config.viewMode === 'large' ? 'ui six doubling cards' : 'ui labels']">
-                    <asset-element v-for="element in modalElements" v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
-                </div>
+
+                <template v-if="modalViewMode === 'large'">
+                    <div class="ui eight doubling cards">
+                        <asset-element v-for="element in modalElements" v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
+                    </div>
+                </template>
+
+                <template v-else>
+                    <table class="ui celled striped table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Filename</th>
+                                <th>File Size</th>
+                                <th>File Modified Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="element in modalElements">
+                                <td>
+                                    <asset-element v-bind:element="element" v-on:elementSelected="onElementSelected"></asset-element>
+                                </td>
+                                <td>{{ element.filename }}</td>
+                                <td>{{ element.size }}</td>
+                                <td>{{ element.dateModified }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </template>
+
             </div>
 
             <div class="actions" v-if="modalElements">
                 <div class="ui cancel button">Cancel</div>
-                <div v-bind:class="selectBtnClass">Select</div>
+                <div v-bind:class="selectBtnClasses">Select</div>
             </div>
         </div>
     </div>
 </template>
+
+<style lang="scss">
+    .modal .header {
+        overflow: hidden;
+    }
+    .modal .header .buttons {
+        float: right;
+    }
+</style>
 
 <script>
     import Draggable from 'vuedraggable';
@@ -46,15 +96,16 @@
             return {
                 modal:              null,
                 $modal:             null,
-                initialized:        false,
-                elements:           this.config.elements,
+                modalViewMode:      this.config.viewMode,
+                modalInitialized:   false,
                 modalElements:      null,
                 selectedElementIds: [],
-                canAddMore:         (this.config.limit === '' || this.config.elements.length < this.config.limit),
-                selectBtnClass: {
-                    'ui ok positive button' : true,
-                    'disabled' : true
+                selectBtnClasses: {
+                    'ui ok positive button': true,
+                    'disabled': true
                 },
+                elements:           this.config.elements,
+                canAddMore:         (this.config.limit === '' || this.config.elements.length < this.config.limit),
                 options: {
                     draggable: '.asset-element',
                     ghostClass: 'disabled',
@@ -81,18 +132,9 @@
         methods: {
 
             onElementRemoved: function(element) {
-                // TODO
-//                delete this.elements[element.id];
-
-                console.log(this.elements);
-
                 remove(this.elements, function(obj) {
                     return obj.id === element.id;
                 });
-
-//                this.elements = newElements;
-
-                console.log(this.elements);
 
                 this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
 
@@ -111,16 +153,32 @@
                     }
                 }
 
-                this.selectBtnClass.disabled = (this.selectedElementIds.length < 1);
+                this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
             },
 
             launchElementSelector: function()
             {
-                if (!this.initialized) {
+                if (!this.modalInitialized) {
                     this.initializeModal();
                 } else {
                     this.modal.modal('show');
                 }
+            },
+
+            toggleModalViewMode: function()
+            {
+                const _this = this;
+
+                if (this.modalViewMode === 'list') {
+                    this.modalViewMode = 'large';
+                } else if (this.modalViewMode === 'large') {
+                    this.modalViewMode = 'list';
+                }
+
+                this.modalElements.map(function(el) {
+                    el.viewMode = _this.modalViewMode;
+                    return el
+                });
             },
 
             initializeModal: function()
@@ -170,7 +228,7 @@
                             setTimeout(function () {
                                 _this.modal.modal('cache sizes');
                                 _this.modal.modal('refresh');
-                                _this.initialized = true;
+                                _this.modalInitialized = true;
                             }, 100)
                         });
 

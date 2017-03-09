@@ -31057,6 +31057,56 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -31075,15 +31125,16 @@ module.exports = Vue$3;
         return {
             modal: null,
             $modal: null,
-            initialized: false,
-            elements: this.config.elements,
+            modalViewMode: this.config.viewMode,
+            modalInitialized: false,
             modalElements: null,
             selectedElementIds: [],
-            canAddMore: this.config.limit === '' || this.config.elements.length < this.config.limit,
-            selectBtnClass: {
+            selectBtnClasses: {
                 'ui ok positive button': true,
                 'disabled': true
             },
+            elements: this.config.elements,
+            canAddMore: this.config.limit === '' || this.config.elements.length < this.config.limit,
             options: {
                 draggable: '.asset-element',
                 ghostClass: 'disabled',
@@ -31110,18 +31161,9 @@ module.exports = Vue$3;
     methods: {
 
         onElementRemoved: function (element) {
-            // TODO
-            //                delete this.elements[element.id];
-
-            console.log(this.elements);
-
             __WEBPACK_IMPORTED_MODULE_2_lodash_remove___default()(this.elements, function (obj) {
                 return obj.id === element.id;
             });
-
-            //                this.elements = newElements;
-
-            console.log(this.elements);
 
             this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
 
@@ -31140,15 +31182,30 @@ module.exports = Vue$3;
                 }
             }
 
-            this.selectBtnClass.disabled = this.selectedElementIds.length < 1;
+            this.selectBtnClasses.disabled = this.selectedElementIds.length < 1;
         },
 
         launchElementSelector: function () {
-            if (!this.initialized) {
+            if (!this.modalInitialized) {
                 this.initializeModal();
             } else {
                 this.modal.modal('show');
             }
+        },
+
+        toggleModalViewMode: function () {
+            const _this = this;
+
+            if (this.modalViewMode === 'list') {
+                this.modalViewMode = 'large';
+            } else if (this.modalViewMode === 'large') {
+                this.modalViewMode = 'list';
+            }
+
+            this.modalElements.map(function (el) {
+                el.viewMode = _this.modalViewMode;
+                return el;
+            });
         },
 
         initializeModal: function () {
@@ -31194,7 +31251,7 @@ module.exports = Vue$3;
                         setTimeout(function () {
                             _this.modal.modal('cache sizes');
                             _this.modal.modal('refresh');
-                            _this.initialized = true;
+                            _this.modalInitialized = true;
                         }, 100);
                     });
                 }
@@ -34223,6 +34280,10 @@ module.exports = Component.exports
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(213)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(19),
@@ -34689,13 +34750,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "add icon"
   }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "ui modal"
-  }, [(!_vm.modalElements) ? _c('div', {
+    staticClass: "ui large modal"
+  }, [_c('div', {
+    staticClass: "header"
+  }, [_c('div', {
+    staticClass: "ui basic buttons"
+  }, [_c('div', {
+    class: [_vm.modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button'],
+    attrs: {
+      "role": "button"
+    },
+    on: {
+      "click": _vm.toggleModalViewMode
+    }
+  }, [_c('i', {
+    staticClass: "left grid layout icon"
+  }), _vm._v("\n                    Grid\n                ")]), _vm._v(" "), _c('div', {
+    class: [_vm.modalViewMode === 'large' ? 'ui right labeled icon button' : 'ui right labeled icon button disabled'],
+    attrs: {
+      "role": "button"
+    },
+    on: {
+      "click": _vm.toggleModalViewMode
+    }
+  }, [_vm._v("\n                    List\n                    "), _c('i', {
+    staticClass: "right list layout icon"
+  })])])]), _vm._v(" "), (!_vm.modalElements) ? _c('div', {
     staticClass: "ui large loader"
   }) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "content"
-  }, [_c('div', {
-    class: [_vm.config.viewMode === 'large' ? 'ui six doubling cards' : 'ui labels']
+  }, [(_vm.modalViewMode === 'large') ? [_c('div', {
+    staticClass: "ui eight doubling cards"
   }, _vm._l((_vm.modalElements), function(element) {
     return _c('asset-element', {
       attrs: {
@@ -34705,12 +34790,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "elementSelected": _vm.onElementSelected
       }
     })
-  }))]) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
+  }))] : [_c('table', {
+    staticClass: "ui celled striped table"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Filename")]), _vm._v(" "), _c('th', [_vm._v("File Size")]), _vm._v(" "), _c('th', [_vm._v("File Modified Date")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.modalElements), function(element) {
+    return _c('tr', [_c('td', [_c('asset-element', {
+      attrs: {
+        "element": element
+      },
+      on: {
+        "elementSelected": _vm.onElementSelected
+      }
+    })], 1), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.filename))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.size))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(element.dateModified))])])
+  }))])]], 2) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "actions"
   }, [_c('div', {
     staticClass: "ui cancel button"
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('div', {
-    class: _vm.selectBtnClass
+    class: _vm.selectBtnClasses
   }, [_vm._v("Select")])]) : _vm._e()])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -39625,6 +39721,47 @@ function toString(value) {
 
 module.exports = toString;
 
+
+/***/ }),
+/* 211 */,
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(212);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("6dec5da1", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-1f9262c9!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Assets.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
