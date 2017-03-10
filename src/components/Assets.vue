@@ -20,13 +20,10 @@
                         v-bind:title="fileUpload.title"
                         v-bind:events="fileUpload.events"
                         v-bind:name="fileUpload.name"
-                        v-bind:post-action="fileUpload.postAction"
                         v-bind:extensions="fileUpload.extensions"
                         v-bind:accept="fileUpload.accept"
                         v-bind:multiple="fileUpload.multiple"
                         v-bind:size="fileUpload.size || 0"
-                        v-bind:headers="fileUpload.headers"
-                        v-bind:data="fileUpload.data"
                         v-bind:drop="fileUpload.drop"
                         v-bind:files="fileUpload.files"
                         ref="upload">
@@ -121,7 +118,7 @@
         },
         directives: {
             addIconToButton: {
-                inserted: function (el) {
+                bind: function (el) {
                     $(el).prepend('<i class="upload icon"></i>');
                 }
             }
@@ -140,7 +137,6 @@
                 fileUpload:         {
                     title:         'Upload',
                     name:          'assets-upload',
-                    postAction:    null,
                     multiple:      true,
                     extensions:    'gif,jpg,png', // get from window.FFFields
                     accept:        '',
@@ -148,22 +144,24 @@
                     drop:          true,
                     files:         [],
                     upload:        {},
-                    headers:       {
-//                        "X-Csrf-Token": "xxxx", // get from window.FFFields
-                    },
-                    data: {
-//                        "_csrf_token": "xxxxxx", // get from window.FFFields
-                    },
                     events: {
                         add(file, component) {
-                            console.log('add');
                             component.active = true;
-                            file.headers['X-Filename'] = encodeURIComponent(file.name);
-                            file.data.finename = file.name;
-                            // file.putAction = 'xxx'
-                            // file.postAction = 'xxx'
 
-                            this.$parent.fileUpload.upload.active = true;
+//                            file.headers['X-Filename'] = encodeURIComponent(file.name);
+                            file.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+                            file.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
+
+                            file.data = {
+                                folderId: 1, // TODO
+//                                filename : file.name,
+                            };
+                            file.data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
+
+                            if (!this.$parent.$refs.upload.active) {
+                                this.$parent.$refs.upload.active = true;
+                            }
                         },
                         progress(file, component) {
                             console.log('progress ' + file.progress);
@@ -198,12 +196,6 @@
         },
         mounted: function() {
             const _this = this;
-
-            window.onload = function() {
-                _this.fileUpload.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
-            };
-
-            this.fileUpload.upload = this.$refs.upload.$data;
 
             this.$modal = $('.ui.modal', this.$el);
             this.modal = this.$modal.modal({
