@@ -2,7 +2,7 @@
     <div class="assets">
         <input type="hidden" v-bind:name="config.name" value="">
 
-        <draggable v-bind:options="options" v-bind:class="[config.viewMode === 'large' ? 'ui eight doubling cards' : 'ui labels']">
+        <draggable v-bind:options="options" v-bind:class="[config.viewMode === 'large' ? 'ui ten doubling cards' : 'ui labels']">
             <asset-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></asset-element>
         </draggable>
 
@@ -70,10 +70,12 @@
 </template>
 
 <style lang="scss">
-    .assets > .ui.button {
-        margin-top: 1rem;
+    .assets > .ui.cards {
+        margin-bottom: 0.25rem;
     }
-
+    .assets > .ui.labels {
+        margin-bottom: 1rem;
+    }
     .modal .header {
         overflow: hidden;
     }

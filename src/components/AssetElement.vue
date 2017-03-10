@@ -7,7 +7,7 @@
             <div class="extra content">
                 <i class="check icon" v-if="selected"></i>
                 {{ element.label }}
-                <i class="right floated delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
+                <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
             </div>
         </template>
 
@@ -24,10 +24,10 @@
 <style lang="scss">
     .asset-element {
         user-select: none;
-    }
 
-    .asset-element .image {
-        pointer-events: none;
+        .image {
+            pointer-events: none;
+        }
     }
 
     .ui.card.disabled {
@@ -41,13 +41,25 @@
         word-wrap: normal;
     }
 
-    .ui.card .extra.content .delete.icon {
-        margin-right: 0;
-        cursor: pointer;
-        opacity: 0.5;
-    }
-    .ui.card .extra.content .delete.icon:hover {
-        opacity: 1;
+    .ui.ten.doubling.cards .ui.card .extra.content {
+        padding-right: 1.8rem;
+        position: relative;
+        font-size: 0.8em;
+
+        .delete.icon {
+            margin-right: 0;
+            cursor: pointer;
+            opacity: 0.5;
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            margin-top: -0.65rem;
+            font-size: 1rem;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
 
     .ui.label {
@@ -74,7 +86,7 @@
                     'link' : this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
                     'disabled' : this.element.disabled,
                     'card' : this.element.viewMode === 'large',
-                    'image label' : this.element.viewMode !== 'large',
+                    'image large label' : this.element.viewMode !== 'large',
                     'asset-element' : true,
                 }
             }

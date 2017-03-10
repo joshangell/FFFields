@@ -30981,6 +30981,18 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
@@ -30998,7 +31010,7 @@ module.exports = Vue$3;
                 'link': this.element.viewMode === 'large' && this.element.context === 'index' && !this.element.disabled,
                 'disabled': this.element.disabled,
                 'card': this.element.viewMode === 'large',
-                'image label': this.element.viewMode !== 'large',
+                'image large label': this.element.viewMode !== 'large',
                 'asset-element': true
             }
         };
@@ -31043,6 +31055,8 @@ module.exports = Vue$3;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_assignIn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_assignIn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AssetElement_vue__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__AssetElement_vue__);
+//
+//
 //
 //
 //
@@ -32155,7 +32169,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n  pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.card .extra.content .delete.icon {\n  margin-right: 0;\n  cursor: pointer;\n  opacity: 0.5;\n}\n.ui.card .extra.content .delete.icon:hover {\n  opacity: 1;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n    pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.ten.doubling.cards .ui.card .extra.content {\n  padding-right: 1.8rem;\n  position: relative;\n  font-size: 0.8em;\n}\n.ui.ten.doubling.cards .ui.card .extra.content .delete.icon {\n    margin-right: 0;\n    cursor: pointer;\n    opacity: 0.5;\n    position: absolute;\n    right: 0.5rem;\n    top: 50%;\n    margin-top: -0.65rem;\n    font-size: 1rem;\n}\n.ui.ten.doubling.cards .ui.card .extra.content .delete.icon:hover {\n      opacity: 1;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -34773,7 +34787,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }), _vm._v(" "), _c('draggable', {
-    class: [_vm.config.viewMode === 'large' ? 'ui eight doubling cards' : 'ui labels'],
+    class: [_vm.config.viewMode === 'large' ? 'ui ten doubling cards' : 'ui labels'],
     attrs: {
       "options": _vm.options
     }
@@ -35190,7 +35204,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.selected) ? _c('i', {
     staticClass: "check icon"
   }) : _vm._e(), _vm._v("\n            " + _vm._s(_vm.element.label) + "\n            "), (_vm.element.context === 'field') ? _c('i', {
-    staticClass: "right floated delete icon",
+    staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
     }
@@ -39784,7 +39798,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "\n.assets > .ui.button {\n  margin-top: 1rem;\n}\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
+exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n.assets > .ui.labels {\n  margin-bottom: 1rem;\n}\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
 
 // exports
 
