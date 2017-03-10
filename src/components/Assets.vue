@@ -14,6 +14,12 @@
         <div class="ui large modal">
 
             <div class="header">
+
+                <button class="ui labeled icon blue button">
+                    <i class="left upload icon"></i>
+                    Upload
+                </button>
+
                 <div class="ui basic buttons">
                     <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
                         <i class="left grid layout icon"></i>
@@ -130,6 +136,7 @@
             this.$modal = $('.ui.modal', this.$el);
             this.modal = this.$modal.modal({
                 observeChanges: true,
+                autofocus: false,
                 onApprove: function($element) {
                     for (let i = 0; i < _this.modalElements.length; i++) {
                         if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {

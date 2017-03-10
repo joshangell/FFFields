@@ -31141,6 +31141,12 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -31187,6 +31193,7 @@ module.exports = Vue$3;
         this.$modal = $('.ui.modal', this.$el);
         this.modal = this.$modal.modal({
             observeChanges: true,
+            autofocus: false,
             onApprove: function ($element) {
                 for (let i = 0; i < _this.modalElements.length; i++) {
                     if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {
@@ -34814,7 +34821,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ui large modal"
   }, [_c('div', {
     staticClass: "header"
-  }, [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "ui basic buttons"
   }, [_c('div', {
     class: [_vm.modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button'],
@@ -34874,7 +34881,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")]), _vm._v(" "), _c('div', {
     class: _vm.selectBtnClasses
   }, [_vm._v("Select")])]) : _vm._e()])], 1)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "ui labeled icon blue button"
+  }, [_c('i', {
+    staticClass: "left upload icon"
+  }), _vm._v("\n                Upload\n            ")])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
