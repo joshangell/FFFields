@@ -14,11 +14,7 @@
         <div class="ui large modal">
 
             <div class="header">
-
-                <button class="ui labeled icon blue button">
-                    <i class="left upload icon"></i>
-                    Upload
-                </button>
+                <file-upload v-addIconToButton class="ui labeled icon blue button" title="Upload" name="something" post-action="" v-bind:multiple="true"></file-upload>
 
                 <div class="ui basic buttons">
                     <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
@@ -95,6 +91,8 @@
 
     import imagesLoaded from 'imagesLoaded';
 
+    import FileUpload from 'vue-upload-component'
+
     import remove from 'lodash/remove';
     import extend from 'lodash/assignIn';
 
@@ -104,6 +102,13 @@
         name: 'assets',
         props: {
             config: {},
+        },
+        directives: {
+            addIconToButton: {
+                inserted: function (el) {
+                    $(el).prepend('<i class="upload icon"></i>');
+                }
+            }
         },
         data: function() {
             return {
@@ -129,6 +134,7 @@
         components: {
             'draggable'     : Draggable,
             'asset-element' : AssetElement,
+            'file-upload'   : FileUpload,
         },
         mounted: function() {
             const _this = this;
@@ -141,16 +147,13 @@
                     for (let i = 0; i < _this.modalElements.length; i++) {
                         if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {
 
-                            // Set some props on the modal element in question
-//                            _this.modalElements[i].disabled = true;
-//                            _this.modalElements[i].selected = false;
-
                             // Clone the element
                             const newElement = extend({}, _this.modalElements[i]);
 
                             // Set up some props on the new element
                             newElement.context = 'field';
                             newElement.disabled = false;
+                            // TODO do we need this?
 //                            newElement.viewMode = _this.elements[0].viewMode;
 
                             // Push it onto the field
