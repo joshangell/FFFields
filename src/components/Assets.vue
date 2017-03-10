@@ -14,7 +14,23 @@
         <div class="ui large modal">
 
             <div class="header">
-                <file-upload v-addIconToButton class="ui labeled icon blue button" title="Upload" name="something" post-action="" v-bind:multiple="true"></file-upload>
+                <file-upload
+                        v-addIconToButton
+                        class="ui labeled icon blue button"
+                        v-bind:title="fileUpload.title"
+                        v-bind:events="fileUpload.events"
+                        v-bind:name="fileUpload.name"
+                        v-bind:post-action="fileUpload.postAction"
+                        v-bind:extensions="fileUpload.extensions"
+                        v-bind:accept="fileUpload.accept"
+                        v-bind:multiple="fileUpload.multiple"
+                        v-bind:size="fileUpload.size || 0"
+                        v-bind:headers="fileUpload.headers"
+                        v-bind:data="fileUpload.data"
+                        v-bind:drop="fileUpload.drop"
+                        v-bind:files="fileUpload.files"
+                        ref="upload">
+                </file-upload>
 
                 <div class="ui basic buttons">
                     <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
@@ -111,12 +127,56 @@
             }
         },
         data: function() {
+
+            const _this = this;
+
             return {
                 modal:              null,
                 $modal:             null,
                 modalViewMode:      this.config.viewMode,
                 modalInitialized:   false,
                 modalElements:      null,
+
+                fileUpload:         {
+                    title:         'Upload',
+                    name:          'assets-upload',
+                    postAction:    null,
+                    multiple:      true,
+                    extensions:    'gif,jpg,png', // get from window.FFFields
+                    accept:        '',
+                    size:          1024 * 1024 * 10,
+                    drop:          true,
+                    files:         [],
+                    upload:        {},
+                    headers:       {
+//                        "X-Csrf-Token": "xxxx", // get from window.FFFields
+                    },
+                    data: {
+//                        "_csrf_token": "xxxxxx", // get from window.FFFields
+                    },
+                    events: {
+                        add(file, component) {
+                            console.log('add');
+                            component.active = true;
+                            file.headers['X-Filename'] = encodeURIComponent(file.name);
+                            file.data.finename = file.name;
+                            // file.putAction = 'xxx'
+                            // file.postAction = 'xxx'
+
+                            this.$parent.fileUpload.upload.active = true;
+                        },
+                        progress(file, component) {
+                            console.log('progress ' + file.progress);
+                        },
+                        after(file, component) {
+                            console.log('after');
+                        },
+                        before(file, component) {
+                            console.log('before');
+                        },
+                    },
+                },
+
                 selectedElementIds: [],
                 selectBtnClasses: {
                     'ui ok positive button': true,
@@ -138,6 +198,12 @@
         },
         mounted: function() {
             const _this = this;
+
+            window.onload = function() {
+                _this.fileUpload.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
+            };
+
+            this.fileUpload.upload = this.$refs.upload.$data;
 
             this.$modal = $('.ui.modal', this.$el);
             this.modal = this.$modal.modal({

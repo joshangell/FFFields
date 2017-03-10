@@ -32451,6 +32451,22 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -32476,12 +32492,56 @@ module.exports = Vue$3;
         }
     },
     data: function () {
+
+        const _this = this;
+
         return {
             modal: null,
             $modal: null,
             modalViewMode: this.config.viewMode,
             modalInitialized: false,
             modalElements: null,
+
+            fileUpload: {
+                title: 'Upload',
+                name: 'assets-upload',
+                postAction: null,
+                multiple: true,
+                extensions: 'gif,jpg,png', // get from window.FFFields
+                accept: '',
+                size: 1024 * 1024 * 10,
+                drop: true,
+                files: [],
+                upload: {},
+                headers: {
+                    //                        "X-Csrf-Token": "xxxx", // get from window.FFFields
+                },
+                data: {
+                    //                        "_csrf_token": "xxxxxx", // get from window.FFFields
+                },
+                events: {
+                    add(file, component) {
+                        console.log('add');
+                        component.active = true;
+                        file.headers['X-Filename'] = encodeURIComponent(file.name);
+                        file.data.finename = file.name;
+                        // file.putAction = 'xxx'
+                        // file.postAction = 'xxx'
+
+                        this.$parent.fileUpload.upload.active = true;
+                    },
+                    progress(file, component) {
+                        console.log('progress ' + file.progress);
+                    },
+                    after(file, component) {
+                        console.log('after');
+                    },
+                    before(file, component) {
+                        console.log('before');
+                    }
+                }
+            },
+
             selectedElementIds: [],
             selectBtnClasses: {
                 'ui ok positive button': true,
@@ -32503,6 +32563,12 @@ module.exports = Vue$3;
     },
     mounted: function () {
         const _this = this;
+
+        window.onload = function () {
+            _this.fileUpload.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
+        };
+
+        this.fileUpload.upload = this.$refs.upload.$data;
 
         this.$modal = $('.ui.modal', this.$el);
         this.modal = this.$modal.modal({
@@ -39367,12 +39433,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       name: "addIconToButton",
       rawName: "v-addIconToButton"
     }],
+    ref: "upload",
     staticClass: "ui labeled icon blue button",
     attrs: {
-      "title": "Upload",
-      "name": "something",
-      "post-action": "",
-      "multiple": true
+      "title": _vm.fileUpload.title,
+      "events": _vm.fileUpload.events,
+      "name": _vm.fileUpload.name,
+      "post-action": _vm.fileUpload.postAction,
+      "extensions": _vm.fileUpload.extensions,
+      "accept": _vm.fileUpload.accept,
+      "multiple": _vm.fileUpload.multiple,
+      "size": _vm.fileUpload.size || 0,
+      "headers": _vm.fileUpload.headers,
+      "data": _vm.fileUpload.data,
+      "drop": _vm.fileUpload.drop,
+      "files": _vm.fileUpload.files
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "ui basic buttons"
