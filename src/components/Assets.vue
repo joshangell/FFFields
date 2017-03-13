@@ -14,31 +14,45 @@
         <div class="ui large modal">
 
             <div class="header">
-                <file-upload
-                        v-addIconToButton
-                        class="ui labeled icon blue button"
-                        v-bind:title="fileUpload.title"
-                        v-bind:events="fileUpload.events"
-                        v-bind:name="fileUpload.name"
-                        v-bind:extensions="fileUpload.extensions"
-                        v-bind:accept="fileUpload.accept"
-                        v-bind:multiple="fileUpload.multiple"
-                        v-bind:size="fileUpload.size || 0"
-                        v-bind:drop="fileUpload.drop"
-                        v-bind:files="fileUpload.files"
-                        ref="upload">
-                </file-upload>
 
-                <div class="ui basic buttons">
-                    <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
-                        <i class="left grid layout icon"></i>
-                        Grid
+                <div class="ui equal width grid">
+                    <div class="column">
+                        <file-upload
+                                v-addIconToButton
+                                v-bind:class="fileUpload.classObject"
+                                v-bind:title="fileUpload.title"
+                                v-bind:events="fileUpload.events"
+                                v-bind:name="fileUpload.name"
+                                v-bind:extensions="fileUpload.extensions"
+                                v-bind:accept="fileUpload.accept"
+                                v-bind:multiple="fileUpload.multiple"
+                                v-bind:size="fileUpload.size || 0"
+                                v-bind:drop="fileUpload.drop"
+                                v-bind:files="fileUpload.files"
+                                ref="upload">
+                        </file-upload>
                     </div>
-                    <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui right labeled icon button' : 'ui right labeled icon button disabled']" v-on:click="toggleModalViewMode">
-                        List
-                        <i class="right list layout icon"></i>
+                    <div class="column">
+                        <div class="ui indicating progress" v-show="fileUpload.batchLength">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui basic buttons">
+                            <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui labeled icon button disabled' : 'ui labeled icon button']" v-on:click="toggleModalViewMode">
+                                <i class="left grid layout icon"></i>
+                                Grid
+                            </div>
+                            <div role="button" v-bind:class="[modalViewMode === 'large' ? 'ui right labeled icon button' : 'ui right labeled icon button disabled']" v-on:click="toggleModalViewMode">
+                                List
+                                <i class="right list layout icon"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="ui large loader" v-if="!modalElements"></div>
@@ -108,6 +122,7 @@
 
     import remove from 'lodash/remove';
     import extend from 'lodash/assignIn';
+    import findIndex from 'lodash/findIndex';
 
     import AssetElement from './AssetElement.vue';
 
@@ -133,44 +148,58 @@
                 modalViewMode:      this.config.viewMode,
                 modalInitialized:   false,
                 modalElements:      null,
+                $uploadProgress:    null,
 
                 fileUpload:         {
+                    classObject: {
+                        'ui labeled icon blue button': true,
+                        'disabled': false,
+                    },
                     title:         'Upload',
                     name:          'assets-upload',
                     multiple:      true,
-                    extensions:    'gif,jpg,png', // get from window.FFFields
-                    accept:        '',
-                    size:          1024 * 1024 * 10,
-                    drop:          true,
+                    extensions:    'gif,jpg,png', // TODO get from window.FFFields
+                    accept:        '', // TODO
+                    size:          1024 * 1024 * 10, // TODO get from window.FFFields
+                    drop:          true, // TODO
                     files:         [],
-                    upload:        {},
+                    batchLength:   0,
                     events: {
                         add(file, component) {
+                            // Update the batch length
+                            this.$parent.fileUpload.batchLength = component.files.length;
+
+                            // Make sure the uploader is set to upload automatically
                             component.active = true;
 
-//                            file.headers['X-Filename'] = encodeURIComponent(file.name);
+                            // Set up the request data
                             file.headers['X-Requested-With'] = 'XMLHttpRequest';
-
                             file.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
-
                             file.data = {
                                 folderId: 1, // TODO
-//                                filename : file.name,
                             };
                             file.data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
-
-                            if (!this.$parent.$refs.upload.active) {
-                                this.$parent.$refs.upload.active = true;
-                            }
                         },
                         progress(file, component) {
-                            console.log('progress ' + file.progress);
+                            this.$parent.updateUploadProgress(file.progress);
                         },
                         after(file, component) {
-                            console.log('after');
+
+                            // Add to the list of files in the modal
+                            // TODO
+
+                            // Remove the file from the files array
+                            const fileIndex = findIndex(component.files, { 'id': file.id });
+                            if (fileIndex != -1) {
+                                component.files.splice(fileIndex, 1);
+                            }
+
+                            // Ping the UI update
+                            this.$parent.updateUploadUiState();
+
                         },
                         before(file, component) {
-                            console.log('before');
+                            this.$parent.updateUploadUiState();
                         },
                     },
                 },
@@ -196,6 +225,9 @@
         },
         mounted: function() {
             const _this = this;
+
+            this.$uploadProgress = $('.ui.progress', this.$el);
+            this.$uploadProgress.progress();
 
             this.$modal = $('.ui.modal', this.$el);
             this.modal = this.$modal.modal({
@@ -337,6 +369,33 @@
                     }
                 });
 
+            },
+
+            updateUploadUiState: function()
+            {
+                const numFiles = this.fileUpload.files.length;
+
+                if (numFiles && this.fileUpload.batchLength) {
+                    this.fileUpload.title = 'Uploading ' + numFiles + ' file' + (numFiles === 1 ? '' : 's') + ' …';
+                    this.fileUpload.classObject.disabled = true;
+                } else {
+                    this.fileUpload.title = 'Upload';
+                    this.fileUpload.classObject.disabled = false;
+                    this.fileUpload.batchLength = 0;
+                    this.$uploadProgress.progress('reset');
+                }
+            },
+
+            updateUploadProgress: function(percent)
+            {
+                if (this.fileUpload.batchLength) {
+                    // Work out the current overall percentage of the total batch
+                    const filesDone = this.fileUpload.batchLength - this.fileUpload.files.length;
+                    const totalValue = this.fileUpload.batchLength * 100;
+
+                    this.$uploadProgress.progress('set total', totalValue);
+                    this.$uploadProgress.progress('set progress', parseInt(percent) + (100 * filesDone));
+                }
             }
 
         }

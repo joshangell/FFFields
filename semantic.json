@@ -44,6 +44,7 @@
     "tab",
     "dimmer",
     "modal",
+    "progress",
     "transition",
     "state",
     "visibility"

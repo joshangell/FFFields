@@ -6,6 +6,7 @@ import './semantic/dist/components/dropdown';
 import './semantic/dist/components/tab';
 import './semantic/dist/components/dimmer';
 import './semantic/dist/components/modal';
+import './semantic/dist/components/progress';
 import './semantic/dist/components/transition';
 import './semantic/dist/components/state';
 import './semantic/dist/components/visibility';
