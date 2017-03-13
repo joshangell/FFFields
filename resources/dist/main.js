@@ -32775,6 +32775,7 @@ module.exports = Vue$3;
                 this.fileUpload.classObject.disabled = false;
                 this.fileUpload.batchLength = 0;
                 this.$uploadProgress.progress('reset');
+                this.initializeModal();
             }
         },
 
