@@ -18,18 +18,18 @@
                 <div class="ui equal width grid">
                     <div class="column">
                         <file-upload
-                                v-addIconToButton
-                                v-bind:class="fileUpload.classObject"
-                                v-bind:title="fileUpload.title"
-                                v-bind:events="fileUpload.events"
-                                v-bind:name="fileUpload.name"
-                                v-bind:extensions="fileUpload.extensions"
-                                v-bind:accept="fileUpload.accept"
-                                v-bind:multiple="fileUpload.multiple"
-                                v-bind:size="fileUpload.size || 0"
-                                v-bind:drop="fileUpload.drop"
-                                v-bind:files="fileUpload.files"
-                                ref="upload">
+                            v-addIconToButton
+                            v-bind:class="fileUpload.classObject"
+                            v-bind:title="fileUpload.title"
+                            v-bind:events="fileUpload.events"
+                            v-bind:name="fileUpload.name"
+                            v-bind:extensions="fileUpload.extensions"
+                            v-bind:accept="fileUpload.accept"
+                            v-bind:multiple="fileUpload.multiple"
+                            v-bind:size="fileUpload.size || 0"
+                            v-bind:drop="fileUpload.drop"
+                            v-bind:files="fileUpload.files"
+                            ref="upload">
                         </file-upload>
                     </div>
                     <div class="column">
@@ -150,6 +150,7 @@
                 modalElements:      null,
                 $uploadProgress:    null,
 
+                // FileUpload settings
                 fileUpload:         {
                     classObject: {
                         'ui labeled icon blue button': true,
@@ -211,6 +212,8 @@
                 },
                 elements:           this.config.elements,
                 canAddMore:         (this.config.limit === '' || this.config.elements.length < this.config.limit),
+
+                // Draggable options
                 options: {
                     draggable: '.asset-element',
                     ghostClass: 'disabled',
@@ -248,6 +251,9 @@
 
                             // Push it onto the field
                             _this.elements.push(newElement);
+
+                            // Update draggable
+                            _this.$children[0]._sortable.option("disabled", _this.elements.length <= 1);
                         }
                     }
                 }
