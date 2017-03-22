@@ -33439,8 +33439,7 @@ module.exports = Vue$3;
                         // Set up some props on the new element
                         newElement.context = 'field';
                         newElement.disabled = false;
-                        // TODO do we need this?
-                        //                            newElement.viewMode = _this.elements[0].viewMode;
+                        newElement.viewMode = _this.elements[0].viewMode;
 
                         // Push it onto the field
                         _this.elements.push(newElement);
