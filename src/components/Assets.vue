@@ -266,10 +266,7 @@
                 this.modalElements = [];
                 this.selectedElementIds = [];
                 this.modalInitialized = false;
-                this.updateCommonUi();
-            },
-
-            updateCommonUi: function() {
+                this.selectBtnClasses.disabled = true;
 
                 // Draggable
                 this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
@@ -278,10 +275,6 @@
                 if (this.config.limit !== '') {
                     this.canAddMore = this.elements.length < this.config.limit;
                 }
-
-                // Select btn disabled state
-                this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
-
             },
 
             onElementRemoved: function(element) {
