@@ -33336,14 +33336,22 @@ module.exports = Vue$3;
     data: function () {
 
         return {
-            modal: null,
             $modal: null,
             modalViewMode: this.config.viewMode,
             modalInitialized: false,
+            modalApproved: false,
             modalElements: [],
-            $uploadProgress: null,
+
+            selectedElementIds: [],
+            selectBtnClasses: {
+                'ui ok positive button': true,
+                'disabled': true
+            },
+            elements: this.config.elements,
+            canAddMore: this.config.limit === '' || this.config.elements.length < this.config.limit,
 
             // FileUpload settings
+            $uploadProgress: null,
             fileUpload: {
                 classObject: {
                     'ui labeled icon blue button': true,
@@ -33396,14 +33404,6 @@ module.exports = Vue$3;
                 }
             },
 
-            selectedElementIds: [],
-            selectBtnClasses: {
-                'ui ok positive button': true,
-                'disabled': true
-            },
-            elements: this.config.elements,
-            canAddMore: this.config.limit === '' || this.config.elements.length < this.config.limit,
-
             // Draggable options
             options: {
                 draggable: '.asset-element',
@@ -33423,10 +33423,12 @@ module.exports = Vue$3;
         this.$uploadProgress.progress();
 
         this.$modal = $('.ui.modal', this.$el);
-        this.modal = this.$modal.modal({
+        this.$modal.modal({
             observeChanges: true,
             autofocus: false,
             onApprove: $element => {
+                this.modalApproved = true;
+
                 for (let i = 0; i < this.modalElements.length; i++) {
                     if (this.selectedElementIds.indexOf(this.modalElements[i].id) != -1) {
 
@@ -33440,35 +33442,25 @@ module.exports = Vue$3;
 
                         // Push it onto the field
                         this.elements.push(newElement);
-
-                        this.updateCommonUi();
-
-                        // TODO Trash the modal!!!!!
-                        this.modalInitialized = false;
-
-                        // Disable and de-select it
-                        //                            _this.modalElements[i].disabled = true;
-                        //                            console.log(_this.modalElements[i]);
-
-                        //                            const indexToRemove = _this.selectedElementIds.indexOf(_this.modalElements[i].id);
-                        //                            if (indexToRemove != -1) {
-                        //                                _this.selectedElementIds.splice(indexToRemove, 1);
-                        //                            }
-
-                        //                            _this.onElementSelected({
-                        //                                selected: false,
-                        //                                elementId: _this.modalElements[i].id
-                        //                            });
-
-
-                        // selected ones need converting to disabled/de-selected in modal once on field
-
                     }
+                }
+            },
+            onHidden: () => {
+                if (this.modalApproved) {
+                    this.modalApproved = false;
+                    this.trashModal();
                 }
             }
         });
     },
     methods: {
+
+        trashModal: function () {
+            this.modalElements = [];
+            this.selectedElementIds = [];
+            this.modalInitialized = false;
+            this.updateCommonUi();
+        },
 
         updateCommonUi: function () {
 
@@ -33489,9 +33481,7 @@ module.exports = Vue$3;
                 return obj.id === element.id;
             });
 
-            this.updateCommonUi();
-
-            // when removed we need to enable in modal
+            this.trashModal();
         },
 
         onElementSelected: function (obj) {
@@ -33511,7 +33501,7 @@ module.exports = Vue$3;
             if (!this.modalInitialized) {
                 this.initializeModal();
             } else {
-                this.modal.modal('show');
+                this.$modal.modal('show');
             }
         },
 
@@ -33539,7 +33529,8 @@ module.exports = Vue$3;
 
         initializeModal: function () {
             // Show the modal
-            this.modal.modal('show');
+            // TODO: improve this here so it shows a spinner first, then the modal
+            this.$modal.modal('show');
 
             // Work out the disabled elements
             const disabledElementIds = [];
@@ -33578,8 +33569,8 @@ module.exports = Vue$3;
 
                     __WEBPACK_IMPORTED_MODULE_1_imagesLoaded___default()(this.$modal, () => {
                         setTimeout(() => {
-                            this.modal.modal('cache sizes');
-                            this.modal.modal('refresh');
+                            this.$modal.modal('cache sizes');
+                            this.$modal.modal('refresh');
                             this.modalInitialized = true;
                         }, 100);
                     });
