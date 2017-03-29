@@ -133,12 +133,12 @@
         },
         directives: {
             addIconToButton: {
-                bind: (el) => {
+                bind: function (el) {
                     $(el).prepend('<i class="upload icon"></i>');
                 }
             }
         },
-        data: () => {
+        data: function() {
 
             return {
                 modal:              null,
@@ -224,7 +224,7 @@
             'asset-element' : AssetElement,
             'file-upload'   : FileUpload,
         },
-        mounted: () => {
+        mounted: function() {
 
             this.$uploadProgress = $('.ui.progress', this.$el);
             this.$uploadProgress.progress();
@@ -279,7 +279,7 @@
         },
         methods: {
 
-            updateCommonUi: () => {
+            updateCommonUi: function() {
 
                 // Draggable
                 this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
@@ -294,8 +294,8 @@
 
             },
 
-            onElementRemoved: (element) => {
-                remove(this.elements, (obj) => {
+            onElementRemoved: function(element) {
+                remove(this.elements, function(obj) {
                     return obj.id === element.id;
                 });
 
@@ -304,7 +304,7 @@
                 // when removed we need to enable in modal
             },
 
-            onElementSelected: (obj) => {
+            onElementSelected: function(obj) {
                 if (obj.selected) {
                     this.selectedElementIds.push(obj.elementId);
                 } else {
@@ -317,7 +317,8 @@
                 this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
             },
 
-            launchElementSelector: () => {
+            launchElementSelector: function()
+            {
                 if (!this.modalInitialized) {
                     this.initializeModal();
                 } else {
@@ -325,7 +326,8 @@
                 }
             },
 
-            toggleModalViewMode: () => {
+            toggleModalViewMode: function()
+            {
                 if (this.modalViewMode === 'list') {
                     this.modalViewMode = 'large';
                 } else if (this.modalViewMode === 'large') {
@@ -338,7 +340,8 @@
                 });
             },
 
-            toggleSelectModalElement: (element) => {
+            toggleSelectModalElement: function(element)
+            {
                 const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
 
                 this.onElementSelected({
@@ -347,7 +350,8 @@
                 });
             },
 
-            initializeModal: () => {
+            initializeModal: function()
+            {
                 // Show the modal
                 this.modal.modal('show');
 
@@ -375,7 +379,8 @@
                     url: window.FFFields.actionUrl + '/fffields/elements/getElements',
                     type: 'POST',
                     data: data,
-                    error: (jqXHR, textStatus, errorThrown) => {
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
                         alert(textStatus + errorThrown);
                     },
                     complete: (jqXHR, textStatus) => {
@@ -399,7 +404,8 @@
 
             },
 
-            updateUploadUiState: () => {
+            updateUploadUiState: function()
+            {
                 const numFiles = this.fileUpload.files.length;
 
                 if (numFiles && this.fileUpload.batchLength) {
@@ -414,7 +420,8 @@
                 }
             },
 
-            updateUploadProgress: (percent) => {
+            updateUploadProgress: function(percent)
+            {
                 if (this.fileUpload.batchLength) {
                     // Work out the current overall percentage of the total batch
                     const filesDone = this.fileUpload.batchLength - this.fileUpload.files.length;
