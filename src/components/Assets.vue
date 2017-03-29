@@ -133,21 +133,19 @@
         },
         directives: {
             addIconToButton: {
-                bind: function (el) {
+                bind: (el) => {
                     $(el).prepend('<i class="upload icon"></i>');
                 }
             }
         },
-        data: function() {
-
-            const _this = this;
+        data: () => {
 
             return {
                 modal:              null,
                 $modal:             null,
                 modalViewMode:      this.config.viewMode,
                 modalInitialized:   false,
-                modalElements:      null,
+                modalElements:      [],
                 $uploadProgress:    null,
 
                 // FileUpload settings
@@ -226,8 +224,7 @@
             'asset-element' : AssetElement,
             'file-upload'   : FileUpload,
         },
-        mounted: function() {
-            const _this = this;
+        mounted: () => {
 
             this.$uploadProgress = $('.ui.progress', this.$el);
             this.$uploadProgress.progress();
@@ -236,23 +233,45 @@
             this.modal = this.$modal.modal({
                 observeChanges: true,
                 autofocus: false,
-                onApprove: function($element) {
-                    for (let i = 0; i < _this.modalElements.length; i++) {
-                        if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {
+                onApprove: ($element) => {
+                    for (let i = 0; i < this.modalElements.length; i++) {
+                        if (this.selectedElementIds.indexOf(this.modalElements[i].id) != -1) {
 
                             // Clone the element
-                            const newElement = extend({}, _this.modalElements[i]);
+                            const newElement = extend({}, this.modalElements[i]);
 
                             // Set up some props on the new element
                             newElement.context = 'field';
                             newElement.disabled = false;
-                            newElement.viewMode = _this.elements[0].viewMode;
+                            newElement.viewMode = this.elements[0].viewMode;
 
                             // Push it onto the field
-                            _this.elements.push(newElement);
+                            this.elements.push(newElement);
 
-                            // Update draggable
-                            _this.$children[0]._sortable.option("disabled", _this.elements.length <= 1);
+                            this.updateCommonUi();
+
+                            // TODO Trash the modal!!!!!
+                            this.modalInitialized = false;
+
+                            // Disable and de-select it
+//                            _this.modalElements[i].disabled = true;
+//                            console.log(_this.modalElements[i]);
+
+//                            const indexToRemove = _this.selectedElementIds.indexOf(_this.modalElements[i].id);
+//                            if (indexToRemove != -1) {
+//                                _this.selectedElementIds.splice(indexToRemove, 1);
+//                            }
+
+//                            _this.onElementSelected({
+//                                selected: false,
+//                                elementId: _this.modalElements[i].id
+//                            });
+
+
+
+                            // selected ones need converting to disabled/de-selected in modal once on field
+
+
                         }
                     }
                 }
@@ -260,19 +279,32 @@
         },
         methods: {
 
-            onElementRemoved: function(element) {
-                remove(this.elements, function(obj) {
-                    return obj.id === element.id;
-                });
+            updateCommonUi: () => {
 
+                // Draggable
                 this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
 
+                // Whether we can add more or not
                 if (this.config.limit !== '') {
                     this.canAddMore = this.elements.length < this.config.limit;
                 }
+
+                // Select btn disabled state
+                this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
+
             },
 
-            onElementSelected: function(obj) {
+            onElementRemoved: (element) => {
+                remove(this.elements, (obj) => {
+                    return obj.id === element.id;
+                });
+
+                this.updateCommonUi();
+
+                // when removed we need to enable in modal
+            },
+
+            onElementSelected: (obj) => {
                 if (obj.selected) {
                     this.selectedElementIds.push(obj.elementId);
                 } else {
@@ -285,8 +317,7 @@
                 this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
             },
 
-            launchElementSelector: function()
-            {
+            launchElementSelector: () => {
                 if (!this.modalInitialized) {
                     this.initializeModal();
                 } else {
@@ -294,24 +325,20 @@
                 }
             },
 
-            toggleModalViewMode: function()
-            {
-                const _this = this;
-
+            toggleModalViewMode: () => {
                 if (this.modalViewMode === 'list') {
                     this.modalViewMode = 'large';
                 } else if (this.modalViewMode === 'large') {
                     this.modalViewMode = 'list';
                 }
 
-                this.modalElements.map(function(el) {
-                    el.viewMode = _this.modalViewMode;
+                this.modalElements.map((el) => {
+                    el.viewMode = this.modalViewMode;
                     return el
                 });
             },
 
-            toggleSelectModalElement: function(element)
-            {
+            toggleSelectModalElement: (element) => {
                 const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
 
                 this.onElementSelected({
@@ -320,10 +347,11 @@
                 });
             },
 
-            initializeModal: function()
-            {
+            initializeModal: () => {
+                // Show the modal
                 this.modal.modal('show');
 
+                // Work out the disabled elements
                 const disabledElementIds = [];
 
                 for (let i = 0; i < this.elements.length; i++) {
@@ -339,8 +367,6 @@
                     disabledElementIds: disabledElementIds
                 };
 
-                const _this = this;
-
                 if (typeof window.FFFields.csrfTokenName != 'undefined') {
                     data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
                 }
@@ -349,25 +375,22 @@
                     url: window.FFFields.actionUrl + '/fffields/elements/getElements',
                     type: 'POST',
                     data: data,
-                    error: function(jqXHR, textStatus, errorThrown)
-                    {
+                    error: (jqXHR, textStatus, errorThrown) => {
                         alert(textStatus + errorThrown);
                     },
-                    complete: function(jqXHR, textStatus)
-                    {
+                    complete: (jqXHR, textStatus) => {
                         if (textStatus != 'success') {
                             alert('An unknown error occurred.');
                             return;
                         }
 
-                        _this.modalElements = jqXHR.responseJSON.elements;
+                        this.modalElements = jqXHR.responseJSON.elements;
 
-                        imagesLoaded(_this.$modal, function()
-                        {
-                            setTimeout(function () {
-                                _this.modal.modal('cache sizes');
-                                _this.modal.modal('refresh');
-                                _this.modalInitialized = true;
+                        imagesLoaded(this.$modal, () => {
+                            setTimeout(() => {
+                                this.modal.modal('cache sizes');
+                                this.modal.modal('refresh');
+                                this.modalInitialized = true;
                             }, 100)
                         });
 
@@ -376,8 +399,7 @@
 
             },
 
-            updateUploadUiState: function()
-            {
+            updateUploadUiState: () => {
                 const numFiles = this.fileUpload.files.length;
 
                 if (numFiles && this.fileUpload.batchLength) {
@@ -392,8 +414,7 @@
                 }
             },
 
-            updateUploadProgress: function(percent)
-            {
+            updateUploadProgress: (percent) => {
                 if (this.fileUpload.batchLength) {
                     // Work out the current overall percentage of the total batch
                     const filesDone = this.fileUpload.batchLength - this.fileUpload.files.length;

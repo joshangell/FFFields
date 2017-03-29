@@ -33193,6 +33193,8 @@ module.exports = Vue$3;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_findIndex___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_findIndex__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__AssetElement_vue__);
+var _this = this;
+
 //
 //
 //
@@ -33328,21 +33330,19 @@ module.exports = Vue$3;
     },
     directives: {
         addIconToButton: {
-            bind: function (el) {
+            bind: el => {
                 $(el).prepend('<i class="upload icon"></i>');
             }
         }
     },
-    data: function () {
-
-        const _this = this;
+    data: () => {
 
         return {
             modal: null,
             $modal: null,
-            modalViewMode: this.config.viewMode,
+            modalViewMode: _this.config.viewMode,
             modalInitialized: false,
-            modalElements: null,
+            modalElements: [],
             $uploadProgress: null,
 
             // FileUpload settings
@@ -33403,14 +33403,14 @@ module.exports = Vue$3;
                 'ui ok positive button': true,
                 'disabled': true
             },
-            elements: this.config.elements,
-            canAddMore: this.config.limit === '' || this.config.elements.length < this.config.limit,
+            elements: _this.config.elements,
+            canAddMore: _this.config.limit === '' || _this.config.elements.length < _this.config.limit,
 
             // Draggable options
             options: {
                 draggable: '.asset-element',
                 ghostClass: 'disabled',
-                disabled: this.config.elements.length <= 1
+                disabled: _this.config.elements.length <= 1
             }
         };
     },
@@ -33419,17 +33419,16 @@ module.exports = Vue$3;
         'asset-element': __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue___default.a,
         'file-upload': __WEBPACK_IMPORTED_MODULE_2_vue_upload_component___default.a
     },
-    mounted: function () {
-        const _this = this;
+    mounted: () => {
 
-        this.$uploadProgress = $('.ui.progress', this.$el);
-        this.$uploadProgress.progress();
+        _this.$uploadProgress = $('.ui.progress', _this.$el);
+        _this.$uploadProgress.progress();
 
-        this.$modal = $('.ui.modal', this.$el);
-        this.modal = this.$modal.modal({
+        _this.$modal = $('.ui.modal', _this.$el);
+        _this.modal = _this.$modal.modal({
             observeChanges: true,
             autofocus: false,
-            onApprove: function ($element) {
+            onApprove: $element => {
                 for (let i = 0; i < _this.modalElements.length; i++) {
                     if (_this.selectedElementIds.indexOf(_this.modalElements[i].id) != -1) {
 
@@ -33444,8 +33443,28 @@ module.exports = Vue$3;
                         // Push it onto the field
                         _this.elements.push(newElement);
 
-                        // Update draggable
-                        _this.$children[0]._sortable.option("disabled", _this.elements.length <= 1);
+                        _this.updateCommonUi();
+
+                        // TODO Trash the modal!!!!!
+                        _this.modalInitialized = false;
+
+                        // Disable and de-select it
+                        //                            _this.modalElements[i].disabled = true;
+                        //                            console.log(_this.modalElements[i]);
+
+                        //                            const indexToRemove = _this.selectedElementIds.indexOf(_this.modalElements[i].id);
+                        //                            if (indexToRemove != -1) {
+                        //                                _this.selectedElementIds.splice(indexToRemove, 1);
+                        //                            }
+
+                        //                            _this.onElementSelected({
+                        //                                selected: false,
+                        //                                elementId: _this.modalElements[i].id
+                        //                            });
+
+
+                        // selected ones need converting to disabled/de-selected in modal once on field
+
                     }
                 }
             }
@@ -33453,82 +33472,92 @@ module.exports = Vue$3;
     },
     methods: {
 
-        onElementRemoved: function (element) {
-            __WEBPACK_IMPORTED_MODULE_3_lodash_remove___default()(this.elements, function (obj) {
+        updateCommonUi: () => {
+
+            // Draggable
+            _this.$children[0]._sortable.option("disabled", _this.elements.length <= 1);
+
+            // Whether we can add more or not
+            if (_this.config.limit !== '') {
+                _this.canAddMore = _this.elements.length < _this.config.limit;
+            }
+
+            // Select btn disabled state
+            _this.selectBtnClasses.disabled = _this.selectedElementIds.length < 1;
+        },
+
+        onElementRemoved: element => {
+            __WEBPACK_IMPORTED_MODULE_3_lodash_remove___default()(_this.elements, obj => {
                 return obj.id === element.id;
             });
 
-            this.$children[0]._sortable.option("disabled", this.elements.length <= 1);
+            _this.updateCommonUi();
 
-            if (this.config.limit !== '') {
-                this.canAddMore = this.elements.length < this.config.limit;
-            }
+            // when removed we need to enable in modal
         },
 
-        onElementSelected: function (obj) {
+        onElementSelected: obj => {
             if (obj.selected) {
-                this.selectedElementIds.push(obj.elementId);
+                _this.selectedElementIds.push(obj.elementId);
             } else {
-                const i = this.selectedElementIds.indexOf(obj.elementId);
+                const i = _this.selectedElementIds.indexOf(obj.elementId);
                 if (i != -1) {
-                    this.selectedElementIds.splice(i, 1);
+                    _this.selectedElementIds.splice(i, 1);
                 }
             }
 
-            this.selectBtnClasses.disabled = this.selectedElementIds.length < 1;
+            _this.selectBtnClasses.disabled = _this.selectedElementIds.length < 1;
         },
 
-        launchElementSelector: function () {
-            if (!this.modalInitialized) {
-                this.initializeModal();
+        launchElementSelector: () => {
+            if (!_this.modalInitialized) {
+                _this.initializeModal();
             } else {
-                this.modal.modal('show');
+                _this.modal.modal('show');
             }
         },
 
-        toggleModalViewMode: function () {
-            const _this = this;
-
-            if (this.modalViewMode === 'list') {
-                this.modalViewMode = 'large';
-            } else if (this.modalViewMode === 'large') {
-                this.modalViewMode = 'list';
+        toggleModalViewMode: () => {
+            if (_this.modalViewMode === 'list') {
+                _this.modalViewMode = 'large';
+            } else if (_this.modalViewMode === 'large') {
+                _this.modalViewMode = 'list';
             }
 
-            this.modalElements.map(function (el) {
+            _this.modalElements.map(el => {
                 el.viewMode = _this.modalViewMode;
                 return el;
             });
         },
 
-        toggleSelectModalElement: function (element) {
-            const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
+        toggleSelectModalElement: element => {
+            const currentStatus = _this.selectedElementIds.indexOf(element.id) != -1;
 
-            this.onElementSelected({
+            _this.onElementSelected({
                 selected: !currentStatus,
                 elementId: element.id
             });
         },
 
-        initializeModal: function () {
-            this.modal.modal('show');
+        initializeModal: () => {
+            // Show the modal
+            _this.modal.modal('show');
 
+            // Work out the disabled elements
             const disabledElementIds = [];
 
-            for (let i = 0; i < this.elements.length; i++) {
-                disabledElementIds.push(this.elements[i].id);
+            for (let i = 0; i < _this.elements.length; i++) {
+                disabledElementIds.push(_this.elements[i].id);
             }
 
             const data = {
-                fieldName: this.config.name,
-                fieldId: this.config.fieldId,
-                sources: this.config.sources,
+                fieldName: _this.config.name,
+                fieldId: _this.config.fieldId,
+                sources: _this.config.sources,
                 elementType: 'Asset',
                 context: 'index',
                 disabledElementIds: disabledElementIds
             };
-
-            const _this = this;
 
             if (typeof window.FFFields.csrfTokenName != 'undefined') {
                 data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
@@ -33538,10 +33567,10 @@ module.exports = Vue$3;
                 url: window.FFFields.actionUrl + '/fffields/elements/getElements',
                 type: 'POST',
                 data: data,
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: (jqXHR, textStatus, errorThrown) => {
                     alert(textStatus + errorThrown);
                 },
-                complete: function (jqXHR, textStatus) {
+                complete: (jqXHR, textStatus) => {
                     if (textStatus != 'success') {
                         alert('An unknown error occurred.');
                         return;
@@ -33549,8 +33578,8 @@ module.exports = Vue$3;
 
                     _this.modalElements = jqXHR.responseJSON.elements;
 
-                    __WEBPACK_IMPORTED_MODULE_1_imagesLoaded___default()(_this.$modal, function () {
-                        setTimeout(function () {
+                    __WEBPACK_IMPORTED_MODULE_1_imagesLoaded___default()(_this.$modal, () => {
+                        setTimeout(() => {
                             _this.modal.modal('cache sizes');
                             _this.modal.modal('refresh');
                             _this.modalInitialized = true;
@@ -33560,29 +33589,29 @@ module.exports = Vue$3;
             });
         },
 
-        updateUploadUiState: function () {
-            const numFiles = this.fileUpload.files.length;
+        updateUploadUiState: () => {
+            const numFiles = _this.fileUpload.files.length;
 
-            if (numFiles && this.fileUpload.batchLength) {
-                this.fileUpload.title = 'Uploading ' + numFiles + ' file' + (numFiles === 1 ? '' : 's') + ' …';
-                this.fileUpload.classObject.disabled = true;
+            if (numFiles && _this.fileUpload.batchLength) {
+                _this.fileUpload.title = 'Uploading ' + numFiles + ' file' + (numFiles === 1 ? '' : 's') + ' …';
+                _this.fileUpload.classObject.disabled = true;
             } else {
-                this.fileUpload.title = 'Upload';
-                this.fileUpload.classObject.disabled = false;
-                this.fileUpload.batchLength = 0;
-                this.$uploadProgress.progress('reset');
-                this.initializeModal();
+                _this.fileUpload.title = 'Upload';
+                _this.fileUpload.classObject.disabled = false;
+                _this.fileUpload.batchLength = 0;
+                _this.$uploadProgress.progress('reset');
+                _this.initializeModal();
             }
         },
 
-        updateUploadProgress: function (percent) {
-            if (this.fileUpload.batchLength) {
+        updateUploadProgress: percent => {
+            if (_this.fileUpload.batchLength) {
                 // Work out the current overall percentage of the total batch
-                const filesDone = this.fileUpload.batchLength - this.fileUpload.files.length;
-                const totalValue = this.fileUpload.batchLength * 100;
+                const filesDone = _this.fileUpload.batchLength - _this.fileUpload.files.length;
+                const totalValue = _this.fileUpload.batchLength * 100;
 
-                this.$uploadProgress.progress('set total', totalValue);
-                this.$uploadProgress.progress('set progress', parseInt(percent) + 100 * filesDone);
+                _this.$uploadProgress.progress('set total', totalValue);
+                _this.$uploadProgress.progress('set progress', parseInt(percent) + 100 * filesDone);
             }
         }
 
