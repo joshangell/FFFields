@@ -1,5 +1,7 @@
 <template>
-    <div v-bind:class="{ 'ui right labeled input': config.showCharsLeft }">
+    <div v-bind:class="classObject">
+        <div v-if="config.leftLabel" class="ui label">{{ config.leftLabel }}</div>
+
         <input v-bind:value="value"
                v-on:input="updateCharsLeft($event.target.value)"
                v-bind:type="config.type"
@@ -33,6 +35,10 @@
             const initialValueLength = value ? value.length : 0;
             const initialCharsLeft = value ? this.config.maxlength - initialValueLength : this.config.maxlength;
             return {
+                classObject : {
+                    'ui right labeled input' : this.config.showCharsLeft,
+                    'ui labeled input' : this.config.leftLabel
+                },
                 value : value,
                 charsLeft : initialCharsLeft,
                 percentageUsed : ((this.config.maxlength-initialCharsLeft)/this.config.maxlength)*100

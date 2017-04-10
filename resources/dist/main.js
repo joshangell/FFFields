@@ -34350,6 +34350,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'text-input',
@@ -34359,6 +34361,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         const initialValueLength = value ? value.length : 0;
         const initialCharsLeft = value ? this.config.maxlength - initialValueLength : this.config.maxlength;
         return {
+            classObject: {
+                'ui right labeled input': this.config.showCharsLeft,
+                'ui labeled input': this.config.leftLabel
+            },
             value: value,
             charsLeft: initialCharsLeft,
             percentageUsed: (this.config.maxlength - initialCharsLeft) / this.config.maxlength * 100
@@ -40752,10 +40758,10 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    class: {
-      'ui right labeled input': _vm.config.showCharsLeft
-    }
-  }, [_c('input', {
+    class: _vm.classObject
+  }, [(_vm.config.leftLabel) ? _c('div', {
+    staticClass: "ui label"
+  }, [_vm._v(_vm._s(_vm.config.leftLabel))]) : _vm._e(), _vm._v(" "), _c('input', {
     attrs: {
       "type": _vm.config.type,
       "id": _vm.config.id,
