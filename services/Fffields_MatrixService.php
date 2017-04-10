@@ -449,7 +449,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     'config' => [
                         'id'    => $id,
                         'name'  => $name,
-                        'value' => $params['variant']->unlimitedStock,
+                        'value' => (bool) $params['variant']->unlimitedStock,
                     ]
                 ];
                 break;
