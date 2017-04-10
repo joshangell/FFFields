@@ -8,7 +8,17 @@
             <div class="ui form">
                 <div class="ui grid">
                     <div class="six wide column">
-                        <field v-for="m in block.meta" v-bind:config="m.config"></field>
+                        <template v-for="m in block.meta">
+
+                            <field v-if="m.config" v-bind:config="m.config"></field>
+
+                            <div v-else class="ui equal width grid">
+                                <div class="column" v-for="nm in m">
+                                    <field v-bind:config="nm.config"></field>
+                                </div>
+                            </div>
+
+                        </template>
                     </div>
                     <div class="ten wide column">
                         <field v-for="f in block.fields" v-bind:config="f.config"></field>

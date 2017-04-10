@@ -34047,6 +34047,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34346,12 +34356,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'text-input',
@@ -34418,20 +34422,7 @@ exports.push([module.i, "\n.matrix-header {\n  height: 1em;\n}\n.matrix-header .
 
 
 /***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui.form input[type=number] {\n  width: auto;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 77 */,
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40470,10 +40461,6 @@ module.exports = Component.exports
 /* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(220)
-
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(74),
@@ -41078,13 +41065,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ui grid"
   }, [_c('div', {
     staticClass: "six wide column"
-  }, _vm._l((_vm.block.meta), function(m) {
-    return _c('field', {
+  }, [_vm._l((_vm.block.meta), function(m) {
+    return [(m.config) ? _c('field', {
       attrs: {
         "config": m.config
       }
-    })
-  })), _vm._v(" "), _c('div', {
+    }) : _c('div', {
+      staticClass: "ui equal width grid"
+    }, _vm._l((m), function(nm) {
+      return _c('div', {
+        staticClass: "column"
+      }, [_c('field', {
+        attrs: {
+          "config": nm.config
+        }
+      })], 1)
+    }))]
+  })], 2), _vm._v(" "), _c('div', {
     staticClass: "ten wide column"
   }, _vm._l((_vm.block.fields), function(f) {
     return _c('field', {
@@ -41349,32 +41346,7 @@ if(false) {
 }
 
 /***/ }),
-/* 220 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(77);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("7545dc4c", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3f79e5c7!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TextInput.vue", function() {
-     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3f79e5c7!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TextInput.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 220 */,
 /* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
