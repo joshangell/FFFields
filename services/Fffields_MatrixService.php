@@ -301,28 +301,28 @@ class Fffields_MatrixService extends BaseApplicationComponent
             ])
         ];
 
-        // TODO: format these fields better
         $meta[] = [
-            'handle' => 'stock',
-            'config' => $this->_getVariantMetaFieldConfig([
-                'name'        => 'stock',
-                'label'       => Craft::t('Stock'),
-                'placeholder' => Craft::t('Enter stock'),
-                'required'    => true,
-                'variant'     => $variant,
-                'namespace'   => $variantNamespace
-            ])
-        ];
-
-        $meta[] = [
-            'handle' => 'unlimitedStock',
-            'config' => $this->_getVariantMetaFieldConfig([
-                'name'        => 'unlimitedStock',
-                'label'       => Craft::t('Unlimited Stock'),
-                'placeholder' => null,
-                'variant'     => $variant,
-                'namespace'   => $variantNamespace
-            ])
+            [
+                'handle' => 'stock',
+                'config' => $this->_getVariantMetaFieldConfig([
+                    'name'        => 'stock',
+                    'label'       => Craft::t('Stock'),
+                    'placeholder' => Craft::t('Enter stock'),
+                    'required'    => true,
+                    'variant'     => $variant,
+                    'namespace'   => $variantNamespace
+                ])
+            ],
+            [
+                'handle' => 'unlimitedStock',
+                'config' => $this->_getVariantMetaFieldConfig([
+                    'name'        => 'unlimitedStock',
+                    'label'       => Craft::t('Unlimited Stock'),
+                    'placeholder' => null,
+                    'variant'     => $variant,
+                    'namespace'   => $variantNamespace
+                ])
+            ]
         ];
 
         $meta[] = [
