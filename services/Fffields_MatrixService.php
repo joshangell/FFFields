@@ -330,7 +330,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 'handle' => 'minQty',
                 'config' => $this->_getVariantMetaFieldConfig([
                     'name'        => 'minQty',
-                    'label'       => Craft::t('Minimum allowed quantity'),
+                    'label'       => Craft::t('Min quantity'),
                     'placeholder' => Craft::t('Any'),
                     'variant'     => $variant,
                     'namespace'   => $variantNamespace
@@ -340,7 +340,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 'handle' => 'maxQty',
                 'config' => $this->_getVariantMetaFieldConfig([
                     'name'        => 'maxQty',
-                    'label'       => Craft::t('Maximum allowed quantity'),
+                    'label'       => Craft::t('Max quantity'),
                     'placeholder' => Craft::t('Any'),
                     'variant'     => $variant,
                     'namespace'   => $variantNamespace
