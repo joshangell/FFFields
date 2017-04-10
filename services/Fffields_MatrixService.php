@@ -326,25 +326,26 @@ class Fffields_MatrixService extends BaseApplicationComponent
         ];
 
         $meta[] = [
-            'handle' => 'minQty',
-            'config' => $this->_getVariantMetaFieldConfig([
-                'name'        => 'minQty',
-                'label'       => Craft::t('Minimum allowed quantity'),
-                'placeholder' => Craft::t('Any'),
-                'variant'     => $variant,
-                'namespace'   => $variantNamespace
-            ])
-        ];
-
-        $meta[] = [
-            'handle' => 'maxQty',
-            'config' => $this->_getVariantMetaFieldConfig([
-                'name'        => 'maxQty',
-                'label'       => Craft::t('Maximum allowed quantity'),
-                'placeholder' => Craft::t('Any'),
-                'variant'     => $variant,
-                'namespace'   => $variantNamespace
-            ])
+            [
+                'handle' => 'minQty',
+                'config' => $this->_getVariantMetaFieldConfig([
+                    'name'        => 'minQty',
+                    'label'       => Craft::t('Minimum allowed quantity'),
+                    'placeholder' => Craft::t('Any'),
+                    'variant'     => $variant,
+                    'namespace'   => $variantNamespace
+                ])
+            ],
+            [
+                'handle' => 'maxQty',
+                'config' => $this->_getVariantMetaFieldConfig([
+                    'name'        => 'maxQty',
+                    'label'       => Craft::t('Maximum allowed quantity'),
+                    'placeholder' => Craft::t('Any'),
+                    'variant'     => $variant,
+                    'namespace'   => $variantNamespace
+                ])
+            ]
         ];
 
         return [$meta, $fields];
