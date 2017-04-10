@@ -394,8 +394,21 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     $value = '';
                 }
 
-                // TODO handle currency label
-                // craft.commerce.primaryPaymentCurrency.iso
+                $currencyLabel = craft()->commerce_paymentCurrencies->getPrimaryPaymentCurrency()->iso;
+
+                switch ($currencyLabel) {
+                    case 'USD' :
+                        $currencyLabel = '$';
+                        break;
+
+                    case 'EUR' :
+                        $currencyLabel = '€';
+                        break;
+
+                    case 'GBP' :
+                        $currencyLabel = '£';
+                        break;
+                }
 
                 $fieldConfig = [
                     'type' => 'text-input',
@@ -404,6 +417,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                         'name'        => $name,
                         'type'        => 'number',
                         'value'       => $value,
+                        'leftLabel'   => $currencyLabel,
                         'placeholder' => $params['placeholder'],
                         'min'         => 0,
                         'step'        => 0.01
