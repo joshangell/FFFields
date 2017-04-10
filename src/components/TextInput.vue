@@ -20,12 +20,6 @@
     </div>
 </template>
 
-<style lang="scss">
-    .ui.form input[type=number] {
-        width: auto;
-    }
-</style>
-
 <script>
     export default {
         name: 'text-input',
