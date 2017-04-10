@@ -33782,6 +33782,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'lightswitch',
@@ -33790,6 +33791,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             checked: this.config.value
         };
+    },
+    mounted: function () {
+        this.handleToggle(this.config.value);
+    },
+    methods: {
+        handleToggle: function (checked) {
+            if (this.config.toggle) {
+                let elements = document.querySelectorAll(this.config.toggle.selector);
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i][this.config.toggle.attribute] = checked;
+                }
+            }
+        }
     }
 };
 
@@ -41242,6 +41256,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.checked),
+      expression: "checked"
+    }],
     attrs: {
       "type": "checkbox",
       "value": "1",
@@ -41249,7 +41269,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": _vm.config.name
     },
     domProps: {
-      "checked": _vm.checked
+      "checked": Array.isArray(_vm.checked) ? _vm._i(_vm.checked, "1") > -1 : (_vm.checked)
+    },
+    on: {
+      "change": function($event) {
+        _vm.handleToggle(_vm.checked)
+      },
+      "click": function($event) {
+        var $$a = _vm.checked,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = "1",
+            $$i = _vm._i($$a, $$v);
+          if ($$c) {
+            $$i < 0 && (_vm.checked = $$a.concat($$v))
+          } else {
+            $$i > -1 && (_vm.checked = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+          }
+        } else {
+          _vm.checked = $$c
+        }
+      }
     }
   }), _vm._v(" "), _c('label')])
 },staticRenderFns: []}
