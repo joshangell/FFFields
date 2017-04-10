@@ -307,7 +307,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 'config' => $this->_getVariantMetaFieldConfig([
                     'name'        => 'stock',
                     'label'       => Craft::t('Stock'),
-                    'placeholder' => Craft::t('Enter stock'),
+                    'placeholder' => null,
                     'required'    => true,
                     'variant'     => $variant,
                     'namespace'   => $variantNamespace
@@ -317,7 +317,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 'handle' => 'unlimitedStock',
                 'config' => $this->_getVariantMetaFieldConfig([
                     'name'        => 'unlimitedStock',
-                    'label'       => Craft::t('Unlimited Stock'),
+                    'label'       => Craft::t('Unlimited?'),
                     'placeholder' => null,
                     'variant'     => $variant,
                     'namespace'   => $variantNamespace
@@ -437,8 +437,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                         'name'        => $name,
                         'type'        => 'number',
                         'value'       => $value,
-                        'placeholder' => $params['placeholder'],
-                        //'disabled' => $params['variant']->unlimitedStock -- would be set on main stock field above
+                        'placeholder' => $params['placeholder']
                     ]
                 ];
                 break;
@@ -450,6 +449,10 @@ class Fffields_MatrixService extends BaseApplicationComponent
                         'id'    => $id,
                         'name'  => $name,
                         'value' => (bool) $params['variant']->unlimitedStock,
+                        'toggle' => [
+                            'selector' => '#'.craft()->templates->namespaceInputId('stock', $params['namespace']),
+                            'attribute' => 'disabled'
+                        ]
                     ]
                 ];
                 break;
