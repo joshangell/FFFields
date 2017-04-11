@@ -120,6 +120,34 @@ class Fffields_BasicService extends BaseApplicationComponent
     }
 
     /**
+     * Returns required config for a <date/> custom tag.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getDateConfig(array $params)
+    {
+        $field = $params['fieldLayoutField']->getField();
+
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
+        $settings = $field->getFieldType()->getSettings();
+
+        $config = [
+            'id'              => $id,
+            'name'            => $name,
+            'value'           => $params['value'],
+            'placeholder'     => ($settings->showDate && $settings->showTime ? Craft::t('Date/Time') : ($settings->showTime ? Craft::t('Time') : Craft::t('Date'))),
+            'showDate'        => $settings->showDate,
+            'showTime'        => $settings->showTime,
+            'minuteIncrement' => $settings->minuteIncrement
+        ];
+
+        return $config;
+    }
+
+    /**
      * Returns the required config for the following custom tags:
      *
      * <dropdown/>

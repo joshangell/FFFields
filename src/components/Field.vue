@@ -38,6 +38,7 @@
     import RadioButtons from './RadioButtons.vue';
     import MultiSelect  from './MultiSelect.vue';
     import Assets       from './Assets.vue';
+    import Date         from './Date.vue';
 
     export default {
         name: 'field',
@@ -54,7 +55,8 @@
             'checkboxes'    : Checkboxes,
             'radio-buttons' : RadioButtons,
             'multi-select'  : MultiSelect,
-            'assets'        : Assets
+            'assets'        : Assets,
+            'date'          : Date
         }
     }
 </script>

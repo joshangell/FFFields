@@ -288,6 +288,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'Assets' :
                 return 'assets';
 
+            case 'Date' :
+                return 'date';
+
             default :
                 return 'message';
                 break;
@@ -326,6 +329,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'MultiSelect' :
                 return craft()->fffields_basic->getOptionsConfig($params);
                 break;
+
+            case 'Date' :
+                return craft()->fffields_basic->getDateConfig($params);
 
             case 'RichText' :
                 return craft()->fffields_richText->getConfig($params);

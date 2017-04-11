@@ -44,6 +44,7 @@
     "tab",
     "dimmer",
     "modal",
+    "popup",
     "progress",
     "transition",
     "state",

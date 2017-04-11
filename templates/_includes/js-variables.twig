@@ -1,3 +1,5 @@
+{% set localeData = craft.i18n.getLocaleData() %}
+
 {% includejs %}
 if (typeof window.FFFields == 'undefined') {
     window.FFFields = {
@@ -9,6 +11,15 @@ if (typeof window.FFFields == 'undefined') {
         csrfTokenName: "{{ craft.config.csrfTokenName|e('js') }}",
     {% endif %}
         fileKinds: {{ craft.app.getFileKinds()|json_encode|raw }},
+        datepickerOptions: {
+            dateFormat: "{{ craft.i18n.getDatepickerJsFormat()|e('js') }}",
+            firstDay: {{ currentUser is defined and currentUser ? currentUser.weekStartDay : craft.config.defaultWeekStartDay }},
+            dayNames: {{ localeData.getWeekDayNames('wide', true)|json_encode|raw }},
+            dayNamesShort: {{ localeData.getWeekDayNames('abbreviated', true)|json_encode|raw }},
+            dayNamesMin: {{ localeData.getWeekDayNames('narrow', true)|json_encode|raw }},
+            monthNames: {{ localeData.getMonthNames('wide', true)|values|json_encode|raw }},
+            monthNamesShort: {{ localeData.getMonthNames('abbreviated', true)|values|json_encode|raw }}
+        },
     };
 }
 {% endincludejs %}
