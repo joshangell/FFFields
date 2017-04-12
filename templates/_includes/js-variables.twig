@@ -12,7 +12,8 @@ if (typeof window.FFFields == 'undefined') {
     {% endif %}
         fileKinds: {{ craft.app.getFileKinds()|json_encode|raw }},
         datepickerOptions: {
-            dateFormat: "{{ craft.i18n.getDatepickerJsFormat()|e('js') }}",
+            localeDate: "{{ craft.fffields.getLocaleDate()|e('js') }}",
+            localeTime: "{{ craft.fffields.getLocaleTime()|e('js') }}",
             firstDay: {{ currentUser is defined and currentUser ? currentUser.weekStartDay : craft.config.defaultWeekStartDay }},
             dayNames: {{ localeData.getWeekDayNames('wide', true)|json_encode|raw }},
             dayNamesShort: {{ localeData.getWeekDayNames('abbreviated', true)|json_encode|raw }},

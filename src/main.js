@@ -1,5 +1,4 @@
 import './semantic/dist/semantic.css';
-import '../node_modules/semantic-ui-calendar/dist/calendar.css';
 
 import './semantic/dist/components/form';
 import './semantic/dist/components/checkbox';
@@ -14,7 +13,6 @@ import './semantic/dist/components/state';
 import './semantic/dist/components/visibility';
 
 import '../node_modules/trumbowyg/dist/trumbowyg.js';
-import '../node_modules/semantic-ui-calendar/dist/calendar.js';
 
 import Vue from 'vue';
 

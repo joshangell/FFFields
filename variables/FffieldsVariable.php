@@ -37,4 +37,26 @@ class FffieldsVariable
         return craft()->fffields->renderField($params);
     }
 
+    /**
+     * Returns the current date in the locales format.
+     *
+     * @return string
+     */
+    public function getLocaleDate()
+    {
+        $date = DateTimeHelper::currentUTCDateTime();
+        return $date->localeDate();
+    }
+
+    /**
+     * Returns the current time in the locales format.
+     *
+     * @return string
+     */
+    public function getFormattedTime()
+    {
+        $date = DateTimeHelper::currentUTCDateTime();
+        return $date->localeTime();
+    }
+
 }
