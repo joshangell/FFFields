@@ -50493,6 +50493,12 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50503,11 +50509,36 @@ module.exports = Vue$3;
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'date',
     props: ['config'],
-    //        data: function() {
-    //            return {
-    //
-    //            };
-    //        },
+
+    data: function () {
+
+        // This could probably be better ...
+
+        let value = '',
+            dateValue = '',
+            timeValue = '';
+
+        if (this.config.value != null && this.config.value.date != null) {
+            dateValue = this.config.value.date;
+        }
+
+        if (this.config.value != null && this.config.value.time != null) {
+            timeValue = this.config.value.time;
+        }
+
+        if (this.config.showDate && this.config.showTime) {
+            value = dateValue + ' ' + timeValue;
+        } else if (this.config.showDate) {
+            value = dateValue;
+        } else if (this.config.showTime) {
+            value = timeValue;
+        }
+
+        return {
+            value: value
+        };
+    },
+
     mounted: function () {
         // Wait until on load to setup the pop-up calendars as we need stuff
         // that is in window.FFFields
@@ -50515,11 +50546,68 @@ module.exports = Vue$3;
             $(this.$el).calendar(this.getCalendarSettings());
         });
     },
+
     methods: {
+
+        getDateValue: function () {
+
+            // If there is something in the value get the moment instance
+            // for that value so we can format it to just the date
+            if (this.value != '') {
+                let date = this.getMomentFromValue(this.value);
+                return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(__WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeDate));
+            }
+
+            // Fall back to looking at the initial value on render
+            if (this.config.value != null && this.config.value.date != null) {
+                return this.config.value.date;
+            }
+
+            return '';
+        },
+
+        getTimeValue: function () {
+
+            // If there is something in the value get the moment instance
+            // for that value so we can format it to just the time
+            if (this.value != '') {
+                let date = this.getMomentFromValue(this.value);
+                return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(__WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeTime));
+            }
+
+            // Fall back to looking at the initial value on render
+            if (this.config.value != null && this.config.value.time != null) {
+                return this.config.value.time;
+            }
+
+            return '';
+        },
+
+        getMomentFromValue: function (value) {
+
+            if (this.config.showDate && this.config.showTime) {
+                return __WEBPACK_IMPORTED_MODULE_2_moment___default()(value, __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeDate) + ' ' + __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeTime));
+            }
+
+            if (this.config.showDate) {
+                return __WEBPACK_IMPORTED_MODULE_2_moment___default()(value, __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeDate));
+            }
+
+            if (this.config.showTime) {
+                return __WEBPACK_IMPORTED_MODULE_2_moment___default()(value, __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeTime));
+            }
+        },
+
         getCalendarSettings: function () {
             return {
                 type: this.config.showDate && this.config.showTime ? 'datetime' : this.config.showTime ? 'time' : 'date',
                 firstDayOfWeek: window.FFFields.datepickerOptions.firstDay,
+
+                initialDate: this.value,
+
+                // This is required otherwise the date / time sub-fields get overridden
+                // to the text value of the selected date on blur
+                formatInput: false,
 
                 text: {
                     days: window.FFFields.datepickerOptions.dayNamesMin,
@@ -50528,28 +50616,28 @@ module.exports = Vue$3;
                 },
 
                 formatter: {
-                    date: function (date, settings) {
+                    date: (date, settings) => {
                         if (!date) {
                             return '';
                         }
 
-                        const format = __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(window.FFFields.datepickerOptions.localeDate);
-
-                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(format);
+                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(__WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeDate));
                     },
-                    time: function (date, settings, forCalendar) {
+                    time: (date, settings, forCalendar) => {
                         if (!date) {
                             return '';
                         }
 
-                        const format = __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(window.FFFields.datepickerOptions.localeTime);
-
-                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(format);
+                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(__WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(this.config.localeTime));
                     }
+                },
+
+                onChange: (date, text, mode) => {
+
+                    // Reset the value to whatever the text version of this date is so that
+                    // getDateValue() and getTimeValue() methods update
+                    this.value = text;
                 }
-
-                //                    initialDate : this.config.value,
-
             };
         }
     }
@@ -58223,7 +58311,10 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "ui calendar"
+    staticClass: "ui calendar",
+    attrs: {
+      "id": _vm.config.id
+    }
   }, [_c('div', {
     staticClass: "ui input left icon"
   }, [_c('i', {
@@ -58231,14 +58322,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('input', {
     attrs: {
       "type": "text",
-      "id": _vm.config.id,
-      "name": _vm.config.name,
       "placeholder": _vm.config.placeholder
     },
     domProps: {
-      "value": _vm.config.value
+      "value": _vm.value
     }
-  })])])
+  }), _vm._v(" "), (_vm.config.showDate) ? _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name + '[date]'
+    },
+    domProps: {
+      "value": _vm.getDateValue()
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.config.showTime) ? _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.config.name + '[time]'
+    },
+    domProps: {
+      "value": _vm.getTimeValue()
+    }
+  }) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

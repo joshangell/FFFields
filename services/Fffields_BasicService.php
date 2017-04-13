@@ -134,10 +134,22 @@ class Fffields_BasicService extends BaseApplicationComponent
         $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
+        $value = null;
+        if ($params['value']) {
+            $value = [
+                'date' => $settings->showDate ? $params['value']->localeDate() : null,
+                'time' => $settings->showTime ? $params['value']->localeTime() : null,
+            ];
+        }
+
+        $currentDateTime = DateTimeHelper::currentUTCDateTime();
+
         $config = [
             'id'              => $id,
             'name'            => $name,
-            'value'           => $params['value'],
+            'value'           => $value,
+            'localeDate'      => $currentDateTime->localeDate(),
+            'localeTime'      => $currentDateTime->localeTime(),
             'placeholder'     => ($settings->showDate && $settings->showTime ? Craft::t('Date/Time') : ($settings->showTime ? Craft::t('Time') : Craft::t('Date'))),
             'showDate'        => $settings->showDate,
             'showTime'        => $settings->showTime,
