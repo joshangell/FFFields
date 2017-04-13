@@ -4,7 +4,9 @@
         <div class="ui input left icon">
             <i class="calendar icon"></i>
             <input type="text"
+                   ref="input"
                    v-bind:value="value"
+                   v-on:input="updateValue($event.target.value)"
                    v-bind:placeholder="config.placeholder">
             <input type="hidden"
                    v-if="config.showDate"
@@ -33,7 +35,6 @@
         data: function() {
 
             // This could probably be better ...
-
             let value = '',
                 dateValue = '',
                 timeValue = '';
@@ -68,6 +69,33 @@
         },
 
         methods: {
+
+            updateValue: function (value) {
+
+                // If the value is changed to empty manually by the user then we
+                // need to reset a bunch of stuff
+                if (value == '') {
+
+                    // Kill the current popup and calendar instances
+                    $(this.$el).calendar('popup', 'hide');
+                    $(this.$el).calendar('popup', 'destroy');
+                    $(this.$el).calendar('destroy');
+
+                    // Get the settings and reset the initial date to null
+                    let settings = this.getCalendarSettings();
+                    settings.initialDate = null;
+
+                    // Re-init the calendar and show it
+                    $(this.$el).calendar(settings);
+                    $(this.$el).calendar('focus');
+
+                }
+
+                // Replicate the normal v-model behaviour
+                this.$refs.input.value = value;
+                this.$emit('input', value);
+
+            },
 
             getDateValue: function() {
 
@@ -124,7 +152,7 @@
                     type: (this.config.showDate && this.config.showTime ? 'datetime' : (this.config.showTime ? 'time' : 'date')),
                     firstDayOfWeek: window.FFFields.datepickerOptions.firstDay,
 
-                    initialDate: this.value,
+                    initialDate: this.value != '' ? this.value : null,
 
                     // This is required otherwise the date / time sub-fields get overridden
                     // to the text value of the selected date on blur

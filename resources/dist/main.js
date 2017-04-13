@@ -50499,6 +50499,8 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
 
 
 
@@ -50513,7 +50515,6 @@ module.exports = Vue$3;
     data: function () {
 
         // This could probably be better ...
-
         let value = '',
             dateValue = '',
             timeValue = '';
@@ -50548,6 +50549,31 @@ module.exports = Vue$3;
     },
 
     methods: {
+
+        updateValue: function (value) {
+
+            // If the value is changed to empty manually by the user then we
+            // need to reset a bunch of stuff
+            if (value == '') {
+
+                // Kill the current popup and calendar instances
+                $(this.$el).calendar('popup', 'hide');
+                $(this.$el).calendar('popup', 'destroy');
+                $(this.$el).calendar('destroy');
+
+                // Get the settings and reset the initial date to null
+                let settings = this.getCalendarSettings();
+                settings.initialDate = null;
+
+                // Re-init the calendar and show it
+                $(this.$el).calendar(settings);
+                $(this.$el).calendar('focus');
+            }
+
+            // Replicate the normal v-model behaviour
+            this.$refs.input.value = value;
+            this.$emit('input', value);
+        },
 
         getDateValue: function () {
 
@@ -50603,7 +50629,7 @@ module.exports = Vue$3;
                 type: this.config.showDate && this.config.showTime ? 'datetime' : this.config.showTime ? 'time' : 'date',
                 firstDayOfWeek: window.FFFields.datepickerOptions.firstDay,
 
-                initialDate: this.value,
+                initialDate: this.value != '' ? this.value : null,
 
                 // This is required otherwise the date / time sub-fields get overridden
                 // to the text value of the selected date on blur
@@ -58320,12 +58346,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "calendar icon"
   }), _vm._v(" "), _c('input', {
+    ref: "input",
     attrs: {
       "type": "text",
       "placeholder": _vm.config.placeholder
     },
     domProps: {
       "value": _vm.value
+    },
+    on: {
+      "input": function($event) {
+        _vm.updateValue($event.target.value)
+      }
     }
   }), _vm._v(" "), (_vm.config.showDate) ? _c('input', {
     attrs: {
