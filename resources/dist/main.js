@@ -50501,6 +50501,28 @@ module.exports = Vue$3;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50573,6 +50595,9 @@ module.exports = Vue$3;
             // Replicate the normal v-model behaviour
             this.$refs.input.value = value;
             this.$emit('input', value);
+
+            // Update our value data prop
+            this.value = value;
         },
 
         getDateValue: function () {
@@ -57439,6 +57464,10 @@ module.exports = Component.exports
 /* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(363)
+
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(181),
@@ -58375,7 +58404,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.getTimeValue()
     }
-  }) : _vm._e()])])
+  }) : _vm._e()]), _vm._v(" "), (_vm.value) ? _c('i', {
+    staticClass: "remove circle icon",
+    on: {
+      "click": function($event) {
+        _vm.updateValue('')
+      }
+    }
+  }) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -63277,6 +63313,47 @@ function replaceEndian (options, matchedPart, first, separator, second, third) {
   return parts.join(separator)
 }
 
+
+/***/ }),
+/* 361 */,
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui[class*=\"left icon\"].input > input {\n  padding-right: 2.67143em !important;\n}\n.remove.circle.icon {\n  position: absolute;\n  right: 0.5em;\n  bottom: 1em;\n  cursor: pointer;\n  opacity: .5;\n}\n.remove.circle.icon:hover {\n  opacity: 1;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(362);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("062a7282", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

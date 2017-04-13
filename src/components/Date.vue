@@ -17,9 +17,31 @@
                    v-bind:value="getTimeValue()"
                    v-bind:name="config.name + '[time]'">
         </div>
+
+        <i class="remove circle icon" v-if="value" v-on:click="updateValue('')"></i>
     </div>
 
 </template>
+
+<style lang="scss">
+
+    .ui[class*="left icon"].input>input {
+        padding-right: 2.67142857em!important;
+    }
+
+    .remove.circle.icon {
+        position: absolute;
+        right: 0.5em;
+        bottom: 1em;
+        cursor: pointer;
+        opacity: .5;
+    }
+
+        .remove.circle.icon:hover {
+            opacity: 1;
+        }
+
+</style>
 
 <script>
     import '../../node_modules/semantic-ui-calendar/dist/calendar.css';
@@ -95,6 +117,8 @@
                 this.$refs.input.value = value;
                 this.$emit('input', value);
 
+                // Update our value data prop
+                this.value = value;
             },
 
             getDateValue: function() {
