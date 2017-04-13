@@ -48,38 +48,28 @@
                     },
 
                     formatter: {
+                        date: function (date, settings) {
+                            if (!date) {
+                                return '';
+                            }
 
-                        // TODO: work out the date and time format from our localeDate and localeTime variables
-//                const format = parseFormat(window.FFFields.datepickerOptions.localeDate);
-////                const format = parseFormat(window.FFFields.datepickerOptions.localeTime);
-//                console.log(format);
-//                console.log(moment().format(format));
-//                        date: function (date, settings) {
-//                            if (!date) {
-//                                return '';
-//                            }
-//
-//                            const day = date.getDate(),
-//                                  month = date.getMonth() + 1,
-//                                  year = date.getFullYear();
-//
-//                            return day + '/' + month + '/' + year;
-//                        }
+                            const format = parseFormat(window.FFFields.datepickerOptions.localeDate);
+
+                            return moment(date).format(format);
+                        },
+                        time: function (date, settings, forCalendar) {
+                            if (!date) {
+                                return '';
+                            }
+
+                            const format = parseFormat(window.FFFields.datepickerOptions.localeTime);
+
+                            return moment(date).format(format);
+                        },
                     }
 
 
 //                    initialDate : this.config.value,
-//                    formatter : {
-//                        datetime: function (date, settings) {
-//                            //return a formatted string representing the date & time of 'date'
-//                        },
-//                        date: function (date, settings) {
-//                            //return a formatted string representing the date of 'date'
-//                        },
-//                        time: function (date, settings, forCalendar) {
-//                            //return a formatted string representing the time of 'date'
-//                        },
-//                    }
 
                 }
             }

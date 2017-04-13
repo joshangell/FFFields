@@ -50527,38 +50527,28 @@ module.exports = Vue$3;
                     monthsShort: window.FFFields.datepickerOptions.monthNamesShort
                 },
 
-                formatter: {}
+                formatter: {
+                    date: function (date, settings) {
+                        if (!date) {
+                            return '';
+                        }
 
-                // TODO: work out the date and time format from our localeDate and localeTime variables
-                //                const format = parseFormat(window.FFFields.datepickerOptions.localeDate);
-                ////                const format = parseFormat(window.FFFields.datepickerOptions.localeTime);
-                //                console.log(format);
-                //                console.log(moment().format(format));
-                //                        date: function (date, settings) {
-                //                            if (!date) {
-                //                                return '';
-                //                            }
-                //
-                //                            const day = date.getDate(),
-                //                                  month = date.getMonth() + 1,
-                //                                  year = date.getFullYear();
-                //
-                //                            return day + '/' + month + '/' + year;
-                //                        }
+                        const format = __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(window.FFFields.datepickerOptions.localeDate);
 
+                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(format);
+                    },
+                    time: function (date, settings, forCalendar) {
+                        if (!date) {
+                            return '';
+                        }
+
+                        const format = __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default()(window.FFFields.datepickerOptions.localeTime);
+
+                        return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format(format);
+                    }
+                }
 
                 //                    initialDate : this.config.value,
-                //                    formatter : {
-                //                        datetime: function (date, settings) {
-                //                            //return a formatted string representing the date & time of 'date'
-                //                        },
-                //                        date: function (date, settings) {
-                //                            //return a formatted string representing the date of 'date'
-                //                        },
-                //                        time: function (date, settings, forCalendar) {
-                //                            //return a formatted string representing the time of 'date'
-                //                        },
-                //                    }
 
             };
         }
