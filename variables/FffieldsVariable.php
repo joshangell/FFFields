@@ -53,7 +53,7 @@ class FffieldsVariable
      *
      * @return string
      */
-    public function getFormattedTime()
+    public function getLocaleTime()
     {
         $date = DateTimeHelper::currentUTCDateTime();
         return $date->localeTime();
