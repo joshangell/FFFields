@@ -32,7 +32,7 @@
     .remove.circle.icon {
         position: absolute;
         right: 0.5em;
-        bottom: 1em;
+        bottom: 0.9em;
         cursor: pointer;
         opacity: .5;
     }

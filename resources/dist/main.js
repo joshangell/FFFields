@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 348);
+/******/ 	return __webpack_require__(__webpack_require__.s = 354);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1899,7 +1899,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(305)("./" + name);
+            __webpack_require__(309)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -14818,21 +14818,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var freeGlobal = __webpack_require__(37);
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-module.exports = root;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -14888,39 +14873,22 @@ module.exports = function() {
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
+var freeGlobal = __webpack_require__(37);
 
-module.exports = isArray;
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -14939,7 +14907,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(346)
+var listToStyles = __webpack_require__(352)
 
 /*
 type StyleObject = {
@@ -15156,11 +15124,43 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+module.exports = isArray;
+
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(222),
-    getValue = __webpack_require__(249);
+var baseIsNative = __webpack_require__(224),
+    getValue = __webpack_require__(251);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -15220,8 +15220,8 @@ module.exports = isObject;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(14),
-    getRawTag = __webpack_require__(246),
-    objectToString = __webpack_require__(274);
+    getRawTag = __webpack_require__(248),
+    objectToString = __webpack_require__(276);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -15317,13 +15317,13 @@ module.exports = isObjectLike;
 
 
 /* styles */
-__webpack_require__(345)
+__webpack_require__(351)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(183),
   /* template */
-  __webpack_require__(337),
+  __webpack_require__(342),
   /* scopeId */
   null,
   /* cssModules */
@@ -15353,11 +15353,11 @@ module.exports = Component.exports
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var listCacheClear = __webpack_require__(259),
-    listCacheDelete = __webpack_require__(260),
-    listCacheGet = __webpack_require__(261),
-    listCacheHas = __webpack_require__(262),
-    listCacheSet = __webpack_require__(263);
+var listCacheClear = __webpack_require__(261),
+    listCacheDelete = __webpack_require__(262),
+    listCacheGet = __webpack_require__(263),
+    listCacheHas = __webpack_require__(264),
+    listCacheSet = __webpack_require__(265);
 
 /**
  * Creates an list cache object.
@@ -15391,7 +15391,7 @@ module.exports = ListCache;
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(3);
+var root = __webpack_require__(4);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -15430,7 +15430,7 @@ module.exports = assocIndexOf;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isKeyable = __webpack_require__(257);
+var isKeyable = __webpack_require__(259);
 
 /**
  * Gets the data for `map`.
@@ -15573,7 +15573,7 @@ module.exports = isSymbol;
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(3);
+    root = __webpack_require__(4);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -15585,11 +15585,11 @@ module.exports = Map;
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapCacheClear = __webpack_require__(264),
-    mapCacheDelete = __webpack_require__(265),
-    mapCacheGet = __webpack_require__(266),
-    mapCacheHas = __webpack_require__(267),
-    mapCacheSet = __webpack_require__(268);
+var mapCacheClear = __webpack_require__(266),
+    mapCacheDelete = __webpack_require__(267),
+    mapCacheGet = __webpack_require__(268),
+    mapCacheHas = __webpack_require__(269),
+    mapCacheSet = __webpack_require__(270);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -15653,10 +15653,10 @@ module.exports = baseGet;
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(5),
+var isArray = __webpack_require__(6),
     isKey = __webpack_require__(25),
-    stringToPath = __webpack_require__(288),
-    toString = __webpack_require__(304);
+    stringToPath = __webpack_require__(290),
+    toString = __webpack_require__(306);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -15680,7 +15680,7 @@ module.exports = castPath;
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(5),
+var isArray = __webpack_require__(6),
     isSymbol = __webpack_require__(20);
 
 /** Used to match property names within property paths. */
@@ -15851,11 +15851,11 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(13),
-    stackClear = __webpack_require__(283),
-    stackDelete = __webpack_require__(284),
-    stackGet = __webpack_require__(285),
-    stackHas = __webpack_require__(286),
-    stackSet = __webpack_require__(287);
+    stackClear = __webpack_require__(285),
+    stackDelete = __webpack_require__(286),
+    stackGet = __webpack_require__(287),
+    stackHas = __webpack_require__(288),
+    stackSet = __webpack_require__(289);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -15883,9 +15883,9 @@ module.exports = Stack;
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(234),
+var baseTimes = __webpack_require__(236),
     isArguments = __webpack_require__(42),
-    isArray = __webpack_require__(5),
+    isArray = __webpack_require__(6),
     isBuffer = __webpack_require__(43),
     isIndex = __webpack_require__(17),
     isTypedArray = __webpack_require__(45);
@@ -15969,7 +15969,7 @@ module.exports = baseAssignValue;
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqualDeep = __webpack_require__(220),
+var baseIsEqualDeep = __webpack_require__(222),
     isObjectLike = __webpack_require__(11);
 
 /**
@@ -16003,11 +16003,11 @@ module.exports = baseIsEqual;
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMatches = __webpack_require__(226),
-    baseMatchesProperty = __webpack_require__(227),
+var baseMatches = __webpack_require__(228),
+    baseMatchesProperty = __webpack_require__(229),
     identity = __webpack_require__(26),
-    isArray = __webpack_require__(5),
-    property = __webpack_require__(297);
+    isArray = __webpack_require__(6),
+    property = __webpack_require__(299);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -16057,9 +16057,9 @@ module.exports = defineProperty;
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(207),
-    arraySome = __webpack_require__(214),
-    cacheHas = __webpack_require__(238);
+var SetCache = __webpack_require__(209),
+    arraySome = __webpack_require__(216),
+    cacheHas = __webpack_require__(240);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -16260,7 +16260,7 @@ module.exports = toSource;
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsArguments = __webpack_require__(219),
+var baseIsArguments = __webpack_require__(221),
     isObjectLike = __webpack_require__(11);
 
 /** Used for built-in method references. */
@@ -16302,8 +16302,8 @@ module.exports = isArguments;
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(3),
-    stubFalse = __webpack_require__(300);
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(4),
+    stubFalse = __webpack_require__(302);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -16390,9 +16390,9 @@ module.exports = isFunction;
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsTypedArray = __webpack_require__(223),
-    baseUnary = __webpack_require__(236),
-    nodeUtil = __webpack_require__(273);
+var baseIsTypedArray = __webpack_require__(225),
+    baseUnary = __webpack_require__(238),
+    nodeUtil = __webpack_require__(275);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -16424,7 +16424,7 @@ module.exports = isTypedArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(31),
-    baseKeys = __webpack_require__(224),
+    baseKeys = __webpack_require__(226),
     isArrayLike = __webpack_require__(27);
 
 /**
@@ -27818,7 +27818,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   }
 
   if (true) {
-    var Sortable = __webpack_require__(307);
+    var Sortable = __webpack_require__(312);
     module.exports = buildDraggable(Sortable);
   } else if (typeof define == "function" && define.amd) {
     define(['sortablejs'], function (Sortable) {
@@ -49876,7 +49876,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(306), __webpack_require__(163)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(310), __webpack_require__(163)))
 
 /***/ }),
 /* 178 */
@@ -50008,17 +50008,17 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_imagesLoaded__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_imagesLoaded__ = __webpack_require__(204);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_imagesLoaded___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_imagesLoaded__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_upload_component__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_upload_component__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_upload_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_upload_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_remove__ = __webpack_require__(298);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_remove__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_remove___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_remove__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_assignIn__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_assignIn__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_assignIn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_assignIn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_findIndex__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_findIndex__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_findIndex___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_findIndex__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue__ = __webpack_require__(314);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AssetElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__AssetElement_vue__);
 //
 //
@@ -50470,13 +50470,13 @@ module.exports = Vue$3;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_semantic_ui_calendar_dist_calendar_css__ = __webpack_require__(356);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_semantic_ui_calendar_dist_calendar_css__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_semantic_ui_calendar_dist_calendar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__node_modules_semantic_ui_calendar_dist_calendar_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_semantic_ui_calendar_dist_calendar_js__ = __webpack_require__(357);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_semantic_ui_calendar_dist_calendar_js__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_semantic_ui_calendar_dist_calendar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__node_modules_semantic_ui_calendar_dist_calendar_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_parseformat__ = __webpack_require__(359);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_parseformat__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment_parseformat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment_parseformat__);
 //
 //
@@ -50739,29 +50739,29 @@ module.exports = Vue$3;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Field_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Field_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue__ = __webpack_require__(327);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TextInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__TextInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TextArea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__TextArea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RichText_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RichText_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__LightSwitch_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue__ = __webpack_require__(320);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Matrix_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Matrix_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__ = __webpack_require__(318);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Dropdown_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Dropdown_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__ = __webpack_require__(316);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Checkboxes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__RadioButtons_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__ = __webpack_require__(323);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__MultiSelect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue__ = __webpack_require__(315);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Assets_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__Assets_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Date_vue__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Date_vue__ = __webpack_require__(317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Date_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__Date_vue__);
 //
 //
@@ -50878,7 +50878,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__ = __webpack_require__(321);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MatrixBlock_vue__);
 //
 //
@@ -51321,7 +51321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-const trumbowygSvgPath = __webpack_require__(308);
+const trumbowygSvgPath = __webpack_require__(313);
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'rich-text',
@@ -51474,7 +51474,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51488,7 +51488,7 @@ exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n
 /* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51502,7 +51502,7 @@ exports.push([module.i, "\n.matrix-header {\n  height: 1em;\n}\n.matrix-header .
 /* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51516,7 +51516,7 @@ exports.push([module.i, "/**\n * Trumbowyg v2.4.2 - A lightweight WYSIWYG editor
 /* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51530,7 +51530,7 @@ exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: aut
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51544,7 +51544,21 @@ exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-ele
 /* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.ui[class*=\"left icon\"].input > input {\n  padding-right: 2.67143em !important;\n}\n.remove.circle.icon {\n  position: absolute;\n  right: 0.5em;\n  bottom: 0.9em;\n  cursor: pointer;\n  opacity: .5;\n}\n.remove.circle.icon:hover {\n  opacity: 1;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51555,10 +51569,10 @@ exports.push([module.i, "\n.ui.form .field > .selection.dropdown {\n  width: aut
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51569,10 +51583,10 @@ exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block 
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)();
+exports = module.exports = __webpack_require__(3)();
 // imports
 
 
@@ -51583,7 +51597,7 @@ exports.push([module.i, "\n.field {\n  position: relative;\n}\n.field .instructi
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -51702,7 +51716,13 @@ return EvEmitter;
 
 
 /***/ }),
-/* 202 */
+/* 203 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -51719,7 +51739,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   if ( true ) {
     // AMD
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-      __webpack_require__(201)
+      __webpack_require__(202)
     ], __WEBPACK_AMD_DEFINE_RESULT__ = function( EvEmitter ) {
       return factory( window, EvEmitter );
     }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -52079,11 +52099,11 @@ return ImagesLoaded;
 
 
 /***/ }),
-/* 203 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(3);
+    root = __webpack_require__(4);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -52092,14 +52112,14 @@ module.exports = DataView;
 
 
 /***/ }),
-/* 204 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(251),
-    hashDelete = __webpack_require__(252),
-    hashGet = __webpack_require__(253),
-    hashHas = __webpack_require__(254),
-    hashSet = __webpack_require__(255);
+var hashClear = __webpack_require__(253),
+    hashDelete = __webpack_require__(254),
+    hashGet = __webpack_require__(255),
+    hashHas = __webpack_require__(256),
+    hashSet = __webpack_require__(257);
 
 /**
  * Creates a hash object.
@@ -52130,11 +52150,11 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(3);
+    root = __webpack_require__(4);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -52143,11 +52163,11 @@ module.exports = Promise;
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(3);
+    root = __webpack_require__(4);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -52156,12 +52176,12 @@ module.exports = Set;
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapCache = __webpack_require__(22),
-    setCacheAdd = __webpack_require__(278),
-    setCacheHas = __webpack_require__(279);
+    setCacheAdd = __webpack_require__(280),
+    setCacheHas = __webpack_require__(281);
 
 /**
  *
@@ -52189,10 +52209,10 @@ module.exports = SetCache;
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(3);
+var root = __webpack_require__(4);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -52201,11 +52221,11 @@ module.exports = Uint8Array;
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(7),
-    root = __webpack_require__(3);
+    root = __webpack_require__(4);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -52214,7 +52234,7 @@ module.exports = WeakMap;
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports) {
 
 /**
@@ -52241,7 +52261,7 @@ module.exports = apply;
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports) {
 
 /**
@@ -52272,7 +52292,7 @@ module.exports = arrayFilter;
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports) {
 
 /**
@@ -52299,7 +52319,7 @@ module.exports = arrayMap;
 
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports) {
 
 /**
@@ -52325,7 +52345,7 @@ module.exports = arrayPush;
 
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports) {
 
 /**
@@ -52354,7 +52374,7 @@ module.exports = arraySome;
 
 
 /***/ }),
-/* 215 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseAssignValue = __webpack_require__(32),
@@ -52388,7 +52408,7 @@ module.exports = assignValue;
 
 
 /***/ }),
-/* 216 */
+/* 218 */
 /***/ (function(module, exports) {
 
 /**
@@ -52418,11 +52438,11 @@ module.exports = baseFindIndex;
 
 
 /***/ }),
-/* 217 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(213),
-    isArray = __webpack_require__(5);
+var arrayPush = __webpack_require__(215),
+    isArray = __webpack_require__(6);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -52444,7 +52464,7 @@ module.exports = baseGetAllKeys;
 
 
 /***/ }),
-/* 218 */
+/* 220 */
 /***/ (function(module, exports) {
 
 /**
@@ -52463,7 +52483,7 @@ module.exports = baseHasIn;
 
 
 /***/ }),
-/* 219 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(9),
@@ -52487,15 +52507,15 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 220 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(30),
     equalArrays = __webpack_require__(36),
-    equalByTag = __webpack_require__(242),
-    equalObjects = __webpack_require__(243),
-    getTag = __webpack_require__(248),
-    isArray = __webpack_require__(5),
+    equalByTag = __webpack_require__(244),
+    equalObjects = __webpack_require__(245),
+    getTag = __webpack_require__(250),
+    isArray = __webpack_require__(6),
     isBuffer = __webpack_require__(43),
     isTypedArray = __webpack_require__(45);
 
@@ -52576,7 +52596,7 @@ module.exports = baseIsEqualDeep;
 
 
 /***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(30),
@@ -52644,11 +52664,11 @@ module.exports = baseIsMatch;
 
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(44),
-    isMasked = __webpack_require__(258),
+    isMasked = __webpack_require__(260),
     isObject = __webpack_require__(8),
     toSource = __webpack_require__(41);
 
@@ -52697,7 +52717,7 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(9),
@@ -52763,11 +52783,11 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPrototype = __webpack_require__(38),
-    nativeKeys = __webpack_require__(271);
+    nativeKeys = __webpack_require__(273);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -52799,12 +52819,12 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8),
     isPrototype = __webpack_require__(38),
-    nativeKeysIn = __webpack_require__(272);
+    nativeKeysIn = __webpack_require__(274);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -52838,11 +52858,11 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMatch = __webpack_require__(221),
-    getMatchData = __webpack_require__(245),
+var baseIsMatch = __webpack_require__(223),
+    getMatchData = __webpack_require__(247),
     matchesStrictComparable = __webpack_require__(40);
 
 /**
@@ -52866,12 +52886,12 @@ module.exports = baseMatches;
 
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqual = __webpack_require__(33),
-    get = __webpack_require__(292),
-    hasIn = __webpack_require__(293),
+    get = __webpack_require__(294),
+    hasIn = __webpack_require__(295),
     isKey = __webpack_require__(25),
     isStrictComparable = __webpack_require__(39),
     matchesStrictComparable = __webpack_require__(40),
@@ -52905,7 +52925,7 @@ module.exports = baseMatchesProperty;
 
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports) {
 
 /**
@@ -52925,7 +52945,7 @@ module.exports = baseProperty;
 
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(23);
@@ -52947,10 +52967,10 @@ module.exports = basePropertyDeep;
 
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseUnset = __webpack_require__(237),
+var baseUnset = __webpack_require__(239),
     isIndex = __webpack_require__(17);
 
 /** Used for built-in method references. */
@@ -52990,12 +53010,12 @@ module.exports = basePullAt;
 
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var identity = __webpack_require__(26),
-    overRest = __webpack_require__(276),
-    setToString = __webpack_require__(281);
+    overRest = __webpack_require__(278),
+    setToString = __webpack_require__(283);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -53013,10 +53033,10 @@ module.exports = baseRest;
 
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constant = __webpack_require__(290),
+var constant = __webpack_require__(292),
     defineProperty = __webpack_require__(35),
     identity = __webpack_require__(26);
 
@@ -53041,7 +53061,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports) {
 
 /**
@@ -53078,7 +53098,7 @@ module.exports = baseSlice;
 
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, exports) {
 
 /**
@@ -53104,12 +53124,12 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(14),
-    arrayMap = __webpack_require__(212),
-    isArray = __webpack_require__(5),
+    arrayMap = __webpack_require__(214),
+    isArray = __webpack_require__(6),
     isSymbol = __webpack_require__(20);
 
 /** Used as references for various `Number` constants. */
@@ -53147,7 +53167,7 @@ module.exports = baseToString;
 
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, exports) {
 
 /**
@@ -53167,12 +53187,12 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 237 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(24),
-    last = __webpack_require__(295),
-    parent = __webpack_require__(277),
+    last = __webpack_require__(297),
+    parent = __webpack_require__(279),
     toKey = __webpack_require__(10);
 
 /**
@@ -53193,7 +53213,7 @@ module.exports = baseUnset;
 
 
 /***/ }),
-/* 238 */
+/* 240 */
 /***/ (function(module, exports) {
 
 /**
@@ -53212,10 +53232,10 @@ module.exports = cacheHas;
 
 
 /***/ }),
-/* 239 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assignValue = __webpack_require__(215),
+var assignValue = __webpack_require__(217),
     baseAssignValue = __webpack_require__(32);
 
 /**
@@ -53258,10 +53278,10 @@ module.exports = copyObject;
 
 
 /***/ }),
-/* 240 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(3);
+var root = __webpack_require__(4);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -53270,11 +53290,11 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 241 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseRest = __webpack_require__(231),
-    isIterateeCall = __webpack_require__(256);
+var baseRest = __webpack_require__(233),
+    isIterateeCall = __webpack_require__(258);
 
 /**
  * Creates a function like `_.assign`.
@@ -53313,15 +53333,15 @@ module.exports = createAssigner;
 
 
 /***/ }),
-/* 242 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(14),
-    Uint8Array = __webpack_require__(208),
+    Uint8Array = __webpack_require__(210),
     eq = __webpack_require__(19),
     equalArrays = __webpack_require__(36),
-    mapToArray = __webpack_require__(269),
-    setToArray = __webpack_require__(280);
+    mapToArray = __webpack_require__(271),
+    setToArray = __webpack_require__(282);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -53431,10 +53451,10 @@ module.exports = equalByTag;
 
 
 /***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getAllKeys = __webpack_require__(244);
+var getAllKeys = __webpack_require__(246);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -53526,11 +53546,11 @@ module.exports = equalObjects;
 
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(217),
-    getSymbols = __webpack_require__(247),
+var baseGetAllKeys = __webpack_require__(219),
+    getSymbols = __webpack_require__(249),
     keys = __webpack_require__(46);
 
 /**
@@ -53548,7 +53568,7 @@ module.exports = getAllKeys;
 
 
 /***/ }),
-/* 245 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(39),
@@ -53578,7 +53598,7 @@ module.exports = getMatchData;
 
 
 /***/ }),
-/* 246 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(14);
@@ -53630,11 +53650,11 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 247 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayFilter = __webpack_require__(211),
-    stubArray = __webpack_require__(299);
+var arrayFilter = __webpack_require__(213),
+    stubArray = __webpack_require__(301);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -53666,14 +53686,14 @@ module.exports = getSymbols;
 
 
 /***/ }),
-/* 248 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DataView = __webpack_require__(203),
+var DataView = __webpack_require__(205),
     Map = __webpack_require__(21),
-    Promise = __webpack_require__(205),
-    Set = __webpack_require__(206),
-    WeakMap = __webpack_require__(209),
+    Promise = __webpack_require__(207),
+    Set = __webpack_require__(208),
+    WeakMap = __webpack_require__(211),
     baseGetTag = __webpack_require__(9),
     toSource = __webpack_require__(41);
 
@@ -53730,7 +53750,7 @@ module.exports = getTag;
 
 
 /***/ }),
-/* 249 */
+/* 251 */
 /***/ (function(module, exports) {
 
 /**
@@ -53749,12 +53769,12 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 250 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(24),
     isArguments = __webpack_require__(42),
-    isArray = __webpack_require__(5),
+    isArray = __webpack_require__(6),
     isIndex = __webpack_require__(17),
     isLength = __webpack_require__(28),
     toKey = __webpack_require__(10);
@@ -53794,7 +53814,7 @@ module.exports = hasPath;
 
 
 /***/ }),
-/* 251 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(18);
@@ -53815,7 +53835,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 252 */
+/* 254 */
 /***/ (function(module, exports) {
 
 /**
@@ -53838,7 +53858,7 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 253 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(18);
@@ -53874,7 +53894,7 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 254 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(18);
@@ -53903,7 +53923,7 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 255 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(18);
@@ -53932,7 +53952,7 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 256 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(19),
@@ -53968,7 +53988,7 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 257 */
+/* 259 */
 /***/ (function(module, exports) {
 
 /**
@@ -53989,10 +54009,10 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 258 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(240);
+var coreJsData = __webpack_require__(242);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -54015,7 +54035,7 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 259 */
+/* 261 */
 /***/ (function(module, exports) {
 
 /**
@@ -54034,7 +54054,7 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 260 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(15);
@@ -54075,7 +54095,7 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 261 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(15);
@@ -54100,7 +54120,7 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 262 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(15);
@@ -54122,7 +54142,7 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 263 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(15);
@@ -54154,10 +54174,10 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 264 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(204),
+var Hash = __webpack_require__(206),
     ListCache = __webpack_require__(13),
     Map = __webpack_require__(21);
 
@@ -54181,7 +54201,7 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 265 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(16);
@@ -54205,7 +54225,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 266 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(16);
@@ -54227,7 +54247,7 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(16);
@@ -54249,7 +54269,7 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 268 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(16);
@@ -54277,7 +54297,7 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 269 */
+/* 271 */
 /***/ (function(module, exports) {
 
 /**
@@ -54301,10 +54321,10 @@ module.exports = mapToArray;
 
 
 /***/ }),
-/* 270 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoize = __webpack_require__(296);
+var memoize = __webpack_require__(298);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -54333,10 +54353,10 @@ module.exports = memoizeCapped;
 
 
 /***/ }),
-/* 271 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(275);
+var overArg = __webpack_require__(277);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -54345,7 +54365,7 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 272 */
+/* 274 */
 /***/ (function(module, exports) {
 
 /**
@@ -54371,7 +54391,7 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 273 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(37);
@@ -54400,7 +54420,7 @@ module.exports = nodeUtil;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)(module)))
 
 /***/ }),
-/* 274 */
+/* 276 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -54428,7 +54448,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 275 */
+/* 277 */
 /***/ (function(module, exports) {
 
 /**
@@ -54449,10 +54469,10 @@ module.exports = overArg;
 
 
 /***/ }),
-/* 276 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(210);
+var apply = __webpack_require__(212);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -54491,11 +54511,11 @@ module.exports = overRest;
 
 
 /***/ }),
-/* 277 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(23),
-    baseSlice = __webpack_require__(233);
+    baseSlice = __webpack_require__(235);
 
 /**
  * Gets the parent value at `path` of `object`.
@@ -54513,7 +54533,7 @@ module.exports = parent;
 
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, exports) {
 
 /** Used to stand-in for `undefined` hash values. */
@@ -54538,7 +54558,7 @@ module.exports = setCacheAdd;
 
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, exports) {
 
 /**
@@ -54558,7 +54578,7 @@ module.exports = setCacheHas;
 
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, exports) {
 
 /**
@@ -54582,11 +54602,11 @@ module.exports = setToArray;
 
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(232),
-    shortOut = __webpack_require__(282);
+var baseSetToString = __webpack_require__(234),
+    shortOut = __webpack_require__(284);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -54602,7 +54622,7 @@ module.exports = setToString;
 
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports) {
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -54645,7 +54665,7 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(13);
@@ -54666,7 +54686,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(module, exports) {
 
 /**
@@ -54690,7 +54710,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(module, exports) {
 
 /**
@@ -54710,7 +54730,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 286 */
+/* 288 */
 /***/ (function(module, exports) {
 
 /**
@@ -54730,7 +54750,7 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 287 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(13),
@@ -54770,10 +54790,10 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 288 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoizeCapped = __webpack_require__(270);
+var memoizeCapped = __webpack_require__(272);
 
 /** Used to match property names within property paths. */
 var reLeadingDot = /^\./,
@@ -54804,12 +54824,12 @@ module.exports = stringToPath;
 
 
 /***/ }),
-/* 289 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(239),
-    createAssigner = __webpack_require__(241),
-    keysIn = __webpack_require__(294);
+var copyObject = __webpack_require__(241),
+    createAssigner = __webpack_require__(243),
+    keysIn = __webpack_require__(296);
 
 /**
  * This method is like `_.assign` except that it iterates over own and
@@ -54850,7 +54870,7 @@ module.exports = assignIn;
 
 
 /***/ }),
-/* 290 */
+/* 292 */
 /***/ (function(module, exports) {
 
 /**
@@ -54882,12 +54902,12 @@ module.exports = constant;
 
 
 /***/ }),
-/* 291 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(216),
+var baseFindIndex = __webpack_require__(218),
     baseIteratee = __webpack_require__(34),
-    toInteger = __webpack_require__(302);
+    toInteger = __webpack_require__(304);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -54943,7 +54963,7 @@ module.exports = findIndex;
 
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(23);
@@ -54982,11 +55002,11 @@ module.exports = get;
 
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHasIn = __webpack_require__(218),
-    hasPath = __webpack_require__(250);
+var baseHasIn = __webpack_require__(220),
+    hasPath = __webpack_require__(252);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -55022,11 +55042,11 @@ module.exports = hasIn;
 
 
 /***/ }),
-/* 294 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(31),
-    baseKeysIn = __webpack_require__(225),
+    baseKeysIn = __webpack_require__(227),
     isArrayLike = __webpack_require__(27);
 
 /**
@@ -55060,7 +55080,7 @@ module.exports = keysIn;
 
 
 /***/ }),
-/* 295 */
+/* 297 */
 /***/ (function(module, exports) {
 
 /**
@@ -55086,7 +55106,7 @@ module.exports = last;
 
 
 /***/ }),
-/* 296 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapCache = __webpack_require__(22);
@@ -55165,11 +55185,11 @@ module.exports = memoize;
 
 
 /***/ }),
-/* 297 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseProperty = __webpack_require__(228),
-    basePropertyDeep = __webpack_require__(229),
+var baseProperty = __webpack_require__(230),
+    basePropertyDeep = __webpack_require__(231),
     isKey = __webpack_require__(25),
     toKey = __webpack_require__(10);
 
@@ -55203,11 +55223,11 @@ module.exports = property;
 
 
 /***/ }),
-/* 298 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIteratee = __webpack_require__(34),
-    basePullAt = __webpack_require__(230);
+    basePullAt = __webpack_require__(232);
 
 /**
  * Removes all elements from `array` that `predicate` returns truthy for
@@ -55262,7 +55282,7 @@ module.exports = remove;
 
 
 /***/ }),
-/* 299 */
+/* 301 */
 /***/ (function(module, exports) {
 
 /**
@@ -55291,7 +55311,7 @@ module.exports = stubArray;
 
 
 /***/ }),
-/* 300 */
+/* 302 */
 /***/ (function(module, exports) {
 
 /**
@@ -55315,10 +55335,10 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 301 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toNumber = __webpack_require__(303);
+var toNumber = __webpack_require__(305);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -55363,10 +55383,10 @@ module.exports = toFinite;
 
 
 /***/ }),
-/* 302 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toFinite = __webpack_require__(301);
+var toFinite = __webpack_require__(303);
 
 /**
  * Converts `value` to an integer.
@@ -55405,7 +55425,7 @@ module.exports = toInteger;
 
 
 /***/ }),
-/* 303 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8),
@@ -55477,10 +55497,10 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 304 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToString = __webpack_require__(235);
+var baseToString = __webpack_require__(237);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -55511,7 +55531,278 @@ module.exports = toString;
 
 
 /***/ }),
-/* 305 */
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parseFormat = __webpack_require__(308)
+module.exports = parseFormat
+
+/* istanbul ignore next */
+if (typeof window !== 'undefined' && window.moment) {
+  window.moment.parseFormat = parseFormat
+}
+
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports) {
+
+module.exports = parseFormat
+
+var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+var abbreviatedDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+var shortestDayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+var abbreviatedMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+var amDesignator = 'AM'
+var pmDesignator = 'PM'
+var lowerAMDesignator = 'am'
+var lowerPMDesignator = 'pm'
+
+var regexDayNames = new RegExp(dayNames.join('|'), 'i')
+var regexAbbreviatedDayNames = new RegExp(abbreviatedDayNames.join('|'), 'i')
+var regexShortestDayNames = new RegExp('\\b(' + shortestDayNames.join('|') + ')\\b', 'i')
+var regexMonthNames = new RegExp(monthNames.join('|'), 'i')
+var regexAbbreviatedMonthNames = new RegExp(abbreviatedMonthNames.join('|'), 'i')
+
+var regexFirstSecondThirdFourth = /(\d+)(st|nd|rd|th)\b/i
+var regexEndian = /(\d{1,4})([/.-])(\d{1,2})[/.-](\d{1,4})/
+
+var regexTimezone = /((\+|-)\d\d:?\d\d)$/
+var amOrPm = '(' + [amDesignator, pmDesignator].join('|') + ')'
+var lowerAmOrPm = '(' + [lowerAMDesignator, lowerPMDesignator].join('|') + ')'
+var regexLowerAmOrPm = new RegExp(lowerAmOrPm)
+var regexUpperAmOrPm = new RegExp(amOrPm)
+var regexHoursWithLeadingZeroDigitMinutesSecondsAmPm = new RegExp('0\\d\\:\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
+var regexHoursWithLeadingZeroDigitMinutesAmPm = new RegExp('0\\d\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
+var regexHoursWithLeadingZeroDigitAmPm = new RegExp('0\\d(\\s*)' + amOrPm, 'i')
+var regexHoursMinutesSecondsAmPm = new RegExp('\\d{1,2}\\:\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
+var regexHoursMinutesAmPm = new RegExp('\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
+var regexHoursAmPm = new RegExp('\\d{1,2}(\\s*)' + amOrPm, 'i')
+
+var regexISO8601HoursWithLeadingZeroMinutesSecondsMilliseconds = /\d{2}:\d{2}:\d{2}\.\d{3}/
+var regexISO8601HoursWithLeadingZeroMinutesSecondsCentiSeconds = /\d{2}:\d{2}:\d{2}\.\d{2}/
+var regexISO8601HoursWithLeadingZeroMinutesSecondsDeciSeconds = /\d{2}:\d{2}:\d{2}\.\d{1}/
+var regexHoursWithLeadingZeroMinutesSeconds = /0\d:\d{2}:\d{2}/
+var regexHoursWithLeadingZeroMinutes = /0\d:\d{2}/
+var regexHoursMinutesSeconds = /\d{1,2}:\d{2}:\d{2}/
+var regexHoursMinutesSecondsMilliseconds = /\d{1,2}:\d{2}:\d{2}\.\d{3}/
+var regexHoursMinutesSecondsCentiSeconds = /\d{1,2}:\d{2}:\d{2}\.\d{2}/
+var regexHoursMinutesSecondsDeciSeconds = /\d{1,2}:\d{2}:\d{2}\.\d{1}/
+var regexHoursMinutes = /\d{1,2}:\d{2}/
+var regexYearLong = /\d{4}/
+var regexDayLeadingZero = /0\d/
+var regexDay = /\d{1,2}/
+var regexYearShort = /\d{2}/
+
+var regexDayShortMonthShort = /^([1-9])\/([1-9]|0[1-9])$/
+var regexDayShortMonth = /^([1-9])\/(1[012])$/
+var regexDayMonthShort = /^(0[1-9]|[12][0-9]|3[01])\/([1-9])$/
+var regexDayMonth = /^(0[1-9]|[12][0-9]|3[01])\/(1[012]|0[1-9])$/
+
+var regexMonthShortYearShort = /^([1-9])\/([1-9][0-9])$/
+var regexMonthYearShort = /^(0[1-9]|1[012])\/([1-9][0-9])$/
+
+var formatIncludesMonth = /([/][M]|[M][/]|[MM]|[MMMM])/
+
+var regexFillingWords = /\b(at)\b/i
+
+var regexUnixMillisecondTimestamp = /\d{13}/
+var regexUnixTimestamp = /\d{10}/
+
+// option defaults
+var defaultOrder = {
+  '/': 'MDY',
+  '.': 'DMY',
+  '-': 'YMD'
+}
+
+function parseFormat (dateString, options) {
+  var format = dateString.toString()
+
+  // default options
+  options = options || {}
+  options.preferredOrder = options.preferredOrder || defaultOrder
+
+  // Unix Millisecond Timestamp ☛ x
+  format = format.replace(regexUnixMillisecondTimestamp, 'x')
+  // Unix Timestamp ☛ X
+  format = format.replace(regexUnixTimestamp, 'X')
+
+  // escape filling words
+  format = format.replace(regexFillingWords, '[$1]')
+
+  //  DAYS
+
+  // Monday ☛ dddd
+  format = format.replace(regexDayNames, 'dddd')
+  // Mon ☛ ddd
+  format = format.replace(regexAbbreviatedDayNames, 'ddd')
+  // Mo ☛ dd
+  format = format.replace(regexShortestDayNames, 'dd')
+
+  // 1st, 2nd, 23rd ☛ do
+  format = format.replace(regexFirstSecondThirdFourth, 'Do')
+
+  // MONTHS
+
+  // January ☛ MMMM
+  format = format.replace(regexMonthNames, 'MMMM')
+  // Jan ☛ MMM
+  format = format.replace(regexAbbreviatedMonthNames, 'MMM')
+
+  // replace endians, like 8/20/2010, 20.8.2010 or 2010-8-20
+  format = format.replace(regexEndian, replaceEndian.bind(null, options))
+
+  // TIME
+
+  // timezone +02:00 ☛ Z
+  format = format.replace(regexTimezone, 'Z')
+  // 23:39:43.331 ☛ 'HH:mm:ss.SSS'
+  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsMilliseconds, 'HH:mm:ss.SSS')
+  // 23:39:43.33 ☛ 'HH:mm:ss.SS'
+  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsCentiSeconds, 'HH:mm:ss.SS')
+  // 23:39:43.3 ☛ 'HH:mm:ss.S'
+  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsDeciSeconds, 'HH:mm:ss.S')
+  // 05:30:20pm ☛ hh:mm:ssa
+  format = format.replace(regexHoursWithLeadingZeroDigitMinutesSecondsAmPm, 'hh:mm:ss$1')
+  // 10:30:20pm ☛ h:mm:ssa
+  format = format.replace(regexHoursMinutesSecondsAmPm, 'h:mm:ss$1')
+  // 05:30pm ☛ hh:mma
+  format = format.replace(regexHoursWithLeadingZeroDigitMinutesAmPm, 'hh:mm$1')
+  // 10:30pm ☛ h:mma
+  format = format.replace(regexHoursMinutesAmPm, 'h:mm$1')
+  // 05pm ☛ hha
+  format = format.replace(regexHoursWithLeadingZeroDigitAmPm, 'hh$1')
+  // 10pm ☛ ha
+  format = format.replace(regexHoursAmPm, 'h$1')
+  // 05:30:20 ☛ HH:mm:ss
+  format = format.replace(regexHoursWithLeadingZeroMinutesSeconds, 'HH:mm:ss')
+  // 5:30:20.222 ☛ H:mm:ss.SSS
+  format = format.replace(regexHoursMinutesSecondsMilliseconds, 'H:mm:ss.SSS')
+  // 5:30:20.22 ☛ H:mm:ss.SS
+  format = format.replace(regexHoursMinutesSecondsCentiSeconds, 'H:mm:ss.SS')
+  // 5:30:20.2 ☛ H:mm:ss.S
+  format = format.replace(regexHoursMinutesSecondsDeciSeconds, 'H:mm:ss.S')
+  // 10:30:20 ☛ H:mm:ss
+  format = format.replace(regexHoursMinutesSeconds, 'H:mm:ss')
+  // 05:30 ☛ H:mm
+  format = format.replace(regexHoursWithLeadingZeroMinutes, 'HH:mm')
+  // 10:30 ☛ HH:mm
+  format = format.replace(regexHoursMinutes, 'H:mm')
+
+  // Check if AM and determine the case of 'a' we need
+  if (regexUpperAmOrPm.test(dateString)) {
+    format += 'A'
+  } else if (regexLowerAmOrPm.test(dateString)) {
+    format += 'a'
+  }
+
+  // do we still have numbers left?
+
+  // Lets check for 4 digits first, these are years for sure
+  format = format.replace(regexYearLong, 'YYYY')
+
+  // check if both numbers are < 13, then it must be D/M
+  format = format.replace(regexDayShortMonthShort, 'D/M')
+
+  // check if first number is < 10 && last < 13, then it must be D/MM
+  format = format.replace(regexDayShortMonth, 'D/MM')
+
+  // check if last number is < 32 && last < 10, then it must be DD/M
+  format = format.replace(regexDayMonthShort, 'DD/M')
+
+  // check if both numbers are > 10, but first < 32 && last < 13, then it must be DD/MM
+  format = format.replace(regexDayMonth, 'DD/MM')
+
+  // check if first < 10 && last > 12, then it must be M/YY
+  format = format.replace(regexMonthShortYearShort, 'M/YY')
+
+  // check if first < 13 && last > 12, then it must be MM/YY
+  format = format.replace(regexMonthYearShort, 'MM/YY')
+
+  // to prevent 9.20 gets formated to D.Y, we format the complete date first, then go for the time
+  if (format.match(formatIncludesMonth)) {
+    var regexHoursDotWithLeadingZeroOrDoubleDigitMinutes = /0\d.\d{2}|\d{2}.\d{2}/
+    var regexHoursDotMinutes = /\d{1}.\d{2}/
+
+    format = format.replace(regexHoursDotWithLeadingZeroOrDoubleDigitMinutes, 'H.mm')
+    format = format.replace(regexHoursDotMinutes, 'h.mm')
+  }
+
+  // now, the next number, if existing, must be a day
+  format = format.replace(regexDayLeadingZero, 'DD')
+  format = format.replace(regexDay, 'D')
+
+  // last but not least, there could still be a year left
+  format = format.replace(regexYearShort, 'YY')
+
+  if (format.length < 1) {
+    format = undefined
+  }
+
+  return format
+}
+
+// if we can't find an endian based on the separator, but
+// there still is a short date with day, month & year,
+// we try to make a smart decision to identify the order
+function replaceEndian (options, matchedPart, first, separator, second, third) {
+  var parts
+  var hasSingleDigit = Math.min(first.length, second.length, third.length) === 1
+  var hasQuadDigit = Math.max(first.length, second.length, third.length) === 4
+  var preferredOrder = typeof options.preferredOrder === 'string' ? options.preferredOrder : options.preferredOrder[separator]
+
+  first = parseInt(first, 10)
+  second = parseInt(second, 10)
+  third = parseInt(third, 10)
+  parts = [first, second, third]
+  preferredOrder = preferredOrder.toUpperCase()
+
+  // If first is a year, order will always be Year-Month-Day
+  if (first > 31) {
+    parts[0] = hasQuadDigit ? 'YYYY' : 'YY'
+    parts[1] = hasSingleDigit ? 'M' : 'MM'
+    parts[2] = hasSingleDigit ? 'D' : 'DD'
+    return parts.join(separator)
+  }
+
+  // Second will never be the year. And if it is a day,
+  // the order will always be Month-Day-Year
+  if (second > 12) {
+    parts[0] = hasSingleDigit ? 'M' : 'MM'
+    parts[1] = hasSingleDigit ? 'D' : 'DD'
+    parts[2] = hasQuadDigit ? 'YYYY' : 'YY'
+    return parts.join(separator)
+  }
+
+  // if third is a year ...
+  if (third > 31) {
+    parts[2] = hasQuadDigit ? 'YYYY' : 'YY'
+
+    // ... try to find day in first and second.
+    // If found, the remaining part is the month.
+    if (preferredOrder[0] === 'M' && first < 13) {
+      parts[0] = hasSingleDigit ? 'M' : 'MM'
+      parts[1] = hasSingleDigit ? 'D' : 'DD'
+      return parts.join(separator)
+    }
+    parts[0] = hasSingleDigit ? 'D' : 'DD'
+    parts[1] = hasSingleDigit ? 'M' : 'MM'
+    return parts.join(separator)
+  }
+
+  // if we had no luck until here, we use the preferred order
+  parts[preferredOrder.indexOf('D')] = hasSingleDigit ? 'D' : 'DD'
+  parts[preferredOrder.indexOf('M')] = hasSingleDigit ? 'M' : 'MM'
+  parts[preferredOrder.indexOf('Y')] = hasQuadDigit ? 'YYYY' : 'YY'
+
+  return parts.join(separator)
+}
+
+
+/***/ }),
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -55760,11 +56051,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 305;
+webpackContext.id = 309;
 
 
 /***/ }),
-/* 306 */
+/* 310 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -55950,7 +56241,1392 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 307 */
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {/*
+ * # Semantic UI 0.0.8 - Calendar
+ * http://github.com/semantic-org/semantic-ui/
+ *
+ *
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ */
+
+;
+(function ($, window, document, undefined) {
+
+  "use strict";
+
+  window = (typeof window != 'undefined' && window.Math == Math)
+    ? window
+    : (typeof self != 'undefined' && self.Math == Math)
+    ? self
+    : Function('return this')()
+  ;
+
+  $.fn.calendar = function (parameters) {
+
+    var
+      $allModules = $(this),
+
+      moduleSelector = $allModules.selector || '',
+
+      time = new Date().getTime(),
+      performance = [],
+
+      query = arguments[0],
+      methodInvoked = (typeof query == 'string'),
+      queryArguments = [].slice.call(arguments, 1),
+      returnedValue
+      ;
+
+    $allModules
+      .each(function () {
+        var
+          settings = ( $.isPlainObject(parameters) )
+            ? $.extend(true, {}, $.fn.calendar.settings, parameters)
+            : $.extend({}, $.fn.calendar.settings),
+
+          className = settings.className,
+          namespace = settings.namespace,
+          selector = settings.selector,
+          formatter = settings.formatter,
+          parser = settings.parser,
+          metadata = settings.metadata,
+          error = settings.error,
+
+          eventNamespace = '.' + namespace,
+          moduleNamespace = 'module-' + namespace,
+
+          $module = $(this),
+          $input = $module.find(selector.input),
+          $container = $module.find(selector.popup),
+          $activator = $module.find(selector.activator),
+
+          element = this,
+          instance = $module.data(moduleNamespace),
+
+          isTouch,
+          isTouchDown = false,
+          focusDateUsedForRange = false,
+          module
+          ;
+
+        module = {
+
+          initialize: function () {
+            module.debug('Initializing calendar for', element);
+
+            isTouch = module.get.isTouch();
+            module.setup.popup();
+            module.setup.inline();
+            module.setup.input();
+            module.setup.date();
+            module.create.calendar();
+
+            module.bind.events();
+            module.instantiate();
+          },
+
+          instantiate: function () {
+            module.verbose('Storing instance of calendar');
+            instance = module;
+            $module.data(moduleNamespace, instance);
+          },
+
+          destroy: function () {
+            module.verbose('Destroying previous calendar for', element);
+            $module.removeData(moduleNamespace);
+            module.unbind.events();
+          },
+
+          setup: {
+            popup: function () {
+              if (settings.inline) {
+                return;
+              }
+              if (!$activator.length) {
+                $activator = $module.children().first();
+                if (!$activator.length) {
+                  return;
+                }
+              }
+              if ($.fn.popup === undefined) {
+                module.error(error.popup);
+                return;
+              }
+              if (!$container.length) {
+                //prepend the popup element to the activator's parent so that it has less chance of messing with
+                //the styling (eg input action button needs to be the last child to have correct border radius)
+                $container = $('<div/>').addClass(className.popup).prependTo($activator.parent());
+              }
+              $container.addClass(className.calendar);
+              var onVisible = settings.onVisible;
+              var onHidden = settings.onHidden;
+              if (!$input.length) {
+                //no input, $container has to handle focus/blur
+                $container.attr('tabindex', '0');
+                onVisible = function () {
+                  module.focus();
+                  return settings.onVisible.apply($container, arguments);
+                };
+                onHidden = function () {
+                  module.blur();
+                  return settings.onHidden.apply($container, arguments);
+                };
+              }
+              var onShow = function () {
+                //reset the focus date onShow
+                module.set.focusDate(module.get.date());
+                module.set.mode(settings.startMode);
+                return settings.onShow.apply($container, arguments);
+              };
+              var on = settings.on || ($input.length ? 'focus' : 'click');
+              var options = $.extend({}, settings.popupOptions, {
+                popup: $container,
+                on: on,
+                hoverable: on === 'hover',
+                onShow: onShow,
+                onVisible: onVisible,
+                onHide: settings.onHide,
+                onHidden: onHidden
+              });
+              module.popup(options);
+            },
+            inline: function () {
+              if ($activator.length && !settings.inline) {
+                return;
+              }
+              $container = $('<div/>').addClass(className.calendar).appendTo($module);
+              if (!$input.length) {
+                $container.attr('tabindex', '0');
+              }
+            },
+            input: function () {
+              if (settings.touchReadonly && $input.length && isTouch) {
+                $input.prop('readonly', true);
+              }
+            },
+            date: function () {
+              if ($input.length) {
+                var val = $input.val();
+                var date = parser.date(val, settings);
+                module.set.date(date, settings.formatInput, false);
+              }
+            }
+          },
+
+          create: {
+            calendar: function () {
+              var i, r, c, p, row, cell, pageGrid;
+
+              var mode = module.get.mode();
+              var today = new Date();
+              var date = module.get.date();
+              var focusDate = module.get.focusDate();
+              var display = focusDate || date || settings.initialDate || today;
+              display = module.helper.dateInRange(display);
+
+              if (!focusDate) {
+                focusDate = display;
+                module.set.focusDate(focusDate, false, false);
+              }
+
+              var isYear = mode === 'year';
+              var isMonth = mode === 'month';
+              var isDay = mode === 'day';
+              var isHour = mode === 'hour';
+              var isMinute = mode === 'minute';
+              var isTimeOnly = settings.type === 'time';
+
+              var multiMonth = Math.max(settings.multiMonth, 1);
+              var monthOffset = !isDay ? 0 : module.get.monthOffset();
+
+              var minute = display.getMinutes();
+              var hour = display.getHours();
+              var day = display.getDate();
+              var startMonth = display.getMonth() + monthOffset;
+              var year = display.getFullYear();
+
+              var columns = isDay ? 7 : isHour ? 4 : 3;
+              var columnsString = columns === 7 ? 'seven' : columns === 4 ? 'four' : 'three';
+              var rows = isDay || isHour ? 6 : 4;
+              var pages = isDay ? multiMonth : 1;
+
+              var container = $container;
+              container.empty();
+              if (pages > 1) {
+                pageGrid = $('<div/>').addClass(className.grid).appendTo(container);
+              }
+
+              for (p = 0; p < pages; p++) {
+                if (pages > 1) {
+                  var pageColumn = $('<div/>').addClass(className.column).appendTo(pageGrid);
+                  container = pageColumn;
+                }
+
+                var month = startMonth + p;
+                var firstMonthDayColumn = (new Date(year, month, 1).getDay() - settings.firstDayOfWeek % 7 + 7) % 7;
+                if (!settings.constantHeight && isDay) {
+                  var requiredCells = new Date(year, month + 1, 0).getDate() + firstMonthDayColumn;
+                  rows = Math.ceil(requiredCells / 7);
+                }
+
+                var yearChange = isYear ? 10 : isMonth ? 1 : 0;
+                var monthChange = isDay ? 1 : 0;
+                var dayChange = isHour || isMinute ? 1 : 0;
+                var prevNextDay = isHour || isMinute ? day : 1;
+                var prevDate = new Date(year - yearChange, month - monthChange, prevNextDay - dayChange, hour);
+                var nextDate = new Date(year + yearChange, month + monthChange, prevNextDay + dayChange, hour);
+
+                var prevLast = isYear ? new Date(Math.ceil(year / 10) * 10 - 9, 0, 0) :
+                  isMonth ? new Date(year, 0, 0) : isDay ? new Date(year, month, 0) : new Date(year, month, day, -1);
+                var nextFirst = isYear ? new Date(Math.ceil(year / 10) * 10 + 1, 0, 1) :
+                  isMonth ? new Date(year + 1, 0, 1) : isDay ? new Date(year, month + 1, 1) : new Date(year, month, day + 1);
+
+                var table = $('<table/>').addClass(className.table).addClass(columnsString + ' column').addClass(mode).appendTo(container);
+
+                //no header for time-only mode
+                if (!isTimeOnly) {
+                  var thead = $('<thead/>').appendTo(table);
+
+                  row = $('<tr/>').appendTo(thead);
+                  cell = $('<th/>').attr('colspan', '' + columns).appendTo(row);
+
+                  var headerDate = isYear || isMonth ? new Date(year, 0, 1) :
+                    isDay ? new Date(year, month, 1) : new Date(year, month, day, hour, minute);
+                  var headerText = $('<span/>').addClass(className.link).appendTo(cell);
+                  headerText.text(formatter.header(headerDate, mode, settings));
+                  var newMode = isMonth ? (settings.disableYear ? 'day' : 'year') :
+                    isDay ? (settings.disableMonth ? 'year' : 'month') : 'day';
+                  headerText.data(metadata.mode, newMode);
+
+                  if (p === 0) {
+                    var prev = $('<span/>').addClass(className.prev).appendTo(cell);
+                    prev.data(metadata.focusDate, prevDate);
+                    prev.toggleClass(className.disabledCell, !module.helper.isDateInRange(prevLast, mode));
+                    $('<i/>').addClass(className.prevIcon).appendTo(prev);
+                  }
+
+                  if (p === pages - 1) {
+                    var next = $('<span/>').addClass(className.next).appendTo(cell);
+                    next.data(metadata.focusDate, nextDate);
+                    next.toggleClass(className.disabledCell, !module.helper.isDateInRange(nextFirst, mode));
+                    $('<i/>').addClass(className.nextIcon).appendTo(next);
+                  }
+
+                  if (isDay) {
+                    row = $('<tr/>').appendTo(thead);
+                    for (i = 0; i < columns; i++) {
+                      cell = $('<th/>').appendTo(row);
+                      cell.text(formatter.dayColumnHeader((i + settings.firstDayOfWeek) % 7, settings));
+                    }
+                  }
+                }
+
+                var tbody = $('<tbody/>').appendTo(table);
+                i = isYear ? Math.ceil(year / 10) * 10 - 9 : isDay ? 1 - firstMonthDayColumn : 0;
+                for (r = 0; r < rows; r++) {
+                  row = $('<tr/>').appendTo(tbody);
+                  for (c = 0; c < columns; c++, i++) {
+                    var cellDate = isYear ? new Date(i, month, 1, hour, minute) :
+                      isMonth ? new Date(year, i, 1, hour, minute) : isDay ? new Date(year, month, i, hour, minute) :
+                        isHour ? new Date(year, month, day, i) : new Date(year, month, day, hour, i * 5);
+                    var cellText = isYear ? i :
+                      isMonth ? settings.text.monthsShort[i] : isDay ? cellDate.getDate() :
+                        formatter.time(cellDate, settings, true);
+                    cell = $('<td/>').addClass(className.cell).appendTo(row);
+                    cell.text(cellText);
+                    cell.data(metadata.date, cellDate);
+                    var adjacent = isDay && cellDate.getMonth() !== ((month + 12) % 12);
+                    var disabled = adjacent || !module.helper.isDateInRange(cellDate, mode) || settings.isDisabled(cellDate, mode);
+                    var active = module.helper.dateEqual(cellDate, date, mode);
+                    var isToday = module.helper.dateEqual(cellDate, today, mode);
+                    cell.toggleClass(className.adjacentCell, adjacent);
+                    cell.toggleClass(className.disabledCell, disabled);
+                    cell.toggleClass(className.activeCell, active && !adjacent);
+                    if (!isHour && !isMinute) {
+                      cell.toggleClass(className.todayCell, !adjacent && isToday);
+                    }
+
+                    // Allow for external modifications of each cell
+                    var cellOptions = {
+                      mode: mode,
+                      adjacent: adjacent,
+                      disabled: disabled,
+                      active: active,
+                      today: isToday
+                    };
+                    formatter.cell(cell, cellDate, cellOptions);
+
+                    if (module.helper.dateEqual(cellDate, focusDate, mode)) {
+                      //ensure that the focus date is exactly equal to the cell date
+                      //so that, if selected, the correct value is set
+                      module.set.focusDate(cellDate, false, false);
+                    }
+                  }
+                }
+
+                if (settings.today) {
+                  var todayRow = $('<tr/>').appendTo(tbody);
+                  var todayButton = $('<td/>').attr('colspan', '' + columns).addClass(className.today).appendTo(todayRow);
+                  todayButton.text(formatter.today(settings));
+                  todayButton.data(metadata.date, today);
+                }
+
+                module.update.focus(false, table);
+              }
+            }
+          },
+
+          update: {
+            focus: function (updateRange, container) {
+              container = container || $container;
+              var mode = module.get.mode();
+              var date = module.get.date();
+              var focusDate = module.get.focusDate();
+              var startDate = module.get.startDate();
+              var endDate = module.get.endDate();
+              var rangeDate = (updateRange ? focusDate : null) || date || (!isTouch ? focusDate : null);
+
+              container.find('td').each(function () {
+                var cell = $(this);
+                var cellDate = cell.data(metadata.date);
+                if (!cellDate) {
+                  return;
+                }
+                var disabled = cell.hasClass(className.disabledCell);
+                var active = cell.hasClass(className.activeCell);
+                var adjacent = cell.hasClass(className.adjacentCell);
+                var focused = module.helper.dateEqual(cellDate, focusDate, mode);
+                var inRange = !rangeDate ? false :
+                  ((!!startDate && module.helper.isDateInRange(cellDate, mode, startDate, rangeDate)) ||
+                  (!!endDate && module.helper.isDateInRange(cellDate, mode, rangeDate, endDate)));
+                cell.toggleClass(className.focusCell, focused && (!isTouch || isTouchDown) && !adjacent);
+                cell.toggleClass(className.rangeCell, inRange && !active && !disabled);
+              });
+            }
+          },
+
+          refresh: function () {
+            module.create.calendar();
+          },
+
+          bind: {
+            events: function () {
+              $container.on('mousedown' + eventNamespace, module.event.mousedown);
+              $container.on('touchstart' + eventNamespace, module.event.mousedown);
+              $container.on('mouseup' + eventNamespace, module.event.mouseup);
+              $container.on('touchend' + eventNamespace, module.event.mouseup);
+              $container.on('mouseover' + eventNamespace, module.event.mouseover);
+              if ($input.length) {
+                $input.on('input' + eventNamespace, module.event.inputChange);
+                $input.on('focus' + eventNamespace, module.event.inputFocus);
+                $input.on('blur' + eventNamespace, module.event.inputBlur);
+                $input.on('click' + eventNamespace, module.event.inputClick);
+                $input.on('keydown' + eventNamespace, module.event.keydown);
+              } else {
+                $container.on('keydown' + eventNamespace, module.event.keydown);
+              }
+            }
+          },
+
+          unbind: {
+            events: function () {
+              $container.off(eventNamespace);
+              if ($input.length) {
+                $input.off(eventNamespace);
+              }
+            }
+          },
+
+          event: {
+            mouseover: function (event) {
+              var target = $(event.target);
+              var date = target.data(metadata.date);
+              var mousedown = event.buttons === 1;
+              if (date) {
+                module.set.focusDate(date, false, true, mousedown);
+              }
+            },
+            mousedown: function (event) {
+              if ($input.length) {
+                //prevent the mousedown on the calendar causing the input to lose focus
+                event.preventDefault();
+              }
+              isTouchDown = event.type.indexOf('touch') >= 0;
+              var target = $(event.target);
+              var date = target.data(metadata.date);
+              if (date) {
+                module.set.focusDate(date, false, true, true);
+              }
+            },
+            mouseup: function (event) {
+              //ensure input has focus so that it receives keydown events for calendar navigation
+              module.focus();
+              event.preventDefault();
+              event.stopPropagation();
+              isTouchDown = false;
+              var target = $(event.target);
+              var parent = target.parent();
+              if (parent.data(metadata.date) || parent.data(metadata.focusDate) || parent.data(metadata.mode)) {
+                //clicked on a child element, switch to parent (used when clicking directly on prev/next <i> icon element)
+                target = parent;
+              }
+              var date = target.data(metadata.date);
+              var focusDate = target.data(metadata.focusDate);
+              var mode = target.data(metadata.mode);
+              if (date) {
+                var forceSet = target.hasClass(className.today);
+                module.selectDate(date, forceSet);
+              }
+              else if (focusDate) {
+                module.set.focusDate(focusDate);
+              }
+              else if (mode) {
+                module.set.mode(mode);
+              }
+            },
+            keydown: function (event) {
+              if (event.keyCode === 27 || event.keyCode === 9) {
+                //esc || tab
+                module.popup('hide');
+              }
+
+              if (module.popup('is visible')) {
+                if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
+                  //arrow keys
+                  var mode = module.get.mode();
+                  var bigIncrement = mode === 'day' ? 7 : mode === 'hour' ? 4 : 3;
+                  var increment = event.keyCode === 37 ? -1 : event.keyCode === 38 ? -bigIncrement : event.keyCode == 39 ? 1 : bigIncrement;
+                  increment *= mode === 'minute' ? 5 : 1;
+                  var focusDate = module.get.focusDate() || module.get.date() || new Date();
+                  var year = focusDate.getFullYear() + (mode === 'year' ? increment : 0);
+                  var month = focusDate.getMonth() + (mode === 'month' ? increment : 0);
+                  var day = focusDate.getDate() + (mode === 'day' ? increment : 0);
+                  var hour = focusDate.getHours() + (mode === 'hour' ? increment : 0);
+                  var minute = focusDate.getMinutes() + (mode === 'minute' ? increment : 0);
+                  var newFocusDate = new Date(year, month, day, hour, minute);
+                  if (settings.type === 'time') {
+                    newFocusDate = module.helper.mergeDateTime(focusDate, newFocusDate);
+                  }
+                  if (module.helper.isDateInRange(newFocusDate, mode)) {
+                    module.set.focusDate(newFocusDate);
+                  }
+                } else if (event.keyCode === 13) {
+                  //enter
+                  var mode = module.get.mode();
+                  var date = module.get.focusDate();
+                  if (date && !settings.isDisabled(date, mode)) {
+                    module.selectDate(date);
+                  }
+                  //disable form submission:
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }
+
+              if (event.keyCode === 38 || event.keyCode === 40) {
+                //arrow-up || arrow-down
+                event.preventDefault(); //don't scroll
+                module.popup('show');
+              }
+            },
+            inputChange: function () {
+              var val = $input.val();
+              var date = parser.date(val, settings);
+              module.set.date(date, false);
+            },
+            inputFocus: function () {
+              $container.addClass(className.active);
+            },
+            inputBlur: function () {
+              $container.removeClass(className.active);
+              if (settings.formatInput) {
+                var date = module.get.date();
+                var text = formatter.datetime(date, settings);
+                $input.val(text);
+              }
+            },
+            inputClick: function () {
+              module.popup('show');
+            }
+          },
+
+          get: {
+            date: function () {
+              return $module.data(metadata.date) || null;
+            },
+            focusDate: function () {
+              return $module.data(metadata.focusDate) || null;
+            },
+            startDate: function () {
+              var startModule = module.get.calendarModule(settings.startCalendar);
+              return (startModule ? startModule.get.date() : $module.data(metadata.startDate)) || null;
+            },
+            endDate: function () {
+              var endModule = module.get.calendarModule(settings.endCalendar);
+              return (endModule ? endModule.get.date() : $module.data(metadata.endDate)) || null;
+            },
+            monthOffset: function () {
+              return $module.data(metadata.monthOffset) || 0;
+            },
+            mode: function () {
+              //only returns valid modes for the current settings
+              var mode = $module.data(metadata.mode) || settings.startMode;
+              var validModes = module.get.validModes();
+              if ($.inArray(mode, validModes) >= 0) {
+                return mode;
+              }
+              return settings.type === 'time' ? 'hour' :
+                settings.type === 'month' ? 'month' :
+                  settings.type === 'year' ? 'year' : 'day';
+            },
+            validModes: function () {
+              var validModes = [];
+              if (settings.type !== 'time') {
+                if (!settings.disableYear || settings.type === 'year') {
+                  validModes.push('year');
+                }
+                if (!(settings.disableMonth || settings.type === 'year') || settings.type === 'month') {
+                  validModes.push('month');
+                }
+                if (settings.type.indexOf('date') >= 0) {
+                  validModes.push('day');
+                }
+              }
+              if (settings.type.indexOf('time') >= 0) {
+                validModes.push('hour');
+                if (!settings.disableMinute) {
+                  validModes.push('minute');
+                }
+              }
+              return validModes;
+            },
+            isTouch: function () {
+              try {
+                document.createEvent('TouchEvent');
+                return true;
+              }
+              catch (e) {
+                return false;
+              }
+            },
+            calendarModule: function (selector) {
+              if (!selector) {
+                return null;
+              }
+              if (!(selector instanceof $)) {
+                selector = $module.parent().children(selector).first();
+              }
+              //assume range related calendars are using the same namespace
+              return selector.data(moduleNamespace);
+            }
+          },
+
+          set: {
+            date: function (date, updateInput, fireChange) {
+              updateInput = updateInput !== false;
+              fireChange = fireChange !== false;
+              date = module.helper.sanitiseDate(date);
+              date = module.helper.dateInRange(date);
+
+              var mode = module.get.mode();
+              var text = formatter.datetime(date, settings);
+              if (fireChange && settings.onChange.call(element, date, text, mode) === false) {
+                return false;
+              }
+
+              module.set.focusDate(date);
+
+              if (settings.isDisabled(date, mode)) {
+                return false;
+              }
+
+              var endDate = module.get.endDate();
+              if (!!endDate && !!date && date > endDate) {
+                //selected date is greater than end date in range, so clear end date
+                module.set.endDate(undefined);
+              }
+              module.set.dataKeyValue(metadata.date, date);
+
+              if (updateInput && $input.length) {
+                $input.val(text);
+              }
+            },
+            startDate: function (date, refreshCalendar) {
+              date = module.helper.sanitiseDate(date);
+              var startModule = module.get.calendarModule(settings.startCalendar);
+              if (startModule) {
+                startModule.set.date(date);
+              }
+              module.set.dataKeyValue(metadata.startDate, date, refreshCalendar);
+            },
+            endDate: function (date, refreshCalendar) {
+              date = module.helper.sanitiseDate(date);
+              var endModule = module.get.calendarModule(settings.endCalendar);
+              if (endModule) {
+                endModule.set.date(date);
+              }
+              module.set.dataKeyValue(metadata.endDate, date, refreshCalendar);
+            },
+            focusDate: function (date, refreshCalendar, updateFocus, updateRange) {
+              date = module.helper.sanitiseDate(date);
+              date = module.helper.dateInRange(date);
+              var isDay = module.get.mode() === 'day';
+              var oldFocusDate = module.get.focusDate();
+              if (isDay && date && oldFocusDate) {
+                var yearDelta = date.getFullYear() - oldFocusDate.getFullYear();
+                var monthDelta = yearDelta * 12 + date.getMonth() - oldFocusDate.getMonth();
+                if (monthDelta) {
+                  var monthOffset = module.get.monthOffset() - monthDelta;
+                  module.set.monthOffset(monthOffset, false);
+                }
+              }
+              var changed = module.set.dataKeyValue(metadata.focusDate, date, refreshCalendar);
+              updateFocus = (updateFocus !== false && changed && refreshCalendar === false) || focusDateUsedForRange != updateRange;
+              focusDateUsedForRange = updateRange;
+              if (updateFocus) {
+                module.update.focus(updateRange);
+              }
+            },
+            monthOffset: function (monthOffset, refreshCalendar) {
+              var multiMonth = Math.max(settings.multiMonth, 1);
+              monthOffset = Math.max(1 - multiMonth, Math.min(0, monthOffset));
+              module.set.dataKeyValue(metadata.monthOffset, monthOffset, refreshCalendar);
+            },
+            mode: function (mode, refreshCalendar) {
+              module.set.dataKeyValue(metadata.mode, mode, refreshCalendar);
+            },
+            dataKeyValue: function (key, value, refreshCalendar) {
+              var oldValue = $module.data(key);
+              var equal = oldValue === value || (oldValue <= value && oldValue >= value); //equality test for dates and string objects
+              if (value) {
+                $module.data(key, value);
+              } else {
+                $module.removeData(key);
+              }
+              refreshCalendar = refreshCalendar !== false && !equal;
+              if (refreshCalendar) {
+                module.create.calendar();
+              }
+              return !equal;
+            }
+          },
+
+          selectDate: function (date, forceSet) {
+            var mode = module.get.mode();
+            var complete = forceSet || mode === 'minute' ||
+              (settings.disableMinute && mode === 'hour') ||
+              (settings.type === 'date' && mode === 'day') ||
+              (settings.type === 'month' && mode === 'month') ||
+              (settings.type === 'year' && mode === 'year');
+            if (complete) {
+              var canceled = module.set.date(date) === false;
+              if (!canceled && settings.closable) {
+                module.popup('hide');
+                //if this is a range calendar, show the end date calendar popup and focus the input
+                var endModule = module.get.calendarModule(settings.endCalendar);
+                if (endModule) {
+                  endModule.popup('show');
+                  endModule.focus();
+                }
+              }
+            } else {
+              var newMode = mode === 'year' ? (!settings.disableMonth ? 'month' : 'day') :
+                mode === 'month' ? 'day' : mode === 'day' ? 'hour' : 'minute';
+              module.set.mode(newMode);
+              if (mode === 'hour' || (mode === 'day' && module.get.date())) {
+                //the user has chosen enough to consider a valid date/time has been chosen
+                module.set.date(date);
+              } else {
+                module.set.focusDate(date);
+              }
+            }
+          },
+
+          changeDate: function (date) {
+            module.set.date(date);
+          },
+
+          clear: function () {
+            module.set.date(undefined);
+          },
+
+          popup: function () {
+            return $activator.popup.apply($activator, arguments);
+          },
+
+          focus: function () {
+            if ($input.length) {
+              $input.focus();
+            } else {
+              $container.focus();
+            }
+          },
+          blur: function () {
+            if ($input.length) {
+              $input.blur();
+            } else {
+              $container.blur();
+            }
+          },
+
+          helper: {
+            sanitiseDate: function (date) {
+              if (!date) {
+                return undefined;
+              }
+              if (!(date instanceof Date)) {
+                date = parser.date('' + date, settings);
+              }
+              if (isNaN(date.getTime())) {
+                return undefined;
+              }
+              return date;
+            },
+            dateDiff: function (date1, date2, mode) {
+              mode = mode || 'day';
+              var isTimeOnly = settings.type === 'time';
+              var isYear = mode === 'year';
+              var isYearOrMonth = isYear || mode === 'month';
+              var isMinute = mode === 'minute';
+              var isHourOrMinute = isMinute || mode === 'hour';
+              //only care about a minute accuracy of 5
+              date1 = new Date(
+                isTimeOnly ? 2000 : date1.getFullYear(),
+                isTimeOnly ? 0 : isYear ? 0 : date1.getMonth(),
+                isTimeOnly ? 1 : isYearOrMonth ? 1 : date1.getDate(),
+                !isHourOrMinute ? 0 : date1.getHours(),
+                !isMinute ? 0 : 5 * Math.floor(date1.getMinutes() / 5));
+              date2 = new Date(
+                isTimeOnly ? 2000 : date2.getFullYear(),
+                isTimeOnly ? 0 : isYear ? 0 : date2.getMonth(),
+                isTimeOnly ? 1 : isYearOrMonth ? 1 : date2.getDate(),
+                !isHourOrMinute ? 0 : date2.getHours(),
+                !isMinute ? 0 : 5 * Math.floor(date2.getMinutes() / 5));
+              return date2.getTime() - date1.getTime();
+            },
+            dateEqual: function (date1, date2, mode) {
+              return !!date1 && !!date2 && module.helper.dateDiff(date1, date2, mode) === 0;
+            },
+            isDateInRange: function (date, mode, minDate, maxDate) {
+              if (!minDate && !maxDate) {
+                var startDate = module.get.startDate();
+                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
+                maxDate = settings.maxDate;
+              }
+              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
+              return !(!date ||
+              (minDate && module.helper.dateDiff(date, minDate, mode) > 0) ||
+              (maxDate && module.helper.dateDiff(maxDate, date, mode) > 0));
+            },
+            dateInRange: function (date, minDate, maxDate) {
+              if (!minDate && !maxDate) {
+                var startDate = module.get.startDate();
+                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
+                maxDate = settings.maxDate;
+              }
+              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
+              var isTimeOnly = settings.type === 'time';
+              return !date ? date :
+                (minDate && module.helper.dateDiff(date, minDate, 'minute') > 0) ?
+                  (isTimeOnly ? module.helper.mergeDateTime(date, minDate) : minDate) :
+                  (maxDate && module.helper.dateDiff(maxDate, date, 'minute') > 0) ?
+                    (isTimeOnly ? module.helper.mergeDateTime(date, maxDate) : maxDate) :
+                    date;
+            },
+            mergeDateTime: function (date, time) {
+              return (!date || !time) ? time :
+                new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
+            }
+          },
+
+          setting: function (name, value) {
+            module.debug('Changing setting', name, value);
+            if ($.isPlainObject(name)) {
+              $.extend(true, settings, name);
+            }
+            else if (value !== undefined) {
+              if ($.isPlainObject(settings[name])) {
+                $.extend(true, settings[name], value);
+              }
+              else {
+                settings[name] = value;
+              }
+            }
+            else {
+              return settings[name];
+            }
+          },
+          internal: function (name, value) {
+            module.debug('Changing internal', name, value);
+            if (value !== undefined) {
+              if ($.isPlainObject(name)) {
+                $.extend(true, module, name);
+              }
+              else {
+                module[name] = value;
+              }
+            }
+            else {
+              return module[name];
+            }
+          },
+          debug: function () {
+            if (!settings.silent && settings.debug) {
+              if (settings.performance) {
+                module.performance.log(arguments);
+              }
+              else {
+                module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+                module.debug.apply(console, arguments);
+              }
+            }
+          },
+          verbose: function () {
+            if (!settings.silent && settings.verbose && settings.debug) {
+              if (settings.performance) {
+                module.performance.log(arguments);
+              }
+              else {
+                module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+                module.verbose.apply(console, arguments);
+              }
+            }
+          },
+          error: function () {
+            if (!settings.silent) {
+              module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+              module.error.apply(console, arguments);
+            }
+          },
+          performance: {
+            log: function (message) {
+              var
+                currentTime,
+                executionTime,
+                previousTime
+                ;
+              if (settings.performance) {
+                currentTime = new Date().getTime();
+                previousTime = time || currentTime;
+                executionTime = currentTime - previousTime;
+                time = currentTime;
+                performance.push({
+                  'Name': message[0],
+                  'Arguments': [].slice.call(message, 1) || '',
+                  'Element': element,
+                  'Execution Time': executionTime
+                });
+              }
+              clearTimeout(module.performance.timer);
+              module.performance.timer = setTimeout(module.performance.display, 500);
+            },
+            display: function () {
+              var
+                title = settings.name + ':',
+                totalTime = 0
+                ;
+              time = false;
+              clearTimeout(module.performance.timer);
+              $.each(performance, function (index, data) {
+                totalTime += data['Execution Time'];
+              });
+              title += ' ' + totalTime + 'ms';
+              if (moduleSelector) {
+                title += ' \'' + moduleSelector + '\'';
+              }
+              if ((console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+                console.groupCollapsed(title);
+                if (console.table) {
+                  console.table(performance);
+                }
+                else {
+                  $.each(performance, function (index, data) {
+                    console.log(data['Name'] + ': ' + data['Execution Time'] + 'ms');
+                  });
+                }
+                console.groupEnd();
+              }
+              performance = [];
+            }
+          },
+          invoke: function (query, passedArguments, context) {
+            var
+              object = instance,
+              maxDepth,
+              found,
+              response
+              ;
+            passedArguments = passedArguments || queryArguments;
+            context = element || context;
+            if (typeof query == 'string' && object !== undefined) {
+              query = query.split(/[\. ]/);
+              maxDepth = query.length - 1;
+              $.each(query, function (depth, value) {
+                var camelCaseValue = (depth != maxDepth)
+                    ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+                    : query
+                  ;
+                if ($.isPlainObject(object[camelCaseValue]) && (depth != maxDepth)) {
+                  object = object[camelCaseValue];
+                }
+                else if (object[camelCaseValue] !== undefined) {
+                  found = object[camelCaseValue];
+                  return false;
+                }
+                else if ($.isPlainObject(object[value]) && (depth != maxDepth)) {
+                  object = object[value];
+                }
+                else if (object[value] !== undefined) {
+                  found = object[value];
+                  return false;
+                }
+                else {
+                  module.error(error.method, query);
+                  return false;
+                }
+              });
+            }
+            if ($.isFunction(found)) {
+              response = found.apply(context, passedArguments);
+            }
+            else if (found !== undefined) {
+              response = found;
+            }
+            if ($.isArray(returnedValue)) {
+              returnedValue.push(response);
+            }
+            else if (returnedValue !== undefined) {
+              returnedValue = [returnedValue, response];
+            }
+            else if (response !== undefined) {
+              returnedValue = response;
+            }
+            return found;
+          }
+        };
+
+        if (methodInvoked) {
+          if (instance === undefined) {
+            module.initialize();
+          }
+          module.invoke(query);
+        }
+        else {
+          if (instance !== undefined) {
+            instance.invoke('destroy');
+          }
+          module.initialize();
+        }
+      })
+    ;
+    return (returnedValue !== undefined)
+      ? returnedValue
+      : this
+      ;
+  };
+
+  $.fn.calendar.settings = {
+
+    name: 'Calendar',
+    namespace: 'calendar',
+
+    silent: false,
+    debug: false,
+    verbose: false,
+    performance: false,
+
+    type: 'datetime',     // picker type, can be 'datetime', 'date', 'time', 'month', or 'year'
+    firstDayOfWeek: 0,    // day for first day column (0 = Sunday)
+    constantHeight: true, // add rows to shorter months to keep day calendar height consistent (6 rows)
+    today: false,         // show a 'today/now' button at the bottom of the calendar
+    closable: true,       // close the popup after selecting a date/time
+    monthFirst: true,     // month before day when parsing/converting date from/to text
+    touchReadonly: true,  // set input to readonly on touch devices
+    inline: false,        // create the calendar inline instead of inside a popup
+    on: null,             // when to show the popup (defaults to 'focus' for input, 'click' for others)
+    initialDate: null,    // date to display initially when no date is selected (null = now)
+    startMode: false,     // display mode to start in, can be 'year', 'month', 'day', 'hour', 'minute' (false = 'day')
+    minDate: null,        // minimum date/time that can be selected, dates/times before are disabled
+    maxDate: null,        // maximum date/time that can be selected, dates/times after are disabled
+    ampm: true,           // show am/pm in time mode
+    disableYear: false,   // disable year selection mode
+    disableMonth: false,  // disable month selection mode
+    disableMinute: false, // disable minute selection mode
+    formatInput: true,    // format the input text upon input blur and module creation
+    startCalendar: null,  // jquery object or selector for another calendar that represents the start date of a date range
+    endCalendar: null,    // jquery object or selector for another calendar that represents the end date of a date range
+    multiMonth: 1,        // show multiple months when in 'day' mode
+
+    // popup options ('popup', 'on', 'hoverable', and show/hide callbacks are overridden)
+    popupOptions: {
+      position: 'bottom left',
+      lastResort: 'bottom left',
+      prefer: 'opposite',
+      hideOnScroll: false
+    },
+
+    text: {
+      days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      today: 'Today',
+      now: 'Now',
+      am: 'AM',
+      pm: 'PM'
+    },
+
+    formatter: {
+      header: function (date, mode, settings) {
+        return mode === 'year' ? settings.formatter.yearHeader(date, settings) :
+          mode === 'month' ? settings.formatter.monthHeader(date, settings) :
+            mode === 'day' ? settings.formatter.dayHeader(date, settings) :
+              mode === 'hour' ? settings.formatter.hourHeader(date, settings) :
+                settings.formatter.minuteHeader(date, settings);
+      },
+      yearHeader: function (date, settings) {
+        var decadeYear = Math.ceil(date.getFullYear() / 10) * 10;
+        return (decadeYear - 9) + ' - ' + (decadeYear + 2);
+      },
+      monthHeader: function (date, settings) {
+        return date.getFullYear();
+      },
+      dayHeader: function (date, settings) {
+        var month = settings.text.months[date.getMonth()];
+        var year = date.getFullYear();
+        return month + ' ' + year;
+      },
+      hourHeader: function (date, settings) {
+        return settings.formatter.date(date, settings);
+      },
+      minuteHeader: function (date, settings) {
+        return settings.formatter.date(date, settings);
+      },
+      dayColumnHeader: function (day, settings) {
+        return settings.text.days[day];
+      },
+      datetime: function (date, settings) {
+        if (!date) {
+          return '';
+        }
+        var day = settings.type === 'time' ? '' : settings.formatter.date(date, settings);
+        var time = settings.type.indexOf('time') < 0 ? '' : settings.formatter.time(date, settings, false);
+        var separator = settings.type === 'datetime' ? ' ' : '';
+        return day + separator + time;
+      },
+      date: function (date, settings) {
+        if (!date) {
+          return '';
+        }
+        var day = date.getDate();
+        var month = settings.text.months[date.getMonth()];
+        var year = date.getFullYear();
+        return settings.type === 'year' ? year :
+          settings.type === 'month' ? month + ' ' + year :
+          (settings.monthFirst ? month + ' ' + day : day + ' ' + month) + ', ' + year;
+      },
+      time: function (date, settings, forCalendar) {
+        if (!date) {
+          return '';
+        }
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var ampm = '';
+        if (settings.ampm) {
+          ampm = ' ' + (hour < 12 ? settings.text.am : settings.text.pm);
+          hour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+        }
+        return hour + ':' + (minute < 10 ? '0' : '') + minute + ampm;
+      },
+      today: function (settings) {
+        return settings.type === 'date' ? settings.text.today : settings.text.now;
+      },
+      cell: function (cell, date, cellOptions) {
+      }
+    },
+
+    parser: {
+      date: function (text, settings) {
+        if (!text) {
+          return null;
+        }
+        text = ('' + text).trim().toLowerCase();
+        if (text.length === 0) {
+          return null;
+        }
+
+        var i, j, k;
+        var minute = -1, hour = -1, day = -1, month = -1, year = -1;
+        var isAm = undefined;
+
+        var isTimeOnly = settings.type === 'time';
+        var isDateOnly = settings.type.indexOf('time') < 0;
+
+        var words = text.split(settings.regExp.dateWords);
+        var numbers = text.split(settings.regExp.dateNumbers);
+
+        if (!isDateOnly) {
+          //am/pm
+          isAm = $.inArray(settings.text.am.toLowerCase(), words) >= 0 ? true :
+            $.inArray(settings.text.pm.toLowerCase(), words) >= 0 ? false : undefined;
+
+          //time with ':'
+          for (i = 0; i < numbers.length; i++) {
+            var number = numbers[i];
+            if (number.indexOf(':') >= 0) {
+              if (hour < 0 || minute < 0) {
+                var parts = number.split(':');
+                for (k = 0; k < Math.min(2, parts.length); k++) {
+                  j = parseInt(parts[k]);
+                  if (isNaN(j)) {
+                    j = 0;
+                  }
+                  if (k === 0) {
+                    hour = j % 24;
+                  } else {
+                    minute = j % 60;
+                  }
+                }
+              }
+              numbers.splice(i, 1);
+            }
+          }
+        }
+
+        if (!isTimeOnly) {
+          //textual month
+          for (i = 0; i < words.length; i++) {
+            var word = words[i];
+            if (word.length <= 0) {
+              continue;
+            }
+            word = word.substring(0, Math.min(word.length, 3));
+            for (j = 0; j < settings.text.months.length; j++) {
+              var monthString = settings.text.months[j];
+              monthString = monthString.substring(0, Math.min(word.length, Math.min(monthString.length, 3))).toLowerCase();
+              if (monthString === word) {
+                month = j + 1;
+                break;
+              }
+            }
+            if (month >= 0) {
+              break;
+            }
+          }
+
+          //year > 59
+          for (i = 0; i < numbers.length; i++) {
+            j = parseInt(numbers[i]);
+            if (isNaN(j)) {
+              continue;
+            }
+            if (j > 59) {
+              year = j;
+              numbers.splice(i, 1);
+              break;
+            }
+          }
+
+          //numeric month
+          if (month < 0) {
+            for (i = 0; i < numbers.length; i++) {
+              k = i > 1 || settings.monthFirst ? i : i === 1 ? 0 : 1;
+              j = parseInt(numbers[k]);
+              if (isNaN(j)) {
+                continue;
+              }
+              if (1 <= j && j <= 12) {
+                month = j;
+                numbers.splice(k, 1);
+                break;
+              }
+            }
+          }
+
+          //day
+          for (i = 0; i < numbers.length; i++) {
+            j = parseInt(numbers[i]);
+            if (isNaN(j)) {
+              continue;
+            }
+            if (1 <= j && j <= 31) {
+              day = j;
+              numbers.splice(i, 1);
+              break;
+            }
+          }
+
+          //year <= 59
+          if (year < 0) {
+            for (i = numbers.length - 1; i >= 0; i--) {
+              j = parseInt(numbers[i]);
+              if (isNaN(j)) {
+                continue;
+              }
+              if (j < 99) {
+                j += 2000;
+              }
+              year = j;
+              numbers.splice(i, 1);
+              break;
+            }
+          }
+        }
+
+        if (!isDateOnly) {
+          //hour
+          if (hour < 0) {
+            for (i = 0; i < numbers.length; i++) {
+              j = parseInt(numbers[i]);
+              if (isNaN(j)) {
+                continue;
+              }
+              if (0 <= j && j <= 23) {
+                hour = j;
+                numbers.splice(i, 1);
+                break;
+              }
+            }
+          }
+
+          //minute
+          if (minute < 0) {
+            for (i = 0; i < numbers.length; i++) {
+              j = parseInt(numbers[i]);
+              if (isNaN(j)) {
+                continue;
+              }
+              if (0 <= j && j <= 59) {
+                minute = j;
+                numbers.splice(i, 1);
+                break;
+              }
+            }
+          }
+        }
+
+        if (minute < 0 && hour < 0 && day < 0 && month < 0 && year < 0) {
+          return null;
+        }
+
+        if (minute < 0) {
+          minute = 0;
+        }
+        if (hour < 0) {
+          hour = 0;
+        }
+        if (day < 0) {
+          day = 1;
+        }
+        if (month < 0) {
+          month = 1;
+        }
+        if (year < 0) {
+          year = new Date().getFullYear();
+        }
+
+        if (isAm !== undefined) {
+          if (isAm) {
+            if (hour === 12) {
+              hour = 0;
+            }
+          } else if (hour < 12) {
+            hour += 12;
+          }
+        }
+
+        var date = new Date(year, month - 1, day, hour, minute);
+        if (date.getMonth() !== month - 1 || date.getFullYear() !== year) {
+          //month or year don't match up, switch to last day of the month
+          date = new Date(year, month, 0, hour, minute);
+        }
+        return isNaN(date.getTime()) ? null : date;
+      }
+    },
+
+    // callback when date changes, return false to cancel the change
+    onChange: function (date, text, mode) {
+      return true;
+    },
+
+    // callback before show animation, return false to prevent show
+    onShow: function () {
+    },
+
+    // callback after show animation
+    onVisible: function () {
+    },
+
+    // callback before hide animation, return false to prevent hide
+    onHide: function () {
+    },
+
+    // callback after hide animation
+    onHidden: function () {
+    },
+
+    // is the given date disabled?
+    isDisabled: function (date, mode) {
+      return false;
+    },
+
+    selector: {
+      popup: '.ui.popup',
+      input: 'input',
+      activator: 'input'
+    },
+
+    regExp: {
+      dateWords: /[^A-Za-z\u00C0-\u024F]+/g,
+      dateNumbers: /[^\d:]+/g
+    },
+
+    error: {
+      popup: 'UI Popup, a required component is not included in this page',
+      method: 'The method you called is not defined.'
+    },
+
+    className: {
+      calendar: 'calendar',
+      active: 'active',
+      popup: 'ui popup',
+      grid: 'ui equal width grid',
+      column: 'column',
+      table: 'ui celled center aligned unstackable table',
+      prev: 'prev link',
+      next: 'next link',
+      prevIcon: 'chevron left icon',
+      nextIcon: 'chevron right icon',
+      link: 'link',
+      cell: 'link',
+      disabledCell: 'disabled',
+      adjacentCell: 'adjacent',
+      activeCell: 'active',
+      rangeCell: 'range',
+      focusCell: 'focus',
+      todayCell: 'today',
+      today: 'today link'
+    },
+
+    metadata: {
+      date: 'date',
+      focusDate: 'focusDate',
+      startDate: 'startDate',
+      endDate: 'endDate',
+      mode: 'mode',
+      monthOffset: 'monthOffset'
+    }
+  };
+
+})(jQuery, window, document);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -57345,24 +59021,24 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 308 */
+/* 313 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1ibG9ja3F1b3RlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yMS4zIDMxLjloLS42Yy44LTEuMiAxLjktMi4yIDMuNC0zLjIgMi4xLTEuNCA1LTIuNyA5LjItMy4zbC0xLjQtOC45Yy00LjcuNy04LjUgMi4xLTExLjcgNC0yLjQgMS40LTQuMyAzLjEtNS44IDQuOS0yLjMgMi43LTMuNyA1LjctNC41IDguNS0uOCAyLjgtMSA1LjQtMSA3LjUgMCAyLjMuMyA0IC40IDQuOCAwIC4xLjEuMy4xLjQgMS4yIDUuNCA2LjEgOS41IDExLjkgOS41IDYuNyAwIDEyLjItNS40IDEyLjItMTIuMnMtNS41LTEyLTEyLjItMTJ6TTQ5LjUgMzEuOWgtLjZjLjgtMS4yIDEuOS0yLjIgMy40LTMuMiAyLjEtMS40IDUtMi43IDkuMi0zLjNsLTEuNC04LjljLTQuNy43LTguNSAyLjEtMTEuNyA0LTIuNCAxLjQtNC4zIDMuMS01LjggNC45LTIuMyAyLjctMy43IDUuNy00LjUgOC41LS44IDIuOC0xIDUuNC0xIDcuNSAwIDIuMy4zIDQgLjQgNC44IDAgLjEuMS4zLjEuNCAxLjIgNS40IDYuMSA5LjUgMTEuOSA5LjUgNi43IDAgMTIuMi01LjQgMTIuMi0xMi4ycy01LjUtMTItMTIuMi0xMnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctYm9sZCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNTEuMSAzNy44Yy0xLjEtMS40LTIuNS0yLjUtNC4yLTMuMyAxLjItLjggMi4xLTEuOCAyLjgtMyAxLTEuNiAxLjUtMy41IDEuNS01LjMgMC0yLS42LTQtMS43LTUuOC0xLjEtMS44LTIuOC0zLjItNC44LTQuMS0yLS45LTQuNi0xLjMtNy44LTEuM2gtMTZ2NDJoMTYuM2MyLjYgMCA0LjgtLjIgNi43LS43IDEuOS0uNSAzLjQtMS4yIDQuNy0yLjEgMS4zLTEgMi40LTIuNCAzLjItNC4xLjktMS43IDEuMy0zLjYgMS4zLTUuNy4yLTIuNS0uNS00LjctMi02LjZ6TTQwLjggNTAuMmMtLjYuMS0xLjguMi0zLjQuMmgtOVYzOC41aDguM2MyLjUgMCA0LjQuMiA1LjYuNiAxLjIuNCAyIDEgMi43IDIgLjYuOSAxIDIgMSAzLjMgMCAxLjEtLjIgMi4xLS43IDIuOS0uNS45LTEgMS41LTEuNyAxLjktLjguNC0xLjcuOC0yLjggMXptMi42LTIwLjRjLS41LjctMS4zIDEuMy0yLjUgMS42LS44LjMtMi41LjQtNC44LjRoLTcuN1YyMS42aDcuMWMxLjQgMCAyLjYgMCAzLjYuMXMxLjcuMiAyLjIuNGMxIC4zIDEuNy44IDIuMiAxLjcuNS45LjggMS44LjggMy0uMSAxLjMtLjQgMi4yLS45IDN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWNsb3NlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik01NyAyMC41bC01LjQtNS40LTE1LjUgMTUuNS0xNS42LTE1LjUtNS40IDUuNEwzMC43IDM2IDE1LjEgNTEuNWw1LjQgNS40IDE1LjYtMTUuNSAxNS41IDE1LjUgNS40LTUuNEw0MS41IDM2eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1jcmVhdGUtbGluayIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzEuMSA0OC45bC02LjcgNi43Yy0uOC44LTEuNi45LTIuMS45cy0xLjQtLjEtMi4xLS45TDE1IDUwLjRjLTEuMS0xLjEtMS4xLTMuMSAwLTQuMmw2LjEtNi4xLjItLjIgNi41LTYuNWMtMS4yLS42LTIuNS0uOS0zLjgtLjktMi4zIDAtNC42LjktNi4zIDIuNkwxMSA0MS44Yy0zLjUgMy41LTMuNSA5LjIgMCAxMi43bDUuMiA1LjJjMS43IDEuNyA0IDIuNiA2LjMgMi42czQuNi0uOSA2LjMtMi42bDYuNy02LjdjMi41LTIuNiAzLjEtNi43IDEuNS0xMGwtNS45IDUuOXpNMzguNyAyMi41bDYuNy02LjdjLjgtLjggMS42LS45IDIuMS0uOXMxLjQuMSAyLjEuOWw1LjIgNS4yYzEuMSAxLjEgMS4xIDMuMSAwIDQuMmwtNi4xIDYuMS0uMi4yTDQyIDM4YzEuMi42IDIuNS45IDMuOC45IDIuMyAwIDQuNi0uOSA2LjMtMi42bDYuNy02LjdjMy41LTMuNSAzLjUtOS4yIDAtMTIuN2wtNS4yLTUuMmMtMS43LTEuNy00LTIuNi02LjMtMi42cy00LjYuOS02LjMgMi42bC02LjcgNi43Yy0yLjcgMi43LTMuMyA2LjktMS43IDEwLjJsNi4xLTYuMWMwIC4xIDAgLjEgMCAweiIvPjxwYXRoIGQ9Ik00NC4yIDMwLjVjLjItLjIuNC0uNi40LS45IDAtLjMtLjEtLjYtLjQtLjlsLTIuMy0yLjNjLS4zLS4yLS42LS40LS45LS40LS4zIDAtLjYuMS0uOS40TDI1LjkgNDAuNmMtLjIuMi0uNC42LS40LjkgMCAuMy4xLjYuNC45bDIuMyAyLjNjLjIuMi42LjQuOS40LjMgMCAuNi0uMS45LS40bDE0LjItMTQuMnpNNDkuOSA1NS40aC04LjV2LTVoOC41di04LjloNS4ydjguOWg4LjV2NWgtOC41djguOWgtNS4ydi04Ljl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWRlbCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNDUuOCA0NWMwIDEtLjMgMS45LS45IDIuOC0uNi45LTEuNiAxLjYtMyAyLjFzLTMuMS44LTUgLjhjLTIuMSAwLTQtLjQtNS43LTEuMS0xLjctLjctMi45LTEuNy0zLjYtMi43LS44LTEuMS0xLjMtMi42LTEuNS00LjVsLS4xLS44LTYuNy42di45Yy4xIDIuOC45IDUuNCAyLjMgNy42IDEuNSAyLjMgMy41IDQgNi4xIDUuMSAyLjYgMS4xIDUuNyAxLjYgOS40IDEuNiAyLjkgMCA1LjYtLjUgOC0xLjYgMi40LTEuMSA0LjMtMi43IDUuNi00LjcgMS4zLTIgMi00LjIgMi02LjUgMC0xLjYtLjMtMy4xLS45LTQuNWwtLjItLjZINDRjMCAuMSAxLjggMi4zIDEuOCA1LjV6TTI5IDI4LjljLS44LS44LTEuMi0xLjctMS4yLTIuOSAwLS43LjEtMS4zLjQtMS45LjMtLjYuNy0xLjEgMS40LTEuNi42LS41IDEuNC0uOSAyLjUtMS4xIDEuMS0uMyAyLjQtLjQgMy45LS40IDIuOSAwIDUgLjYgNi4zIDEuNyAxLjMgMS4xIDIuMSAyLjcgMi40IDUuMWwuMS45IDYuOC0uNXYtLjljLS4xLTIuNS0uOC00LjctMi4xLTYuN3MtMy4yLTMuNS01LjYtNC41Yy0yLjQtMS01LjEtMS41LTguMS0xLjUtMi44IDAtNS4zLjUtNy42IDEuNC0yLjMgMS00LjIgMi40LTUuNCA0LjMtMS4yIDEuOS0xLjkgMy45LTEuOSA2LjEgMCAxLjcuNCAzLjQgMS4yIDQuOWwuMy41aDExLjhjLTIuMy0uOS0zLjktMS43LTUuMi0yLjl6bTEzLjMtNi4yek0yMi43IDIwLjN6TTEzIDM0LjFoNDYuMXYzLjRIMTN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWVtIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yNiA1N2wxMC4xLTQyaDcuMkwzMy4yIDU3SDI2eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1mdWxsc2NyZWVuIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0yNS4yIDcuMUg3LjF2MTcuN2w2LjctNi41IDEwLjUgMTAuNSA0LjUtNC41LTEwLjQtMTAuNXpNNDcuMiA3LjFsNi41IDYuNy0xMC41IDEwLjUgNC41IDQuNSAxMC41LTEwLjQgNi43IDYuOFY3LjF6TTQ3LjcgNDMuMmwtNC41IDQuNSAxMC40IDEwLjUtNi44IDYuN2gxOC4xVjQ3LjJsLTYuNyA2LjV6TTI0LjMgNDMuMkwxMy44IDUzLjZsLTYuNy02Ljh2MTguMWgxNy43bC02LjUtNi43IDEwLjUtMTAuNXoiLz48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMC43IDI4LjhoMTguMVYxMS4ybC02LjYgNi40TDExLjYgNy4xbC00LjUgNC41IDEwLjUgMTAuNXpNNjAuOCAyOC44bC02LjQtNi42IDEwLjUtMTAuNi00LjUtNC41LTEwLjUgMTAuNS02LjctNi45djE4LjF6TTYwLjQgNjQuOWw0LjUtNC41LTEwLjUtMTAuNSA2LjktNi43SDQzLjJ2MTcuNmw2LjYtNi40ek0xMS42IDY0LjlsMTAuNS0xMC41IDYuNyA2LjlWNDMuMkgxMS4xbDYuNSA2LjZMNy4xIDYwLjR6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWgxIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02LjQgMTQuOWg3LjR2MTYuN2gxOS4xVjE0LjloNy40VjU3aC03LjRWMzhIMTMuOHYxOUg2LjRWMTQuOXpNNDcuOCAyMi41YzEuNCAwIDIuOC0uMSA0LjEtLjQgMS4zLS4yIDIuNS0uNiAzLjYtMS4yIDEuMS0uNSAyLTEuMyAyLjgtMi4xLjgtLjkgMS4zLTEuOSAxLjUtMy4yaDUuNXY0MS4yaC03LjR2LTI5SDQ3Ljh2LTUuM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaDIiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTEuNSAxNC45aDcuNHYxNi43SDI4VjE0LjloNy40VjU3SDI4VjM4SDguOHYxOUgxLjVWMTQuOXpNNzAuMiA1Ni45SDQyYzAtMy40LjktNi40IDIuNS05czMuOC00LjggNi42LTYuN2MxLjMtMSAyLjctMS45IDQuMi0yLjkgMS41LS45IDIuOC0xLjkgNC0zIDEuMi0xLjEgMi4yLTIuMiAzLTMuNC44LTEuMiAxLjItMi43IDEuMi00LjMgMC0uNy0uMS0xLjUtLjMtMi40cy0uNS0xLjYtMS0yLjRjLS41LS43LTEuMi0xLjMtMi4xLTEuOC0uOS0uNS0yLjEtLjctMy41LS43LTEuMyAwLTIuNC4zLTMuMy44cy0xLjYgMS4zLTIuMSAyLjItLjkgMi0xLjIgMy4zYy0uMyAxLjMtLjQgMi42LS40IDQuMWgtNi43YzAtMi4zLjMtNC40LjktNi4zLjYtMS45IDEuNS0zLjYgMi43LTUgMS4yLTEuNCAyLjctMi41IDQuNC0zLjMgMS43LS44IDMuOC0xLjIgNi4xLTEuMiAyLjUgMCA0LjYuNCA2LjMgMS4yIDEuNy44IDMuMSAxLjkgNC4xIDMuMSAxIDEuMyAxLjggMi42IDIuMiA0LjEuNCAxLjUuNiAyLjkuNiA0LjIgMCAxLjYtLjMgMy4xLS44IDQuNS0uNSAxLjMtMS4yIDIuNi0yLjEgMy43LS45IDEuMS0xLjggMi4yLTIuOSAzLjEtMS4xLjktMi4yIDEuOC0zLjQgMi43LTEuMi44LTIuNCAxLjYtMy41IDIuNC0xLjIuNy0yLjMgMS41LTMuMyAyLjItMSAuNy0xLjkgMS41LTIuNiAyLjMtLjcuOC0xLjMgMS43LTEuNSAyLjZoMjAuMXY1Ljl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWgzIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0xLjQgMTQuNWg3LjR2MTYuN2gxOS4xVjE0LjVoNy40djQyLjFoLTcuNHYtMTlIOC44djE5SDEuNFYxNC41ek01My4xIDMyLjRjMS4xIDAgMi4yIDAgMy4zLS4yIDEuMS0uMiAyLjEtLjUgMi45LTEgLjktLjUgMS42LTEuMiAyLjEtMiAuNS0uOS44LTEuOS44LTMuMiAwLTEuOC0uNi0zLjItMS44LTQuMi0xLjItMS4xLTIuNy0xLjYtNC42LTEuNi0xLjIgMC0yLjIuMi0zLjEuNy0uOS41LTEuNiAxLjEtMi4yIDEuOS0uNi44LTEgMS43LTEuMyAyLjctLjMgMS0uNCAyLS40IDMuMWgtNi43Yy4xLTIgLjUtMy45IDEuMS01LjYuNy0xLjcgMS42LTMuMiAyLjctNC40czIuNi0yLjIgNC4yLTIuOWMxLjYtLjcgMy41LTEuMSA1LjYtMS4xIDEuNiAwIDMuMi4yIDQuNy43IDEuNi41IDIuOSAxLjIgNC4yIDIuMSAxLjIuOSAyLjIgMi4xIDMgMy40LjcgMS40IDEuMSAzIDEuMSA0LjggMCAyLjEtLjUgMy45LTEuNCA1LjQtLjkgMS42LTIuNCAyLjctNC40IDMuNHYuMWMyLjQuNSA0LjIgMS42IDUuNSAzLjUgMS4zIDEuOSAyIDQuMSAyIDYuOCAwIDItLjQgMy43LTEuMiA1LjMtLjggMS42LTEuOCAyLjktMy4yIDMuOS0xLjMgMS4xLTIuOSAxLjktNC43IDIuNS0xLjguNi0zLjYuOS01LjYuOS0yLjQgMC00LjUtLjMtNi4zLTFzLTMuMy0xLjctNC41LTIuOWMtMS4yLTEuMy0yLjEtMi44LTIuNy00LjUtLjYtMS44LTEtMy43LTEtNS45aDYuN2MtLjEgMi41LjUgNC42IDEuOSA2LjMgMS4zIDEuNyAzLjMgMi41IDUuOSAyLjUgMi4yIDAgNC4xLS42IDUuNi0xLjkgMS41LTEuMyAyLjMtMy4xIDIuMy01LjQgMC0xLjYtLjMtMi45LS45LTMuOC0uNi0uOS0xLjUtMS43LTIuNS0yLjItMS0uNS0yLjItLjgtMy40LS45LTEuMy0uMS0yLjYtLjItMy45LS4xdi01LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWg0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0xLjUgMTQuOWg3LjR2MTYuN0gyOFYxNC45aDcuNFY1N0gyOFYzOEg4Ljl2MTlIMS41VjE0Ljl6TTcwLjUgNDcuMmgtNS4zVjU3aC02LjR2LTkuOEg0MS4ydi02LjdsMTcuNy0yNC44aDYuNHYyNi4yaDUuM3Y1LjN6bS0yNC4yLTUuM2gxMi41VjIzLjdoLS4xTDQ2LjMgNDEuOXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaG9yaXpvbnRhbC1ydWxlIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik05LjEgMzJoNTR2OGgtNTR6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWluc2VydC1pbWFnZSIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNjQgMTd2MzhIOFYxN2g1Nm04LThIMHY1NGg3MlY5eiIvPjxwYXRoIGQ9Ik0xNy41IDIyQzE1IDIyIDEzIDI0IDEzIDI2LjVzMiA0LjUgNC41IDQuNSA0LjUtMiA0LjUtNC41LTItNC41LTQuNS00LjV6TTE2IDUwaDI3TDI5LjUgMzJ6TTM2IDM2LjJsOC45LTguNUw2MC4yIDUwSDQ1LjlTMzUuNiAzNS45IDM2IDM2LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWl0YWxpYyIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMjYgNTdsMTAuMS00Mmg3LjJMMzMuMiA1N0gyNnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctanVzdGlmeS1jZW50ZXIiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNMTggMzJoMzZ2OEgxOHoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctanVzdGlmeS1mdWxsIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik05IDE0aDU0djhIOXpNOSA1MGg1NHY4SDl6TTkgMzJoNTR2OEg5eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1qdXN0aWZ5LWxlZnQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNOSAzMmgzNnY4SDl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWp1c3RpZnktcmlnaHQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTkgMTRoNTR2OEg5ek05IDUwaDU0djhIOXpNMjcgMzJoMzZ2OEgyN3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctbGluayIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzAuOSA0OS4xbC02LjcgNi43Yy0uOC44LTEuNi45LTIuMS45cy0xLjQtLjEtMi4xLS45bC01LjItNS4yYy0xLjEtMS4xLTEuMS0zLjEgMC00LjJsNi4xLTYuMS4yLS4yIDYuNS02LjVjLTEuMi0uNi0yLjUtLjktMy44LS45LTIuMyAwLTQuNi45LTYuMyAyLjZMMTAuOCA0MmMtMy41IDMuNS0zLjUgOS4yIDAgMTIuN2w1LjIgNS4yYzEuNyAxLjcgNCAyLjYgNi4zIDIuNnM0LjYtLjkgNi4zLTIuNmw2LjctNi43QzM4IDUwLjUgMzguNiA0Ni4zIDM3IDQzbC02LjEgNi4xek0zOC41IDIyLjdsNi43LTYuN2MuOC0uOCAxLjYtLjkgMi4xLS45czEuNC4xIDIuMS45bDUuMiA1LjJjMS4xIDEuMSAxLjEgMy4xIDAgNC4ybC02LjEgNi4xLS4yLjItNi41IDYuNWMxLjIuNiAyLjUuOSAzLjguOSAyLjMgMCA0LjYtLjkgNi4zLTIuNmw2LjctNi43YzMuNS0zLjUgMy41LTkuMiAwLTEyLjdsLTUuMi01LjJjLTEuNy0xLjctNC0yLjYtNi4zLTIuNnMtNC42LjktNi4zIDIuNmwtNi43IDYuN2MtMi43IDIuNy0zLjMgNi45LTEuNyAxMC4ybDYuMS02LjF6Ii8+PHBhdGggZD0iTTQ0LjEgMzAuN2MuMi0uMi40LS42LjQtLjkgMC0uMy0uMS0uNi0uNC0uOWwtMi4zLTIuM2MtLjItLjItLjYtLjQtLjktLjQtLjMgMC0uNi4xLS45LjRMMjUuOCA0MC44Yy0uMi4yLS40LjYtLjQuOSAwIC4zLjEuNi40LjlsMi4zIDIuM2MuMi4yLjYuNC45LjQuMyAwIC42LS4xLjktLjRsMTQuMi0xNC4yeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1vcmRlcmVkLWxpc3QiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI3IDE0aDM2djhIMjd6TTI3IDUwaDM2djhIMjd6TTI3IDMyaDM2djhIMjd6TTExLjggMTUuOFYyMmgxLjh2LTcuOGgtMS41bC0yLjEgMSAuMyAxLjN6TTEyLjEgMzguNWwuNy0uNmMxLjEtMSAyLjEtMi4xIDIuMS0zLjQgMC0xLjQtMS0yLjQtMi43LTIuNC0xLjEgMC0yIC40LTIuNi44bC41IDEuM2MuNC0uMyAxLS42IDEuNy0uNi45IDAgMS4zLjUgMS4zIDEuMSAwIC45LS45IDEuOC0yLjYgMy4zbC0xIC45VjQwSDE1di0xLjVoLTIuOXpNMTMuMyA1My45YzEtLjQgMS40LTEgMS40LTEuOCAwLTEuMS0uOS0xLjktMi42LTEuOS0xIDAtMS45LjMtMi40LjZsLjQgMS4zYy4zLS4yIDEtLjUgMS42LS41LjggMCAxLjIuMyAxLjIuOCAwIC43LS44LjktMS40LjloLS43djEuM2guN2MuOCAwIDEuNi4zIDEuNiAxLjEgMCAuNi0uNSAxLTEuNCAxLS43IDAtMS41LS4zLTEuOC0uNWwtLjQgMS40Yy41LjMgMS4zLjYgMi4zLjYgMiAwIDMuMi0xIDMuMi0yLjQgMC0xLjEtLjgtMS44LTEuNy0xLjl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXAiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTQ3LjggMTUuMUgzMC4xYy00LjcgMC04LjUgMy43LTguNSA4LjRzMy43IDguNCA4LjQgOC40djI1aDdWMTkuOGgzdjM3LjFoNC4xVjE5LjhoMy43di00Ljd6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXJlZG8iIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTEwLjggNTEuMmMwLTUuMSAyLjEtOS43IDUuNC0xMy4xIDMuMy0zLjMgOC01LjQgMTMuMS01LjRINDZ2LTEyTDYxLjMgMzYgNDUuOSA1MS4zVjM5LjFIMjkuM2MtMy4zIDAtNi40IDEuMy04LjUgMy41LTIuMiAyLjItMy41IDUuMi0zLjUgOC41aC02LjV6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXJlbW92ZWZvcm1hdCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNTguMiA1NC42TDUyIDQ4LjVsMy42LTMuNiA2LjEgNi4xIDYuNC02LjQgMy44IDMuOC02LjQgNi40IDYuMSA2LjEtMy42IDMuNi02LjEtNi4xLTYuNCA2LjQtMy43LTMuOCA2LjQtNi40ek0yMS43IDUyLjFINTBWNTdIMjEuN3pNMTguOCAxNS4yaDM0LjF2Ni40SDM5LjV2MjQuMmgtNy40VjIxLjVIMTguOHYtNi4zeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1zdHJpa2V0aHJvdWdoIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik00NS44IDQ1YzAgMS0uMyAxLjktLjkgMi44LS42LjktMS42IDEuNi0zIDIuMXMtMy4xLjgtNSAuOGMtMi4xIDAtNC0uNC01LjctMS4xLTEuNy0uNy0yLjktMS43LTMuNi0yLjctLjgtMS4xLTEuMy0yLjYtMS41LTQuNWwtLjEtLjgtNi43LjZ2LjljLjEgMi44LjkgNS40IDIuMyA3LjYgMS41IDIuMyAzLjUgNCA2LjEgNS4xIDIuNiAxLjEgNS43IDEuNiA5LjQgMS42IDIuOSAwIDUuNi0uNSA4LTEuNiAyLjQtMS4xIDQuMy0yLjcgNS42LTQuNyAxLjMtMiAyLTQuMiAyLTYuNSAwLTEuNi0uMy0zLjEtLjktNC41bC0uMi0uNkg0NGMwIC4xIDEuOCAyLjMgMS44IDUuNXpNMjkgMjguOWMtLjgtLjgtMS4yLTEuNy0xLjItMi45IDAtLjcuMS0xLjMuNC0xLjkuMy0uNi43LTEuMSAxLjQtMS42LjYtLjUgMS40LS45IDIuNS0xLjEgMS4xLS4zIDIuNC0uNCAzLjktLjQgMi45IDAgNSAuNiA2LjMgMS43IDEuMyAxLjEgMi4xIDIuNyAyLjQgNS4xbC4xLjkgNi44LS41di0uOWMtLjEtMi41LS44LTQuNy0yLjEtNi43cy0zLjItMy41LTUuNi00LjVjLTIuNC0xLTUuMS0xLjUtOC4xLTEuNS0yLjggMC01LjMuNS03LjYgMS40LTIuMyAxLTQuMiAyLjQtNS40IDQuMy0xLjIgMS45LTEuOSAzLjktMS45IDYuMSAwIDEuNy40IDMuNCAxLjIgNC45bC4zLjVoMTEuOGMtMi4zLS45LTMuOS0xLjctNS4yLTIuOXptMTMuMy02LjJ6TTIyLjcgMjAuM3pNMTMgMzQuMWg0Ni4xdjMuNEgxM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctc3Ryb25nIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik01MS4xIDM3LjhjLTEuMS0xLjQtMi41LTIuNS00LjItMy4zIDEuMi0uOCAyLjEtMS44IDIuOC0zIDEtMS42IDEuNS0zLjUgMS41LTUuMyAwLTItLjYtNC0xLjctNS44LTEuMS0xLjgtMi44LTMuMi00LjgtNC4xLTItLjktNC42LTEuMy03LjgtMS4zaC0xNnY0MmgxNi4zYzIuNiAwIDQuOC0uMiA2LjctLjcgMS45LS41IDMuNC0xLjIgNC43LTIuMSAxLjMtMSAyLjQtMi40IDMuMi00LjEuOS0xLjcgMS4zLTMuNiAxLjMtNS43LjItMi41LS41LTQuNy0yLTYuNnpNNDAuOCA1MC4yYy0uNi4xLTEuOC4yLTMuNC4yaC05VjM4LjVoOC4zYzIuNSAwIDQuNC4yIDUuNi42IDEuMi40IDIgMSAyLjcgMiAuNi45IDEgMiAxIDMuMyAwIDEuMS0uMiAyLjEtLjcgMi45LS41LjktMSAxLjUtMS43IDEuOS0uOC40LTEuNy44LTIuOCAxem0yLjYtMjAuNGMtLjUuNy0xLjMgMS4zLTIuNSAxLjYtLjguMy0yLjUuNC00LjguNGgtNy43VjIxLjZoNy4xYzEuNCAwIDIuNiAwIDMuNi4xczEuNy4yIDIuMi40YzEgLjMgMS43LjggMi4yIDEuNy41LjkuOCAxLjguOCAzLS4xIDEuMy0uNCAyLjItLjkgM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctc3Vic2NyaXB0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMiAxNWg3LjhMNTYgNTcuMWgtNy45TDQ0LjMgNDZIMjcuNGwtNCAxMS4xaC03LjZMMzIgMTV6bS0yLjUgMjUuNGgxMi45TDM2IDIyLjNoLS4ybC02LjMgMTguMXpNNTguNyA1OS45Yy42LTEuNCAyLTIuOCA0LjEtNC40IDEuOS0xLjMgMy4xLTIuMyAzLjctMi45LjgtLjkgMS4zLTEuOSAxLjMtMyAwLS45LS4yLTEuNi0uNy0yLjItLjUtLjYtMS4yLS45LTIuMS0uOS0xLjIgMC0yLjEuNS0yLjUgMS40LS4zLjUtLjQgMS40LS41IDIuNWgtNGMuMS0xLjguNC0zLjIgMS00LjMgMS4xLTIuMSAzLTMuMSA1LjgtMy4xIDIuMiAwIDMuOS42IDUuMiAxLjggMS4zIDEuMiAxLjkgMi44IDEuOSA0LjggMCAxLjUtLjUgMi45LTEuNCA0LjEtLjYuOC0xLjYgMS43LTMgMi42TDY2IDU3LjdjLTEgLjctMS43IDEuMi0yLjEgMS42LS40LjMtLjcuNy0xIDEuMUg3MlY2NEg1Ny44YzAtMS41LjMtMi44LjktNC4xeiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1zdXBlcnNjcmlwdCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMzIgMTVoNy44TDU2IDU3LjFoLTcuOWwtNC0xMS4xSDI3LjRsLTQgMTEuMWgtNy42TDMyIDE1em0tMi41IDI1LjRoMTIuOUwzNiAyMi4zaC0uMmwtNi4zIDE4LjF6TTQ5LjYgMjguOGMuNS0xLjEgMS42LTIuMyAzLjQtMy42IDEuNS0xLjEgMi41LTEuOSAzLTIuNC43LS43IDEtMS42IDEtMi40IDAtLjctLjItMS4zLS42LTEuOC0uNC0uNS0xLS43LTEuNy0uNy0xIDAtMS43LjQtMi4xIDEuMS0uMi40LS4zIDEuMS0uNCAyLjFINDljLjEtMS41LjMtMi42LjgtMy41LjktMS43IDIuNS0yLjYgNC44LTIuNiAxLjggMCAzLjIuNSA0LjMgMS41IDEuMSAxIDEuNiAyLjMgMS42IDQgMCAxLjMtLjQgMi40LTEuMSAzLjQtLjUuNy0xLjMgMS40LTIuNCAyLjJsLTEuMyAxYy0uOC42LTEuNCAxLTEuNyAxLjMtLjMuMy0uNi42LS44LjloNy40djNINDguOGMwLTEuMy4zLTIuNC44LTMuNXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdGFibGUiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI1LjY4NiA1MS4zOHYtNi4zNDdxMC0uNDYyLS4yOTctLjc2LS4yOTgtLjI5Ny0uNzYxLS4yOTdIMTQuMDRxLS40NjMgMC0uNzYxLjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43Ni4yOThoMTAuNTg5cS40NjMgMCAuNzYtLjI5OC4yOTgtLjI5Ny4yOTgtLjc2em0wLTEyLjY5MnYtNi4zNDZxMC0uNDYzLS4yOTctLjc2LS4yOTgtLjI5OC0uNzYxLS4yOThIMTQuMDRxLS40NjMgMC0uNzYxLjI5OC0uMjk4LjI5Ny0uMjk4Ljc2djYuMzQ2cTAgLjQ2Mi4yOTguNzYuMjk4LjI5Ny43Ni4yOTdoMTAuNTg5cS40NjMgMCAuNzYtLjI5Ny4yOTgtLjI5OC4yOTgtLjc2em0xNi45NCAxMi42OTF2LTYuMzQ2cTAtLjQ2Mi0uMjk3LS43Ni0uMjk4LS4yOTctLjc2MS0uMjk3SDMwLjk4cS0uNDYzIDAtLjc2LjI5Ny0uMjk5LjI5OC0uMjk5Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTguMjk5LS4yOTcuMjk5LS43NnptLTE2Ljk0LTI1LjM4M3YtNi4zNDVxMC0uNDYzLS4yOTctLjc2LS4yOTgtLjI5OC0uNzYxLS4yOThIMTQuMDRxLS40NjMgMC0uNzYxLjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43Ni4yOThoMTAuNTg5cS40NjMgMCAuNzYtLjI5OC4yOTgtLjI5Ny4yOTgtLjc2em0xNi45NCAxMi42OTJ2LTYuMzQ2cTAtLjQ2My0uMjk3LS43Ni0uMjk4LS4yOTgtLjc2MS0uMjk4SDMwLjk4cS0uNDYzIDAtLjc2LjI5OC0uMjk5LjI5Ny0uMjk5Ljc2djYuMzQ2cTAgLjQ2Mi4yOTguNzYuMjk4LjI5Ny43NjEuMjk3aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTcuMjk5LS4yOTguMjk5LS43NnptMTYuOTQgMTIuNjkxdi02LjM0NnEwLS40NjItLjI5Ny0uNzYtLjI5OC0uMjk3LS43Ni0uMjk3SDQ3LjkycS0uNDYzIDAtLjc2LjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTcuNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk4LjI5OC0uMjk3LjI5OC0uNzZ6bS0xNi45NC0yNS4zODN2LTYuMzQ1cTAtLjQ2My0uMjk3LS43Ni0uMjk4LS4yOTgtLjc2MS0uMjk4SDMwLjk4cS0uNDYzIDAtLjc2LjI5Ny0uMjk5LjI5OC0uMjk5Ljc2djYuMzQ2cTAgLjQ2My4yOTguNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2LS4yOTguMjk5LS4yOTcuMjk5LS43NnptMTYuOTQgMTIuNjkydi02LjM0NnEwLS40NjMtLjI5Ny0uNzYtLjI5OC0uMjk4LS43Ni0uMjk4SDQ3LjkycS0uNDYzIDAtLjc2LjI5OC0uMjk4LjI5Ny0uMjk4Ljc2djYuMzQ2cTAgLjQ2Mi4yOTcuNzYuMjk4LjI5Ny43NjEuMjk3aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk3LjI5OC0uMjk4LjI5OC0uNzZ6bTAtMTIuNjkydi02LjM0NXEwLS40NjMtLjI5Ny0uNzYtLjI5OC0uMjk4LS43Ni0uMjk4SDQ3LjkycS0uNDYzIDAtLjc2LjI5Ny0uMjk4LjI5OC0uMjk4Ljc2djYuMzQ2cTAgLjQ2My4yOTcuNzYuMjk4LjI5OC43NjEuMjk4aDEwLjU4OHEuNDYzIDAgLjc2MS0uMjk4LjI5OC0uMjk3LjI5OC0uNzZ6bTQuMjM2LTEwLjU3NnYzNS45NnEwIDIuMTgtMS41NTUgMy43MzQtMS41NTUgMS41NTMtMy43MzkgMS41NTNIMTQuMDRxLTIuMTg0IDAtMy43MzktMS41NTMtMS41NTUtMS41NTMtMS41NTUtMy43MzVWMTUuNDJxMC0yLjE4MSAxLjU1NS0zLjczNSAxLjU1NS0xLjU1MyAzLjczOS0xLjU1M2g0NC40NjhxMi4xODQgMCAzLjczOSAxLjU1MyAxLjU1NSAxLjU1NCAxLjU1NSAzLjczNXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5kZXJsaW5lIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zNiAzNXpNMTUuMiA1NS45aDQxLjZWNTlIMTUuMnpNMjEuMSAxMy45aDYuNHYyMS4yYzAgMS4yLjEgMi41LjIgMy43LjEgMS4zLjUgMi40IDEgMy40LjYgMSAxLjQgMS44IDIuNiAyLjUgMS4xLjYgMi43IDEgNC44IDEgMi4xIDAgMy43LS4zIDQuOC0xIDEuMS0uNiAyLTEuNSAyLjYtMi41LjYtMSAuOS0yLjEgMS0zLjQuMS0xLjMuMi0yLjUuMi0zLjdWMTMuOUg1MXYyMy4zYzAgMi4zLS40IDQuNC0xLjEgNi4xLS43IDEuNy0xLjcgMy4yLTMgNC40LTEuMyAxLjItMi45IDItNC43IDIuNi0xLjguNi0zLjkuOS02LjEuOS0yLjIgMC00LjMtLjMtNi4xLS45LTEuOC0uNi0zLjQtMS41LTQuNy0yLjYtMS4zLTEuMi0yLjMtMi42LTMtNC40LS43LTEuNy0xLjEtMy44LTEuMS02LjFWMTMuOXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5kbyIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNNjEuMiA1MS4yYzAtNS4xLTIuMS05LjctNS40LTEzLjEtMy4zLTMuMy04LTUuNC0xMy4xLTUuNEgyNi4xdi0xMkwxMC44IDM2bDE1LjMgMTUuM1YzOS4xaDE2LjdjMy4zIDAgNi40IDEuMyA4LjUgMy41IDIuMiAyLjIgMy41IDUuMiAzLjUgOC41aDYuNHoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5saW5rIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMC45IDQ5LjFsLTYuNyA2LjdjLS44LjgtMS42LjktMi4xLjlzLTEuNC0uMS0yLjEtLjlsLTUuMi01LjJjLTEuMS0xLjEtMS4xLTMuMSAwLTQuMmw2LjEtNi4xLjItLjIgNi41LTYuNWMtMS4yLS42LTIuNS0uOS0zLjgtLjktMi4zIDAtNC42LjktNi4zIDIuNkwxMC44IDQyYy0zLjUgMy41LTMuNSA5LjIgMCAxMi43bDUuMiA1LjJjMS43IDEuNyA0IDIuNiA2LjMgMi42czQuNi0uOSA2LjMtMi42bDYuNy02LjdDMzggNTAuNSAzOC42IDQ2LjMgMzcgNDNsLTYuMSA2LjF6TTM4LjUgMjIuN2w2LjctNi43Yy44LS44IDEuNi0uOSAyLjEtLjlzMS40LjEgMi4xLjlsNS4yIDUuMmMxLjEgMS4xIDEuMSAzLjEgMCA0LjJsLTYuMSA2LjEtLjIuMi02LjUgNi41YzEuMi42IDIuNS45IDMuOC45IDIuMyAwIDQuNi0uOSA2LjMtMi42bDYuNy02LjdjMy41LTMuNSAzLjUtOS4yIDAtMTIuN2wtNS4yLTUuMmMtMS43LTEuNy00LTIuNi02LjMtMi42cy00LjYuOS02LjMgMi42bC02LjcgNi43Yy0yLjcgMi43LTMuMyA2LjktMS43IDEwLjJsNi4xLTYuMXoiLz48cGF0aCBkPSJNNDQuMSAzMC43Yy4yLS4yLjQtLjYuNC0uOSAwLS4zLS4xLS42LS40LS45bC0yLjMtMi4zYy0uMi0uMi0uNi0uNC0uOS0uNC0uMyAwLS42LjEtLjkuNEwyNS44IDQwLjhjLS4yLjItLjQuNi0uNC45IDAgLjMuMS42LjQuOWwyLjMgMi4zYy4yLjIuNi40LjkuNC4zIDAgLjYtLjEuOS0uNGwxNC4yLTE0LjJ6TTQxLjMgNTUuOHYtNWgyMi4ydjVINDEuM3oiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdW5vcmRlcmVkLWxpc3QiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTI3IDE0aDM2djhIMjd6TTI3IDUwaDM2djhIMjd6TTkgNTBoOXY4SDl6TTkgMzJoOXY4SDl6TTkgMTRoOXY4SDl6TTI3IDMyaDM2djhIMjd6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXZpZXctaHRtbCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ik0yNi45IDE3LjlMOSAzNi4yIDI2LjkgNTRNNDUgNTRsMTcuOS0xOC4zTDQ1IDE3LjkiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctYmFzZTY0IiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02NCAxN3YzOEg4VjE3aDU2bTgtOEgwdjU0aDcyVjl6Ii8+PHBhdGggZD0iTTI5LjkgMjguOWMtLjUtLjUtMS4xLS44LTEuOC0uOHMtMS40LjItMS45LjdjLS41LjQtLjkgMS0xLjIgMS42LS4zLjYtLjUgMS4zLS42IDIuMS0uMS43LS4yIDEuNC0uMiAxLjlsLjEuMWMuNi0uOCAxLjItMS40IDItMS44LjgtLjQgMS43LS41IDIuNy0uNS45IDAgMS44LjIgMi42LjYuOC40IDEuNi45IDIuMiAxLjUuNi42IDEgMS4zIDEuMiAyLjIuMy44LjQgMS42LjQgMi41IDAgMS4xLS4yIDIuMS0uNSAzLS4zLjktLjggMS43LTEuNSAyLjQtLjYuNy0xLjQgMS4yLTIuMyAxLjYtLjkuNC0xLjkuNi0zIC42LTEuNiAwLTIuOC0uMy0zLjktLjktMS0uNi0xLjgtMS40LTIuNS0yLjQtLjYtMS0xLTIuMS0xLjMtMy40LS4yLTEuMy0uNC0yLjYtLjQtMy45IDAtMS4zLjEtMi42LjQtMy44LjMtMS4zLjgtMi40IDEuNC0zLjUuNy0xIDEuNS0xLjkgMi41LTIuNSAxLS42IDIuMy0xIDMuOC0xIC45IDAgMS43LjEgMi41LjQuOC4zIDEuNC42IDIgMS4xLjYuNSAxLjEgMS4xIDEuNCAxLjguNC43LjYgMS41LjcgMi41aC00YzAtMS0uMy0xLjYtLjgtMi4xem0tMy41IDYuOGMtLjQuMi0uOC41LTEgLjgtLjMuNC0uNS44LS42IDEuMi0uMS41LS4yIDEtLjIgMS41cy4xLjkuMiAxLjRjLjEuNS40LjkuNiAxLjIuMy40LjYuNyAxIC45LjQuMi45LjMgMS40LjMuNSAwIDEtLjEgMS4zLS4zLjQtLjIuNy0uNSAxLS45LjMtLjQuNS0uOC42LTEuMi4xLS41LjItLjkuMi0xLjQgMC0uNS0uMS0xLS4yLTEuNC0uMS0uNS0uMy0uOS0uNi0xLjItLjMtLjQtLjYtLjctMS0uOS0uNC0uMi0uOS0uMy0xLjQtLjMtLjQgMC0uOS4xLTEuMy4zek0zNi4zIDQxLjN2LTMuOGw5LTEyLjFINDl2MTIuNGgyLjd2My41SDQ5djQuOGgtNHYtNC44aC04Ljd6TTQ1IDMwLjdsLTUuMyA3LjJoNS40bC0uMS03LjJ6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLWJhY2stY29sb3IiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTM2LjUgMjIuM2wtNi4zIDE4LjFINDNsLTYuMy0xOC4xeiIvPjxwYXRoIGQ9Ik05IDguOXY1NC4yaDU0LjFWOC45SDl6bTM5LjkgNDguMkw0NSA0NkgyOC4ybC0zLjkgMTEuMWgtNy42TDMyLjggMTVoNy44bDE2LjIgNDIuMWgtNy45eiIvPjwvc3ltYm9sPjxzeW1ib2wgaWQ9InRydW1ib3d5Zy1mb3JlLWNvbG9yIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik0zMiAxNWg3LjhMNTYgNTcuMWgtNy45bC00LTExLjFIMjcuNGwtNCAxMS4xaC03LjZMMzIgMTV6bS0yLjUgMjUuNGgxMi45TDM2IDIyLjNoLS4ybC02LjMgMTguMXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctZW1vamkiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTM2LjA1IDlDMjEuMDkgOSA4Ljk0OSAyMS4xNDEgOC45NDkgMzYuMTAxYzAgMTQuOTYgMTIuMTQxIDI3LjEwMSAyNy4xMDEgMjcuMTAxIDE0Ljk2IDAgMjcuMTAxLTEyLjE0MSAyNy4xMDEtMjcuMTAxUzUxLjAxIDkgMzYuMDUgOXptOS43NTcgMTUuMDk1YzIuNjUxIDAgNC40MTggMS43NjcgNC40MTggNC40MThzLTEuNzY3IDQuNDE4LTQuNDE4IDQuNDE4LTQuNDE4LTEuNzY3LTQuNDE4LTQuNDE4IDEuNzY3LTQuNDE4IDQuNDE4LTQuNDE4em0tMTkuNDc5IDBjMi42NTEgMCA0LjQxOCAxLjc2NyA0LjQxOCA0LjQxOHMtMS43NjcgNC40MTgtNC40MTggNC40MTgtNC40MTgtMS43NjctNC40MTgtNC40MTggMS43NjctNC40MTggNC40MTgtNC40MTh6bTkuNzIyIDMwLjQzNmMtMTQuMDkzIDAtMTYuMjYxLTEzLjAwOS0xNi4yNjEtMTMuMDA5aDMyLjUyMlM1MC4xNDMgNTQuNTMxIDM2LjA1IDU0LjUzMXoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctaW5zZXJ0LWF1ZGlvIiB2aWV3Qm94PSIwIDAgOCA4Ij48cGF0aCBkPSJNMy4zNDQgMEwyIDJIMHY0aDJsMS4zNDQgMkg0VjBoLS42NTZ6TTUgMXYxYy4xNTIgMCAuMzEzLjAyNi40NjkuMDYzSDUuNWMuODYuMjE1IDEuNS45OTUgMS41IDEuOTM4YTEuOTkgMS45OSAwIDAgMS0yIDIuMDAxdjFhMi45ODggMi45ODggMCAwIDAgMy0zIDIuOTg4IDIuOTg4IDAgMCAwLTMtM3ptMCAydjJsLjI1LS4wMzFDNS42ODMgNC44NTEgNiA0LjQ2MiA2IDRjMC0uNDQ2LS4zMjUtLjgxOS0uNzUtLjkzOHYtLjAzMWgtLjAzMUw1IDN6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLW5vZW1iZWQiIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZD0iTTMxLjUgMzMuNlYyNWwxMSAxMS0xMSAxMXYtOC44eiIvPjxwYXRoIGQ9Ik02NCAxN3YzOEg4VjE3aDU2bTgtOEgwdjU0aDcyVjl6Ii8+PC9zeW1ib2w+PHN5bWJvbCBpZD0idHJ1bWJvd3lnLXByZWZvcm1hdHRlZCIgdmlld0JveD0iMCAwIDcyIDcyIj48cGF0aCBkPSJNMTAuMyAzMy41Yy40IDAgLjktLjEgMS41LS4yczEuMi0uMyAxLjgtLjdjLjYtLjMgMS4xLS44IDEuNS0xLjMuNC0uNS42LTEuMy42LTIuMVYxNy4xYzAtMS40LjMtMi42LjgtMy42czEuMi0xLjkgMi0yLjVjLjgtLjcgMS42LTEuMiAyLjUtMS41LjktLjMgMS42LS41IDIuMi0uNWg1LjN2NS4zaC0zLjJjLS43IDAtMS4zLjEtMS44LjQtLjQuMy0uOC42LTEgMS0uMi40LS40LjktLjQgMS4zLS4xLjUtLjEuOS0uMSAxLjR2MTEuNGMwIDEuMi0uMiAyLjEtLjcgMi45LS41LjgtMSAxLjQtMS43IDEuOC0uNi40LTEuMy44LTIgMS0uNy4yLTEuMy4zLTEuNy40di4xYy41IDAgMSAuMSAxLjcuMy43LjIgMS4zLjUgMiAuOS42LjUgMS4yIDEuMSAxLjcgMS45LjUuOC43IDIgLjcgMy40djExLjFjMCAuNCAwIC45LjEgMS40LjEuNS4yLjkuNCAxLjNzLjYuNyAxIDFjLjQuMyAxIC40IDEuOC40aDMuMlY2M2gtNS4zYy0uNiAwLTEuNC0uMi0yLjItLjUtLjktLjMtMS43LS44LTIuNS0xLjVzLTEuNC0xLjUtMi0yLjVjLS41LTEtLjgtMi4yLS44LTMuNlY0My41YzAtLjktLjItMS43LS42LTIuMy0uNC0uNi0uOS0xLjEtMS41LTEuNS0uNi0uNC0xLjItLjYtMS44LS43LS42LS4xLTEuMS0uMi0xLjUtLjJ2LTUuM3pNNjEuOCAzOC43Yy0uNCAwLTEgLjEtMS42LjItLjYuMS0xLjIuNC0xLjguNy0uNi4zLTEuMS43LTEuNSAxLjMtLjQuNS0uNiAxLjMtLjYgMi4xdjEyLjFjMCAxLjQtLjMgMi42LS44IDMuNnMtMS4yIDEuOS0yIDIuNWMtLjguNy0xLjYgMS4yLTIuNSAxLjUtLjkuMy0xLjYuNS0yLjIuNWgtNS4zdi01LjNoMy4yYy43IDAgMS4zLS4xIDEuOC0uNC40LS4zLjgtLjYgMS0xIC4yLS40LjQtLjkuNC0xLjMuMS0uNS4xLS45LjEtMS40VjQyLjNjMC0xLjIuMi0yLjEuNy0yLjkuNS0uOCAxLTEuNCAxLjctMS44LjYtLjQgMS4zLS44IDItMSAuNy0uMiAxLjMtLjMgMS43LS40di0uMWMtLjUgMC0xLS4xLTEuNy0uMy0uNy0uMi0xLjMtLjUtMi0uOS0uNi0uNC0xLjItMS4xLTEuNy0xLjktLjUtLjgtLjctMi0uNy0zLjRWMTguNWMwLS40IDAtLjktLjEtMS40LS4xLS41LS4yLS45LS40LTEuM3MtLjYtLjctMS0xYy0uNC0uMy0xLS40LTEuOC0uNGgtMy4yVjkuMWg1LjNjLjYgMCAxLjQuMiAyLjIuNS45LjMgMS43LjggMi41IDEuNXMxLjQgMS41IDIgMi41Yy41IDEgLjggMi4yLjggMy42djExLjZjMCAuOS4yIDEuNy42IDIuMy40LjYuOSAxLjEgMS41IDEuNS42LjQgMS4yLjYgMS44LjcuNi4xIDEuMi4yIDEuNi4ydjUuMnoiLz48L3N5bWJvbD48c3ltYm9sIGlkPSJ0cnVtYm93eWctdXBsb2FkIiB2aWV3Qm94PSIwIDAgNzIgNzIiPjxwYXRoIGQ9Ik02NCAyN3YyOEg4VjI3SDB2MzZoNzJWMjdoLTh6Ii8+PHBhdGggZD0iTTMyLjEgNi43aDh2MzMuNmgtOHoiLz48cGF0aCBkPSJNNDggMzUuOUwzNiA0OS42IDI0IDM2aDI0eiIvPjwvc3ltYm9sPjwvc3ZnPg=="
 
 /***/ }),
-/* 309 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(342)
+__webpack_require__(347)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(178),
   /* template */
-  __webpack_require__(331),
+  __webpack_require__(336),
   /* scopeId */
   null,
   /* cssModules */
@@ -57389,18 +59065,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 310 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(338)
+__webpack_require__(343)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(179),
   /* template */
-  __webpack_require__(323),
+  __webpack_require__(328),
   /* scopeId */
   null,
   /* cssModules */
@@ -57427,14 +59103,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 311 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(180),
   /* template */
-  __webpack_require__(335),
+  __webpack_require__(340),
   /* scopeId */
   null,
   /* cssModules */
@@ -57461,18 +59137,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 312 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(363)
+__webpack_require__(348)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(181),
   /* template */
-  __webpack_require__(332),
+  __webpack_require__(337),
   /* scopeId */
   null,
   /* cssModules */
@@ -57499,18 +59175,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 313 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(343)
+__webpack_require__(349)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(182),
   /* template */
-  __webpack_require__(333),
+  __webpack_require__(338),
   /* scopeId */
   null,
   /* cssModules */
@@ -57537,14 +59213,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 314 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(184),
   /* template */
-  __webpack_require__(336),
+  __webpack_require__(341),
   /* scopeId */
   null,
   /* cssModules */
@@ -57571,18 +59247,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 315 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(339)
+__webpack_require__(344)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(185),
   /* template */
-  __webpack_require__(325),
+  __webpack_require__(330),
   /* scopeId */
   null,
   /* cssModules */
@@ -57609,18 +59285,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 316 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(344)
+__webpack_require__(350)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(186),
   /* template */
-  __webpack_require__(334),
+  __webpack_require__(339),
   /* scopeId */
   null,
   /* cssModules */
@@ -57647,14 +59323,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 317 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(187),
   /* template */
-  __webpack_require__(324),
+  __webpack_require__(329),
   /* scopeId */
   null,
   /* cssModules */
@@ -57681,18 +59357,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 318 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(341)
+__webpack_require__(346)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(188),
   /* template */
-  __webpack_require__(330),
+  __webpack_require__(335),
   /* scopeId */
   null,
   /* cssModules */
@@ -57719,14 +59395,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 319 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(189),
   /* template */
-  __webpack_require__(329),
+  __webpack_require__(334),
   /* scopeId */
   null,
   /* cssModules */
@@ -57753,18 +59429,18 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 320 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(340)
+__webpack_require__(345)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(190),
   /* template */
-  __webpack_require__(328),
+  __webpack_require__(333),
   /* scopeId */
   null,
   /* cssModules */
@@ -57791,14 +59467,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 321 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(191),
   /* template */
-  __webpack_require__(327),
+  __webpack_require__(332),
   /* scopeId */
   null,
   /* cssModules */
@@ -57825,14 +59501,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 322 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(192),
   /* template */
-  __webpack_require__(326),
+  __webpack_require__(331),
   /* scopeId */
   null,
   /* cssModules */
@@ -57859,7 +59535,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 323 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58009,7 +59685,7 @@ if (false) {
 }
 
 /***/ }),
-/* 324 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58026,7 +59702,7 @@ if (false) {
 }
 
 /***/ }),
-/* 325 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58107,7 +59783,7 @@ if (false) {
 }
 
 /***/ }),
-/* 326 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58150,7 +59826,7 @@ if (false) {
 }
 
 /***/ }),
-/* 327 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58188,7 +59864,7 @@ if (false) {
 }
 
 /***/ }),
-/* 328 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58211,7 +59887,7 @@ if (false) {
 }
 
 /***/ }),
-/* 329 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58259,7 +59935,7 @@ if (false) {
 }
 
 /***/ }),
-/* 330 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58309,7 +59985,7 @@ if (false) {
 }
 
 /***/ }),
-/* 331 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58361,7 +60037,7 @@ if (false) {
 }
 
 /***/ }),
-/* 332 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58422,7 +60098,7 @@ if (false) {
 }
 
 /***/ }),
-/* 333 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58465,7 +60141,7 @@ if (false) {
 }
 
 /***/ }),
-/* 334 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58590,7 +60266,7 @@ if (false) {
 }
 
 /***/ }),
-/* 335 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58657,7 +60333,7 @@ if (false) {
 }
 
 /***/ }),
-/* 336 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58717,7 +60393,7 @@ if (false) {
 }
 
 /***/ }),
-/* 337 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -58749,7 +60425,7 @@ if (false) {
 }
 
 /***/ }),
-/* 338 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58759,7 +60435,7 @@ var content = __webpack_require__(193);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("6dec5da1", content, false);
+var update = __webpack_require__(5)("6dec5da1", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58775,7 +60451,7 @@ if(false) {
 }
 
 /***/ }),
-/* 339 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58785,7 +60461,7 @@ var content = __webpack_require__(194);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("0eaba284", content, false);
+var update = __webpack_require__(5)("0eaba284", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58801,7 +60477,7 @@ if(false) {
 }
 
 /***/ }),
-/* 340 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58811,7 +60487,7 @@ var content = __webpack_require__(195);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("ef758a4c", content, false);
+var update = __webpack_require__(5)("ef758a4c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58827,7 +60503,7 @@ if(false) {
 }
 
 /***/ }),
-/* 341 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58837,7 +60513,7 @@ var content = __webpack_require__(196);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("5831f142", content, false);
+var update = __webpack_require__(5)("5831f142", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58853,7 +60529,7 @@ if(false) {
 }
 
 /***/ }),
-/* 342 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58863,7 +60539,7 @@ var content = __webpack_require__(197);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("44ab666a", content, false);
+var update = __webpack_require__(5)("44ab666a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58879,7 +60555,7 @@ if(false) {
 }
 
 /***/ }),
-/* 343 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -58889,7 +60565,33 @@ var content = __webpack_require__(198);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("4b0bd46e", content, false);
+var update = __webpack_require__(5)("062a7282", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(199);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("4b0bd46e", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58905,17 +60607,17 @@ if(false) {
 }
 
 /***/ }),
-/* 344 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(199);
+var content = __webpack_require__(200);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("274fdfb2", content, false);
+var update = __webpack_require__(5)("274fdfb2", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58931,17 +60633,17 @@ if(false) {
 }
 
 /***/ }),
-/* 345 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(200);
+var content = __webpack_require__(201);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(6)("f19e078e", content, false);
+var update = __webpack_require__(5)("f19e078e", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -58957,7 +60659,7 @@ if(false) {
 }
 
 /***/ }),
-/* 346 */
+/* 352 */
 /***/ (function(module, exports) {
 
 /**
@@ -58990,7 +60692,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 347 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -61575,7 +63277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 //# sourceMappingURL=vue-upload-component.js.map
 
 /***/ }),
-/* 348 */
+/* 354 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61643,1717 +63345,6 @@ if (document.querySelector('#field-layout')) {
     });
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 357 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(jQuery) {/*
- * # Semantic UI 0.0.8 - Calendar
- * http://github.com/semantic-org/semantic-ui/
- *
- *
- * Released under the MIT license
- * http://opensource.org/licenses/MIT
- */
-
-;
-(function ($, window, document, undefined) {
-
-  "use strict";
-
-  window = (typeof window != 'undefined' && window.Math == Math)
-    ? window
-    : (typeof self != 'undefined' && self.Math == Math)
-    ? self
-    : Function('return this')()
-  ;
-
-  $.fn.calendar = function (parameters) {
-
-    var
-      $allModules = $(this),
-
-      moduleSelector = $allModules.selector || '',
-
-      time = new Date().getTime(),
-      performance = [],
-
-      query = arguments[0],
-      methodInvoked = (typeof query == 'string'),
-      queryArguments = [].slice.call(arguments, 1),
-      returnedValue
-      ;
-
-    $allModules
-      .each(function () {
-        var
-          settings = ( $.isPlainObject(parameters) )
-            ? $.extend(true, {}, $.fn.calendar.settings, parameters)
-            : $.extend({}, $.fn.calendar.settings),
-
-          className = settings.className,
-          namespace = settings.namespace,
-          selector = settings.selector,
-          formatter = settings.formatter,
-          parser = settings.parser,
-          metadata = settings.metadata,
-          error = settings.error,
-
-          eventNamespace = '.' + namespace,
-          moduleNamespace = 'module-' + namespace,
-
-          $module = $(this),
-          $input = $module.find(selector.input),
-          $container = $module.find(selector.popup),
-          $activator = $module.find(selector.activator),
-
-          element = this,
-          instance = $module.data(moduleNamespace),
-
-          isTouch,
-          isTouchDown = false,
-          focusDateUsedForRange = false,
-          module
-          ;
-
-        module = {
-
-          initialize: function () {
-            module.debug('Initializing calendar for', element);
-
-            isTouch = module.get.isTouch();
-            module.setup.popup();
-            module.setup.inline();
-            module.setup.input();
-            module.setup.date();
-            module.create.calendar();
-
-            module.bind.events();
-            module.instantiate();
-          },
-
-          instantiate: function () {
-            module.verbose('Storing instance of calendar');
-            instance = module;
-            $module.data(moduleNamespace, instance);
-          },
-
-          destroy: function () {
-            module.verbose('Destroying previous calendar for', element);
-            $module.removeData(moduleNamespace);
-            module.unbind.events();
-          },
-
-          setup: {
-            popup: function () {
-              if (settings.inline) {
-                return;
-              }
-              if (!$activator.length) {
-                $activator = $module.children().first();
-                if (!$activator.length) {
-                  return;
-                }
-              }
-              if ($.fn.popup === undefined) {
-                module.error(error.popup);
-                return;
-              }
-              if (!$container.length) {
-                //prepend the popup element to the activator's parent so that it has less chance of messing with
-                //the styling (eg input action button needs to be the last child to have correct border radius)
-                $container = $('<div/>').addClass(className.popup).prependTo($activator.parent());
-              }
-              $container.addClass(className.calendar);
-              var onVisible = settings.onVisible;
-              var onHidden = settings.onHidden;
-              if (!$input.length) {
-                //no input, $container has to handle focus/blur
-                $container.attr('tabindex', '0');
-                onVisible = function () {
-                  module.focus();
-                  return settings.onVisible.apply($container, arguments);
-                };
-                onHidden = function () {
-                  module.blur();
-                  return settings.onHidden.apply($container, arguments);
-                };
-              }
-              var onShow = function () {
-                //reset the focus date onShow
-                module.set.focusDate(module.get.date());
-                module.set.mode(settings.startMode);
-                return settings.onShow.apply($container, arguments);
-              };
-              var on = settings.on || ($input.length ? 'focus' : 'click');
-              var options = $.extend({}, settings.popupOptions, {
-                popup: $container,
-                on: on,
-                hoverable: on === 'hover',
-                onShow: onShow,
-                onVisible: onVisible,
-                onHide: settings.onHide,
-                onHidden: onHidden
-              });
-              module.popup(options);
-            },
-            inline: function () {
-              if ($activator.length && !settings.inline) {
-                return;
-              }
-              $container = $('<div/>').addClass(className.calendar).appendTo($module);
-              if (!$input.length) {
-                $container.attr('tabindex', '0');
-              }
-            },
-            input: function () {
-              if (settings.touchReadonly && $input.length && isTouch) {
-                $input.prop('readonly', true);
-              }
-            },
-            date: function () {
-              if ($input.length) {
-                var val = $input.val();
-                var date = parser.date(val, settings);
-                module.set.date(date, settings.formatInput, false);
-              }
-            }
-          },
-
-          create: {
-            calendar: function () {
-              var i, r, c, p, row, cell, pageGrid;
-
-              var mode = module.get.mode();
-              var today = new Date();
-              var date = module.get.date();
-              var focusDate = module.get.focusDate();
-              var display = focusDate || date || settings.initialDate || today;
-              display = module.helper.dateInRange(display);
-
-              if (!focusDate) {
-                focusDate = display;
-                module.set.focusDate(focusDate, false, false);
-              }
-
-              var isYear = mode === 'year';
-              var isMonth = mode === 'month';
-              var isDay = mode === 'day';
-              var isHour = mode === 'hour';
-              var isMinute = mode === 'minute';
-              var isTimeOnly = settings.type === 'time';
-
-              var multiMonth = Math.max(settings.multiMonth, 1);
-              var monthOffset = !isDay ? 0 : module.get.monthOffset();
-
-              var minute = display.getMinutes();
-              var hour = display.getHours();
-              var day = display.getDate();
-              var startMonth = display.getMonth() + monthOffset;
-              var year = display.getFullYear();
-
-              var columns = isDay ? 7 : isHour ? 4 : 3;
-              var columnsString = columns === 7 ? 'seven' : columns === 4 ? 'four' : 'three';
-              var rows = isDay || isHour ? 6 : 4;
-              var pages = isDay ? multiMonth : 1;
-
-              var container = $container;
-              container.empty();
-              if (pages > 1) {
-                pageGrid = $('<div/>').addClass(className.grid).appendTo(container);
-              }
-
-              for (p = 0; p < pages; p++) {
-                if (pages > 1) {
-                  var pageColumn = $('<div/>').addClass(className.column).appendTo(pageGrid);
-                  container = pageColumn;
-                }
-
-                var month = startMonth + p;
-                var firstMonthDayColumn = (new Date(year, month, 1).getDay() - settings.firstDayOfWeek % 7 + 7) % 7;
-                if (!settings.constantHeight && isDay) {
-                  var requiredCells = new Date(year, month + 1, 0).getDate() + firstMonthDayColumn;
-                  rows = Math.ceil(requiredCells / 7);
-                }
-
-                var yearChange = isYear ? 10 : isMonth ? 1 : 0;
-                var monthChange = isDay ? 1 : 0;
-                var dayChange = isHour || isMinute ? 1 : 0;
-                var prevNextDay = isHour || isMinute ? day : 1;
-                var prevDate = new Date(year - yearChange, month - monthChange, prevNextDay - dayChange, hour);
-                var nextDate = new Date(year + yearChange, month + monthChange, prevNextDay + dayChange, hour);
-
-                var prevLast = isYear ? new Date(Math.ceil(year / 10) * 10 - 9, 0, 0) :
-                  isMonth ? new Date(year, 0, 0) : isDay ? new Date(year, month, 0) : new Date(year, month, day, -1);
-                var nextFirst = isYear ? new Date(Math.ceil(year / 10) * 10 + 1, 0, 1) :
-                  isMonth ? new Date(year + 1, 0, 1) : isDay ? new Date(year, month + 1, 1) : new Date(year, month, day + 1);
-
-                var table = $('<table/>').addClass(className.table).addClass(columnsString + ' column').addClass(mode).appendTo(container);
-
-                //no header for time-only mode
-                if (!isTimeOnly) {
-                  var thead = $('<thead/>').appendTo(table);
-
-                  row = $('<tr/>').appendTo(thead);
-                  cell = $('<th/>').attr('colspan', '' + columns).appendTo(row);
-
-                  var headerDate = isYear || isMonth ? new Date(year, 0, 1) :
-                    isDay ? new Date(year, month, 1) : new Date(year, month, day, hour, minute);
-                  var headerText = $('<span/>').addClass(className.link).appendTo(cell);
-                  headerText.text(formatter.header(headerDate, mode, settings));
-                  var newMode = isMonth ? (settings.disableYear ? 'day' : 'year') :
-                    isDay ? (settings.disableMonth ? 'year' : 'month') : 'day';
-                  headerText.data(metadata.mode, newMode);
-
-                  if (p === 0) {
-                    var prev = $('<span/>').addClass(className.prev).appendTo(cell);
-                    prev.data(metadata.focusDate, prevDate);
-                    prev.toggleClass(className.disabledCell, !module.helper.isDateInRange(prevLast, mode));
-                    $('<i/>').addClass(className.prevIcon).appendTo(prev);
-                  }
-
-                  if (p === pages - 1) {
-                    var next = $('<span/>').addClass(className.next).appendTo(cell);
-                    next.data(metadata.focusDate, nextDate);
-                    next.toggleClass(className.disabledCell, !module.helper.isDateInRange(nextFirst, mode));
-                    $('<i/>').addClass(className.nextIcon).appendTo(next);
-                  }
-
-                  if (isDay) {
-                    row = $('<tr/>').appendTo(thead);
-                    for (i = 0; i < columns; i++) {
-                      cell = $('<th/>').appendTo(row);
-                      cell.text(formatter.dayColumnHeader((i + settings.firstDayOfWeek) % 7, settings));
-                    }
-                  }
-                }
-
-                var tbody = $('<tbody/>').appendTo(table);
-                i = isYear ? Math.ceil(year / 10) * 10 - 9 : isDay ? 1 - firstMonthDayColumn : 0;
-                for (r = 0; r < rows; r++) {
-                  row = $('<tr/>').appendTo(tbody);
-                  for (c = 0; c < columns; c++, i++) {
-                    var cellDate = isYear ? new Date(i, month, 1, hour, minute) :
-                      isMonth ? new Date(year, i, 1, hour, minute) : isDay ? new Date(year, month, i, hour, minute) :
-                        isHour ? new Date(year, month, day, i) : new Date(year, month, day, hour, i * 5);
-                    var cellText = isYear ? i :
-                      isMonth ? settings.text.monthsShort[i] : isDay ? cellDate.getDate() :
-                        formatter.time(cellDate, settings, true);
-                    cell = $('<td/>').addClass(className.cell).appendTo(row);
-                    cell.text(cellText);
-                    cell.data(metadata.date, cellDate);
-                    var adjacent = isDay && cellDate.getMonth() !== ((month + 12) % 12);
-                    var disabled = adjacent || !module.helper.isDateInRange(cellDate, mode) || settings.isDisabled(cellDate, mode);
-                    var active = module.helper.dateEqual(cellDate, date, mode);
-                    var isToday = module.helper.dateEqual(cellDate, today, mode);
-                    cell.toggleClass(className.adjacentCell, adjacent);
-                    cell.toggleClass(className.disabledCell, disabled);
-                    cell.toggleClass(className.activeCell, active && !adjacent);
-                    if (!isHour && !isMinute) {
-                      cell.toggleClass(className.todayCell, !adjacent && isToday);
-                    }
-
-                    // Allow for external modifications of each cell
-                    var cellOptions = {
-                      mode: mode,
-                      adjacent: adjacent,
-                      disabled: disabled,
-                      active: active,
-                      today: isToday
-                    };
-                    formatter.cell(cell, cellDate, cellOptions);
-
-                    if (module.helper.dateEqual(cellDate, focusDate, mode)) {
-                      //ensure that the focus date is exactly equal to the cell date
-                      //so that, if selected, the correct value is set
-                      module.set.focusDate(cellDate, false, false);
-                    }
-                  }
-                }
-
-                if (settings.today) {
-                  var todayRow = $('<tr/>').appendTo(tbody);
-                  var todayButton = $('<td/>').attr('colspan', '' + columns).addClass(className.today).appendTo(todayRow);
-                  todayButton.text(formatter.today(settings));
-                  todayButton.data(metadata.date, today);
-                }
-
-                module.update.focus(false, table);
-              }
-            }
-          },
-
-          update: {
-            focus: function (updateRange, container) {
-              container = container || $container;
-              var mode = module.get.mode();
-              var date = module.get.date();
-              var focusDate = module.get.focusDate();
-              var startDate = module.get.startDate();
-              var endDate = module.get.endDate();
-              var rangeDate = (updateRange ? focusDate : null) || date || (!isTouch ? focusDate : null);
-
-              container.find('td').each(function () {
-                var cell = $(this);
-                var cellDate = cell.data(metadata.date);
-                if (!cellDate) {
-                  return;
-                }
-                var disabled = cell.hasClass(className.disabledCell);
-                var active = cell.hasClass(className.activeCell);
-                var adjacent = cell.hasClass(className.adjacentCell);
-                var focused = module.helper.dateEqual(cellDate, focusDate, mode);
-                var inRange = !rangeDate ? false :
-                  ((!!startDate && module.helper.isDateInRange(cellDate, mode, startDate, rangeDate)) ||
-                  (!!endDate && module.helper.isDateInRange(cellDate, mode, rangeDate, endDate)));
-                cell.toggleClass(className.focusCell, focused && (!isTouch || isTouchDown) && !adjacent);
-                cell.toggleClass(className.rangeCell, inRange && !active && !disabled);
-              });
-            }
-          },
-
-          refresh: function () {
-            module.create.calendar();
-          },
-
-          bind: {
-            events: function () {
-              $container.on('mousedown' + eventNamespace, module.event.mousedown);
-              $container.on('touchstart' + eventNamespace, module.event.mousedown);
-              $container.on('mouseup' + eventNamespace, module.event.mouseup);
-              $container.on('touchend' + eventNamespace, module.event.mouseup);
-              $container.on('mouseover' + eventNamespace, module.event.mouseover);
-              if ($input.length) {
-                $input.on('input' + eventNamespace, module.event.inputChange);
-                $input.on('focus' + eventNamespace, module.event.inputFocus);
-                $input.on('blur' + eventNamespace, module.event.inputBlur);
-                $input.on('click' + eventNamespace, module.event.inputClick);
-                $input.on('keydown' + eventNamespace, module.event.keydown);
-              } else {
-                $container.on('keydown' + eventNamespace, module.event.keydown);
-              }
-            }
-          },
-
-          unbind: {
-            events: function () {
-              $container.off(eventNamespace);
-              if ($input.length) {
-                $input.off(eventNamespace);
-              }
-            }
-          },
-
-          event: {
-            mouseover: function (event) {
-              var target = $(event.target);
-              var date = target.data(metadata.date);
-              var mousedown = event.buttons === 1;
-              if (date) {
-                module.set.focusDate(date, false, true, mousedown);
-              }
-            },
-            mousedown: function (event) {
-              if ($input.length) {
-                //prevent the mousedown on the calendar causing the input to lose focus
-                event.preventDefault();
-              }
-              isTouchDown = event.type.indexOf('touch') >= 0;
-              var target = $(event.target);
-              var date = target.data(metadata.date);
-              if (date) {
-                module.set.focusDate(date, false, true, true);
-              }
-            },
-            mouseup: function (event) {
-              //ensure input has focus so that it receives keydown events for calendar navigation
-              module.focus();
-              event.preventDefault();
-              event.stopPropagation();
-              isTouchDown = false;
-              var target = $(event.target);
-              var parent = target.parent();
-              if (parent.data(metadata.date) || parent.data(metadata.focusDate) || parent.data(metadata.mode)) {
-                //clicked on a child element, switch to parent (used when clicking directly on prev/next <i> icon element)
-                target = parent;
-              }
-              var date = target.data(metadata.date);
-              var focusDate = target.data(metadata.focusDate);
-              var mode = target.data(metadata.mode);
-              if (date) {
-                var forceSet = target.hasClass(className.today);
-                module.selectDate(date, forceSet);
-              }
-              else if (focusDate) {
-                module.set.focusDate(focusDate);
-              }
-              else if (mode) {
-                module.set.mode(mode);
-              }
-            },
-            keydown: function (event) {
-              if (event.keyCode === 27 || event.keyCode === 9) {
-                //esc || tab
-                module.popup('hide');
-              }
-
-              if (module.popup('is visible')) {
-                if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
-                  //arrow keys
-                  var mode = module.get.mode();
-                  var bigIncrement = mode === 'day' ? 7 : mode === 'hour' ? 4 : 3;
-                  var increment = event.keyCode === 37 ? -1 : event.keyCode === 38 ? -bigIncrement : event.keyCode == 39 ? 1 : bigIncrement;
-                  increment *= mode === 'minute' ? 5 : 1;
-                  var focusDate = module.get.focusDate() || module.get.date() || new Date();
-                  var year = focusDate.getFullYear() + (mode === 'year' ? increment : 0);
-                  var month = focusDate.getMonth() + (mode === 'month' ? increment : 0);
-                  var day = focusDate.getDate() + (mode === 'day' ? increment : 0);
-                  var hour = focusDate.getHours() + (mode === 'hour' ? increment : 0);
-                  var minute = focusDate.getMinutes() + (mode === 'minute' ? increment : 0);
-                  var newFocusDate = new Date(year, month, day, hour, minute);
-                  if (settings.type === 'time') {
-                    newFocusDate = module.helper.mergeDateTime(focusDate, newFocusDate);
-                  }
-                  if (module.helper.isDateInRange(newFocusDate, mode)) {
-                    module.set.focusDate(newFocusDate);
-                  }
-                } else if (event.keyCode === 13) {
-                  //enter
-                  var mode = module.get.mode();
-                  var date = module.get.focusDate();
-                  if (date && !settings.isDisabled(date, mode)) {
-                    module.selectDate(date);
-                  }
-                  //disable form submission:
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-              }
-
-              if (event.keyCode === 38 || event.keyCode === 40) {
-                //arrow-up || arrow-down
-                event.preventDefault(); //don't scroll
-                module.popup('show');
-              }
-            },
-            inputChange: function () {
-              var val = $input.val();
-              var date = parser.date(val, settings);
-              module.set.date(date, false);
-            },
-            inputFocus: function () {
-              $container.addClass(className.active);
-            },
-            inputBlur: function () {
-              $container.removeClass(className.active);
-              if (settings.formatInput) {
-                var date = module.get.date();
-                var text = formatter.datetime(date, settings);
-                $input.val(text);
-              }
-            },
-            inputClick: function () {
-              module.popup('show');
-            }
-          },
-
-          get: {
-            date: function () {
-              return $module.data(metadata.date) || null;
-            },
-            focusDate: function () {
-              return $module.data(metadata.focusDate) || null;
-            },
-            startDate: function () {
-              var startModule = module.get.calendarModule(settings.startCalendar);
-              return (startModule ? startModule.get.date() : $module.data(metadata.startDate)) || null;
-            },
-            endDate: function () {
-              var endModule = module.get.calendarModule(settings.endCalendar);
-              return (endModule ? endModule.get.date() : $module.data(metadata.endDate)) || null;
-            },
-            monthOffset: function () {
-              return $module.data(metadata.monthOffset) || 0;
-            },
-            mode: function () {
-              //only returns valid modes for the current settings
-              var mode = $module.data(metadata.mode) || settings.startMode;
-              var validModes = module.get.validModes();
-              if ($.inArray(mode, validModes) >= 0) {
-                return mode;
-              }
-              return settings.type === 'time' ? 'hour' :
-                settings.type === 'month' ? 'month' :
-                  settings.type === 'year' ? 'year' : 'day';
-            },
-            validModes: function () {
-              var validModes = [];
-              if (settings.type !== 'time') {
-                if (!settings.disableYear || settings.type === 'year') {
-                  validModes.push('year');
-                }
-                if (!(settings.disableMonth || settings.type === 'year') || settings.type === 'month') {
-                  validModes.push('month');
-                }
-                if (settings.type.indexOf('date') >= 0) {
-                  validModes.push('day');
-                }
-              }
-              if (settings.type.indexOf('time') >= 0) {
-                validModes.push('hour');
-                if (!settings.disableMinute) {
-                  validModes.push('minute');
-                }
-              }
-              return validModes;
-            },
-            isTouch: function () {
-              try {
-                document.createEvent('TouchEvent');
-                return true;
-              }
-              catch (e) {
-                return false;
-              }
-            },
-            calendarModule: function (selector) {
-              if (!selector) {
-                return null;
-              }
-              if (!(selector instanceof $)) {
-                selector = $module.parent().children(selector).first();
-              }
-              //assume range related calendars are using the same namespace
-              return selector.data(moduleNamespace);
-            }
-          },
-
-          set: {
-            date: function (date, updateInput, fireChange) {
-              updateInput = updateInput !== false;
-              fireChange = fireChange !== false;
-              date = module.helper.sanitiseDate(date);
-              date = module.helper.dateInRange(date);
-
-              var mode = module.get.mode();
-              var text = formatter.datetime(date, settings);
-              if (fireChange && settings.onChange.call(element, date, text, mode) === false) {
-                return false;
-              }
-
-              module.set.focusDate(date);
-
-              if (settings.isDisabled(date, mode)) {
-                return false;
-              }
-
-              var endDate = module.get.endDate();
-              if (!!endDate && !!date && date > endDate) {
-                //selected date is greater than end date in range, so clear end date
-                module.set.endDate(undefined);
-              }
-              module.set.dataKeyValue(metadata.date, date);
-
-              if (updateInput && $input.length) {
-                $input.val(text);
-              }
-            },
-            startDate: function (date, refreshCalendar) {
-              date = module.helper.sanitiseDate(date);
-              var startModule = module.get.calendarModule(settings.startCalendar);
-              if (startModule) {
-                startModule.set.date(date);
-              }
-              module.set.dataKeyValue(metadata.startDate, date, refreshCalendar);
-            },
-            endDate: function (date, refreshCalendar) {
-              date = module.helper.sanitiseDate(date);
-              var endModule = module.get.calendarModule(settings.endCalendar);
-              if (endModule) {
-                endModule.set.date(date);
-              }
-              module.set.dataKeyValue(metadata.endDate, date, refreshCalendar);
-            },
-            focusDate: function (date, refreshCalendar, updateFocus, updateRange) {
-              date = module.helper.sanitiseDate(date);
-              date = module.helper.dateInRange(date);
-              var isDay = module.get.mode() === 'day';
-              var oldFocusDate = module.get.focusDate();
-              if (isDay && date && oldFocusDate) {
-                var yearDelta = date.getFullYear() - oldFocusDate.getFullYear();
-                var monthDelta = yearDelta * 12 + date.getMonth() - oldFocusDate.getMonth();
-                if (monthDelta) {
-                  var monthOffset = module.get.monthOffset() - monthDelta;
-                  module.set.monthOffset(monthOffset, false);
-                }
-              }
-              var changed = module.set.dataKeyValue(metadata.focusDate, date, refreshCalendar);
-              updateFocus = (updateFocus !== false && changed && refreshCalendar === false) || focusDateUsedForRange != updateRange;
-              focusDateUsedForRange = updateRange;
-              if (updateFocus) {
-                module.update.focus(updateRange);
-              }
-            },
-            monthOffset: function (monthOffset, refreshCalendar) {
-              var multiMonth = Math.max(settings.multiMonth, 1);
-              monthOffset = Math.max(1 - multiMonth, Math.min(0, monthOffset));
-              module.set.dataKeyValue(metadata.monthOffset, monthOffset, refreshCalendar);
-            },
-            mode: function (mode, refreshCalendar) {
-              module.set.dataKeyValue(metadata.mode, mode, refreshCalendar);
-            },
-            dataKeyValue: function (key, value, refreshCalendar) {
-              var oldValue = $module.data(key);
-              var equal = oldValue === value || (oldValue <= value && oldValue >= value); //equality test for dates and string objects
-              if (value) {
-                $module.data(key, value);
-              } else {
-                $module.removeData(key);
-              }
-              refreshCalendar = refreshCalendar !== false && !equal;
-              if (refreshCalendar) {
-                module.create.calendar();
-              }
-              return !equal;
-            }
-          },
-
-          selectDate: function (date, forceSet) {
-            var mode = module.get.mode();
-            var complete = forceSet || mode === 'minute' ||
-              (settings.disableMinute && mode === 'hour') ||
-              (settings.type === 'date' && mode === 'day') ||
-              (settings.type === 'month' && mode === 'month') ||
-              (settings.type === 'year' && mode === 'year');
-            if (complete) {
-              var canceled = module.set.date(date) === false;
-              if (!canceled && settings.closable) {
-                module.popup('hide');
-                //if this is a range calendar, show the end date calendar popup and focus the input
-                var endModule = module.get.calendarModule(settings.endCalendar);
-                if (endModule) {
-                  endModule.popup('show');
-                  endModule.focus();
-                }
-              }
-            } else {
-              var newMode = mode === 'year' ? (!settings.disableMonth ? 'month' : 'day') :
-                mode === 'month' ? 'day' : mode === 'day' ? 'hour' : 'minute';
-              module.set.mode(newMode);
-              if (mode === 'hour' || (mode === 'day' && module.get.date())) {
-                //the user has chosen enough to consider a valid date/time has been chosen
-                module.set.date(date);
-              } else {
-                module.set.focusDate(date);
-              }
-            }
-          },
-
-          changeDate: function (date) {
-            module.set.date(date);
-          },
-
-          clear: function () {
-            module.set.date(undefined);
-          },
-
-          popup: function () {
-            return $activator.popup.apply($activator, arguments);
-          },
-
-          focus: function () {
-            if ($input.length) {
-              $input.focus();
-            } else {
-              $container.focus();
-            }
-          },
-          blur: function () {
-            if ($input.length) {
-              $input.blur();
-            } else {
-              $container.blur();
-            }
-          },
-
-          helper: {
-            sanitiseDate: function (date) {
-              if (!date) {
-                return undefined;
-              }
-              if (!(date instanceof Date)) {
-                date = parser.date('' + date, settings);
-              }
-              if (isNaN(date.getTime())) {
-                return undefined;
-              }
-              return date;
-            },
-            dateDiff: function (date1, date2, mode) {
-              mode = mode || 'day';
-              var isTimeOnly = settings.type === 'time';
-              var isYear = mode === 'year';
-              var isYearOrMonth = isYear || mode === 'month';
-              var isMinute = mode === 'minute';
-              var isHourOrMinute = isMinute || mode === 'hour';
-              //only care about a minute accuracy of 5
-              date1 = new Date(
-                isTimeOnly ? 2000 : date1.getFullYear(),
-                isTimeOnly ? 0 : isYear ? 0 : date1.getMonth(),
-                isTimeOnly ? 1 : isYearOrMonth ? 1 : date1.getDate(),
-                !isHourOrMinute ? 0 : date1.getHours(),
-                !isMinute ? 0 : 5 * Math.floor(date1.getMinutes() / 5));
-              date2 = new Date(
-                isTimeOnly ? 2000 : date2.getFullYear(),
-                isTimeOnly ? 0 : isYear ? 0 : date2.getMonth(),
-                isTimeOnly ? 1 : isYearOrMonth ? 1 : date2.getDate(),
-                !isHourOrMinute ? 0 : date2.getHours(),
-                !isMinute ? 0 : 5 * Math.floor(date2.getMinutes() / 5));
-              return date2.getTime() - date1.getTime();
-            },
-            dateEqual: function (date1, date2, mode) {
-              return !!date1 && !!date2 && module.helper.dateDiff(date1, date2, mode) === 0;
-            },
-            isDateInRange: function (date, mode, minDate, maxDate) {
-              if (!minDate && !maxDate) {
-                var startDate = module.get.startDate();
-                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
-                maxDate = settings.maxDate;
-              }
-              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
-              return !(!date ||
-              (minDate && module.helper.dateDiff(date, minDate, mode) > 0) ||
-              (maxDate && module.helper.dateDiff(maxDate, date, mode) > 0));
-            },
-            dateInRange: function (date, minDate, maxDate) {
-              if (!minDate && !maxDate) {
-                var startDate = module.get.startDate();
-                minDate = startDate && settings.minDate ? new Date(Math.max(startDate, settings.minDate)) : startDate || settings.minDate;
-                maxDate = settings.maxDate;
-              }
-              minDate = minDate && new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate(), minDate.getHours(), 5 * Math.ceil(minDate.getMinutes() / 5));
-              var isTimeOnly = settings.type === 'time';
-              return !date ? date :
-                (minDate && module.helper.dateDiff(date, minDate, 'minute') > 0) ?
-                  (isTimeOnly ? module.helper.mergeDateTime(date, minDate) : minDate) :
-                  (maxDate && module.helper.dateDiff(maxDate, date, 'minute') > 0) ?
-                    (isTimeOnly ? module.helper.mergeDateTime(date, maxDate) : maxDate) :
-                    date;
-            },
-            mergeDateTime: function (date, time) {
-              return (!date || !time) ? time :
-                new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
-            }
-          },
-
-          setting: function (name, value) {
-            module.debug('Changing setting', name, value);
-            if ($.isPlainObject(name)) {
-              $.extend(true, settings, name);
-            }
-            else if (value !== undefined) {
-              if ($.isPlainObject(settings[name])) {
-                $.extend(true, settings[name], value);
-              }
-              else {
-                settings[name] = value;
-              }
-            }
-            else {
-              return settings[name];
-            }
-          },
-          internal: function (name, value) {
-            module.debug('Changing internal', name, value);
-            if (value !== undefined) {
-              if ($.isPlainObject(name)) {
-                $.extend(true, module, name);
-              }
-              else {
-                module[name] = value;
-              }
-            }
-            else {
-              return module[name];
-            }
-          },
-          debug: function () {
-            if (!settings.silent && settings.debug) {
-              if (settings.performance) {
-                module.performance.log(arguments);
-              }
-              else {
-                module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
-                module.debug.apply(console, arguments);
-              }
-            }
-          },
-          verbose: function () {
-            if (!settings.silent && settings.verbose && settings.debug) {
-              if (settings.performance) {
-                module.performance.log(arguments);
-              }
-              else {
-                module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
-                module.verbose.apply(console, arguments);
-              }
-            }
-          },
-          error: function () {
-            if (!settings.silent) {
-              module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
-              module.error.apply(console, arguments);
-            }
-          },
-          performance: {
-            log: function (message) {
-              var
-                currentTime,
-                executionTime,
-                previousTime
-                ;
-              if (settings.performance) {
-                currentTime = new Date().getTime();
-                previousTime = time || currentTime;
-                executionTime = currentTime - previousTime;
-                time = currentTime;
-                performance.push({
-                  'Name': message[0],
-                  'Arguments': [].slice.call(message, 1) || '',
-                  'Element': element,
-                  'Execution Time': executionTime
-                });
-              }
-              clearTimeout(module.performance.timer);
-              module.performance.timer = setTimeout(module.performance.display, 500);
-            },
-            display: function () {
-              var
-                title = settings.name + ':',
-                totalTime = 0
-                ;
-              time = false;
-              clearTimeout(module.performance.timer);
-              $.each(performance, function (index, data) {
-                totalTime += data['Execution Time'];
-              });
-              title += ' ' + totalTime + 'ms';
-              if (moduleSelector) {
-                title += ' \'' + moduleSelector + '\'';
-              }
-              if ((console.group !== undefined || console.table !== undefined) && performance.length > 0) {
-                console.groupCollapsed(title);
-                if (console.table) {
-                  console.table(performance);
-                }
-                else {
-                  $.each(performance, function (index, data) {
-                    console.log(data['Name'] + ': ' + data['Execution Time'] + 'ms');
-                  });
-                }
-                console.groupEnd();
-              }
-              performance = [];
-            }
-          },
-          invoke: function (query, passedArguments, context) {
-            var
-              object = instance,
-              maxDepth,
-              found,
-              response
-              ;
-            passedArguments = passedArguments || queryArguments;
-            context = element || context;
-            if (typeof query == 'string' && object !== undefined) {
-              query = query.split(/[\. ]/);
-              maxDepth = query.length - 1;
-              $.each(query, function (depth, value) {
-                var camelCaseValue = (depth != maxDepth)
-                    ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
-                    : query
-                  ;
-                if ($.isPlainObject(object[camelCaseValue]) && (depth != maxDepth)) {
-                  object = object[camelCaseValue];
-                }
-                else if (object[camelCaseValue] !== undefined) {
-                  found = object[camelCaseValue];
-                  return false;
-                }
-                else if ($.isPlainObject(object[value]) && (depth != maxDepth)) {
-                  object = object[value];
-                }
-                else if (object[value] !== undefined) {
-                  found = object[value];
-                  return false;
-                }
-                else {
-                  module.error(error.method, query);
-                  return false;
-                }
-              });
-            }
-            if ($.isFunction(found)) {
-              response = found.apply(context, passedArguments);
-            }
-            else if (found !== undefined) {
-              response = found;
-            }
-            if ($.isArray(returnedValue)) {
-              returnedValue.push(response);
-            }
-            else if (returnedValue !== undefined) {
-              returnedValue = [returnedValue, response];
-            }
-            else if (response !== undefined) {
-              returnedValue = response;
-            }
-            return found;
-          }
-        };
-
-        if (methodInvoked) {
-          if (instance === undefined) {
-            module.initialize();
-          }
-          module.invoke(query);
-        }
-        else {
-          if (instance !== undefined) {
-            instance.invoke('destroy');
-          }
-          module.initialize();
-        }
-      })
-    ;
-    return (returnedValue !== undefined)
-      ? returnedValue
-      : this
-      ;
-  };
-
-  $.fn.calendar.settings = {
-
-    name: 'Calendar',
-    namespace: 'calendar',
-
-    silent: false,
-    debug: false,
-    verbose: false,
-    performance: false,
-
-    type: 'datetime',     // picker type, can be 'datetime', 'date', 'time', 'month', or 'year'
-    firstDayOfWeek: 0,    // day for first day column (0 = Sunday)
-    constantHeight: true, // add rows to shorter months to keep day calendar height consistent (6 rows)
-    today: false,         // show a 'today/now' button at the bottom of the calendar
-    closable: true,       // close the popup after selecting a date/time
-    monthFirst: true,     // month before day when parsing/converting date from/to text
-    touchReadonly: true,  // set input to readonly on touch devices
-    inline: false,        // create the calendar inline instead of inside a popup
-    on: null,             // when to show the popup (defaults to 'focus' for input, 'click' for others)
-    initialDate: null,    // date to display initially when no date is selected (null = now)
-    startMode: false,     // display mode to start in, can be 'year', 'month', 'day', 'hour', 'minute' (false = 'day')
-    minDate: null,        // minimum date/time that can be selected, dates/times before are disabled
-    maxDate: null,        // maximum date/time that can be selected, dates/times after are disabled
-    ampm: true,           // show am/pm in time mode
-    disableYear: false,   // disable year selection mode
-    disableMonth: false,  // disable month selection mode
-    disableMinute: false, // disable minute selection mode
-    formatInput: true,    // format the input text upon input blur and module creation
-    startCalendar: null,  // jquery object or selector for another calendar that represents the start date of a date range
-    endCalendar: null,    // jquery object or selector for another calendar that represents the end date of a date range
-    multiMonth: 1,        // show multiple months when in 'day' mode
-
-    // popup options ('popup', 'on', 'hoverable', and show/hide callbacks are overridden)
-    popupOptions: {
-      position: 'bottom left',
-      lastResort: 'bottom left',
-      prefer: 'opposite',
-      hideOnScroll: false
-    },
-
-    text: {
-      days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      today: 'Today',
-      now: 'Now',
-      am: 'AM',
-      pm: 'PM'
-    },
-
-    formatter: {
-      header: function (date, mode, settings) {
-        return mode === 'year' ? settings.formatter.yearHeader(date, settings) :
-          mode === 'month' ? settings.formatter.monthHeader(date, settings) :
-            mode === 'day' ? settings.formatter.dayHeader(date, settings) :
-              mode === 'hour' ? settings.formatter.hourHeader(date, settings) :
-                settings.formatter.minuteHeader(date, settings);
-      },
-      yearHeader: function (date, settings) {
-        var decadeYear = Math.ceil(date.getFullYear() / 10) * 10;
-        return (decadeYear - 9) + ' - ' + (decadeYear + 2);
-      },
-      monthHeader: function (date, settings) {
-        return date.getFullYear();
-      },
-      dayHeader: function (date, settings) {
-        var month = settings.text.months[date.getMonth()];
-        var year = date.getFullYear();
-        return month + ' ' + year;
-      },
-      hourHeader: function (date, settings) {
-        return settings.formatter.date(date, settings);
-      },
-      minuteHeader: function (date, settings) {
-        return settings.formatter.date(date, settings);
-      },
-      dayColumnHeader: function (day, settings) {
-        return settings.text.days[day];
-      },
-      datetime: function (date, settings) {
-        if (!date) {
-          return '';
-        }
-        var day = settings.type === 'time' ? '' : settings.formatter.date(date, settings);
-        var time = settings.type.indexOf('time') < 0 ? '' : settings.formatter.time(date, settings, false);
-        var separator = settings.type === 'datetime' ? ' ' : '';
-        return day + separator + time;
-      },
-      date: function (date, settings) {
-        if (!date) {
-          return '';
-        }
-        var day = date.getDate();
-        var month = settings.text.months[date.getMonth()];
-        var year = date.getFullYear();
-        return settings.type === 'year' ? year :
-          settings.type === 'month' ? month + ' ' + year :
-          (settings.monthFirst ? month + ' ' + day : day + ' ' + month) + ', ' + year;
-      },
-      time: function (date, settings, forCalendar) {
-        if (!date) {
-          return '';
-        }
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var ampm = '';
-        if (settings.ampm) {
-          ampm = ' ' + (hour < 12 ? settings.text.am : settings.text.pm);
-          hour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-        }
-        return hour + ':' + (minute < 10 ? '0' : '') + minute + ampm;
-      },
-      today: function (settings) {
-        return settings.type === 'date' ? settings.text.today : settings.text.now;
-      },
-      cell: function (cell, date, cellOptions) {
-      }
-    },
-
-    parser: {
-      date: function (text, settings) {
-        if (!text) {
-          return null;
-        }
-        text = ('' + text).trim().toLowerCase();
-        if (text.length === 0) {
-          return null;
-        }
-
-        var i, j, k;
-        var minute = -1, hour = -1, day = -1, month = -1, year = -1;
-        var isAm = undefined;
-
-        var isTimeOnly = settings.type === 'time';
-        var isDateOnly = settings.type.indexOf('time') < 0;
-
-        var words = text.split(settings.regExp.dateWords);
-        var numbers = text.split(settings.regExp.dateNumbers);
-
-        if (!isDateOnly) {
-          //am/pm
-          isAm = $.inArray(settings.text.am.toLowerCase(), words) >= 0 ? true :
-            $.inArray(settings.text.pm.toLowerCase(), words) >= 0 ? false : undefined;
-
-          //time with ':'
-          for (i = 0; i < numbers.length; i++) {
-            var number = numbers[i];
-            if (number.indexOf(':') >= 0) {
-              if (hour < 0 || minute < 0) {
-                var parts = number.split(':');
-                for (k = 0; k < Math.min(2, parts.length); k++) {
-                  j = parseInt(parts[k]);
-                  if (isNaN(j)) {
-                    j = 0;
-                  }
-                  if (k === 0) {
-                    hour = j % 24;
-                  } else {
-                    minute = j % 60;
-                  }
-                }
-              }
-              numbers.splice(i, 1);
-            }
-          }
-        }
-
-        if (!isTimeOnly) {
-          //textual month
-          for (i = 0; i < words.length; i++) {
-            var word = words[i];
-            if (word.length <= 0) {
-              continue;
-            }
-            word = word.substring(0, Math.min(word.length, 3));
-            for (j = 0; j < settings.text.months.length; j++) {
-              var monthString = settings.text.months[j];
-              monthString = monthString.substring(0, Math.min(word.length, Math.min(monthString.length, 3))).toLowerCase();
-              if (monthString === word) {
-                month = j + 1;
-                break;
-              }
-            }
-            if (month >= 0) {
-              break;
-            }
-          }
-
-          //year > 59
-          for (i = 0; i < numbers.length; i++) {
-            j = parseInt(numbers[i]);
-            if (isNaN(j)) {
-              continue;
-            }
-            if (j > 59) {
-              year = j;
-              numbers.splice(i, 1);
-              break;
-            }
-          }
-
-          //numeric month
-          if (month < 0) {
-            for (i = 0; i < numbers.length; i++) {
-              k = i > 1 || settings.monthFirst ? i : i === 1 ? 0 : 1;
-              j = parseInt(numbers[k]);
-              if (isNaN(j)) {
-                continue;
-              }
-              if (1 <= j && j <= 12) {
-                month = j;
-                numbers.splice(k, 1);
-                break;
-              }
-            }
-          }
-
-          //day
-          for (i = 0; i < numbers.length; i++) {
-            j = parseInt(numbers[i]);
-            if (isNaN(j)) {
-              continue;
-            }
-            if (1 <= j && j <= 31) {
-              day = j;
-              numbers.splice(i, 1);
-              break;
-            }
-          }
-
-          //year <= 59
-          if (year < 0) {
-            for (i = numbers.length - 1; i >= 0; i--) {
-              j = parseInt(numbers[i]);
-              if (isNaN(j)) {
-                continue;
-              }
-              if (j < 99) {
-                j += 2000;
-              }
-              year = j;
-              numbers.splice(i, 1);
-              break;
-            }
-          }
-        }
-
-        if (!isDateOnly) {
-          //hour
-          if (hour < 0) {
-            for (i = 0; i < numbers.length; i++) {
-              j = parseInt(numbers[i]);
-              if (isNaN(j)) {
-                continue;
-              }
-              if (0 <= j && j <= 23) {
-                hour = j;
-                numbers.splice(i, 1);
-                break;
-              }
-            }
-          }
-
-          //minute
-          if (minute < 0) {
-            for (i = 0; i < numbers.length; i++) {
-              j = parseInt(numbers[i]);
-              if (isNaN(j)) {
-                continue;
-              }
-              if (0 <= j && j <= 59) {
-                minute = j;
-                numbers.splice(i, 1);
-                break;
-              }
-            }
-          }
-        }
-
-        if (minute < 0 && hour < 0 && day < 0 && month < 0 && year < 0) {
-          return null;
-        }
-
-        if (minute < 0) {
-          minute = 0;
-        }
-        if (hour < 0) {
-          hour = 0;
-        }
-        if (day < 0) {
-          day = 1;
-        }
-        if (month < 0) {
-          month = 1;
-        }
-        if (year < 0) {
-          year = new Date().getFullYear();
-        }
-
-        if (isAm !== undefined) {
-          if (isAm) {
-            if (hour === 12) {
-              hour = 0;
-            }
-          } else if (hour < 12) {
-            hour += 12;
-          }
-        }
-
-        var date = new Date(year, month - 1, day, hour, minute);
-        if (date.getMonth() !== month - 1 || date.getFullYear() !== year) {
-          //month or year don't match up, switch to last day of the month
-          date = new Date(year, month, 0, hour, minute);
-        }
-        return isNaN(date.getTime()) ? null : date;
-      }
-    },
-
-    // callback when date changes, return false to cancel the change
-    onChange: function (date, text, mode) {
-      return true;
-    },
-
-    // callback before show animation, return false to prevent show
-    onShow: function () {
-    },
-
-    // callback after show animation
-    onVisible: function () {
-    },
-
-    // callback before hide animation, return false to prevent hide
-    onHide: function () {
-    },
-
-    // callback after hide animation
-    onHidden: function () {
-    },
-
-    // is the given date disabled?
-    isDisabled: function (date, mode) {
-      return false;
-    },
-
-    selector: {
-      popup: '.ui.popup',
-      input: 'input',
-      activator: 'input'
-    },
-
-    regExp: {
-      dateWords: /[^A-Za-z\u00C0-\u024F]+/g,
-      dateNumbers: /[^\d:]+/g
-    },
-
-    error: {
-      popup: 'UI Popup, a required component is not included in this page',
-      method: 'The method you called is not defined.'
-    },
-
-    className: {
-      calendar: 'calendar',
-      active: 'active',
-      popup: 'ui popup',
-      grid: 'ui equal width grid',
-      column: 'column',
-      table: 'ui celled center aligned unstackable table',
-      prev: 'prev link',
-      next: 'next link',
-      prevIcon: 'chevron left icon',
-      nextIcon: 'chevron right icon',
-      link: 'link',
-      cell: 'link',
-      disabledCell: 'disabled',
-      adjacentCell: 'adjacent',
-      activeCell: 'active',
-      rangeCell: 'range',
-      focusCell: 'focus',
-      todayCell: 'today',
-      today: 'today link'
-    },
-
-    metadata: {
-      date: 'date',
-      focusDate: 'focusDate',
-      startDate: 'startDate',
-      endDate: 'endDate',
-      mode: 'mode',
-      monthOffset: 'monthOffset'
-    }
-  };
-
-})(jQuery, window, document);
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 358 */,
-/* 359 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parseFormat = __webpack_require__(360)
-module.exports = parseFormat
-
-/* istanbul ignore next */
-if (typeof window !== 'undefined' && window.moment) {
-  window.moment.parseFormat = parseFormat
-}
-
-
-/***/ }),
-/* 360 */
-/***/ (function(module, exports) {
-
-module.exports = parseFormat
-
-var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-var abbreviatedDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-var shortestDayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-var abbreviatedMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-var amDesignator = 'AM'
-var pmDesignator = 'PM'
-var lowerAMDesignator = 'am'
-var lowerPMDesignator = 'pm'
-
-var regexDayNames = new RegExp(dayNames.join('|'), 'i')
-var regexAbbreviatedDayNames = new RegExp(abbreviatedDayNames.join('|'), 'i')
-var regexShortestDayNames = new RegExp('\\b(' + shortestDayNames.join('|') + ')\\b', 'i')
-var regexMonthNames = new RegExp(monthNames.join('|'), 'i')
-var regexAbbreviatedMonthNames = new RegExp(abbreviatedMonthNames.join('|'), 'i')
-
-var regexFirstSecondThirdFourth = /(\d+)(st|nd|rd|th)\b/i
-var regexEndian = /(\d{1,4})([/.-])(\d{1,2})[/.-](\d{1,4})/
-
-var regexTimezone = /((\+|-)\d\d:?\d\d)$/
-var amOrPm = '(' + [amDesignator, pmDesignator].join('|') + ')'
-var lowerAmOrPm = '(' + [lowerAMDesignator, lowerPMDesignator].join('|') + ')'
-var regexLowerAmOrPm = new RegExp(lowerAmOrPm)
-var regexUpperAmOrPm = new RegExp(amOrPm)
-var regexHoursWithLeadingZeroDigitMinutesSecondsAmPm = new RegExp('0\\d\\:\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
-var regexHoursWithLeadingZeroDigitMinutesAmPm = new RegExp('0\\d\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
-var regexHoursWithLeadingZeroDigitAmPm = new RegExp('0\\d(\\s*)' + amOrPm, 'i')
-var regexHoursMinutesSecondsAmPm = new RegExp('\\d{1,2}\\:\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
-var regexHoursMinutesAmPm = new RegExp('\\d{1,2}\\:\\d{1,2}(\\s*)' + amOrPm, 'i')
-var regexHoursAmPm = new RegExp('\\d{1,2}(\\s*)' + amOrPm, 'i')
-
-var regexISO8601HoursWithLeadingZeroMinutesSecondsMilliseconds = /\d{2}:\d{2}:\d{2}\.\d{3}/
-var regexISO8601HoursWithLeadingZeroMinutesSecondsCentiSeconds = /\d{2}:\d{2}:\d{2}\.\d{2}/
-var regexISO8601HoursWithLeadingZeroMinutesSecondsDeciSeconds = /\d{2}:\d{2}:\d{2}\.\d{1}/
-var regexHoursWithLeadingZeroMinutesSeconds = /0\d:\d{2}:\d{2}/
-var regexHoursWithLeadingZeroMinutes = /0\d:\d{2}/
-var regexHoursMinutesSeconds = /\d{1,2}:\d{2}:\d{2}/
-var regexHoursMinutesSecondsMilliseconds = /\d{1,2}:\d{2}:\d{2}\.\d{3}/
-var regexHoursMinutesSecondsCentiSeconds = /\d{1,2}:\d{2}:\d{2}\.\d{2}/
-var regexHoursMinutesSecondsDeciSeconds = /\d{1,2}:\d{2}:\d{2}\.\d{1}/
-var regexHoursMinutes = /\d{1,2}:\d{2}/
-var regexYearLong = /\d{4}/
-var regexDayLeadingZero = /0\d/
-var regexDay = /\d{1,2}/
-var regexYearShort = /\d{2}/
-
-var regexDayShortMonthShort = /^([1-9])\/([1-9]|0[1-9])$/
-var regexDayShortMonth = /^([1-9])\/(1[012])$/
-var regexDayMonthShort = /^(0[1-9]|[12][0-9]|3[01])\/([1-9])$/
-var regexDayMonth = /^(0[1-9]|[12][0-9]|3[01])\/(1[012]|0[1-9])$/
-
-var regexMonthShortYearShort = /^([1-9])\/([1-9][0-9])$/
-var regexMonthYearShort = /^(0[1-9]|1[012])\/([1-9][0-9])$/
-
-var formatIncludesMonth = /([/][M]|[M][/]|[MM]|[MMMM])/
-
-var regexFillingWords = /\b(at)\b/i
-
-var regexUnixMillisecondTimestamp = /\d{13}/
-var regexUnixTimestamp = /\d{10}/
-
-// option defaults
-var defaultOrder = {
-  '/': 'MDY',
-  '.': 'DMY',
-  '-': 'YMD'
-}
-
-function parseFormat (dateString, options) {
-  var format = dateString.toString()
-
-  // default options
-  options = options || {}
-  options.preferredOrder = options.preferredOrder || defaultOrder
-
-  // Unix Millisecond Timestamp ☛ x
-  format = format.replace(regexUnixMillisecondTimestamp, 'x')
-  // Unix Timestamp ☛ X
-  format = format.replace(regexUnixTimestamp, 'X')
-
-  // escape filling words
-  format = format.replace(regexFillingWords, '[$1]')
-
-  //  DAYS
-
-  // Monday ☛ dddd
-  format = format.replace(regexDayNames, 'dddd')
-  // Mon ☛ ddd
-  format = format.replace(regexAbbreviatedDayNames, 'ddd')
-  // Mo ☛ dd
-  format = format.replace(regexShortestDayNames, 'dd')
-
-  // 1st, 2nd, 23rd ☛ do
-  format = format.replace(regexFirstSecondThirdFourth, 'Do')
-
-  // MONTHS
-
-  // January ☛ MMMM
-  format = format.replace(regexMonthNames, 'MMMM')
-  // Jan ☛ MMM
-  format = format.replace(regexAbbreviatedMonthNames, 'MMM')
-
-  // replace endians, like 8/20/2010, 20.8.2010 or 2010-8-20
-  format = format.replace(regexEndian, replaceEndian.bind(null, options))
-
-  // TIME
-
-  // timezone +02:00 ☛ Z
-  format = format.replace(regexTimezone, 'Z')
-  // 23:39:43.331 ☛ 'HH:mm:ss.SSS'
-  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsMilliseconds, 'HH:mm:ss.SSS')
-  // 23:39:43.33 ☛ 'HH:mm:ss.SS'
-  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsCentiSeconds, 'HH:mm:ss.SS')
-  // 23:39:43.3 ☛ 'HH:mm:ss.S'
-  format = format.replace(regexISO8601HoursWithLeadingZeroMinutesSecondsDeciSeconds, 'HH:mm:ss.S')
-  // 05:30:20pm ☛ hh:mm:ssa
-  format = format.replace(regexHoursWithLeadingZeroDigitMinutesSecondsAmPm, 'hh:mm:ss$1')
-  // 10:30:20pm ☛ h:mm:ssa
-  format = format.replace(regexHoursMinutesSecondsAmPm, 'h:mm:ss$1')
-  // 05:30pm ☛ hh:mma
-  format = format.replace(regexHoursWithLeadingZeroDigitMinutesAmPm, 'hh:mm$1')
-  // 10:30pm ☛ h:mma
-  format = format.replace(regexHoursMinutesAmPm, 'h:mm$1')
-  // 05pm ☛ hha
-  format = format.replace(regexHoursWithLeadingZeroDigitAmPm, 'hh$1')
-  // 10pm ☛ ha
-  format = format.replace(regexHoursAmPm, 'h$1')
-  // 05:30:20 ☛ HH:mm:ss
-  format = format.replace(regexHoursWithLeadingZeroMinutesSeconds, 'HH:mm:ss')
-  // 5:30:20.222 ☛ H:mm:ss.SSS
-  format = format.replace(regexHoursMinutesSecondsMilliseconds, 'H:mm:ss.SSS')
-  // 5:30:20.22 ☛ H:mm:ss.SS
-  format = format.replace(regexHoursMinutesSecondsCentiSeconds, 'H:mm:ss.SS')
-  // 5:30:20.2 ☛ H:mm:ss.S
-  format = format.replace(regexHoursMinutesSecondsDeciSeconds, 'H:mm:ss.S')
-  // 10:30:20 ☛ H:mm:ss
-  format = format.replace(regexHoursMinutesSeconds, 'H:mm:ss')
-  // 05:30 ☛ H:mm
-  format = format.replace(regexHoursWithLeadingZeroMinutes, 'HH:mm')
-  // 10:30 ☛ HH:mm
-  format = format.replace(regexHoursMinutes, 'H:mm')
-
-  // Check if AM and determine the case of 'a' we need
-  if (regexUpperAmOrPm.test(dateString)) {
-    format += 'A'
-  } else if (regexLowerAmOrPm.test(dateString)) {
-    format += 'a'
-  }
-
-  // do we still have numbers left?
-
-  // Lets check for 4 digits first, these are years for sure
-  format = format.replace(regexYearLong, 'YYYY')
-
-  // check if both numbers are < 13, then it must be D/M
-  format = format.replace(regexDayShortMonthShort, 'D/M')
-
-  // check if first number is < 10 && last < 13, then it must be D/MM
-  format = format.replace(regexDayShortMonth, 'D/MM')
-
-  // check if last number is < 32 && last < 10, then it must be DD/M
-  format = format.replace(regexDayMonthShort, 'DD/M')
-
-  // check if both numbers are > 10, but first < 32 && last < 13, then it must be DD/MM
-  format = format.replace(regexDayMonth, 'DD/MM')
-
-  // check if first < 10 && last > 12, then it must be M/YY
-  format = format.replace(regexMonthShortYearShort, 'M/YY')
-
-  // check if first < 13 && last > 12, then it must be MM/YY
-  format = format.replace(regexMonthYearShort, 'MM/YY')
-
-  // to prevent 9.20 gets formated to D.Y, we format the complete date first, then go for the time
-  if (format.match(formatIncludesMonth)) {
-    var regexHoursDotWithLeadingZeroOrDoubleDigitMinutes = /0\d.\d{2}|\d{2}.\d{2}/
-    var regexHoursDotMinutes = /\d{1}.\d{2}/
-
-    format = format.replace(regexHoursDotWithLeadingZeroOrDoubleDigitMinutes, 'H.mm')
-    format = format.replace(regexHoursDotMinutes, 'h.mm')
-  }
-
-  // now, the next number, if existing, must be a day
-  format = format.replace(regexDayLeadingZero, 'DD')
-  format = format.replace(regexDay, 'D')
-
-  // last but not least, there could still be a year left
-  format = format.replace(regexYearShort, 'YY')
-
-  if (format.length < 1) {
-    format = undefined
-  }
-
-  return format
-}
-
-// if we can't find an endian based on the separator, but
-// there still is a short date with day, month & year,
-// we try to make a smart decision to identify the order
-function replaceEndian (options, matchedPart, first, separator, second, third) {
-  var parts
-  var hasSingleDigit = Math.min(first.length, second.length, third.length) === 1
-  var hasQuadDigit = Math.max(first.length, second.length, third.length) === 4
-  var preferredOrder = typeof options.preferredOrder === 'string' ? options.preferredOrder : options.preferredOrder[separator]
-
-  first = parseInt(first, 10)
-  second = parseInt(second, 10)
-  third = parseInt(third, 10)
-  parts = [first, second, third]
-  preferredOrder = preferredOrder.toUpperCase()
-
-  // If first is a year, order will always be Year-Month-Day
-  if (first > 31) {
-    parts[0] = hasQuadDigit ? 'YYYY' : 'YY'
-    parts[1] = hasSingleDigit ? 'M' : 'MM'
-    parts[2] = hasSingleDigit ? 'D' : 'DD'
-    return parts.join(separator)
-  }
-
-  // Second will never be the year. And if it is a day,
-  // the order will always be Month-Day-Year
-  if (second > 12) {
-    parts[0] = hasSingleDigit ? 'M' : 'MM'
-    parts[1] = hasSingleDigit ? 'D' : 'DD'
-    parts[2] = hasQuadDigit ? 'YYYY' : 'YY'
-    return parts.join(separator)
-  }
-
-  // if third is a year ...
-  if (third > 31) {
-    parts[2] = hasQuadDigit ? 'YYYY' : 'YY'
-
-    // ... try to find day in first and second.
-    // If found, the remaining part is the month.
-    if (preferredOrder[0] === 'M' && first < 13) {
-      parts[0] = hasSingleDigit ? 'M' : 'MM'
-      parts[1] = hasSingleDigit ? 'D' : 'DD'
-      return parts.join(separator)
-    }
-    parts[0] = hasSingleDigit ? 'D' : 'DD'
-    parts[1] = hasSingleDigit ? 'M' : 'MM'
-    return parts.join(separator)
-  }
-
-  // if we had no luck until here, we use the preferred order
-  parts[preferredOrder.indexOf('D')] = hasSingleDigit ? 'D' : 'DD'
-  parts[preferredOrder.indexOf('M')] = hasSingleDigit ? 'M' : 'MM'
-  parts[preferredOrder.indexOf('Y')] = hasQuadDigit ? 'YYYY' : 'YY'
-
-  return parts.join(separator)
-}
-
-
-/***/ }),
-/* 361 */,
-/* 362 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.ui[class*=\"left icon\"].input > input {\n  padding-right: 2.67143em !important;\n}\n.remove.circle.icon {\n  position: absolute;\n  right: 0.5em;\n  bottom: 1em;\n  cursor: pointer;\n  opacity: .5;\n}\n.remove.circle.icon:hover {\n  opacity: 1;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 363 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(362);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(6)("062a7282", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue", function() {
-     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7136f618!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Date.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
 
 /***/ })
 /******/ ]);
