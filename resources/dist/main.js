@@ -50549,11 +50549,11 @@ module.exports = Vue$3;
             timeValue = this.config.value.time;
         }
 
-        if (this.config.showDate && this.config.showTime) {
+        if (dateValue != '' && timeValue != '' && this.config.showDate && this.config.showTime) {
             value = dateValue + ' ' + timeValue;
-        } else if (this.config.showDate) {
+        } else if (dateValue != '' && this.config.showDate) {
             value = dateValue;
-        } else if (this.config.showTime) {
+        } else if (timeValue != '' && this.config.showTime) {
             value = timeValue;
         }
 
