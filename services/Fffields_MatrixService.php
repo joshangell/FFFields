@@ -153,7 +153,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
         $variant = new Commerce_VariantModel();
         $variant->setProduct($params['product']);
 
-        list($meta, $fields) = $this->_getVariantFields($variant, $name);
+        list($meta, $fields) = $this->_getVariantFields($variant, '__BLOCK__', $name);
 
         // Store the meta and fields for the blockTypes array
         $blockTypes[] = [
@@ -177,19 +177,18 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 $variantId = 'new' . $totalNewVariants;
             }
 
-
             // Need to re-build the fields and variants so we get inline errors and values etc
 
 //            $metaFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($meta)));
 //            $variantFields = json_decode(str_replace('__VARIANT__', $variantId, json_encode($fields)));
 
-            list($metaFields, $variantFields) = $this->_getVariantFields($variant, $name);
+            list($metaFields, $variantFields) = $this->_getVariantFields($variant, $variantId, $name);
 
             $variants[] = [
                 'name' => Craft::t('Variant'),
                 'enabled' => [
                     'name' => $name.'['.$variantId.'][enabled]',
-                    'value' => $variant->enabled,
+                    'value' => $variant->enabled ? '1' : '0',
                 ],
                 'meta'   => $metaFields,
                 'fields' => $variantFields
@@ -214,11 +213,12 @@ class Fffields_MatrixService extends BaseApplicationComponent
      * Returns the field configs for both the meta and field layout for a variant.
      *
      * @param $variant
+     * @param $variantId
      * @param $name
      *
      * @return array
      */
-    private function _getVariantFields($variant, $name)
+    private function _getVariantFields($variant, $variantId, $name)
     {
         $fields = [];
         $meta = [];
@@ -226,10 +226,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
         // Sort out the custom fields for these variants
         $variantFieldLayout = $variant->getFieldLayout();
 
-        $variantNamespace = $name.'[__BLOCK__]';
-        if ($variant->id) {
-            $variantNamespace = $name.'['.$variant->id.']';
-        }
+        $variantNamespace = $name.'['.$variantId.']';
 
         foreach ($variantFieldLayout->getFields() as $variantFieldLayoutField) {
 
