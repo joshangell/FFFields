@@ -63406,6 +63406,35 @@ if (document.querySelector('#field-layout')) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63426,6 +63455,7 @@ if (document.querySelector('#field-layout')) {
     },
 
     data: function () {
+        console.log(this.config.elements);
         return {
             $modal: null,
             modalInitialized: false,
@@ -63654,7 +63684,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.label {\n  /*margin-bottom: 0.5rem;*/\n  cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -63662,6 +63692,10 @@ exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.lab
 /***/ }),
 /* 366 */
 /***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(372)
 
 var Component = __webpack_require__(2)(
   /* script */
@@ -63778,17 +63812,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }), _vm._v(" "), _c('div', {
-    staticClass: "ui labels"
-  }, _vm._l((_vm.elements), function(element) {
-    return _c('category-element', {
+    staticClass: "ui list"
+  }, [_vm._l((_vm.elements), function(element) {
+    return [_c('div', {
+      class: 'item level-' + element.level
+    }, [(element.level > 1) ? _c('i', {
+      staticClass: "angle down icon"
+    }) : _vm._e(), _vm._v(" "), _c('category-element', {
       attrs: {
         "element": element
       },
       on: {
         "elementRemoved": _vm.onElementRemoved
       }
-    })
-  })), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
+    })], 1)]
+  })], 2), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
     staticClass: "ui small basic labeled icon button",
     attrs: {
       "type": "button"
@@ -63805,9 +63843,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "ui divided selection list"
+    staticClass: "ui list"
   }, [_vm._l((_vm.modalElements), function(element) {
-    return [_c('category-element', {
+    return [_c('div', {
+      class: 'item level-' + element.level
+    }, [(element.level > 1) ? _c('i', {
+      staticClass: "angle down icon"
+    }) : _vm._e(), _vm._v(" "), _c('category-element', {
       attrs: {
         "element": element,
         "selectedElementIds": _vm.selectedElementIds
@@ -63815,7 +63857,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "elementSelected": _vm.onElementSelected
       }
-    })]
+    })], 1)]
   })], 2)]) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "actions"
   }, [_c('div', {
@@ -63850,6 +63892,46 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7ca45d70!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CategoryElement.vue", function() {
      var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-7ca45d70!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CategoryElement.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.level-2 {\n  margin-left: 0rem;\n}\n.level-3 {\n  margin-left: 2.5rem;\n}\n.level-4 {\n  margin-left: 5rem;\n}\n.level-5 {\n  margin-left: 7.5rem;\n}\n.level-6 {\n  margin-left: 10rem;\n}\n.level-7 {\n  margin-left: 12.5rem;\n}\n.level-8 {\n  margin-left: 15rem;\n}\n.level-9 {\n  margin-left: 17.5rem;\n}\n.angle.down.icon {\n  transform: rotate(45deg);\n  float: left;\n  font-size: 2em;\n  margin-top: 0.2rem !important;\n  color: #e8e8e8;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(371);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("561f611a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-dc8d0c3c!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Categories.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-dc8d0c3c!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Categories.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

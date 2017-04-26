@@ -100,6 +100,7 @@ class Fffields_CategoriesService extends BaseApplicationComponent
                     'name'         => $params['name'] . '[]',
                     'context'      => $params['context'],
                     'label'        => HtmlHelper::encode($element),
+                    'level'        => $element->level,
                     'disabled'     => in_array($element->id, $disabledElementIds),
                 ];
             }

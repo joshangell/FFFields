@@ -11,7 +11,7 @@
         user-select: none;
     }
     .ui.label {
-        margin-bottom: 0.5rem;
+        /*margin-bottom: 0.5rem;*/
         cursor: default;
     }
 </style>

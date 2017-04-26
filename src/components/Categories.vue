@@ -2,8 +2,13 @@
     <div class="catgeories">
         <input type="hidden" v-bind:name="config.name" value="">
 
-        <div class="ui labels">
-            <category-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></category-element>
+        <div class="ui list">
+            <template v-for="element in elements">
+                <div v-bind:class="'item level-'+element.level">
+                    <i class="angle down icon" v-if="element.level > 1"></i>
+                    <category-element v-bind:element="element" v-on:elementRemoved="onElementRemoved"></category-element>
+                </div>
+            </template>
         </div>
 
         <button type="button" class="ui small basic labeled icon button" v-if="canAddMore" v-on:click="launchElementSelector">
@@ -17,9 +22,12 @@
 
             <div class="content" v-if="modalElements">
 
-                <div class="ui divided selection list">
-                    <template v-for="element in modalElements" class="item">
-                        <category-element v-bind:element="element" v-bind:selectedElementIds="selectedElementIds" v-on:elementSelected="onElementSelected"></category-element>
+                <div class="ui list">
+                    <template v-for="element in modalElements">
+                        <div v-bind:class="'item level-'+element.level">
+                            <i class="angle down icon" v-if="element.level > 1"></i>
+                            <category-element v-bind:element="element" v-bind:selectedElementIds="selectedElementIds" v-on:elementSelected="onElementSelected"></category-element>
+                        </div>
                     </template>
                 </div>
 
@@ -33,6 +41,27 @@
 
     </div>
 </template>
+
+<style lang="scss">
+    .level-2 { margin-left: 0rem; }
+    .level-3 { margin-left: 2.5rem; }
+    .level-4 { margin-left: 5rem; }
+    .level-5 { margin-left: 7.5rem; }
+    .level-6 { margin-left: 10rem; }
+    .level-7 { margin-left: 12.5rem; }
+    .level-8 { margin-left: 15rem; }
+    .level-9 { margin-left: 17.5rem; }
+
+    .angle.down.icon {
+        transform: rotate(45deg);
+
+        float: left;
+        font-size: 2em;
+        margin-top: 0.2rem !important;
+
+        color: #e8e8e8;
+    }
+</style>
 
 <script>
 
@@ -54,6 +83,7 @@
         },
 
         data: function() {
+            console.log(this.config.elements);
             return {
                 $modal:             null,
                 modalInitialized:   false,
