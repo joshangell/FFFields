@@ -38,6 +38,7 @@
     import RadioButtons from './RadioButtons.vue';
     import MultiSelect  from './MultiSelect.vue';
     import Assets       from './Assets.vue';
+    import Categories   from './Categories.vue';
     import Date         from './Date.vue';
 
     export default {
@@ -56,6 +57,7 @@
             'radio-buttons' : RadioButtons,
             'multi-select'  : MultiSelect,
             'assets'        : Assets,
+            'categories'    : Categories,
             'date'          : Date
         }
     }

@@ -288,6 +288,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'Assets' :
                 return 'assets';
 
+            case 'Categories' :
+                return 'categories';
+
             case 'Date' :
                 return 'date';
 
@@ -341,6 +344,9 @@ class FffieldsService extends BaseApplicationComponent
 
             case 'Assets' :
                 return craft()->fffields_assets->getConfig($params);
+
+            case 'Categories' :
+                return craft()->fffields_categories->getConfig($params);
 
             default :
                 return [

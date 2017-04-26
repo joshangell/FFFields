@@ -29,7 +29,7 @@ class Fffields_ElementsController extends BaseController
     /**
      * TODO
      */
-    public function actionGetElements()
+    public function actionGetAssets()
     {
         $sourceKeys = craft()->request->getParam('sources');
         $elementType = $this->getElementType();
@@ -39,24 +39,20 @@ class Fffields_ElementsController extends BaseController
         $disabledElementIds = craft()->request->getParam('disabledElementIds', array());
 
         $field = craft()->fields->getFieldById($fieldId);
+
         $viewMode = $field->getFieldType()->getSettings()->viewMode;
 
-        if (is_array($sourceKeys))
-        {
-            $sources = array();
+        if (is_array($sourceKeys)) {
+            $sources = [];
 
-            foreach ($sourceKeys as $key)
-            {
+            foreach ($sourceKeys as $key) {
                 $source = $elementType->getSource($key, $context);
 
-                if ($source)
-                {
+                if ($source) {
                     $sources[$key] = $source;
                 }
             }
-        }
-        else
-        {
+        } else {
             $sources = craft()->elementIndexes->getSources($elementType->getClassHandle(), $context);
         }
 
@@ -78,6 +74,39 @@ class Fffields_ElementsController extends BaseController
             'elements' => craft()->fffields_assets->transformCriteria($criteria, [
                 'name' => $name,
                 'viewMode' => $viewMode,
+                'context' => $context,
+                'disabledElementIds' => $disabledElementIds
+            ])
+        ]);
+
+    }
+
+    public function actionGetCategories()
+    {
+        $sourceKey = craft()->request->getParam('source');
+        $elementType = $this->getElementType();
+        $context = craft()->request->getParam('context');
+        $name = craft()->request->getParam('fieldName');
+        $fieldId = craft()->request->getParam('fieldId');
+        $disabledElementIds = craft()->request->getParam('disabledElementIds', array());
+
+        $field = craft()->fields->getFieldById($fieldId);
+
+        $source = $elementType->getSource($sourceKey, $context);
+
+        $criteria = craft()->elements->getCriteria($elementType->getClassHandle());
+
+
+        // Does the source specify any criteria attributes?
+        if (!empty($source['criteria']))
+        {
+            $criteria->setAttributes($source['criteria']);
+        }
+
+        $this->returnJson([
+            'success' => true,
+            'elements' => craft()->fffields_categories->transformCriteria($criteria, [
+                'name' => $name,
                 'context' => $context,
                 'disabledElementIds' => $disabledElementIds
             ])

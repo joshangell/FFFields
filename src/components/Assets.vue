@@ -358,7 +358,7 @@
                 }
 
                 $.ajax({
-                    url: window.FFFields.actionUrl + '/fffields/elements/getElements',
+                    url: window.FFFields.actionUrl + '/fffields/elements/getAssets',
                     type: 'POST',
                     data: data,
                     error: function(jqXHR, textStatus, errorThrown)
