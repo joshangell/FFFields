@@ -63360,8 +63360,8 @@ if (document.querySelector('#field-layout')) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_pullAt__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_reverse__ = __webpack_require__(386);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_reverse___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_reverse__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_uniqBy__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_uniqBy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_uniqBy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue__ = __webpack_require__(367);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue__);
 //
@@ -63471,20 +63471,36 @@ if (document.querySelector('#field-layout')) {
             onApprove: $element => {
                 this.modalApproved = true;
 
+                const newElementsArray = [];
+
                 for (let i = 0; i < this.modalElements.length; i++) {
+
+                    // Is it in this.elements already? If so, move from this.elements and to the new tree and skip.
+                    let currentIndex = this.elements.findIndex(obj => {
+                        return obj.id === this.modalElements[i].id;
+                    });
+
+                    if (currentIndex != -1) {
+                        newElementsArray.push(this.elements[currentIndex]);
+                    }
+
+                    // Is is in the newly selected elements array? If so, add it to the tree.
                     if (this.selectedElementIds.indexOf(this.modalElements[i].id) != -1) {
 
                         // Clone the element
-                        const newElement = __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn___default()({}, this.modalElements[i]);
+                        let newElement = __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn___default()({}, this.modalElements[i]);
 
                         // Set up some props on the new element
                         newElement.context = 'field';
                         newElement.disabled = false;
 
                         // Push it onto the field
-                        this.elements.push(newElement);
+                        newElementsArray.push(newElement);
                     }
                 }
+
+                // Clean out any duplicates
+                this.elements = __WEBPACK_IMPORTED_MODULE_2_lodash_uniqBy___default()(newElementsArray, 'id');
             },
             onHidden: () => {
                 if (this.modalApproved) {
@@ -63546,42 +63562,69 @@ if (document.querySelector('#field-layout')) {
 
             let element = this.modalElements[elementIndex];
 
+            //                // Check if the parent of this element is already selected,
+            //                // if it is we need to insert at that point in the selected array and stop
+            //                if (element.parent !== null) {
+            //
+            //                    let elementIndex = this.modalElements.findIndex(function(o) {
+            //                        return o.id === obj.elementId;
+            //                    });
+            //
+            //                }
+            //
+            //
+
+            // Add/remove
             if (obj.selected) {
-
-                // Add to the selected stack
                 this.selectedElementIds.push(element.id);
+            } else {
+                let idx = this.selectedElementIds.indexOf(element.id);
+                if (idx != -1) {
+                    this.selectedElementIds.splice(idx, 1);
+                }
+            }
 
-                // Check its not a top level category, if its not we select
-                // up the tree until to the parent
-                if (element.parent !== null) {
+            // Check its not a top level category, if its not we select
+            // up the tree until to the parent
+            if (element.parent !== null) {
 
-                    // First reverse the array so we can look down it instead of up
-                    this.modalElements.reverse();
+                // First reverse the array so we can look down it instead of up
+                this.modalElements.reverse();
 
-                    // Re-find that index
-                    let elementIndex = this.modalElements.findIndex(function (o) {
-                        return o.id === element.id;
-                    });
+                // Re-find that index
+                let elementIndex = this.modalElements.findIndex(function (o) {
+                    return o.id === element.id;
+                });
 
-                    for (let i = elementIndex + 1; i < this.modalElements.length; i++) {
+                let parentId = element.parent;
 
-                        // Add to the stack
-                        this.selectedElementIds.push(this.modalElements[i].id);
+                for (let i = elementIndex; i < this.modalElements.length; i++) {
 
-                        // Stop as soon as we hit anything other than the parent
-                        if (this.modalElements[i].id !== element.parent) {
+                    // Check we match the current parent we’re looking for
+                    if (this.modalElements[i].id === parentId) {
+
+                        // Add/remove
+                        if (obj.selected) {
+                            this.selectedElementIds.push(this.modalElements[i].id);
+                        } else {
+                            let idx = this.selectedElementIds.indexOf(this.modalElements[i].id);
+                            if (idx != -1) {
+                                this.selectedElementIds.splice(idx, 1);
+                            }
+                        }
+
+                        // If there is no new parent to look for then stop
+                        if (this.modalElements[i].parent == null) {
                             break;
                         }
-                    }
 
-                    // Stick the array back the right way around
-                    this.modalElements.reverse();
+                        // Otherwise, store the next parent to look for
+                        parentId = this.modalElements[i].parent;
+                    }
                 }
-            } else {
-                const i = this.selectedElementIds.indexOf(obj.elementId);
-                if (i != -1) {
-                    this.selectedElementIds.splice(i, 1);
-                }
+
+                // Stick the array back the right way around
+                this.modalElements.reverse();
             }
 
             this.selectBtnClasses.disabled = this.selectedElementIds.length < 1;
@@ -64233,43 +64276,291 @@ module.exports = pullAt;
 /* 383 */,
 /* 384 */,
 /* 385 */,
-/* 386 */
-/***/ (function(module, exports) {
+/* 386 */,
+/* 387 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/** Used for built-in method references. */
-var arrayProto = Array.prototype;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeReverse = arrayProto.reverse;
+var baseIndexOf = __webpack_require__(389);
 
 /**
- * Reverses `array` so that the first element becomes the last, the second
- * element becomes the second to last, and so on.
+ * A specialized version of `_.includes` for arrays without support for
+ * specifying an index to search from.
  *
- * **Note:** This method mutates `array` and is based on
- * [`Array#reverse`](https://mdn.io/Array/reverse).
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludes(array, value) {
+  var length = array == null ? 0 : array.length;
+  return !!length && baseIndexOf(array, value, 0) > -1;
+}
+
+module.exports = arrayIncludes;
+
+
+/***/ }),
+/* 388 */
+/***/ (function(module, exports) {
+
+/**
+ * This function is like `arrayIncludes` except that it accepts a comparator.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @param {Function} comparator The comparator invoked per element.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+function arrayIncludesWith(array, value, comparator) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (comparator(value, array[index])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+module.exports = arrayIncludesWith;
+
+
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseFindIndex = __webpack_require__(218),
+    baseIsNaN = __webpack_require__(390),
+    strictIndexOf = __webpack_require__(393);
+
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function baseIndexOf(array, value, fromIndex) {
+  return value === value
+    ? strictIndexOf(array, value, fromIndex)
+    : baseFindIndex(array, baseIsNaN, fromIndex);
+}
+
+module.exports = baseIndexOf;
+
+
+/***/ }),
+/* 390 */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+function baseIsNaN(value) {
+  return value !== value;
+}
+
+module.exports = baseIsNaN;
+
+
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var SetCache = __webpack_require__(209),
+    arrayIncludes = __webpack_require__(387),
+    arrayIncludesWith = __webpack_require__(388),
+    cacheHas = __webpack_require__(240),
+    createSet = __webpack_require__(392),
+    setToArray = __webpack_require__(282);
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/**
+ * The base implementation of `_.uniqBy` without support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} [iteratee] The iteratee invoked per element.
+ * @param {Function} [comparator] The comparator invoked per element.
+ * @returns {Array} Returns the new duplicate free array.
+ */
+function baseUniq(array, iteratee, comparator) {
+  var index = -1,
+      includes = arrayIncludes,
+      length = array.length,
+      isCommon = true,
+      result = [],
+      seen = result;
+
+  if (comparator) {
+    isCommon = false;
+    includes = arrayIncludesWith;
+  }
+  else if (length >= LARGE_ARRAY_SIZE) {
+    var set = iteratee ? null : createSet(array);
+    if (set) {
+      return setToArray(set);
+    }
+    isCommon = false;
+    includes = cacheHas;
+    seen = new SetCache;
+  }
+  else {
+    seen = iteratee ? [] : result;
+  }
+  outer:
+  while (++index < length) {
+    var value = array[index],
+        computed = iteratee ? iteratee(value) : value;
+
+    value = (comparator || value !== 0) ? value : 0;
+    if (isCommon && computed === computed) {
+      var seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
+        }
+      }
+      if (iteratee) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+    else if (!includes(seen, computed, comparator)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+}
+
+module.exports = baseUniq;
+
+
+/***/ }),
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Set = __webpack_require__(208),
+    noop = __webpack_require__(394),
+    setToArray = __webpack_require__(282);
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/**
+ * Creates a set object of `values`.
+ *
+ * @private
+ * @param {Array} values The values to add to the set.
+ * @returns {Object} Returns the new set.
+ */
+var createSet = !(Set && (1 / setToArray(new Set([,-0]))[1]) == INFINITY) ? noop : function(values) {
+  return new Set(values);
+};
+
+module.exports = createSet;
+
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.indexOf` which performs strict equality
+ * comparisons of values, i.e. `===`.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function strictIndexOf(array, value, fromIndex) {
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+module.exports = strictIndexOf;
+
+
+/***/ }),
+/* 394 */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns `undefined`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.3.0
+ * @category Util
+ * @example
+ *
+ * _.times(2, _.noop);
+ * // => [undefined, undefined]
+ */
+function noop() {
+  // No operation performed.
+}
+
+module.exports = noop;
+
+
+/***/ }),
+/* 395 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIteratee = __webpack_require__(34),
+    baseUniq = __webpack_require__(391);
+
+/**
+ * This method is like `_.uniq` except that it accepts `iteratee` which is
+ * invoked for each element in `array` to generate the criterion by which
+ * uniqueness is computed. The order of result values is determined by the
+ * order they occur in the array. The iteratee is invoked with one argument:
+ * (value).
  *
  * @static
  * @memberOf _
  * @since 4.0.0
  * @category Array
- * @param {Array} array The array to modify.
- * @returns {Array} Returns `array`.
+ * @param {Array} array The array to inspect.
+ * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
+ * @returns {Array} Returns the new duplicate free array.
  * @example
  *
- * var array = [1, 2, 3];
+ * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
+ * // => [2.1, 1.2]
  *
- * _.reverse(array);
- * // => [3, 2, 1]
- *
- * console.log(array);
- * // => [3, 2, 1]
+ * // The `_.property` iteratee shorthand.
+ * _.uniqBy([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x');
+ * // => [{ 'x': 1 }, { 'x': 2 }]
  */
-function reverse(array) {
-  return array == null ? array : nativeReverse.call(array);
+function uniqBy(array, iteratee) {
+  return (array && array.length) ? baseUniq(array, baseIteratee(iteratee, 2)) : [];
 }
 
-module.exports = reverse;
+module.exports = uniqBy;
 
 
 /***/ })

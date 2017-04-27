@@ -63,7 +63,7 @@
 
     import _pullAt from 'lodash/pullAt';
     import _extend from 'lodash/assignIn';
-    import _reverse from 'lodash/reverse';
+    import _uniqBy from 'lodash/uniqBy';
 
     import CategoryElement from './CategoryElement.vue';
 
@@ -105,20 +105,38 @@
                 onApprove: ($element) => {
                     this.modalApproved = true;
 
+                    const newElementsArray = [];
+
                     for (let i = 0; i < this.modalElements.length; i++) {
+
+                        // Is it in this.elements already? If so, move from this.elements and to the new tree and skip.
+                        let currentIndex = this.elements.findIndex(obj => {
+                            return obj.id === this.modalElements[i].id;
+                        });
+
+                        if (currentIndex != -1) {
+                            newElementsArray.push(this.elements[currentIndex]);
+                        }
+
+
+                        // Is is in the newly selected elements array? If so, add it to the tree.
                         if (this.selectedElementIds.indexOf(this.modalElements[i].id) != -1) {
 
                             // Clone the element
-                            const newElement = _extend({}, this.modalElements[i]);
+                            let newElement = _extend({}, this.modalElements[i]);
 
                             // Set up some props on the new element
                             newElement.context = 'field';
                             newElement.disabled = false;
 
                             // Push it onto the field
-                            this.elements.push(newElement);
+                            newElementsArray.push(newElement);
                         }
                     }
+
+                    // Clean out any duplicates
+                    this.elements = _uniqBy(newElementsArray, 'id');
+
                 },
                 onHidden: () => {
                     if (this.modalApproved) {
@@ -180,45 +198,74 @@
 
                 let element = this.modalElements[elementIndex];
 
+
+//                // Check if the parent of this element is already selected,
+//                // if it is we need to insert at that point in the selected array and stop
+//                if (element.parent !== null) {
+//
+//                    let elementIndex = this.modalElements.findIndex(function(o) {
+//                        return o.id === obj.elementId;
+//                    });
+//
+//                }
+//
+//
+
+                // Add/remove
                 if (obj.selected) {
-
-                    // Add to the selected stack
                     this.selectedElementIds.push(element.id);
+                } else {
+                    let idx = this.selectedElementIds.indexOf(element.id);
+                    if (idx != -1) {
+                        this.selectedElementIds.splice(idx, 1);
+                    }
+                }
 
-                    // Check its not a top level category, if its not we select
-                    // up the tree until to the parent
-                    if (element.parent !== null) {
 
-                        // First reverse the array so we can look down it instead of up
-                        this.modalElements.reverse();
+                // Check its not a top level category, if its not we select
+                // up the tree until to the parent
+                if (element.parent !== null) {
 
-                        // Re-find that index
-                        let elementIndex = this.modalElements.findIndex(function(o) {
-                            return o.id === element.id;
-                        });
+                    // First reverse the array so we can look down it instead of up
+                    this.modalElements.reverse();
 
-                        for (let i = elementIndex + 1; i < this.modalElements.length; i++) {
+                    // Re-find that index
+                    let elementIndex = this.modalElements.findIndex(function(o) {
+                        return o.id === element.id;
+                    });
 
-                            // Add to the stack
-                            this.selectedElementIds.push(this.modalElements[i].id);
+                    let parentId = element.parent;
 
-                            // Stop as soon as we hit anything other than the parent
-                            if (this.modalElements[i].id !== element.parent) {
+                    for (let i = elementIndex; i < this.modalElements.length; i++) {
+
+                        // Check we match the current parent we’re looking for
+                        if (this.modalElements[i].id === parentId) {
+
+                            // Add/remove
+                            if (obj.selected) {
+                                this.selectedElementIds.push(this.modalElements[i].id);
+                            } else {
+                                let idx = this.selectedElementIds.indexOf(this.modalElements[i].id);
+                                if (idx != -1) {
+                                    this.selectedElementIds.splice(idx, 1);
+                                }
+                            }
+
+                            // If there is no new parent to look for then stop
+                            if (this.modalElements[i].parent == null) {
                                 break;
                             }
+
+                            // Otherwise, store the next parent to look for
+                            parentId = this.modalElements[i].parent;
+
                         }
 
-                        // Stick the array back the right way around
-                        this.modalElements.reverse();
-
                     }
 
+                    // Stick the array back the right way around
+                    this.modalElements.reverse();
 
-                } else {
-                    const i = this.selectedElementIds.indexOf(obj.elementId);
-                    if (i != -1) {
-                        this.selectedElementIds.splice(i, 1);
-                    }
                 }
 
                 this.selectBtnClasses.disabled = (this.selectedElementIds.length < 1);
