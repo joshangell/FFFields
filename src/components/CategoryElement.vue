@@ -40,13 +40,6 @@
         },
         methods: {
             removeElement: function(event) {
-                $(this.$el).transition({
-                    animation: 'fade',
-                    onHide: function() {
-                        $(this).remove();
-                    }
-                });
-
                 this.$emit('elementRemoved', this.element);
             },
             selectElement: function(event) {
