@@ -11,7 +11,7 @@
             {{ config.selectionLabel }}
         </button>
 
-        <div class="ui large modal">
+        <div class="ui large modal assets-modal">
 
             <div class="header">
 
@@ -98,17 +98,17 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="css">
     .assets > .ui.cards {
         margin-bottom: 0.25rem;
     }
     .assets > .ui.labels {
         margin-bottom: 1rem;
     }
-    .modal .header {
+    .modal.assets-modal .header {
         overflow: hidden;
     }
-    .modal .header .buttons {
+    .modal.assets-modal .header .buttons {
         float: right;
     }
 </style>

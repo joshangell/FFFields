@@ -30,18 +30,18 @@
         }
     }
 
-    .ui.card.disabled {
+    .ui.card.disabled.asset-element {
         opacity: 0.25;
     }
 
-    .ui.card .extra.content {
+    .ui.card.asset-element .extra.content {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         word-wrap: normal;
     }
 
-    .ui.ten.doubling.cards .ui.card .extra.content {
+    .ui.ten.doubling.cards .ui.card.asset-element .extra.content {
         padding-right: 1.8rem;
         position: relative;
         font-size: 0.8em;
@@ -62,7 +62,7 @@
         }
     }
 
-    .ui.label {
+    .asset-element .ui.label {
         margin-bottom: 0.5rem;
         cursor: default;
     }

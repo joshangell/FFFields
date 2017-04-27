@@ -25,22 +25,22 @@
 
 <style lang="scss">
 
-    .ui[class*="left icon"].input>input {
-        padding-right: 2.67142857em!important;
+    .ui.calendar .ui[class*="left icon"].input>input {
+        padding-right: 2.67142857em !important;
     }
 
-    .remove.circle.icon {
+    .ui.calendar .remove.circle.icon {
         position: absolute;
         right: 0.5em;
         bottom: 0.9em;
         cursor: pointer;
         opacity: .5;
-    }
 
-        .remove.circle.icon:hover {
+
+        &:hover {
             opacity: 1;
         }
-
+    }
 </style>
 
 <script>

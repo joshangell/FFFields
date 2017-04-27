@@ -32,18 +32,18 @@
     </div>
 </template>
 
-<style lang="scss">
-    .level-2  { margin-left: 0rem;    }
-    .level-3  { margin-left: 2.5rem;  }
-    .level-4  { margin-left: 5rem;    }
-    .level-5  { margin-left: 7.5rem;  }
-    .level-6  { margin-left: 10rem;   }
-    .level-7  { margin-left: 12.5rem; }
-    .level-8  { margin-left: 15rem;   }
-    .level-9  { margin-left: 17.5rem; }
-    .level-10 { margin-left: 20rem;   }
+<style lang="css">
+    .catgeories .level-2  { margin-left: 0rem;    }
+    .catgeories .level-3  { margin-left: 2.5rem;  }
+    .catgeories .level-4  { margin-left: 5rem;    }
+    .catgeories .level-5  { margin-left: 7.5rem;  }
+    .catgeories .level-6  { margin-left: 10rem;   }
+    .catgeories .level-7  { margin-left: 12.5rem; }
+    .catgeories .level-8  { margin-left: 15rem;   }
+    .catgeories .level-9  { margin-left: 17.5rem; }
+    .catgeories .level-10 { margin-left: 20rem;   }
 
-    .angle.down.icon {
+    .catgeories .angle.down.icon {
         transform: rotate(45deg);
 
         float: left;
