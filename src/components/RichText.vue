@@ -31,9 +31,7 @@
         mounted: function() {
             $.trumbowyg.svgPath = this.svgPath;
             $('textarea', this.$el)
-                .trumbowyg({
-                    autogrow: true
-                })
+                .trumbowyg(JSON.parse(this.config.options))
                 .on('tbwchange', this.onChange)
                 .trumbowyg('html', this.value);
         },

@@ -51336,9 +51336,7 @@ const trumbowygSvgPath = __webpack_require__(313);
     },
     mounted: function () {
         $.trumbowyg.svgPath = this.svgPath;
-        $('textarea', this.$el).trumbowyg({
-            autogrow: true
-        }).on('tbwchange', this.onChange).trumbowyg('html', this.value);
+        $('textarea', this.$el).trumbowyg(JSON.parse(this.config.options)).on('tbwchange', this.onChange).trumbowyg('html', this.value);
     },
     methods: {
         onChange() {

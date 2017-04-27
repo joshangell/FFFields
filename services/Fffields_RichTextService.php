@@ -12,6 +12,14 @@ namespace Craft;
 class Fffields_RichTextService extends BaseApplicationComponent
 {
 
+    // Properties
+    // =========================================================================
+
+    /**
+     * @var
+     */
+    private $_field;
+
     // Public Methods
     // =========================================================================
 
@@ -25,19 +33,19 @@ class Fffields_RichTextService extends BaseApplicationComponent
     public function getConfig(array $params)
     {
 
-        $field = $params['fieldLayoutField']->getField();
+        $this->_field = $params['fieldLayoutField']->getField();
 
-//        // TODO implement redactor config from field
-//        $this->_includeFieldResources($configJs);
-//        $configJs = $this->_getConfigJson();
+        // Gets the json config for the field
+        $configJs = $this->_getConfigJson();
 
-        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
-        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
+        $id = craft()->templates->namespaceInputId($this->_field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($this->_field->handle, $params['namespace']);
 
         $config = array(
-            'id'    => $id,
-            'name'  => $name,
-            'value' => $params['value'],
+            'id'      => $id,
+            'name'    => $name,
+            'value'   => $params['value'],
+            'options' => $configJs
 //            'linkOptions'     => $this->_getLinkOptions(), // TODO support link options
 //            'assetSources'    => $this->_getAssetSources(), // TODO support asset sources
 //            'transforms'      => $this->_getTransforms(), // TODO support transforms
@@ -64,27 +72,25 @@ class Fffields_RichTextService extends BaseApplicationComponent
 
     }
 
-//    /**
-//     * Returns the Redactor config JSON used by this field.
-//     *
-//     * TODO: convert to Trumbowyg config object
-//     *
-//     * @return string
-//     */
-//    private function _getConfigJson()
-//    {
-//        if ($this->_field->getFieldType()->getSettings()->configFile)
-//        {
-//            $configPath = craft()->path->getConfigPath().'redactor/'.$this->_field->getFieldType()->getSettings()->configFile;
-//            $json = IOHelper::getFileContents($configPath);
-//        }
-//
-//        if (empty($json))
-//        {
-//            $json = '{}';
-//        }
-//
-//        return $json;
-//    }
+    /**
+     * Returns the Trumbowyg config JSON used by this field.
+     *
+     * @return string
+     */
+    private function _getConfigJson()
+    {
+        if ($this->_field->getFieldType()->getSettings()->configFile)
+        {
+            $configPath = craft()->path->getConfigPath().'trumbowyg/'.$this->_field->getFieldType()->getSettings()->configFile;
+            $json = IOHelper::getFileContents($configPath);
+        }
+
+        if (empty($json))
+        {
+            $json = '{}';
+        }
+
+        return $json;
+    }
 
 }
