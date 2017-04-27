@@ -51475,7 +51475,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n.assets > .ui.labels {\n  margin-bottom: 1rem;\n}\n.modal .header {\n  overflow: hidden;\n}\n.modal .header .buttons {\n  float: right;\n}\n", ""]);
+exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n.assets > .ui.labels {\n  margin-bottom: 1rem;\n}\n.modal.assets-modal .header {\n  overflow: hidden;\n}\n.modal.assets-modal .header .buttons {\n  float: right;\n}\n", ""]);
 
 // exports
 
@@ -51531,7 +51531,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n    pointer-events: none;\n}\n.ui.card.disabled {\n  opacity: 0.25;\n}\n.ui.card .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.ten.doubling.cards .ui.card .extra.content {\n  padding-right: 1.8rem;\n  position: relative;\n  font-size: 0.8em;\n}\n.ui.ten.doubling.cards .ui.card .extra.content .delete.icon {\n    margin-right: 0;\n    cursor: pointer;\n    opacity: 0.5;\n    position: absolute;\n    right: 0.5rem;\n    top: 50%;\n    margin-top: -0.65rem;\n    font-size: 1rem;\n}\n.ui.ten.doubling.cards .ui.card .extra.content .delete.icon:hover {\n      opacity: 1;\n}\n.ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n    pointer-events: none;\n}\n.ui.card.disabled.asset-element {\n  opacity: 0.25;\n}\n.ui.card.asset-element .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content {\n  padding-right: 1.8rem;\n  position: relative;\n  font-size: 0.8em;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon {\n    margin-right: 0;\n    cursor: pointer;\n    opacity: 0.5;\n    position: absolute;\n    right: 0.5rem;\n    top: 50%;\n    margin-top: -0.65rem;\n    font-size: 1rem;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon:hover {\n      opacity: 1;\n}\n.asset-element .ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -51545,7 +51545,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.ui[class*=\"left icon\"].input > input {\n  padding-right: 2.67143em !important;\n}\n.remove.circle.icon {\n  position: absolute;\n  right: 0.5em;\n  bottom: 0.9em;\n  cursor: pointer;\n  opacity: .5;\n}\n.remove.circle.icon:hover {\n  opacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n.ui.calendar .ui[class*=\"left icon\"].input > input {\n  padding-right: 2.67142857em !important;\n}\n.ui.calendar .remove.circle.icon {\n  position: absolute;\n  right: 0.5em;\n  bottom: 0.9em;\n  cursor: pointer;\n  opacity: .5;\n}\n.ui.calendar .remove.circle.icon:hover {\n    opacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -59568,7 +59568,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "add icon"
   }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "ui large modal"
+    staticClass: "ui large modal assets-modal"
   }, [_c('div', {
     staticClass: "header"
   }, [_c('div', {
@@ -63360,8 +63360,10 @@ if (document.querySelector('#field-layout')) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_pullAt__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue__ = __webpack_require__(367);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_reverse__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_reverse___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_reverse__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue__ = __webpack_require__(367);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue__);
 //
 //
 //
@@ -63418,6 +63420,12 @@ if (document.querySelector('#field-layout')) {
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -63434,7 +63442,7 @@ if (document.querySelector('#field-layout')) {
     },
 
     components: {
-        'category-element': __WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue___default.a
+        'category-element': __WEBPACK_IMPORTED_MODULE_3__CategoryElement_vue___default.a
     },
 
     data: function () {
@@ -63530,8 +63538,45 @@ if (document.querySelector('#field-layout')) {
         },
 
         onElementSelected: function (obj) {
+
+            // Get the index of this element
+            let elementIndex = this.modalElements.findIndex(function (o) {
+                return o.id === obj.elementId;
+            });
+
+            let element = this.modalElements[elementIndex];
+
             if (obj.selected) {
-                this.selectedElementIds.push(obj.elementId);
+
+                // Add to the selected stack
+                this.selectedElementIds.push(element.id);
+
+                // Check its not a top level category, if its not we select
+                // up the tree until to the parent
+                if (element.parent !== null) {
+
+                    // First reverse the array so we can look down it instead of up
+                    this.modalElements.reverse();
+
+                    // Re-find that index
+                    let elementIndex = this.modalElements.findIndex(function (o) {
+                        return o.id === element.id;
+                    });
+
+                    for (let i = elementIndex + 1; i < this.modalElements.length; i++) {
+
+                        // Add to the stack
+                        this.selectedElementIds.push(this.modalElements[i].id);
+
+                        // Stop as soon as we hit anything other than the parent
+                        if (this.modalElements[i].id !== element.parent) {
+                            break;
+                        }
+                    }
+
+                    // Stick the array back the right way around
+                    this.modalElements.reverse();
+                }
             } else {
                 const i = this.selectedElementIds.indexOf(obj.elementId);
                 if (i != -1) {
@@ -63548,15 +63593,6 @@ if (document.querySelector('#field-layout')) {
             } else {
                 this.$modal.modal('show');
             }
-        },
-
-        toggleSelectModalElement: function (element) {
-            const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
-
-            this.onElementSelected({
-                selected: !currentStatus,
-                elementId: element.id
-            });
         },
 
         initializeModal: function () {
@@ -63636,6 +63672,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'category-element',
@@ -63651,6 +63697,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             classObject: {
                 'ui label': true,
                 'disabled': this.element.disabled,
+                'selectable': this.element.context === 'index',
                 'category-element': true
             }
         };
@@ -63680,7 +63727,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.label {\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.ui.label.category-element {\n  user-select: none;\n  cursor: default;\n}\n.ui.label.category-element.selectable {\n  cursor: pointer;\n}\n.ui.label.category-element.selectable:hover {\n    background-color: #e0e0e0;\n    border-color: #e0e0e0;\n    background-image: none;\n    color: rgba(0, 0, 0, 0.8);\n}\n", ""]);
 
 // exports
 
@@ -63775,7 +63822,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.selectElement
     }
-  }, [_vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
+  }, [(_vm.selected) ? _c('i', {
+    staticClass: "check icon"
+  }) : _vm._e(), _vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
@@ -63833,7 +63882,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "add icon"
   }), _vm._v("\n        " + _vm._s(_vm.config.selectionLabel) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "ui large modal"
+    staticClass: "ui large modal catgeories-modal"
   }, [(!_vm.modalElements) ? _c('div', {
     staticClass: "ui large loader"
   }) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
@@ -63901,7 +63950,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.level-2 {\n  margin-left: 0rem;\n}\n.level-3 {\n  margin-left: 2.5rem;\n}\n.level-4 {\n  margin-left: 5rem;\n}\n.level-5 {\n  margin-left: 7.5rem;\n}\n.level-6 {\n  margin-left: 10rem;\n}\n.level-7 {\n  margin-left: 12.5rem;\n}\n.level-8 {\n  margin-left: 15rem;\n}\n.level-9 {\n  margin-left: 17.5rem;\n}\n.level-10 {\n  margin-left: 20rem;\n}\n.angle.down.icon {\n  transform: rotate(45deg);\n  float: left;\n  font-size: 2em;\n  margin-top: 0.2rem !important;\n  color: #e8e8e8;\n}\n", ""]);
+exports.push([module.i, "\n.catgeories .level-2,\n.catgeories-modal .level-2 {\n  margin-left: 0rem;\n}\n.catgeories .level-3,\n.catgeories-modal .level-3 {\n  margin-left: 2.5rem;\n}\n.catgeories .level-4,\n.catgeories-modal .level-4 {\n  margin-left: 5rem;\n}\n.catgeories .level-5,\n.catgeories-modal .level-5 {\n  margin-left: 7.5rem;\n}\n.catgeories .level-6,\n.catgeories-modal .level-6 {\n  margin-left: 10rem;\n}\n.catgeories .level-7,\n.catgeories-modal .level-7 {\n  margin-left: 12.5rem;\n}\n.catgeories .level-8,\n.catgeories-modal .level-8 {\n  margin-left: 15rem;\n}\n.catgeories .level-9,\n.catgeories-modal .level-9 {\n  margin-left: 17.5rem;\n}\n.catgeories .level-10,\n.catgeories-modal .level-10 {\n  margin-left: 20rem;\n}\n.catgeories .angle.down.icon,\n.catgeories-modal .angle.down.icon {\n  transform: rotate(45deg);\n  float: left;\n  font-size: 2em;\n  margin-top: 0.2rem !important;\n  color: #e8e8e8;\n}\n", ""]);
 
 // exports
 
@@ -64175,6 +64224,52 @@ var pullAt = flatRest(function(array, indexes) {
 });
 
 module.exports = pullAt;
+
+
+/***/ }),
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeReverse = arrayProto.reverse;
+
+/**
+ * Reverses `array` so that the first element becomes the last, the second
+ * element becomes the second to last, and so on.
+ *
+ * **Note:** This method mutates `array` and is based on
+ * [`Array#reverse`](https://mdn.io/Array/reverse).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Array
+ * @param {Array} array The array to modify.
+ * @returns {Array} Returns `array`.
+ * @example
+ *
+ * var array = [1, 2, 3];
+ *
+ * _.reverse(array);
+ * // => [3, 2, 1]
+ *
+ * console.log(array);
+ * // => [3, 2, 1]
+ */
+function reverse(array) {
+  return array == null ? array : nativeReverse.call(array);
+}
+
+module.exports = reverse;
 
 
 /***/ })

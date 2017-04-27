@@ -98,7 +98,7 @@
     </div>
 </template>
 
-<style lang="css">
+<style lang="scss">
     .assets > .ui.cards {
         margin-bottom: 0.25rem;
     }

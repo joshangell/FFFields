@@ -11,7 +11,7 @@
             {{ config.selectionLabel }}
         </button>
 
-        <div class="ui large modal">
+        <div class="ui large modal catgeories-modal">
 
             <div class="ui large loader" v-if="!modalElements"></div>
 
@@ -32,25 +32,30 @@
     </div>
 </template>
 
-<style lang="css">
-    .catgeories .level-2  { margin-left: 0rem;    }
-    .catgeories .level-3  { margin-left: 2.5rem;  }
-    .catgeories .level-4  { margin-left: 5rem;    }
-    .catgeories .level-5  { margin-left: 7.5rem;  }
-    .catgeories .level-6  { margin-left: 10rem;   }
-    .catgeories .level-7  { margin-left: 12.5rem; }
-    .catgeories .level-8  { margin-left: 15rem;   }
-    .catgeories .level-9  { margin-left: 17.5rem; }
-    .catgeories .level-10 { margin-left: 20rem;   }
+<style lang="scss">
+    .catgeories,
+    .catgeories-modal {
 
-    .catgeories .angle.down.icon {
-        transform: rotate(45deg);
+        .level-2  { margin-left: 0rem;    }
+        .level-3  { margin-left: 2.5rem;  }
+        .level-4  { margin-left: 5rem;    }
+        .level-5  { margin-left: 7.5rem;  }
+        .level-6  { margin-left: 10rem;   }
+        .level-7  { margin-left: 12.5rem; }
+        .level-8  { margin-left: 15rem;   }
+        .level-9  { margin-left: 17.5rem; }
+        .level-10 { margin-left: 20rem;   }
 
-        float: left;
-        font-size: 2em;
-        margin-top: 0.2rem !important;
+        .angle.down.icon {
+            transform: rotate(45deg);
 
-        color: #e8e8e8;
+            float: left;
+            font-size: 2em;
+            margin-top: 0.2rem !important;
+
+            color: #e8e8e8;
+        }
+
     }
 </style>
 
@@ -58,6 +63,7 @@
 
     import _pullAt from 'lodash/pullAt';
     import _extend from 'lodash/assignIn';
+    import _reverse from 'lodash/reverse';
 
     import CategoryElement from './CategoryElement.vue';
 
@@ -166,8 +172,48 @@
             },
 
             onElementSelected: function(obj) {
+
+                // Get the index of this element
+                let elementIndex = this.modalElements.findIndex(function(o) {
+                    return o.id === obj.elementId;
+                });
+
+                let element = this.modalElements[elementIndex];
+
                 if (obj.selected) {
-                    this.selectedElementIds.push(obj.elementId);
+
+                    // Add to the selected stack
+                    this.selectedElementIds.push(element.id);
+
+                    // Check its not a top level category, if its not we select
+                    // up the tree until to the parent
+                    if (element.parent !== null) {
+
+                        // First reverse the array so we can look down it instead of up
+                        this.modalElements.reverse();
+
+                        // Re-find that index
+                        let elementIndex = this.modalElements.findIndex(function(o) {
+                            return o.id === element.id;
+                        });
+
+                        for (let i = elementIndex + 1; i < this.modalElements.length; i++) {
+
+                            // Add to the stack
+                            this.selectedElementIds.push(this.modalElements[i].id);
+
+                            // Stop as soon as we hit anything other than the parent
+                            if (this.modalElements[i].id !== element.parent) {
+                                break;
+                            }
+                        }
+
+                        // Stick the array back the right way around
+                        this.modalElements.reverse();
+
+                    }
+
+
                 } else {
                     const i = this.selectedElementIds.indexOf(obj.elementId);
                     if (i != -1) {
@@ -185,16 +231,6 @@
                 } else {
                     this.$modal.modal('show');
                 }
-            },
-
-            toggleSelectModalElement: function(element)
-            {
-                const currentStatus = this.selectedElementIds.indexOf(element.id) != -1;
-
-                this.onElementSelected({
-                    selected: !currentStatus,
-                    elementId: element.id
-                });
             },
 
             initializeModal: function()
