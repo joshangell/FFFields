@@ -3,12 +3,7 @@
         <input type="hidden" v-bind:name="config.name" value="">
 
         <div class="ui list">
-            <template v-for="element in elements">
-                <div v-bind:class="'item level-'+element.level">
-                    <i class="angle down icon" v-if="element.level > 1"></i>
-                    <category-element v-bind:element="element" v-on:elementRemoved="onElementRemoved"></category-element>
-                </div>
-            </template>
+            <category-element v-for="element in elements" v-bind:element="element" v-on:elementRemoved="onElementRemoved"></category-element>
         </div>
 
         <button type="button" class="ui small basic labeled icon button" v-if="canAddMore" v-on:click="launchElementSelector">
@@ -23,12 +18,7 @@
             <div class="content" v-if="modalElements">
 
                 <div class="ui list">
-                    <template v-for="element in modalElements">
-                        <div v-bind:class="'item level-'+element.level">
-                            <i class="angle down icon" v-if="element.level > 1"></i>
-                            <category-element v-bind:element="element" v-bind:selectedElementIds="selectedElementIds" v-on:elementSelected="onElementSelected"></category-element>
-                        </div>
-                    </template>
+                    <category-element v-for="element in modalElements" v-bind:element="element" v-bind:selectedElementIds="selectedElementIds" v-on:elementSelected="onElementSelected"></category-element>
                 </div>
 
             </div>
@@ -43,14 +33,15 @@
 </template>
 
 <style lang="scss">
-    .level-2 { margin-left: 0rem; }
-    .level-3 { margin-left: 2.5rem; }
-    .level-4 { margin-left: 5rem; }
-    .level-5 { margin-left: 7.5rem; }
-    .level-6 { margin-left: 10rem; }
-    .level-7 { margin-left: 12.5rem; }
-    .level-8 { margin-left: 15rem; }
-    .level-9 { margin-left: 17.5rem; }
+    .level-2  { margin-left: 0rem;    }
+    .level-3  { margin-left: 2.5rem;  }
+    .level-4  { margin-left: 5rem;    }
+    .level-5  { margin-left: 7.5rem;  }
+    .level-6  { margin-left: 10rem;   }
+    .level-7  { margin-left: 12.5rem; }
+    .level-8  { margin-left: 15rem;   }
+    .level-9  { margin-left: 17.5rem; }
+    .level-10 { margin-left: 20rem;   }
 
     .angle.down.icon {
         transform: rotate(45deg);
@@ -65,8 +56,8 @@
 
 <script>
 
-    import remove from 'lodash/remove';
-    import extend from 'lodash/assignIn';
+    import _pullAt from 'lodash/pullAt';
+    import _extend from 'lodash/assignIn';
 
     import CategoryElement from './CategoryElement.vue';
 
@@ -83,7 +74,6 @@
         },
 
         data: function() {
-            console.log(this.config.elements);
             return {
                 $modal:             null,
                 modalInitialized:   false,
@@ -113,7 +103,7 @@
                         if (this.selectedElementIds.indexOf(this.modalElements[i].id) != -1) {
 
                             // Clone the element
-                            const newElement = extend({}, this.modalElements[i]);
+                            const newElement = _extend({}, this.modalElements[i]);
 
                             // Set up some props on the new element
                             newElement.context = 'field';
@@ -148,9 +138,37 @@
             },
 
             onElementRemoved: function(element) {
-                remove(this.elements, function(obj) {
+
+                console.log(this.elements);
+
+                // Get the index of this element so we know where to start looking for children from
+                const elementIndex = this.elements.findIndex(function(obj) {
                     return obj.id === element.id;
                 });
+
+
+                // Start the array of element indexes we need to remove
+                let elementIndexesToRemove = [elementIndex];
+
+                // Look for direct descendants so we can remove them too
+                for (let i = elementIndex + 1; i < this.elements.length; i++) {
+
+                    // Stop as soon as we go above or the same as the level of the element clicked
+                    if (this.elements[i].level <= element.level) {
+                        break;
+                    }
+
+                    // Trigger the UI removal on the child component
+                    // TODO
+
+                    // Add to the removal array
+                    elementIndexesToRemove.push(i);
+                }
+
+                // Finally remove them all
+                _pullAt(this.elements, elementIndexesToRemove);
+
+                console.log(this.elements);
 
                 this.trashModal();
             },

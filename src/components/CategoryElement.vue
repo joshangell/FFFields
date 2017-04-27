@@ -1,8 +1,11 @@
 <template>
-    <div v-bind:class="classObject" v-on:click="selectElement">
-        {{ element.label }}
-        <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
-        <input type="hidden" v-bind:name="element.name" v-bind:value="element.id" v-if="element.context === 'field'">
+    <div v-bind:class="'item level-'+element.level">
+        <i class="angle down icon" v-if="element.level > 1"></i>
+        <div v-bind:class="classObject" v-on:click="selectElement">
+            {{ element.label }}
+            <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
+            <input type="hidden" v-bind:name="element.name" v-bind:value="element.id" v-if="element.context === 'field'">
+        </div>
     </div>
 </template>
 
@@ -11,7 +14,6 @@
         user-select: none;
     }
     .ui.label {
-        /*margin-bottom: 0.5rem;*/
         cursor: default;
     }
 </style>

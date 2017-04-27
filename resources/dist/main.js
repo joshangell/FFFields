@@ -63364,21 +63364,12 @@ if (document.querySelector('#field-layout')) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_remove__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_remove___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_remove__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt__ = __webpack_require__(379);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_pullAt__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_assignIn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_assignIn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue__ = __webpack_require__(367);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CategoryElement_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -63455,7 +63446,6 @@ if (document.querySelector('#field-layout')) {
     },
 
     data: function () {
-        console.log(this.config.elements);
         return {
             $modal: null,
             modalInitialized: false,
@@ -63520,9 +63510,36 @@ if (document.querySelector('#field-layout')) {
         },
 
         onElementRemoved: function (element) {
-            __WEBPACK_IMPORTED_MODULE_0_lodash_remove___default()(this.elements, function (obj) {
+
+            console.log(this.elements);
+
+            // Get the index of this element so we know where to start looking for children from
+            const elementIndex = this.elements.findIndex(function (obj) {
                 return obj.id === element.id;
             });
+
+            // Start the array of element indexes we need to remove
+            let elementIndexesToRemove = [elementIndex];
+
+            // Look for direct descendants so we can remove them too
+            for (let i = elementIndex + 1; i < this.elements.length; i++) {
+
+                // Stop as soon as we go above or the same as the level of the element clicked
+                if (this.elements[i].level <= element.level) {
+                    break;
+                }
+
+                // Trigger the UI removal on the child component
+                // TODO
+
+                // Add to the removal array
+                elementIndexesToRemove.push(i);
+            }
+
+            // Finally remove them all
+            __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt___default()(this.elements, elementIndexesToRemove);
+
+            console.log(this.elements);
 
             this.trashModal();
         },
@@ -63632,6 +63649,8 @@ if (document.querySelector('#field-layout')) {
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'category-element',
@@ -63684,7 +63703,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.label {\n  /*margin-bottom: 0.5rem;*/\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.category-element {\n  user-select: none;\n}\n.ui.label {\n  cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -63771,11 +63790,15 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    class: 'item level-' + _vm.element.level
+  }, [(_vm.element.level > 1) ? _c('i', {
+    staticClass: "angle down icon"
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     class: _vm.classObject,
     on: {
       "click": _vm.selectElement
     }
-  }, [_vm._v("\n    " + _vm._s(_vm.element.label) + "\n    "), (_vm.element.context === 'field') ? _c('i', {
+  }, [_vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
@@ -63788,7 +63811,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.element.id
     }
-  }) : _vm._e()])
+  }) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -63813,20 +63836,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "ui list"
-  }, [_vm._l((_vm.elements), function(element) {
-    return [_c('div', {
-      class: 'item level-' + element.level
-    }, [(element.level > 1) ? _c('i', {
-      staticClass: "angle down icon"
-    }) : _vm._e(), _vm._v(" "), _c('category-element', {
+  }, _vm._l((_vm.elements), function(element) {
+    return _c('category-element', {
       attrs: {
         "element": element
       },
       on: {
         "elementRemoved": _vm.onElementRemoved
       }
-    })], 1)]
-  })], 2), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
+    })
+  })), _vm._v(" "), (_vm.canAddMore) ? _c('button', {
     staticClass: "ui small basic labeled icon button",
     attrs: {
       "type": "button"
@@ -63844,12 +63863,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('div', {
     staticClass: "ui list"
-  }, [_vm._l((_vm.modalElements), function(element) {
-    return [_c('div', {
-      class: 'item level-' + element.level
-    }, [(element.level > 1) ? _c('i', {
-      staticClass: "angle down icon"
-    }) : _vm._e(), _vm._v(" "), _c('category-element', {
+  }, _vm._l((_vm.modalElements), function(element) {
+    return _c('category-element', {
       attrs: {
         "element": element,
         "selectedElementIds": _vm.selectedElementIds
@@ -63857,8 +63872,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "elementSelected": _vm.onElementSelected
       }
-    })], 1)]
-  })], 2)]) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
+    })
+  }))]) : _vm._e(), _vm._v(" "), (_vm.modalElements) ? _c('div', {
     staticClass: "actions"
   }, [_c('div', {
     staticClass: "ui cancel button"
@@ -63909,7 +63924,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.level-2 {\n  margin-left: 0rem;\n}\n.level-3 {\n  margin-left: 2.5rem;\n}\n.level-4 {\n  margin-left: 5rem;\n}\n.level-5 {\n  margin-left: 7.5rem;\n}\n.level-6 {\n  margin-left: 10rem;\n}\n.level-7 {\n  margin-left: 12.5rem;\n}\n.level-8 {\n  margin-left: 15rem;\n}\n.level-9 {\n  margin-left: 17.5rem;\n}\n.angle.down.icon {\n  transform: rotate(45deg);\n  float: left;\n  font-size: 2em;\n  margin-top: 0.2rem !important;\n  color: #e8e8e8;\n}\n", ""]);
+exports.push([module.i, "\n.level-2 {\n  margin-left: 0rem;\n}\n.level-3 {\n  margin-left: 2.5rem;\n}\n.level-4 {\n  margin-left: 5rem;\n}\n.level-5 {\n  margin-left: 7.5rem;\n}\n.level-6 {\n  margin-left: 10rem;\n}\n.level-7 {\n  margin-left: 12.5rem;\n}\n.level-8 {\n  margin-left: 15rem;\n}\n.level-9 {\n  margin-left: 17.5rem;\n}\n.level-10 {\n  margin-left: 20rem;\n}\n.angle.down.icon {\n  transform: rotate(45deg);\n  float: left;\n  font-size: 2em;\n  margin-top: 0.2rem !important;\n  color: #e8e8e8;\n}\n", ""]);
 
 // exports
 
@@ -63939,6 +63954,251 @@ if(false) {
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
 }
+
+/***/ }),
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var get = __webpack_require__(294);
+
+/**
+ * The base implementation of `_.at` without support for individual paths.
+ *
+ * @private
+ * @param {Object} object The object to iterate over.
+ * @param {string[]} paths The property paths to pick.
+ * @returns {Array} Returns the picked elements.
+ */
+function baseAt(object, paths) {
+  var index = -1,
+      length = paths.length,
+      result = Array(length),
+      skip = object == null;
+
+  while (++index < length) {
+    result[index] = skip ? undefined : get(object, paths[index]);
+  }
+  return result;
+}
+
+module.exports = baseAt;
+
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayPush = __webpack_require__(215),
+    isFlattenable = __webpack_require__(377);
+
+/**
+ * The base implementation of `_.flatten` with support for restricting flattening.
+ *
+ * @private
+ * @param {Array} array The array to flatten.
+ * @param {number} depth The maximum recursion depth.
+ * @param {boolean} [predicate=isFlattenable] The function invoked per iteration.
+ * @param {boolean} [isStrict] Restrict to values that pass `predicate` checks.
+ * @param {Array} [result=[]] The initial result value.
+ * @returns {Array} Returns the new flattened array.
+ */
+function baseFlatten(array, depth, predicate, isStrict, result) {
+  var index = -1,
+      length = array.length;
+
+  predicate || (predicate = isFlattenable);
+  result || (result = []);
+
+  while (++index < length) {
+    var value = array[index];
+    if (depth > 0 && predicate(value)) {
+      if (depth > 1) {
+        // Recursively flatten arrays (susceptible to call stack limits).
+        baseFlatten(value, depth - 1, predicate, isStrict, result);
+      } else {
+        arrayPush(result, value);
+      }
+    } else if (!isStrict) {
+      result[result.length] = value;
+    }
+  }
+  return result;
+}
+
+module.exports = baseFlatten;
+
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isSymbol = __webpack_require__(20);
+
+/**
+ * Compares values to sort them in ascending order.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {number} Returns the sort order indicator for `value`.
+ */
+function compareAscending(value, other) {
+  if (value !== other) {
+    var valIsDefined = value !== undefined,
+        valIsNull = value === null,
+        valIsReflexive = value === value,
+        valIsSymbol = isSymbol(value);
+
+    var othIsDefined = other !== undefined,
+        othIsNull = other === null,
+        othIsReflexive = other === other,
+        othIsSymbol = isSymbol(other);
+
+    if ((!othIsNull && !othIsSymbol && !valIsSymbol && value > other) ||
+        (valIsSymbol && othIsDefined && othIsReflexive && !othIsNull && !othIsSymbol) ||
+        (valIsNull && othIsDefined && othIsReflexive) ||
+        (!valIsDefined && othIsReflexive) ||
+        !valIsReflexive) {
+      return 1;
+    }
+    if ((!valIsNull && !valIsSymbol && !othIsSymbol && value < other) ||
+        (othIsSymbol && valIsDefined && valIsReflexive && !valIsNull && !valIsSymbol) ||
+        (othIsNull && valIsDefined && valIsReflexive) ||
+        (!othIsDefined && valIsReflexive) ||
+        !othIsReflexive) {
+      return -1;
+    }
+  }
+  return 0;
+}
+
+module.exports = compareAscending;
+
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var flatten = __webpack_require__(378),
+    overRest = __webpack_require__(278),
+    setToString = __webpack_require__(283);
+
+/**
+ * A specialized version of `baseRest` which flattens the rest array.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @returns {Function} Returns the new function.
+ */
+function flatRest(func) {
+  return setToString(overRest(func, undefined, flatten), func + '');
+}
+
+module.exports = flatRest;
+
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(14),
+    isArguments = __webpack_require__(42),
+    isArray = __webpack_require__(6);
+
+/** Built-in value references. */
+var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+
+/**
+ * Checks if `value` is a flattenable `arguments` object or array.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is flattenable, else `false`.
+ */
+function isFlattenable(value) {
+  return isArray(value) || isArguments(value) ||
+    !!(spreadableSymbol && value && value[spreadableSymbol]);
+}
+
+module.exports = isFlattenable;
+
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseFlatten = __webpack_require__(374);
+
+/**
+ * Flattens `array` a single level deep.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to flatten.
+ * @returns {Array} Returns the new flattened array.
+ * @example
+ *
+ * _.flatten([1, [2, [3, [4]], 5]]);
+ * // => [1, 2, [3, [4]], 5]
+ */
+function flatten(array) {
+  var length = array == null ? 0 : array.length;
+  return length ? baseFlatten(array, 1) : [];
+}
+
+module.exports = flatten;
+
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayMap = __webpack_require__(214),
+    baseAt = __webpack_require__(373),
+    basePullAt = __webpack_require__(232),
+    compareAscending = __webpack_require__(375),
+    flatRest = __webpack_require__(376),
+    isIndex = __webpack_require__(17);
+
+/**
+ * Removes elements from `array` corresponding to `indexes` and returns an
+ * array of removed elements.
+ *
+ * **Note:** Unlike `_.at`, this method mutates `array`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Array
+ * @param {Array} array The array to modify.
+ * @param {...(number|number[])} [indexes] The indexes of elements to remove.
+ * @returns {Array} Returns the new array of removed elements.
+ * @example
+ *
+ * var array = ['a', 'b', 'c', 'd'];
+ * var pulled = _.pullAt(array, [1, 3]);
+ *
+ * console.log(array);
+ * // => ['a', 'c']
+ *
+ * console.log(pulled);
+ * // => ['b', 'd']
+ */
+var pullAt = flatRest(function(array, indexes) {
+  var length = array == null ? 0 : array.length,
+      result = baseAt(array, indexes);
+
+  basePullAt(array, arrayMap(indexes, function(index) {
+    return isIndex(index, length) ? +index : index;
+  }).sort(compareAscending));
+
+  return result;
+});
+
+module.exports = pullAt;
+
 
 /***/ })
 /******/ ]);
