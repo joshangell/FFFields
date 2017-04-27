@@ -139,13 +139,10 @@
 
             onElementRemoved: function(element) {
 
-                console.log(this.elements);
-
                 // Get the index of this element so we know where to start looking for children from
                 const elementIndex = this.elements.findIndex(function(obj) {
                     return obj.id === element.id;
                 });
-
 
                 // Start the array of element indexes we need to remove
                 let elementIndexesToRemove = [elementIndex];
@@ -158,17 +155,12 @@
                         break;
                     }
 
-                    // Trigger the UI removal on the child component
-                    // TODO
-
                     // Add to the removal array
                     elementIndexesToRemove.push(i);
                 }
 
                 // Finally remove them all
                 _pullAt(this.elements, elementIndexesToRemove);
-
-                console.log(this.elements);
 
                 this.trashModal();
             },

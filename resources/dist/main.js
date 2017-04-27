@@ -49883,7 +49883,7 @@ module.exports = Vue$3;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -49978,13 +49978,6 @@ module.exports = Vue$3;
     },
     methods: {
         removeElement: function (event) {
-            $(this.$el).transition({
-                animation: 'fade',
-                onHide: function () {
-                    $(this).remove();
-                }
-            });
-
             this.$emit('elementRemoved', this.element);
         },
         selectElement: function (event) {
@@ -49998,7 +49991,6 @@ module.exports = Vue$3;
         }
     }
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 179 */
@@ -63511,8 +63503,6 @@ if (document.querySelector('#field-layout')) {
 
         onElementRemoved: function (element) {
 
-            console.log(this.elements);
-
             // Get the index of this element so we know where to start looking for children from
             const elementIndex = this.elements.findIndex(function (obj) {
                 return obj.id === element.id;
@@ -63529,17 +63519,12 @@ if (document.querySelector('#field-layout')) {
                     break;
                 }
 
-                // Trigger the UI removal on the child component
-                // TODO
-
                 // Add to the removal array
                 elementIndexesToRemove.push(i);
             }
 
             // Finally remove them all
             __WEBPACK_IMPORTED_MODULE_0_lodash_pullAt___default()(this.elements, elementIndexesToRemove);
-
-            console.log(this.elements);
 
             this.trashModal();
         },
@@ -63630,7 +63615,7 @@ if (document.querySelector('#field-layout')) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -63672,13 +63657,6 @@ if (document.querySelector('#field-layout')) {
     },
     methods: {
         removeElement: function (event) {
-            $(this.$el).transition({
-                animation: 'fade',
-                onHide: function () {
-                    $(this).remove();
-                }
-            });
-
             this.$emit('elementRemoved', this.element);
         },
         selectElement: function (event) {
@@ -63692,7 +63670,6 @@ if (document.querySelector('#field-layout')) {
         }
     }
 };
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 365 */
