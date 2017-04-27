@@ -361,10 +361,10 @@
                     url: window.FFFields.actionUrl + '/fffields/elements/getAssets',
                     type: 'POST',
                     data: data,
-                    error: function(jqXHR, textStatus, errorThrown)
-                    {
-                        alert(textStatus + errorThrown);
-                    },
+//                    error: function(jqXHR, textStatus, errorThrown)
+//                    {
+//                        alert(textStatus + errorThrown);
+//                    },
                     complete: (jqXHR, textStatus) => {
                         if (textStatus != 'success') {
                             alert('An unknown error occurred.');

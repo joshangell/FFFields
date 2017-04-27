@@ -50369,9 +50369,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 url: window.FFFields.actionUrl + '/fffields/elements/getAssets',
                 type: 'POST',
                 data: data,
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + errorThrown);
-                },
+                //                    error: function(jqXHR, textStatus, errorThrown)
+                //                    {
+                //                        alert(textStatus + errorThrown);
+                //                    },
                 complete: (jqXHR, textStatus) => {
                     if (textStatus != 'success') {
                         alert('An unknown error occurred.');
@@ -63562,18 +63563,6 @@ if (document.querySelector('#field-layout')) {
 
             let element = this.modalElements[elementIndex];
 
-            //                // Check if the parent of this element is already selected,
-            //                // if it is we need to insert at that point in the selected array and stop
-            //                if (element.parent !== null) {
-            //
-            //                    let elementIndex = this.modalElements.findIndex(function(o) {
-            //                        return o.id === obj.elementId;
-            //                    });
-            //
-            //                }
-            //
-            //
-
             // Add/remove
             if (obj.selected) {
                 this.selectedElementIds.push(element.id);
@@ -63667,9 +63656,10 @@ if (document.querySelector('#field-layout')) {
                 url: window.FFFields.actionUrl + '/fffields/elements/getCategories',
                 type: 'POST',
                 data: data,
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus + errorThrown);
-                },
+                //                    error: function(jqXHR, textStatus, errorThrown)
+                //                    {
+                //                        alert(textStatus + errorThrown);
+                //                    },
                 complete: (jqXHR, textStatus) => {
                     if (textStatus != 'success') {
                         alert('An unknown error occurred.');
