@@ -392,22 +392,6 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     $value = '';
                 }
 
-                $currencyLabel = craft()->commerce_paymentCurrencies->getPrimaryPaymentCurrency()->iso;
-
-                switch ($currencyLabel) {
-                    case 'USD' :
-                        $currencyLabel = '$';
-                        break;
-
-                    case 'EUR' :
-                        $currencyLabel = '€';
-                        break;
-
-                    case 'GBP' :
-                        $currencyLabel = '£';
-                        break;
-                }
-
                 $fieldConfig = [
                     'type' => 'text-input',
                     'config' => [
@@ -415,7 +399,7 @@ class Fffields_MatrixService extends BaseApplicationComponent
                         'name'        => $name,
                         'type'        => 'number',
                         'value'       => $value,
-                        'leftLabel'   => $currencyLabel,
+                        'leftLabel'   => craft()->i18n->getLocaleData()->getCurrencySymbol(craft()->commerce_paymentCurrencies->getPrimaryPaymentCurrency()->iso),
                         'placeholder' => $params['placeholder'],
                         'min'         => 0,
                         'step'        => 0.01
