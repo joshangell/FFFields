@@ -245,7 +245,7 @@
                             // Set up some props on the new element
                             newElement.context = 'field';
                             newElement.disabled = false;
-                            newElement.viewMode = this.elements[0].viewMode;
+                            newElement.viewMode = this.config.viewMode;
 
                             // Push it onto the field
                             this.elements.push(newElement);
