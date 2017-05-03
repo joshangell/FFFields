@@ -345,6 +345,57 @@ class Fffields_MatrixService extends BaseApplicationComponent
             ]
         ];
 
+
+        // Dimension fields
+        if ($variant->product->type->hasDimensions) {
+
+            $meta[] = [
+                [
+                    'handle' => 'length',
+                    'config' => $this->_getVariantMetaFieldConfig([
+                        'name'        => 'length',
+                        'label'       => Craft::t('Length'),
+                        'placeholder' => Craft::t('Length in ').craft()->commerce_settings->getSettings()->dimensionUnits,
+                        'variant'     => $variant,
+                        'namespace'   => $variantNamespace
+                    ])
+                ],
+                [
+                    'handle' => 'width',
+                    'config' => $this->_getVariantMetaFieldConfig([
+                        'name'        => 'width',
+                        'label'       => Craft::t('Width'),
+                        'placeholder' => Craft::t('Width in '.craft()->commerce_settings->getSettings()->dimensionUnits),
+                        'variant'     => $variant,
+                        'namespace'   => $variantNamespace
+                    ])
+                ]
+            ];
+
+            $meta[] = [
+                [
+                    'handle' => 'height',
+                    'config' => $this->_getVariantMetaFieldConfig([
+                        'name'        => 'height',
+                        'label'       => Craft::t('Height'),
+                        'placeholder' => Craft::t('Height in '.craft()->commerce_settings->getSettings()->dimensionUnits),
+                        'variant'     => $variant,
+                        'namespace'   => $variantNamespace
+                    ])
+                ],
+                [
+                    'handle' => 'weight',
+                    'config' => $this->_getVariantMetaFieldConfig([
+                        'name'        => 'weight',
+                        'label'       => Craft::t('Weight'),
+                        'placeholder' => Craft::t('Weight in '.craft()->commerce_settings->getSettings()->weightUnits),
+                        'variant'     => $variant,
+                        'namespace'   => $variantNamespace
+                    ])
+                ]
+            ];
+        }
+
         return [$meta, $fields];
 
     }
@@ -454,6 +505,29 @@ class Fffields_MatrixService extends BaseApplicationComponent
                         'type'        => 'number',
                         'value'       => $value,
                         'placeholder' => $params['placeholder'],
+                    ]
+                ];
+                break;
+
+            case 'weight' :
+            case 'length' :
+            case 'width' :
+            case 'height' :
+                $value = craft()->numberFormatter->formatDecimal($params['variant'][$params['name']], false);
+
+                if ($value === '0') {
+                    $value = '';
+                }
+
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'number',
+                        'value'       => $value,
+                        'placeholder' => $params['placeholder'],
+                        'step'        => 0.01,
                     ]
                 ];
                 break;

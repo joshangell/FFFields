@@ -7,7 +7,7 @@
         <template v-if="block.meta !== undefined">
             <div class="ui form">
                 <div class="ui grid">
-                    <div class="six wide column">
+                    <div class="eight wide column">
                         <template v-for="m in block.meta">
 
                             <field v-if="m.config" v-bind:config="m.config"></field>
@@ -20,7 +20,7 @@
 
                         </template>
                     </div>
-                    <div class="ten wide column">
+                    <div class="eight wide column">
                         <field v-for="f in block.fields" v-bind:config="f.config"></field>
                     </div>
                 </div>
