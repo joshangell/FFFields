@@ -14,14 +14,16 @@
         <div class="ui bottom attached tab segment{% if loop.first %} active{% endif %}" data-tab="tab{{ loop.index }}">
             {% include "fields" with {
                 fields:  tab.getFields(),
-                element: element
+                element: element,
+                assetsFolderId: assetsFolderId
             } only %}
         </div>
     {% endfor %}
 {% elseif tabs %}
     {% include "fields" with {
         fields:  tabs[0].getFields(),
-        element: element
+        element: element,
+        assetsFolderId: assetsFolderId
     } only %}
 {% endif %}
 </div>

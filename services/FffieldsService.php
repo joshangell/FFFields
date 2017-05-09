@@ -20,10 +20,11 @@ class FffieldsService extends BaseApplicationComponent
      *
      * @param BaseElementModel      $element
      * @param FieldLayoutModel|null $fieldLayout
+     * @param int|null              $assetsFolderId
      *
      * @return bool|\Twig_Markup
      */
-    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null)
+    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null, $assetsFolderId = null)
     {
 
         if (!$fieldLayout) {
@@ -52,7 +53,8 @@ class FffieldsService extends BaseApplicationComponent
 
         $html = craft()->templates->render('fieldlayout', [
             'element' => $element,
-            'fieldLayout' => $fieldLayout
+            'fieldLayout' => $fieldLayout,
+            'assetsFolderId' => $assetsFolderId
         ]);
 
         craft()->templates->setTemplatesPath($oldPath);

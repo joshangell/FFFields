@@ -20,9 +20,9 @@ class FffieldsVariable
      *
      * @return mixed
      */
-    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null)
+    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null, $assetsFolderId = null)
     {
-        return craft()->fffields->render($element, $fieldLayout);
+        return craft()->fffields->render($element, $fieldLayout, $assetsFolderId);
     }
 
     /**

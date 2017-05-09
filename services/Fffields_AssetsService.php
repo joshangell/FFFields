@@ -31,7 +31,6 @@ class Fffields_AssetsService extends BaseApplicationComponent
         $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
         $settings = $field->getFieldType()->getSettings();
 
-
         // Sort out the element criteria object
         $criteria = $params['value'];
 
@@ -52,17 +51,24 @@ class Fffields_AssetsService extends BaseApplicationComponent
         ]);
 
         // Work out any weird selection criteria
+        // TODO: Add `kind` from field settings
         $selectionCriteria = [
             'localeEnabled' => null,
             'locale' => craft()->getLanguage()
         ];
+
+        // Override source if folder is set
+        if (!is_null($params['assetsFolderId'])) {
+            $folder = craft()->assets->getFolderById($params['assetsFolderId']);
+            $selectionCriteria['sourceId'] = $folder->sourceId;
+        }
 
         // Return the config
         $config = [
             'id'             => $id,
             'name'           => $name,
             'elements'       => $elements,
-            'sources'        => $settings->sources,
+            'sources'        => !is_null($params['assetsFolderId']) ? ['folder:'.$params['assetsFolderId'].':single'] : $settings->sources,
             'criteria'       => $selectionCriteria,
             'limit'          => $settings->limit,
             'viewMode'       => $settings->viewMode,
