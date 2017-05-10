@@ -30,6 +30,10 @@
         }
     }
 
+    .ui.card.asset-element, .ui.cards>.card.asset-element {
+        width: 147px;
+    }
+
     .ui.card.disabled.asset-element {
         opacity: 0.25;
     }

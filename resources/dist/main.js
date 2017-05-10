@@ -50316,6 +50316,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'asset-element',
@@ -52292,7 +52296,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n    pointer-events: none;\n}\n.ui.card.disabled.asset-element {\n  opacity: 0.25;\n}\n.ui.card.asset-element .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content {\n  padding-right: 1.8rem;\n  position: relative;\n  font-size: 0.8em;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon {\n    margin-right: 0;\n    cursor: pointer;\n    opacity: 0.5;\n    position: absolute;\n    right: 0.5rem;\n    top: 50%;\n    margin-top: -0.65rem;\n    font-size: 1rem;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon:hover {\n      opacity: 1;\n}\n.asset-element .ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
+exports.push([module.i, "\n.asset-element {\n  user-select: none;\n}\n.asset-element .image {\n    pointer-events: none;\n}\n.ui.card.asset-element, .ui.cards > .card.asset-element {\n  width: 147px;\n}\n.ui.card.disabled.asset-element {\n  opacity: 0.25;\n}\n.ui.card.asset-element .extra.content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  word-wrap: normal;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content {\n  padding-right: 1.8rem;\n  position: relative;\n  font-size: 0.8em;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon {\n    margin-right: 0;\n    cursor: pointer;\n    opacity: 0.5;\n    position: absolute;\n    right: 0.5rem;\n    top: 50%;\n    margin-top: -0.65rem;\n    font-size: 1rem;\n}\n.ui.ten.doubling.cards .ui.card.asset-element .extra.content .delete.icon:hover {\n      opacity: 1;\n}\n.asset-element .ui.label {\n  margin-bottom: 0.5rem;\n  cursor: default;\n}\n", ""]);
 
 // exports
 

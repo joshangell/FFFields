@@ -97,7 +97,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
     public function transformCriteria($criteria, $params)
     {
         $elements = [];
-        $size = ($params['viewMode'] === 'large' ? 100 : 50);
+        $size = ($params['viewMode'] === 'large' ? 200 : 50);
 
         $disabledElementIds = [];
         if (isset($params['disabledElementIds'])) {
