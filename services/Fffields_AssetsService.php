@@ -58,8 +58,10 @@ class Fffields_AssetsService extends BaseApplicationComponent
         ];
 
         // Override source if folder is set
-        if (!is_null($params['assetsFolderId'])) {
-            $folder = craft()->assets->getFolderById($params['assetsFolderId']);
+        $assetsFolderId = false;
+        if (isset($params['assetsFolderId']) && !is_null($params['assetsFolderId'])) {
+            $assetsFolderId = $params['assetsFolderId'];
+            $folder = craft()->assets->getFolderById($assetsFolderId);
             $selectionCriteria['sourceId'] = $folder->sourceId;
         }
 
@@ -68,7 +70,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'id'             => $id,
             'name'           => $name,
             'elements'       => $elements,
-            'sources'        => !is_null($params['assetsFolderId']) ? ['folder:'.$params['assetsFolderId'].':single'] : $settings->sources,
+            'sources'        => $assetsFolderId ? ['folder:'.$assetsFolderId.':single'] : $settings->sources,
             'criteria'       => $selectionCriteria,
             'limit'          => $settings->limit,
             'viewMode'       => $settings->viewMode,
