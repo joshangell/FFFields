@@ -57,11 +57,26 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'locale' => craft()->getLanguage()
         ];
 
-        // Override source if folder is set
-        $assetsFolderId = false;
+
+        // If we were passed in a folder ID then use that
         if (isset($params['assetsFolderId']) && !is_null($params['assetsFolderId'])) {
+
             $assetsFolderId = $params['assetsFolderId'];
             $folder = craft()->assets->getFolderById($assetsFolderId);
+            $selectionCriteria['sourceId'] = $folder->sourceId;
+
+        } else {
+
+            // Otherwise use the field settings sources and get the first one available
+            if ($settings->sources === '*') {
+                $sourceIds = craft()->assetSources->getPublicSourceIds();
+                $folder = craft()->assets->getRootFolderBySourceId($sourceIds[0]);
+            } else {
+                $sourceId = explode('folder:', $settings->sources[0])[1];
+                $folder = craft()->assets->getRootFolderBySourceId($sourceId);
+            }
+
+            $assetsFolderId = $folder->id;
             $selectionCriteria['sourceId'] = $folder->sourceId;
         }
 
@@ -70,7 +85,8 @@ class Fffields_AssetsService extends BaseApplicationComponent
             'id'             => $id,
             'name'           => $name,
             'elements'       => $elements,
-            'sources'        => $assetsFolderId ? ['folder:'.$assetsFolderId.':single'] : $settings->sources,
+            'sources'        => ['folder:'.$assetsFolderId.':single'],
+            'folderId'       => $assetsFolderId,
             'criteria'       => $selectionCriteria,
             'limit'          => $settings->limit,
             'viewMode'       => $settings->viewMode,

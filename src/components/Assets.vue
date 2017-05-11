@@ -183,7 +183,7 @@
                             file.headers['X-Requested-With'] = 'XMLHttpRequest';
                             file.postAction = window.FFFields.actionUrl + '/assets/uploadFile';
                             file.data = {
-                                folderId: 1, // TODO
+                                folderId: this.$parent.config.folderId,
                             };
                             file.data[window.FFFields.csrfTokenName] = window.FFFields.csrfTokenValue;
                         },
