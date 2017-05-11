@@ -59,4 +59,32 @@ class FffieldsVariable
         return $date->localeTime();
     }
 
+    /**
+     * Returns the correct array of elements for a given Assets criteria.
+     *
+     * @param $params
+     *
+     * @return mixed
+     */
+    public function transformAssetsCriteria($params)
+    {
+        // Sort out the element criteria object
+        $criteria = $params['value'];
+
+        if (!($criteria instanceof ElementCriteriaModel))
+        {
+            $criteria = craft()->elements->getCriteria(ElementType::Asset);
+            $criteria->id = false;
+        }
+
+        $criteria->status = null;
+        $criteria->localeEnabled = null;
+
+        return craft()->fffields_assets->transformCriteria($criteria, [
+            'name' => $params['name'],
+            'viewMode' => $params['viewMode'],
+            'context' => 'field'
+        ]);
+    }
+
 }
