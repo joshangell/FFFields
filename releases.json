@@ -1,5 +1,17 @@
 [
   {
+    "version": "0.2.0",
+    "downloadUrl": "https://github.com/joshangell/fffields/archive/master.zip",
+    "date": "2017-05-11T10:00:00",
+    "notes": [
+      "[Added] Added support for Commerce Variants, Assets, Categories and DateTime fields.",
+      "[Added] Added support for Trumbowyg config files. They should be placed in `craft/app/config/trumbowyg` as a json file with the same name as the one used by Redactor for that field.",
+      "[Added] Added an option to lightswitches that allows them to toggle attributes on other inputs.",
+      "[Added] Added a `leftLabel` option to plain text fields that displays whatever you like on the left of the field.",
+      "[Improved] Scoped the inline css properly."
+    ]
+  },
+  {
     "version": "0.1.0",
     "downloadUrl": "https://github.com/joshangell/fffields/archive/master.zip",
     "date": "2017-02-17T15:00:00",

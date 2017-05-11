@@ -1,6 +1,6 @@
 {
   "name": "FFFields",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Craft CMS fields for the front-end.",
   "main": "resources/dist/main.js",
   "dependencies": {
