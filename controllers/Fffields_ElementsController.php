@@ -38,9 +38,12 @@ class Fffields_ElementsController extends BaseController
         $fieldId = craft()->request->getParam('fieldId');
         $disabledElementIds = craft()->request->getParam('disabledElementIds', array());
 
-        $field = craft()->fields->getFieldById($fieldId);
-
-        $viewMode = $field->getFieldType()->getSettings()->viewMode;
+        if ($fieldId) {
+            $field = craft()->fields->getFieldById($fieldId);
+            $viewMode = $field->getFieldType()->getSettings()->viewMode;
+        } else {
+            $viewMode = 'large';
+        }
 
         if (is_array($sourceKeys)) {
             $sources = [];
