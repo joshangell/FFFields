@@ -532,6 +532,40 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 ];
                 break;
 
+            case 'sku';
+
+                // Deal with Marketplace Vendor-specific SKUs
+                $marketplace = craft()->plugins->getPlugin('marketplace');
+
+                $value = $params['variant'][$params['name']];
+
+                if ($marketplace) {
+                    $vendor = $params['variant']->getProduct()->vendor[0] ?? null;
+                    if ($vendor) {
+
+                        // Check the start of the string
+                        $pos = strpos($value, $vendor->code.'-');
+
+                        // If it was the vendor code then remove it
+                        if ($pos !== false) {
+                            $value = substr_replace($value, '', $pos, strlen($vendor->code.'-'));
+                        }
+                    }
+                }
+
+                $fieldConfig = [
+                    'type' => 'text-input',
+                    'config' => [
+                        'id'          => $id,
+                        'name'        => $name,
+                        'type'        => 'text',
+                        'value'       => $value,
+                        'placeholder' => $params['placeholder'],
+                        'leftLabel'   => ($marketplace && $vendor ? $vendor->code.'-' : null)
+                    ]
+                ];
+                break;
+
             default;
                 $fieldConfig = [
                     'type' => 'text-input',
