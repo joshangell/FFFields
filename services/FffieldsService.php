@@ -350,6 +350,12 @@ class FffieldsService extends BaseApplicationComponent
             case 'Categories' :
                 return craft()->fffields_categories->getConfig($params);
 
+            case 'Seomatic_Meta' :
+                return [
+                    'class' => 'ui warning message visible',
+                    'message' =>  Craft::t("Coming soon!")
+                ];
+
             default :
                 return [
                     'class' => 'ui warning message visible',
