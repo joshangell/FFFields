@@ -2,7 +2,7 @@
 {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
 <div class="ui form">
-{% for field in fields %}
+{% for field in fields if field.getField().handle not in excludedFieldHandles %}
     {{ craft.fffields.renderField({
         element: element,
         fieldLayoutField: field,

@@ -17,12 +17,14 @@ class FffieldsVariable
      *
      * @param BaseElementModel      $element
      * @param FieldLayoutModel|null $fieldLayout
+     * @param null                  $assetsFolderId
+     * @param array                 $excludedFieldHandles
      *
      * @return mixed
      */
-    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null, $assetsFolderId = null)
+    public function render(BaseElementModel $element, FieldLayoutModel $fieldLayout = null, $assetsFolderId = null, $excludedFieldHandles = [])
     {
-        return craft()->fffields->render($element, $fieldLayout, $assetsFolderId);
+        return craft()->fffields->render($element, $fieldLayout, $assetsFolderId, $excludedFieldHandles);
     }
 
     /**

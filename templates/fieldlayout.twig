@@ -15,7 +15,8 @@
             {% include "fields" with {
                 fields:  tab.getFields(),
                 element: element,
-                assetsFolderId: assetsFolderId
+                assetsFolderId: assetsFolderId,
+                excludedFieldHandles: excludedFieldHandles
             } only %}
         </div>
     {% endfor %}
@@ -23,7 +24,8 @@
     {% include "fields" with {
         fields:  tabs[0].getFields(),
         element: element,
-        assetsFolderId: assetsFolderId
+        assetsFolderId: assetsFolderId,
+        excludedFieldHandles: excludedFieldHandles
     } only %}
 {% endif %}
 </div>
