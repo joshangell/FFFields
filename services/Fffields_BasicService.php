@@ -232,6 +232,7 @@ class Fffields_BasicService extends BaseApplicationComponent
             'id' => $id,
             'name' => $name,
             'value' => $value,
+            'fluid' => false,
             'options' => $settings->options
         ];
 

@@ -1,6 +1,6 @@
 <template>
 
-    <select class="ui dropdown" v-bind:name="config.name" v-bind:id="config.id" v-model="selected">
+    <select v-bind:class="classObject" v-bind:name="config.name" v-bind:id="config.id" v-model="selected">
         <option v-for="option in config.options" v-bind:value="option.value">{{ option.label }}</option>
     </select>
 
@@ -18,7 +18,11 @@
         props: ['config'],
         data: function() {
             return {
-                selected : this.config.value
+                selected : this.config.value,
+                classObject : {
+                    "ui dropdown" : true,
+                    "fluid" : this.config.fluid,
+                }
             }
         },
         mounted: function() {
