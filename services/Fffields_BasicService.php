@@ -239,4 +239,29 @@ class Fffields_BasicService extends BaseApplicationComponent
         return $config;
     }
 
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getSEOmaticConfig(array $params)
+    {
+        $field = $params['fieldLayoutField']->getField();
+        $value = $params['value'];
+
+        $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
+        $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
+//        $settings = $field->getFieldType()->getSettings();
+
+        $config = [
+            'id'    => $id,
+            'name'  => $name,
+            'value' => $value,
+        ];
+
+        return $config;
+
+    }
+
 }

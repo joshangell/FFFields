@@ -40,6 +40,7 @@
     import Assets       from './Assets.vue';
     import Categories   from './Categories.vue';
     import Date         from './Date.vue';
+    import SEOmatic     from './SEOmatic.vue';
 
     export default {
         name: 'field',
@@ -58,7 +59,8 @@
             'multi-select'  : MultiSelect,
             'assets'        : Assets,
             'categories'    : Categories,
-            'date'          : Date
+            'date'          : Date,
+            'seomatic'      : SEOmatic
         }
     }
 </script>

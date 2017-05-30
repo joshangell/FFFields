@@ -298,6 +298,9 @@ class FffieldsService extends BaseApplicationComponent
             case 'Date' :
                 return 'date';
 
+            case 'Seomatic_Meta' :
+                return 'seomatic';
+
             default :
                 return 'message';
                 break;
@@ -353,10 +356,7 @@ class FffieldsService extends BaseApplicationComponent
                 return craft()->fffields_categories->getConfig($params);
 
             case 'Seomatic_Meta' :
-                return [
-                    'class' => 'ui warning message visible',
-                    'message' =>  Craft::t("Coming soon!")
-                ];
+                return craft()->fffields_basic->getSEOmaticConfig($params);
 
             default :
                 return [
