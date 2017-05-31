@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th></th>
-                <th class="four wide">Source</th>
+                <th>Source</th>
                 <th>Value</th>
             </tr>
         </thead>
