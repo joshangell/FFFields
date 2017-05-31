@@ -52182,14 +52182,58 @@ const trumbowygSvgPath = __webpack_require__(334);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'seomatic',
     props: ['config'],
     data: function () {
         return {
-            seoTitleSource: this.config.value.seoTitleSource,
-            seoTitleDescription: this.config.value.seoTitleDescription,
+            seoTitleSource: this.config.value.seoTitleSource ? this.config.value.seoTitleSource : 'custom',
+            seoTitleSourceField: this.config.value.seoTitleSourceField,
+            seoDescriptionSource: this.config.value.seoDescriptionSource ? this.config.value.seoDescriptionSource : 'custom',
+            seoDescriptionSourceField: this.config.value.seoDescriptionSourceField,
             value: this.config.value
         };
     },
@@ -60592,6 +60636,10 @@ module.exports = Component.exports
 /* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(393)
+
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(205),
@@ -61259,8 +61307,17 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('table', {
-    staticClass: "ui single line table seomatic"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('th', [_vm._v("Title")]), _vm._v(" "), _c('td', [_c('select', {
+    staticClass: "ui definition table seomatic"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', {
+    staticClass: "top aligned",
+    attrs: {
+      "rowspan": "2"
+    }
+  }, [_vm._v("Title")]), _vm._v(" "), _c('td', [_c('div', {
+    staticClass: "ui equal width grid"
+  }, [_c('div', {
+    staticClass: "column"
+  }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -61286,11 +61343,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "custom"
     }
-  }, [_vm._v("Custom")]), _vm._v(" "), _c('option', {
+  }, [_vm._v("Custom Text")]), _vm._v(" "), _c('option', {
     attrs: {
       "value": "field"
     }
-  }, [_vm._v("From " + _vm._s(_vm.value.seoTitleSourceField) + " field")])])]), _vm._v(" "), _c('td', [_c('input', {
+  }, [_vm._v("From Field")])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.seoTitleSource === 'field'),
+      expression: "seoTitleSource === 'field'"
+    }],
+    staticClass: "column field-list"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.seoTitleSourceField),
+      expression: "seoTitleSourceField"
+    }],
+    staticClass: "ui dropdown fluid",
+    attrs: {
+      "name": _vm.config.name + '[seoTitleSourceField]',
+      "id": _vm.config.id + '-seoTitleSourceField'
+    },
+    on: {
+      "change": function($event) {
+        _vm.seoTitleSourceField = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, _vm._l((_vm.config.fieldList), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.value
+      }
+    }, [_vm._v(_vm._s(option.label))])
+  }))])])]), _vm._v(" "), _c('td', {
+    staticClass: "top aligned"
+  }, [_c('input', {
     attrs: {
       "type": "text",
       "id": _vm.config.id + '-seoTitle',
@@ -61300,21 +61395,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.value.seoTitle
     }
-  })])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Description")]), _vm._v(" "), _c('td', [_c('select', {
+  })])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('tr', [_c('td', {
+    staticClass: "top aligned",
+    attrs: {
+      "rowspan": "2"
+    }
+  }, [_vm._v("Description")]), _vm._v(" "), _c('td', [_c('div', {
+    staticClass: "ui equal width grid"
+  }, [_c('div', {
+    staticClass: "column"
+  }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.seoTitleDescription),
-      expression: "seoTitleDescription"
+      value: (_vm.seoDescriptionSource),
+      expression: "seoDescriptionSource"
     }],
     staticClass: "ui dropdown fluid",
     attrs: {
-      "name": _vm.config.name + '[seoTitleDescription]',
-      "id": _vm.config.id + '-seoTitleDescription'
+      "name": _vm.config.name + '[seoDescriptionSource]',
+      "id": _vm.config.id + '-seoDescriptionSource'
     },
     on: {
       "change": function($event) {
-        _vm.seoTitleDescription = Array.prototype.filter.call($event.target.options, function(o) {
+        _vm.seoDescriptionSource = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
           var val = "_value" in o ? o._value : o.value;
@@ -61326,23 +61430,85 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "custom"
     }
-  }, [_vm._v("Custom")]), _vm._v(" "), _c('option', {
+  }, [_vm._v("Custom Text")]), _vm._v(" "), _c('option', {
     attrs: {
       "value": "field"
     }
-  }, [_vm._v("From " + _vm._s(_vm.value.seoTitleDescriptionField) + " field")])])]), _vm._v(" "), _c('td', [_c('input', {
+  }, [_vm._v("From Field")])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.seoDescriptionSource === 'field'),
+      expression: "seoDescriptionSource === 'field'"
+    }],
+    staticClass: "column field-list"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.seoDescriptionSourceField),
+      expression: "seoDescriptionSourceField"
+    }],
+    staticClass: "ui dropdown fluid",
+    attrs: {
+      "name": _vm.config.name + '[seoDescriptionSourceField]',
+      "id": _vm.config.id + '-seoDescriptionSourceField'
+    },
+    on: {
+      "change": function($event) {
+        _vm.seoDescriptionSourceField = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, _vm._l((_vm.config.fieldList), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.value
+      }
+    }, [_vm._v(_vm._s(option.label))])
+  }))])])]), _vm._v(" "), _c('td', [_c('input', {
     attrs: {
       "type": "text",
       "id": _vm.config.id + '-seoDescription',
       "name": _vm.config.name + '[seoDescription]',
-      "disabled": _vm.seoTitleDescription === 'field'
+      "disabled": _vm.seoDescriptionSource === 'field'
     },
     domProps: {
       "value": _vm.value.seoDescription
     }
-  })])])])])
+  })])]), _vm._v(" "), _vm._m(2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th'), _vm._v(" "), _c('th', [_vm._v("Source")]), _vm._v(" "), _c('th', [_vm._v("Value")])])
+  return _c('thead', [_c('tr', [_c('th'), _vm._v(" "), _c('th', {
+    staticClass: "four wide"
+  }, [_vm._v("Source")]), _vm._v(" "), _c('th', [_vm._v("Value")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', {
+    staticClass: "instructions ignored",
+    attrs: {
+      "colspan": "2"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "http://blog.woorank.com/2014/07/15-title-tag-optimization-guidelines-usability-seo/",
+      "target": "_blank"
+    }
+  }, [_vm._v("The SEO Title")]), _vm._v(" should be between 10 and 70 characters (spaces included). Make sure your title tag is explicit and contains your most important keywords. Be sure that each page has a unique title tag. The "), _c('code', [_vm._v("siteSeoName")]), _vm._v(" length is subtracted from the 70 character limit automatically, since it is appended to the seoTitle.")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', {
+    staticClass: "instructions ignored",
+    attrs: {
+      "colspan": "2"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "http://blog.woorank.com/2013/03/the-importance-of-meta-descriptions/",
+      "target": "_blank"
+    }
+  }, [_vm._v("The SEO Description")]), _vm._v(" should be between 70 and 160 characters (spaces included). Meta descriptions allow you to influence how your web pages are described and displayed in search results. Ensure that all of your web pages have a unique meta description that is explicit and contains your most important keywords.")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -64759,6 +64925,54 @@ if (document.querySelector('#field-layout')) {
     });
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.seomatic td.instructions {\n  border-top: 0 !important;\n  border-left: 1px solid rgba(34, 36, 38, 0.15);\n}\n.seomatic .field-list {\n  padding-left: 0.5em !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(392);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("33450d73", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-786c0303!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SEOmatic.vue", function() {
+     var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-786c0303!./../../node_modules/sass-loader/lib/loader.js!./../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SEOmatic.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

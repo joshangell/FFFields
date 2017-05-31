@@ -252,12 +252,69 @@ class Fffields_BasicService extends BaseApplicationComponent
 
         $id = craft()->templates->namespaceInputId($field->handle, $params['namespace']);
         $name = craft()->templates->namespaceInputName($field->handle, $params['namespace']);
-//        $settings = $field->getFieldType()->getSettings();
+
+        // Sort out the field list
+        // Nicked from the `Seomatic_MetaFieldType::getInputHtml()` method
+        $element = $field->getFieldType()->element;
+        $fieldList = [
+            [
+                'label' => 'Title',
+                'value' => 'title'
+            ]
+        ];
+//        $fieldData = array('title' => $element->content['title']);
+        foreach ($element->fieldLayout->getFields() as $fieldLayout)
+        {
+            $field = craft()->fields->getFieldById($fieldLayout->fieldId);
+
+            if (in_array($field->type, ['PlainText','RichText','RedactorI','PreparseField_Preparse','Neo','Matrix','Tags'])) {
+                $fieldList[] = [
+                    'label' => $field->name,
+                    'value' => $field->handle,
+                ];
+            }
+
+
+//            switch ($field->type)
+//            {
+//                case "PlainText":
+//                case "RichText":
+//                case "RedactorI":
+//                case "PreparseField_Preparse":
+//                    $fieldList[$field->handle] = $field->name;
+//                    $fieldData[$field->handle] = craft()->seomatic->truncateStringOnWord(
+//                        strip_tags($element->content[$field->handle]),
+//                        200);
+//                    break;
+//
+//                case "Neo":
+//                    $fieldList[$field->handle] = $field->name;
+//                    $fieldData[$field->handle] = craft()->seomatic->truncateStringOnWord(
+//                        craft()->seomatic->extractTextFromNeo($element[$field->handle]),
+//                        200);
+//                    break;
+//
+//                case "Matrix":
+//                    $fieldList[$field->handle] = $field->name;
+//                    $fieldData[$field->handle] = craft()->seomatic->truncateStringOnWord(
+//                        craft()->seomatic->extractTextFromMatrix($element[$field->handle]),
+//                        200);
+//                    break;
+//
+//                case "Tags":
+//                    $fieldList[$field->handle] = $field->name;
+//                    $fieldData[$field->handle] = craft()->seomatic->truncateStringOnWord(
+//                        craft()->seomatic->extractTextFromTags($element[$field->handle]),
+//                        200);
+//                    break;
+//            }
+        }
 
         $config = [
-            'id'    => $id,
-            'name'  => $name,
-            'value' => $value,
+            'id'        => $id,
+            'name'      => $name,
+            'value'     => $value,
+            'fieldList' => $fieldList,
         ];
 
         return $config;
