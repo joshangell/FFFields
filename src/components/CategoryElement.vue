@@ -3,7 +3,7 @@
         <i class="angle down icon" v-if="element.level > 1"></i>
         <div v-bind:class="classObject" v-on:click="selectElement">
             <i class="check icon" v-if="selected"></i>
-            {{ element.label }}
+            <span v-html="element.label"></span>
             <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
             <input type="hidden" v-bind:name="element.name" v-bind:value="element.id" v-if="element.context === 'field'">
         </div>

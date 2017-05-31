@@ -6,14 +6,14 @@
             </div>
             <div class="extra content">
                 <i class="check icon" v-if="selected"></i>
-                {{ element.label }}
+                <span v-html="element.label"></span>
                 <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
             </div>
         </template>
 
         <template v-else>
             <img v-bind:src="element.thumbUrl">
-            {{ element.label }}
+            <span v-html="element.label"></span>
             <i class="delete icon" v-on:click="removeElement" v-if="element.context === 'field'"></i>
         </template>
 

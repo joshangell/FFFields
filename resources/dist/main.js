@@ -62573,7 +62573,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "extra content"
   }, [(_vm.selected) ? _c('i', {
     staticClass: "check icon"
-  }) : _vm._e(), _vm._v("\n            " + _vm._s(_vm.element.label) + "\n            "), (_vm.element.context === 'field') ? _c('i', {
+  }) : _vm._e(), _vm._v(" "), _c('span', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.element.label)
+    }
+  }), _vm._v(" "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
@@ -62582,7 +62586,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": _vm.element.thumbUrl
     }
-  }), _vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
+  }), _vm._v(" "), _c('span', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.element.label)
+    }
+  }), _vm._v(" "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
@@ -62897,7 +62905,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [(_vm.selected) ? _c('i', {
     staticClass: "check icon"
-  }) : _vm._e(), _vm._v("\n        " + _vm._s(_vm.element.label) + "\n        "), (_vm.element.context === 'field') ? _c('i', {
+  }) : _vm._e(), _vm._v(" "), _c('span', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.element.label)
+    }
+  }), _vm._v(" "), (_vm.element.context === 'field') ? _c('i', {
     staticClass: "delete icon",
     on: {
       "click": _vm.removeElement
