@@ -6,7 +6,7 @@
             {{ config.label }}
         </label>
 
-        <div class='instructions'>{{ config.instructions }}</div>
+        <div class='instructions' v-if="config.instructions" v-html="instructions"></div>
 
         <component v-bind:is="config.field.type" v-bind:config="config.field.config"></component>
 
@@ -42,9 +42,16 @@
     import Date         from './Date.vue';
     import SEOmatic     from './SEOmatic.vue';
 
+    import marked       from '../../node_modules/marked';
+
     export default {
         name: 'field',
         props: ['config'],
+        data: function() {
+            return {
+                instructions : this.config.instructions ? marked(this.config.instructions) : null
+            };
+        },
         components: {
             'message'       : Message,
             'field'         : Field,
