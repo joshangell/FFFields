@@ -116,7 +116,8 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     'name' => $name.'[__BLOCK__][enabled]',
                     'value' => '1'
                 ],
-                'fields' => $fields
+                'fields' => $fields,
+
             ];
         }
 
@@ -125,7 +126,8 @@ class Fffields_MatrixService extends BaseApplicationComponent
             'name'           => $name,
             'blocks'         => $blocks,
             'blockTypes'     => $blockTypes,
-            'totalNewBlocks' => $totalNewBlocks
+            'totalNewBlocks' => $totalNewBlocks,
+            'isVariantField' => false
         ];
 
         return $config;
@@ -163,7 +165,11 @@ class Fffields_MatrixService extends BaseApplicationComponent
                 'value' => '1'
             ],
             'meta'   => $meta,
-            'fields' => $fields
+            'fields' => $fields,
+            'isDefault' => [
+                'name' => $name.'[__BLOCK__][isDefault]',
+                'value' => '0'
+            ],
         ];
 
 
@@ -191,7 +197,11 @@ class Fffields_MatrixService extends BaseApplicationComponent
                     'value' => $variant->enabled ? '1' : '0',
                 ],
                 'meta'   => $metaFields,
-                'fields' => $variantFields
+                'fields' => $variantFields,
+                'isDefault' => [
+                    'name' => $name.'['.$variantId.'][isDefault]',
+                    'value' => $variant->isDefault ? '1' : '0'
+                ],
             ];
         }
 
@@ -200,7 +210,8 @@ class Fffields_MatrixService extends BaseApplicationComponent
             'name'           => $name,
             'blocks'         => $variants,
             'blockTypes'     => $blockTypes,
-            'totalNewBlocks' => $totalNewVariants
+            'totalNewBlocks' => $totalNewVariants,
+            'isVariantField' => true,
         ];
 
         return $config;

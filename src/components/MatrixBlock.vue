@@ -4,10 +4,12 @@
         <input type="hidden" v-bind:name="block.type.name" v-bind:value="block.type.value" v-if="block.type !== undefined">
         <input type="hidden" v-bind:name="block.enabled.name" v-bind:value="enabled">
 
+        <input v-if="isVariantField" type="hidden" v-bind:name="block.isDefault.name" v-bind:value="isDefault">
+
         <template v-if="block.meta !== undefined">
-            <div class="ui form">
+            <div class="ui form" v-if="block.fields.length > 0">
                 <div class="ui grid">
-                    <div class="eight wide column">
+                    <div class="eight wide column meta">
                         <template v-for="m in block.meta">
 
                             <field v-if="m.config" v-bind:config="m.config"></field>
@@ -25,6 +27,20 @@
                     </div>
                 </div>
             </div>
+
+            <div v-else class="ui form">
+                <template v-for="m in block.meta">
+
+                    <field v-if="m.config" v-bind:config="m.config"></field>
+
+                    <div v-else class="ui equal width grid">
+                        <div class="column" v-for="nm in m">
+                            <field v-bind:config="nm.config"></field>
+                        </div>
+                    </div>
+
+                </template>
+            </div>
         </template>
 
         <template v-else>
@@ -37,6 +53,12 @@
             {{ block.name }}
 
             <div class="actions">
+
+                <template v-if="isVariantField && isDefault === '1'">
+                    <div class="item" title="Default variant">
+                        <i class="star icon"></i>
+                    </div>
+                </template>
 
                 <template v-if="enabled === '0'">
                     <div class="item">
@@ -70,6 +92,10 @@
                                     <i class="button toggle off icon"></i>
                                     <span>Enable</span>
                                 </template>
+                            </div>
+                            <div class="item" v-if="isVariantField" v-on:click="makeDefault">
+                                <i class="star icon"></i>
+                                <span>Make default</span>
                             </div>
                             <div class="item" v-on:click="deleteBlock">
                                 <i class="button minus circle icon"></i>
@@ -127,6 +153,11 @@
             margin-left: 0;
         }
     }
+
+    .matrix-block .meta {
+        background-color: #f3f4f5;
+        border-right: 1px solid #e8e8e8;
+    }
 </style>
 
 <script>
@@ -134,14 +165,15 @@
 
     export default {
         name: 'matrix-block',
-        props: ['block'],
+        props: ['block','isVariantField'],
         components : {
             'field' : Field,
         },
         data: function() {
             return {
                 collapsed: this.block.enabled.value !== '1',
-                enabled: this.block.enabled.value
+                enabled: this.block.enabled.value,
+                isDefault: this.block.isDefault !== undefined ? this.block.isDefault.value : '0',
             }
         },
         // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
@@ -190,6 +222,13 @@
                         $(this).remove();
                     }
                 });
+            },
+            makeDefault: function() {
+                this.$emit('madeDefault');
+                this.isDefault = '1';
+            },
+            makeNotDefault: function() {
+                this.isDefault = '0';
             }
         },
         mounted: function() {

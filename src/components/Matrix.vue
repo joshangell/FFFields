@@ -16,7 +16,7 @@
         </div>
 
         <draggable v-bind:options="options">
-            <matrix-block v-for="blk in blocks" v-bind:block="blk" ref="matrixBlock"></matrix-block>
+            <matrix-block v-for="blk in blocks" v-bind:block="blk" v-bind:is-variant-field="isVariantField" v-on:madeDefault="onMadeDefault" ref="matrixBlock"></matrix-block>
         </draggable>
 
         <div class="matrix-footer">
@@ -75,6 +75,7 @@
                 blocks         : this.config.blocks,
                 blockTypes     : this.config.blockTypes,
                 totalNewBlocks : this.config.totalNewBlocks,
+                isVariantField : this.config.isVariantField,
                 options: {
                     handle      : '.move',
                     ghostClass  : 'disabled',
@@ -108,6 +109,11 @@
                 event.preventDefault();
                 for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
                     this.$refs.matrixBlock[i].collapse();
+                }
+            },
+            onMadeDefault: function() {
+                for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                    this.$refs.matrixBlock[i].makeNotDefault();
                 }
             }
         }

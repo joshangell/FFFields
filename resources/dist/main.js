@@ -51729,6 +51729,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             blocks: this.config.blocks,
             blockTypes: this.config.blockTypes,
             totalNewBlocks: this.config.totalNewBlocks,
+            isVariantField: this.config.isVariantField,
             options: {
                 handle: '.move',
                 ghostClass: 'disabled',
@@ -51762,6 +51763,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             event.preventDefault();
             for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
                 this.$refs.matrixBlock[i].collapse();
+            }
+        },
+        onMadeDefault: function () {
+            for (let i = 0; i < this.$refs.matrixBlock.length; i++) {
+                this.$refs.matrixBlock[i].makeNotDefault();
             }
         }
     }
@@ -51906,19 +51912,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = {
     name: 'matrix-block',
-    props: ['block'],
+    props: ['block', 'isVariantField'],
     components: {
         'field': __WEBPACK_IMPORTED_MODULE_0__Field_vue___default.a
     },
     data: function () {
         return {
             collapsed: this.block.enabled.value !== '1',
-            enabled: this.block.enabled.value
+            enabled: this.block.enabled.value,
+            isDefault: this.block.isDefault !== undefined ? this.block.isDefault.value : '0'
         };
     },
     // This is key, see here: https://vuejs.org/v2/guide/components.html#Circular-References-Between-Components
@@ -51967,6 +52005,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     $(this).remove();
                 }
             });
+        },
+        makeDefault: function () {
+            this.$emit('madeDefault');
+            this.isDefault = '1';
+        },
+        makeNotDefault: function () {
+            this.isDefault = '0';
         }
     },
     mounted: function () {
@@ -52483,7 +52528,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .ui.top.attached.label {\n  z-index: 2;\n}\n.matrix-block .actions {\n  /*position: absolute;*/\n  /*z-index: 2;*/\n  /*right: 0.8em;*/\n  /*top: 5px;*/\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n", ""]);
+exports.push([module.i, "\n.matrix-block {\n  /*z-index: 1;*/\n}\n.matrix-block .ui.form {\n  margin-top: 2em;\n}\n.matrix-block .ui.top.attached.label {\n  z-index: 2;\n}\n.matrix-block .actions {\n  /*position: absolute;*/\n  /*z-index: 2;*/\n  /*right: 0.8em;*/\n  /*top: 5px;*/\n  float: right;\n}\n.matrix-block .actions > .item {\n    float: left;\n    margin-left: 1em;\n    opacity: 0.75;\n}\n.matrix-block .actions > .item:hover {\n      opacity: 1;\n}\n.matrix-block .actions .move {\n    margin-right: 0;\n    cursor: move;\n}\n.matrix-block .actions .ui.dropdown .dropdown.icon {\n    margin-left: 0;\n}\n.matrix-block .meta {\n  background-color: #f3f4f5;\n  border-right: 1px solid #e8e8e8;\n}\n", ""]);
 
 // exports
 
@@ -60945,7 +60990,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       ref: "matrixBlock",
       refInFor: true,
       attrs: {
-        "block": blk
+        "block": blk,
+        "is-variant-field": _vm.isVariantField
+      },
+      on: {
+        "madeDefault": _vm.onMadeDefault
       }
     })
   })), _vm._v(" "), _c('div', {
@@ -61621,12 +61670,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.enabled
     }
-  }), _vm._v(" "), (_vm.block.meta !== undefined) ? [_c('div', {
+  }), _vm._v(" "), (_vm.isVariantField) ? _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": _vm.block.isDefault.name
+    },
+    domProps: {
+      "value": _vm.isDefault
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.block.meta !== undefined) ? [(_vm.block.fields.length > 0) ? _c('div', {
     staticClass: "ui form"
   }, [_c('div', {
     staticClass: "ui grid"
   }, [_c('div', {
-    staticClass: "eight wide column"
+    staticClass: "eight wide column meta"
   }, [_vm._l((_vm.block.meta), function(m) {
     return [(m.config) ? _c('field', {
       attrs: {
@@ -61651,7 +61708,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "config": f.config
       }
     })
-  }))])])] : [_c('div', {
+  }))])]) : _c('div', {
+    staticClass: "ui form"
+  }, [_vm._l((_vm.block.meta), function(m) {
+    return [(m.config) ? _c('field', {
+      attrs: {
+        "config": m.config
+      }
+    }) : _c('div', {
+      staticClass: "ui equal width grid"
+    }, _vm._l((m), function(nm) {
+      return _c('div', {
+        staticClass: "column"
+      }, [_c('field', {
+        attrs: {
+          "config": nm.config
+        }
+      })], 1)
+    }))]
+  })], 2)] : [_c('div', {
     staticClass: "ui form"
   }, _vm._l((_vm.block.fields), function(f) {
     return _c('field', {
@@ -61663,7 +61738,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ui top attached label"
   }, [_vm._v("\n        " + _vm._s(_vm.block.name) + "\n\n        "), _c('div', {
     staticClass: "actions"
-  }, [(_vm.enabled === '0') ? [_vm._m(0)] : _vm._e(), _vm._v(" "), _c('div', {
+  }, [(_vm.isVariantField && _vm.isDefault === '1') ? [_vm._m(0)] : _vm._e(), _vm._v(" "), (_vm.enabled === '0') ? [_vm._m(1)] : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "item"
   }, [_c('div', {
     staticClass: "ui icon dropdown"
@@ -61691,15 +61766,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "button toggle on icon"
   }), _vm._v(" "), _c('span', [_vm._v("Disable")])] : [_c('i', {
     staticClass: "button toggle off icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('span', [_vm._v("Enable")])]], 2), _vm._v(" "), (_vm.isVariantField) ? _c('div', {
+    staticClass: "item",
+    on: {
+      "click": _vm.makeDefault
+    }
+  }, [_c('i', {
+    staticClass: "star icon"
+  }), _vm._v(" "), _c('span', [_vm._v("Make default")])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "item",
     on: {
       "click": _vm.deleteBlock
     }
   }, [_c('i', {
     staticClass: "button minus circle icon"
-  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(1)], 2)])], 2)
+  }), _vm._v(" "), _c('span', [_vm._v("Delete")])])])])]), _vm._v(" "), _vm._m(2)], 2)])], 2)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "item",
+    attrs: {
+      "title": "Default variant"
+    }
+  }, [_c('i', {
+    staticClass: "star icon"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "item"
   }, [_c('i', {
