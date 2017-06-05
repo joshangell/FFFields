@@ -1,5 +1,5 @@
 <template>
-    <div class="assets">
+    <div v-bind:class="[config.viewMode === 'large' && !elements.length ? 'assets assets--pad' : 'assets']">
         <input type="hidden" v-bind:name="config.name" value="">
 
         <draggable v-bind:options="options" v-bind:class="[config.viewMode === 'large' ? 'ui ten doubling cards' : 'ui labels']">
@@ -104,6 +104,10 @@
     }
     .assets > .ui.labels {
         margin-bottom: 1rem;
+    }
+    .assets--pad {
+        padding-top: 1rem;
+
     }
     .modal.assets-modal .header {
         overflow: hidden;

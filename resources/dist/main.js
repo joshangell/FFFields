@@ -50493,6 +50493,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -52425,7 +52429,7 @@ exports = module.exports = __webpack_require__(3)();
 
 
 // module
-exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n.assets > .ui.labels {\n  margin-bottom: 1rem;\n}\n.modal.assets-modal .header {\n  overflow: hidden;\n}\n.modal.assets-modal .header .buttons {\n  float: right;\n}\n", ""]);
+exports.push([module.i, "\n.assets > .ui.cards {\n  margin-bottom: 0.25rem;\n}\n.assets > .ui.labels {\n  margin-bottom: 1rem;\n}\n.assets--pad {\n  padding-top: 1rem;\n}\n.modal.assets-modal .header {\n  overflow: hidden;\n}\n.modal.assets-modal .header .buttons {\n  float: right;\n}\n", ""]);
 
 // exports
 
@@ -62105,7 +62109,7 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "assets"
+    class: [_vm.config.viewMode === 'large' && !_vm.elements.length ? 'assets assets--pad' : 'assets']
   }, [_c('input', {
     attrs: {
       "type": "hidden",
