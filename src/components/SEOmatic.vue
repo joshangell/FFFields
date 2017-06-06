@@ -36,7 +36,7 @@
                 </td>
                 <td class="top aligned">
                     <input type="text"
-                           v-bind:value="value.seoTitle"
+                           v-model="value.seoTitle"
                            v-bind:id="config.id + '-seoTitle'"
                            v-bind:name="config.name + '[seoTitle]'"
                            v-bind:disabled="seoTitleSource === 'field'">
@@ -71,7 +71,7 @@
                 </td>
                 <td>
                     <input type="text"
-                           v-bind:value="value.seoDescription"
+                           v-model="value.seoDescription"
                            v-bind:id="config.id + '-seoDescription'"
                            v-bind:name="config.name + '[seoDescription]'"
                            v-bind:disabled="seoDescriptionSource === 'field'">
