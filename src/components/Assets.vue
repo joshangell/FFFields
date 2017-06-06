@@ -353,7 +353,7 @@
                     fieldId: this.config.fieldId,
                     sources: this.config.sources,
                     elementType: 'Asset',
-                    context: 'index',
+                    context: 'field',
                     disabledElementIds: disabledElementIds
                 };
 
