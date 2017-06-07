@@ -285,7 +285,7 @@
                     fieldId: this.config.fieldId,
                     source: this.config.source,
                     elementType: 'Category',
-                    context: 'field',
+                    context: 'index',
                     disabledElementIds: disabledElementIds
                 };
 

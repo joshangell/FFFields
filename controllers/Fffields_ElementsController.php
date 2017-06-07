@@ -49,7 +49,7 @@ class Fffields_ElementsController extends BaseController
             $sources = [];
 
             foreach ($sourceKeys as $key) {
-                $source = $elementType->getSource($key, $context);
+                $source = $elementType->getSource($key, 'field');
 
                 if ($source) {
                     $sources[$key] = $source;
@@ -95,7 +95,7 @@ class Fffields_ElementsController extends BaseController
 
         $field = craft()->fields->getFieldById($fieldId);
 
-        $source = $elementType->getSource($sourceKey, $context);
+        $source = $elementType->getSource($sourceKey, 'field');
 
         $criteria = craft()->elements->getCriteria($elementType->getClassHandle());
 

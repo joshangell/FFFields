@@ -50728,7 +50728,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 fieldId: this.config.fieldId,
                 sources: this.config.sources,
                 elementType: 'Asset',
-                context: 'field',
+                context: 'index',
                 disabledElementIds: disabledElementIds
             };
 
@@ -51086,7 +51086,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 fieldId: this.config.fieldId,
                 source: this.config.source,
                 elementType: 'Category',
-                context: 'field',
+                context: 'index',
                 disabledElementIds: disabledElementIds
             };
 
