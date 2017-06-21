@@ -50549,7 +50549,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 title: 'Upload',
                 name: 'assets-upload',
                 multiple: true,
-                extensions: 'gif,jpg,png', // TODO get from window.FFFields
+                extensions: 'gif,jpg,png,jpeg', // TODO get from window.FFFields
                 accept: '', // TODO
                 size: 1024 * 1024 * 10, // TODO get from window.FFFields
                 drop: true, // TODO
