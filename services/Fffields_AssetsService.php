@@ -145,7 +145,7 @@ class Fffields_AssetsService extends BaseApplicationComponent
                     'thumbUrl'     => $thumbUrl,
                     'filename'     => $element->filename,
                     'size'         => craft()->formatter->formatSize($element->size),
-                    'dateModified' => $element->dateModified->localeDate()
+                    'dateModified' => $element->dateModified ? $element->dateModified->localeDate() : ''
                 ];
             }
         }
