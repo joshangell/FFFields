@@ -72,6 +72,8 @@ class Fffields_ElementsController extends BaseController
             $criteria->setAttributes($source['criteria']);
         }
 
+        $criteria->limit = null;
+
         $this->returnJson([
             'success' => true,
             'elements' => craft()->fffields_assets->transformCriteria($criteria, [
@@ -105,6 +107,8 @@ class Fffields_ElementsController extends BaseController
         {
             $criteria->setAttributes($source['criteria']);
         }
+
+        $criteria->limit = null;
 
         $this->returnJson([
             'success' => true,
