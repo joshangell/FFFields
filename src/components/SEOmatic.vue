@@ -1,88 +1,93 @@
 <template>
-    <table class="ui definition table seomatic">
+    <div>
+        <table class="ui definition table seomatic">
 
-        <thead>
-            <tr>
-                <th></th>
-                <th>Source</th>
-                <th>Value</th>
-            </tr>
-        </thead>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Source</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-            <tr>
-                <td rowspan="2" class="top aligned">Title</td>
-                <td>
-                    <div class="ui equal width grid">
-                        <div class="column">
-                            <select class="ui dropdown fluid"
-                                    v-bind:name="config.name + '[seoTitleSource]'"
-                                    v-bind:id="config.id + '-seoTitleSource'"
-                                    v-model="seoTitleSource">
-                                <option value="custom">Custom Text</option>
-                                <option value="field">From Field</option>
-                            </select>
+                <tr>
+                    <td rowspan="2" class="top aligned">Title</td>
+                    <td>
+                        <div class="ui equal width grid">
+                            <div class="column">
+                                <select class="ui dropdown fluid"
+                                        v-bind:name="config.name + '[seoTitleSource]'"
+                                        v-bind:id="config.id + '-seoTitleSource'"
+                                        v-model="seoTitleSource">
+                                    <option value="custom">Custom Text</option>
+                                    <option value="field">From Field</option>
+                                </select>
+                            </div>
+                            <div v-show="seoTitleSource === 'field'" class="column field-list">
+                                <select class="ui dropdown fluid"
+                                        v-bind:name="config.name + '[seoTitleSourceField]'"
+                                        v-bind:id="config.id + '-seoTitleSourceField'"
+                                        v-model="seoTitleSourceField">
+                                    <option v-for="option in config.fieldList" v-bind:value="option.value">{{ option.label }}</option>
+                                </select>
+                            </div>
                         </div>
-                        <div v-show="seoTitleSource === 'field'" class="column field-list">
-                            <select class="ui dropdown fluid"
-                                    v-bind:name="config.name + '[seoTitleSourceField]'"
-                                    v-bind:id="config.id + '-seoTitleSourceField'"
-                                    v-model="seoTitleSourceField">
-                                <option v-for="option in config.fieldList" v-bind:value="option.value">{{ option.label }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td class="top aligned">
-                    <input type="text"
-                           v-model="value.seoTitle"
-                           v-bind:id="config.id + '-seoTitle'"
-                           v-bind:name="config.name + '[seoTitle]'"
-                           v-bind:disabled="seoTitleSource === 'field'">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="instructions ignored"><a href="http://blog.woorank.com/2014/07/15-title-tag-optimization-guidelines-usability-seo/" target="_blank">The SEO Title</a> should be between 10 and 70 characters (spaces included). Make sure your title tag is explicit and contains your most important keywords. Be sure that each page has a unique title tag. The <code>siteSeoName</code> length is subtracted from the 70 character limit automatically, since it is appended to the seoTitle.</td>
-            </tr>
+                    </td>
+                    <td class="top aligned">
+                        <input type="text"
+                               v-model="value.seoTitleUnparsed"
+                               v-bind:id="config.id + '-seoTitleUnparsed'"
+                               v-bind:name="config.name + '[seoTitleUnparsed]'"
+                               v-bind:disabled="seoTitleSource === 'field'">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="instructions ignored"><a href="http://blog.woorank.com/2014/07/15-title-tag-optimization-guidelines-usability-seo/" target="_blank">The SEO Title</a> should be between 10 and 70 characters (spaces included). Make sure your title tag is explicit and contains your most important keywords. Be sure that each page has a unique title tag. The <code>siteSeoName</code> length is subtracted from the 70 character limit automatically, since it is appended to the seoTitle.</td>
+                </tr>
 
-            <tr>
-                <td rowspan="2" class="top aligned">Description</td>
-                <td>
-                    <div class="ui equal width grid">
-                        <div class="column">
-                            <select class="ui dropdown fluid"
-                                    v-bind:name="config.name + '[seoDescriptionSource]'"
-                                    v-bind:id="config.id + '-seoDescriptionSource'"
-                                    v-model="seoDescriptionSource">
-                                <option value="custom">Custom Text</option>
-                                <option value="field">From Field</option>
-                            </select>
+                <tr>
+                    <td rowspan="2" class="top aligned">Description</td>
+                    <td>
+                        <div class="ui equal width grid">
+                            <div class="column">
+                                <select class="ui dropdown fluid"
+                                        v-bind:name="config.name + '[seoDescriptionSource]'"
+                                        v-bind:id="config.id + '-seoDescriptionSource'"
+                                        v-model="seoDescriptionSource">
+                                    <option value="custom">Custom Text</option>
+                                    <option value="field">From Field</option>
+                                </select>
+                            </div>
+                            <div v-show="seoDescriptionSource === 'field'" class="column field-list">
+                                <select class="ui dropdown fluid"
+                                        v-bind:name="config.name + '[seoDescriptionSourceField]'"
+                                        v-bind:id="config.id + '-seoDescriptionSourceField'"
+                                        v-model="seoDescriptionSourceField">
+                                    <option v-for="option in config.fieldList" v-bind:value="option.value">{{ option.label }}</option>
+                                </select>
+                            </div>
                         </div>
-                        <div v-show="seoDescriptionSource === 'field'" class="column field-list">
-                            <select class="ui dropdown fluid"
-                                    v-bind:name="config.name + '[seoDescriptionSourceField]'"
-                                    v-bind:id="config.id + '-seoDescriptionSourceField'"
-                                    v-model="seoDescriptionSourceField">
-                                <option v-for="option in config.fieldList" v-bind:value="option.value">{{ option.label }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <input type="text"
-                           v-model="value.seoDescription"
-                           v-bind:id="config.id + '-seoDescription'"
-                           v-bind:name="config.name + '[seoDescription]'"
-                           v-bind:disabled="seoDescriptionSource === 'field'">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="instructions ignored"><a href="http://blog.woorank.com/2013/03/the-importance-of-meta-descriptions/" target="_blank">The SEO Description</a> should be between 70 and 160 characters (spaces included). Meta descriptions allow you to influence how your web pages are described and displayed in search results. Ensure that all of your web pages have a unique meta description that is explicit and contains your most important keywords.</td>
-            </tr>
+                    </td>
+                    <td>
+                        <input type="text"
+                               v-model="value.seoDescriptionUnparsed"
+                               v-bind:id="config.id + '-seoDescriptionUnparsed'"
+                               v-bind:name="config.name + '[seoDescriptionUnparsed]'"
+                               v-bind:disabled="seoDescriptionSource === 'field'">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="instructions ignored"><a href="http://blog.woorank.com/2013/03/the-importance-of-meta-descriptions/" target="_blank">The SEO Description</a> should be between 70 and 160 characters (spaces included). Meta descriptions allow you to influence how your web pages are described and displayed in search results. Ensure that all of your web pages have a unique meta description that is explicit and contains your most important keywords.</td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+
+        <input v-for="handle in unusedFields" type="hidden" :id="config.id + '-'+handle" :name="config.name + '['+handle+']'" :value="value[handle]">
+
+    </div>
 </template>
 
 <style lang="scss">
@@ -101,6 +106,7 @@
         props: ['config'],
         data: function() {
             return {
+                unusedFields : ['seoMainEntityCategory','seoMainEntityOfPage','seoKeywordsSource','seoKeywordsSourceField','seoKeywordsUnparsed','seoImageIdSource','seoImageIdSourceField','seoImageId','seoImageTransform','twitterCardType','seoTwitterImageIdSource','seoTwitterImageIdSourceField','seoTwitterImageId','seoTwitterImageTransform','openGraphType','seoFacebookImageIdSource','seoFacebookImageIdSourceField','seoFacebookImageId','seoFacebookImageTransform','robots'],
                 seoTitleSource : this.config.value.seoTitleSource ? this.config.value.seoTitleSource : 'custom',
                 seoTitleSourceField : this.config.value.seoTitleSourceField,
                 seoDescriptionSource : this.config.value.seoDescriptionSource ? this.config.value.seoDescriptionSource : 'custom',
